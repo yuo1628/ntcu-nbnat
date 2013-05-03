@@ -1,0 +1,66 @@
+/*
+ * @description: 外框設計
+ * @author: shown (2013-05-03 15:55)
+ * @update: shown (2013-05-03 17:08)
+ */
+
+.divFrame {
+	padding: 10px;
+	border: 1px solid #e0e0e0;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	-webkit-box-shadow: #e0e0e0 0px 2px 3px;
+	-moz-box-shadow: #e0e0e0 0px 2px 3px;
+	box-shadow: #e0e0e0 0px 2px 3px;
+}
+
+.greenBtn, .blueBtn, .grayBtn {
+	border: 1px solid #e0e0e0;
+	padding: .2em .8em;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	color: white;
+	font-family: "微軟正黑體", Arial;
+	font-weight: bold;
+	cursor:pointer;
+}
+.greenBtn ,.greenBtn:active, .greenBtn:focus {
+	background-color: #8fc31f;
+}
+.blueBtn,.blueBtn:active, .blueBtn:focus  {
+	background-color: #5a9ee9;
+}
+.grayBtn,.grayBtn:active, .grayBtn:focus {
+	background-color: #f9f9f9;
+}
+.greenBtn:hover {
+	background-color: #8fc31f;
+}
+.blueBtn:hover {
+	background-color: #5a9ee9;
+}
+.grayBtn:hover {
+	background-color: #f9f9f9;
+}
+
+
+.textStyle {
+	border: 2px solid #e0e0e0;	
+	resize: none;
+	padding: .5em;
+	border-radius: 0.3em;
+	-moz-border-radius: 0.3em; /*firefox*/
+	-webkit-border-radius: 0.3em; /*chrome*/
+	outline: 0;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+.textStyle:active, .textStyle:focus {
+	box-shadow: 0 0 .5em #5a9ee9;
+	border-color: #CDE5FF;
+}

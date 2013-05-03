@@ -1,0 +1,46 @@
+/*
+ * @description: 首頁樣是
+ * @author: shown (2013-05-03 17:00)
+ * @update: shown (2013-05-03 )
+ */
+
+.banner, .news {
+	width: 960px;
+	height: 200px;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+.other {
+	margin: 10px 0;
+	padding: 10px 0;
+	text-align: center;
+	width: 990px;
+	border-top: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0;
+}
+.other .divFrame {
+	width: 280px;
+	height: 200px;
+	display: inline-block;
+	margin: 0 5px;
+}
+#msg {
+	width: 100%;
+	margin: 0 auto;
+	margin-top: 10px;
+	display: block;
+	height: 100px;
+	border-top: 1px solid #e0e0e0;
+}
+#login ul li h6 {
+	display: block;
+	margin-bottom: 5px;
+}
+#login ul li {
+	display: inline-block;
+	margin:0 5px;
+}
+#login {
+		
+	float:right;
+}

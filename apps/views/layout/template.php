@@ -9,14 +9,18 @@
 	<body>
 		<div id="container">
 			<div id="header">
-				<div id="logoBox"></div>
+				<div id="logo"></div>
 				<div id="nav"></div>
-
 			</div>
-			<div id="menuBox"></div>
-			<div id="wrap"></div>
+			<div id="wrapper">
+				<div id="menu">
+					<a id="toggle"></a>
+				</div>
+				<div id="main"></div>
+			</div>
+			<p id="footer"></p>
 		</div>
-		<p class="footer"></p>
-		</div>
+		
+		
 	</body>
 </html>

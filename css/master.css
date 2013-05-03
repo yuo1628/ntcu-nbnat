@@ -1,13 +1,18 @@
-/**
- * web page style init
- *
- * @author Shown
+/*
+ * @description: 版面基本樣式宣告
+ * @author: shown
+ * @update: shown (2013-05-03 17:00)
  */
 body, html {
 	width: 100%;
 	height: 100%;
-	margin: 0;
 	font-family: Arial;
+}
+body, html, p, h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+	display: inline-block;
 }
 a {
 	color: #666;
@@ -26,45 +31,53 @@ h2 {
 	color: #666;
 	font-size: 15px;
 }
-
+ul,ol
+{
+	list-style-type:none;
+	list-style-position:outside;
+	padding-left:0;	
+}
 #container {
-	border: 1px solid black;
 	width: 990px;
-	padding:10px 0;
-	margin:0 auto;
+	margin: 0 auto;
+}
+#wrapper {
+	width: 100%;
+	display: inline-block;
 }
 #header {
 	height: 100px;
-	border: 1px solid blue;
 }
-#logoBox
-{
-	width:128px;
-	height:80px;
-	margin:10px;
-	border: 1px solid #e0e0e0;	
-	float:left;
-}
-#nav
-{
-	width:830px;
-	height:80px;
-	margin:10px 0;
+#logo {
+	width: 128px;
+	height: 80px;
+	margin: 10px;
+	float: left;
 	border: 1px solid #e0e0e0;
-	display:inline-block;	
 }
-#menuBox {
-	clear:left;
-
-	width: 120px;
+#nav {
+	width: 824px;
+	height: 80px;
+	margin: 10px 0;
+	display: inline-block;
+}
+#menu {
+	clear: left;
+	width: 200px;
 	height: 700px;
-	border: 1px solid green;	
+	display: inline-block;
 	float: left;
 }
-#wrap {
-	display:inline-block;	
+#main {
+	display: inline-block;
+	float: right;
 	margin-left: 10px;
-	width: 856px;
+	width: 767px;
 	height: 700px;
-	border: 1px solid red;
+}
+#footer {
+	margin-top: 10px;
+	text-align: center;
+	font-size: .6em;
+	color: gray;
 }
