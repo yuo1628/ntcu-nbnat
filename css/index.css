@@ -1,21 +1,17 @@
 /*
  * @description: 首頁樣是
  * @author: shown (2013-05-03 17:00)
- * @update: shown (2013-05-03 )
+ * @update: shown (2013-05-03 19:30)
  */
 
-.banner{
+.banner,.news{
 	width: 960px;	
 	margin: 0 auto;
 	margin-top: 10px;
-	height: 230px;	
+	
 }
-.news {	
-	height: 200px;	
-	width:460px;
-	margin: 10px 5px 0px 5px;
-	display:inline-block;
-}
+.banner{height: 230px;	}
+.news{height: 200px;	}
 .other {
 	margin: 10px 0;
 	padding: 10px 0;
@@ -30,12 +26,14 @@
 	display: inline-block;
 	margin: 0 5px;
 }
-#msg ,#pro{
+#msg{
 	width: 100%;
 	margin: 0 auto;
 	margin-top: 10px;
+	height:155px;
 	display: block;	
 	border-top: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0;
 }
 #login ul li h6 {
 	display: block;

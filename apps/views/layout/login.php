@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="css/master.css" />
 		<link rel="stylesheet" href="css/frame.css" />
 		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/news.css" />
 	</head>
 	<body>
 		<div id="container">
