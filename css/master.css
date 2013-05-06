@@ -15,8 +15,9 @@ h1, h2, h3, h4, h5, h6 {
 	display: inline-block;
 }
 a {
-	color: #666;
+	color: #666;		
 }
+
 a:visited {
 	color: #5a9ee9;
 }
@@ -41,7 +42,7 @@ ul,ol
 	width: 990px;
 	margin: 0 auto;
 }
-#wrapper {
+#content {
 	width: 100%;
 	display: inline-block;
 }
@@ -53,7 +54,7 @@ ul,ol
 	height: 80px;
 	margin: 10px;
 	float: left;
-	border: 1px solid #e0e0e0;
+	background-image: url(../img/logo.png);;
 }
 #nav {
 	width: 824px;
@@ -63,19 +64,21 @@ ul,ol
 }
 #menu {
 	clear: left;
-	width: 200px;
+	width: 22%;
 	height: 700px;
 	display: inline-block;
 	float: left;
+	overflow: hidden;
 }
 #main {
 	display: inline-block;
 	float: right;
 	margin-left: 10px;
-	width: 767px;
+	width: 72%;
 	height: 700px;
 }
 #footer {
+	clear:both;
 	margin-top: 10px;
 	text-align: center;
 	font-size: .6em;
