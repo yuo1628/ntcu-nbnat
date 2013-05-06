@@ -13,9 +13,13 @@ class MY_Controller extends CI_Controller
 	 */
 	public function __construct()
 	{
-		parent::__construct();	
-
-		$this->load->library('layout');
+		parent::__construct();
+		
+		// import library;	
+		$this->load->library('dreamon');
+		dimport('view.layout');
+		
+		$this->layout = new DLayout(); 
 		$this->layout->setLayout('layout/default');
 	}
 }

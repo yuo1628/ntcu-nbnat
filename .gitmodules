@@ -1,0 +1,3 @@
+[submodule "apps/libraries/dreamon"]
+	path = apps/libraries/dreamon
+	url = git@github.com:dreamonmddproject/ci-library.git
