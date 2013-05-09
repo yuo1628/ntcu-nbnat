@@ -11,7 +11,7 @@ class HomeController extends MY_Controller {
 
 		$itemList = array("itemList"=>array(
 			"item1" => array("img/logo.jpg","./index.php/member", "會員管理"),
-			"item2" => array("img/logo.jpg","", "公佈欄管理"),
+			"item2" => array("img/logo.jpg","./index.php/news", "公佈欄管理"),
 			"item3" => array("img/logo.jpg","./", "會員登出")
 			));
 

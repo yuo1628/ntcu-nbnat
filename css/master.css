@@ -15,12 +15,22 @@ h1, h2, h3, h4, h5, h6 {
 	display: inline-block;
 }
 a {
-	color: #666;		
+	color: #666;	
+	text-decoration: none;	
 }
-
+a:link {
+	color: #5a9ee9;
+}
 a:visited {
 	color: #5a9ee9;
 }
+a:hover {
+	text-decoration: underline;	
+}
+a:active {
+	text-decoration: underline;	
+}
+
 img {
 	border: 0;
 }

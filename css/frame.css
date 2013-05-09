@@ -15,26 +15,28 @@
 	box-shadow: #e0e0e0 0px 2px 3px;
 }
 
-.greenBtn, .blueBtn, .grayBtn {
-	
+.greenBtn, .blueBtn, .grayBtn {	
 	border: 1px solid #e0e0e0;
 	padding: .2em .8em;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
-	border-radius: 5px;
-	color: white;
+	border-radius: 5px;	
 	font-family: "微軟正黑體", Arial;
 	font-weight: bold;	
 	cursor:pointer;
 }
+.greenBtn, .blueBtn{
+	color: white;
+}
+
 .greenBtn:hover {
 	background-color: #178918;
 }
 .blueBtn:hover {
-	background-color: #5a9ee9;
+	background-color: #1989FF;
 }
 .grayBtn:hover {
-	background-color: #f9f9f9;
+	background-color: #e0e0e0;
 }
 .greenBtn ,.greenBtn:active {
 	background-color: #8fc31f;
@@ -43,10 +45,9 @@
 	background-color: #5a9ee9;
 }
 .grayBtn,.grayBtn:active{
+	color: #aaaaaa;
 	background-color: #f9f9f9;
 }
-
-
 
 .textStyle {
 	border: 2px solid #e0e0e0;	
@@ -66,3 +67,4 @@
 	box-shadow: 0 0 .5em #5a9ee9;
 	border-color: #CDE5FF;
 }
+
