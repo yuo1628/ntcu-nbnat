@@ -9,38 +9,40 @@
 		<link rel="stylesheet" href="css/frame.css" />
 		<link rel="stylesheet" href="css/menu.css" />
 		
-		
-		
+		<!-- css & js-->
+		<?php 
+			//include head
+			echo $this->layout->fetchHead(); 
+		?> 
 		
 	</head>
 	<body>
+		
 		<div id="container">
-			<div id="container">
-				<div id="header">
-					<div id="logo"></div>
-					<div id="nav">
+			<div id="header">
+				<div id="logo"></div>
+				<div id="nav">
 
-					</div>
 				</div>
-				<div id="content">
-					<div id="menu" class="divFrame">						
-						<a id="toggle"></a>
-						<ul>
-						<?php
-							for ($i = 1; $i <= count($itemList); $i++) {
-								echo "<li><a href='" . $itemList["item" . $i][1] . "'><img src='" . $itemList["item" . $i][0] . "'/><span>" . $itemList["item" . $i][2] . "</span></a></li>";
-							}
-						 ?>
-						 </ul>
-					</div>
-					<div id="main" class="divFrame">
-						<?php echo $content; ?>
-					</div>
-				</div>
-				<p id="footer">
-					法律顧問 : 令衍法律事務所　台灣黃頁名錄 | 長泓露天拍賣 | 長泓資訊粉絲專頁　© 2013長泓資訊有限公司
-				</p>
 			</div>
+			<div id="content">
+				<div id="menu" class="divFrame">						
+					<a id="toggle"></a>
+					<ul>
+					<?php foreach ($itemList as $item): ?>
+						<li class="item"><a href="<?php echo $item[1] ?>"><img src="<?php echo $item[0] ?>"/><span><?php echo $item[2] ?></span></a></li>
+					<?php endforeach; ?>
+					
+					 </ul>
+				</div>
+				<div id="main" class="divFrame">
+					<?php echo $content; ?>
+				</div>
+			</div>
+			<p id="footer">
+				法律顧問 : 令衍法律事務所　台灣黃頁名錄 | 長泓露天拍賣 | 長泓資訊粉絲專頁　© 2013長泓資訊有限公司
+			</p>
+		</div>
 
 	</body>
 </html>
