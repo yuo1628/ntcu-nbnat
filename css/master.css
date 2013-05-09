@@ -75,7 +75,7 @@ ul,ol
 #menu {
 	clear: left;
 	width: 22%;
-	height: 700px;
+	min-height: 700px;
 	display: inline-block;
 	float: left;
 	overflow: hidden;
@@ -85,7 +85,7 @@ ul,ol
 	float: right;
 	margin-left: 10px;
 	width: 72%;
-	height: 700px;
+	min-height: 700px;
 }
 #footer {
 	clear:both;
