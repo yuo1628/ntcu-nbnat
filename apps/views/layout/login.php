@@ -13,7 +13,7 @@
 		<div id="container">
 			<div id="header">
 				<div id="logo">
-					
+					<a href="./"></a>
 				</div>
 				<nav id="nav">
 					<div id="login">

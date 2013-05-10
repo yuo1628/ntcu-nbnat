@@ -10,9 +10,9 @@ class HomeController extends MY_Controller {
 	public function index() {
 
 		$itemList = array("itemList"=>array(
-			"item1" => array("img/logo.jpg","./index.php/member", "會員管理"),
-			"item2" => array("img/logo.jpg","./index.php/news", "公佈欄管理"),
-			"item3" => array("img/logo.jpg","./", "會員登出")
+			"item1" => array("member","./index.php/member", "會員管理"),
+			"item2" => array("news","./index.php/news", "公告管理"),
+			"item3" => array("logout","./", "登出帳號")
 			));
 
 		$this -> layout -> view('view/home/default', $itemList);

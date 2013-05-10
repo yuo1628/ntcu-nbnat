@@ -20,17 +20,21 @@
 		
 		<div id="container">
 			<div id="header">
-				<div id="logo"></div>
+				<div id="logo">
+					<a href="./"></a>
+				</div>
 				<div id="nav">
 
 				</div>
 			</div>
 			<div id="content">
 				<div id="menu" class="divFrame">						
-					<a id="toggle"></a>
+					<div id="toggle">
+						<div><</div>
+						</div>
 					<ul>
 					<?php foreach ($itemList as $item): ?>
-						<li class="item"><a href="<?php echo $item[1] ?>"><img src="<?php echo $item[0] ?>"/><span><?php echo $item[2] ?></span></a></li>
+						<li class="item"><a href="<?php echo $item[1] ?>"><span class="icon icon-<?php echo $item[0]?>"><span><?php echo $item[2] ?></span></span></a></li>
 					<?php endforeach; ?>
 					
 					 </ul>

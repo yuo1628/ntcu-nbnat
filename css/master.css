@@ -59,12 +59,12 @@ ul,ol
 #header {
 	height: 100px;
 }
-#logo {
+#logo a{
 	width: 128px;
 	height: 80px;
 	margin: 10px;
 	float: left;
-	background-image: url(../img/logo.png);;
+	background-image: url(../img/logo.png);
 }
 #nav {
 	width: 824px;

@@ -9,14 +9,17 @@ $(document).ready(function() {
 			toggle = "open";
 			$("#menu").animate({
 				width : "4%"
+			}, 500, function() {
+				$("#menu ul li a span span").hide();
 			});
-			$("#menu ul li a span").hide("slow");
 			$("#main").animate({
 				width : "90%"
-			});
+			},500);
+			
 			$(this).animate({
 				width : "18px"
-			}).html("");
+			}).html("<div>></div>");
+
 		} else {
 			toggle = "close";
 			$("#menu").animate({
@@ -25,13 +28,13 @@ $(document).ready(function() {
 			$("#main").animate({
 				width : "72%"
 			});
-			$("#menu ul li a span").show("slow");
+			$("#menu ul li a span span").show();
 			$(this).css({
 				width : "25px",
 				"padding-left" : "0"
 			}).animate({
 				height : "105%"
-			}).html("");
+			}).html("<div><</div>");
 		}
 	});
 

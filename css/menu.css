@@ -1,28 +1,34 @@
 /*
  * @description: 功能選單基本樣式宣告
  * @author: shown
- * @update: shown (2013-05-06 16:00)
+ * @update: shown (2013-05-10 16:00)
  */
-#toggle
-{	
+#toggle {
+	position:relative;
 	background-color: #f0f0f0;
-	text-align:center;	
-	color:gray;
-	font-weight:bold;
-	margin:-10px;	
-	width:25px;	
-	min-height:720px;
-	float:right;	
-	cursor:pointer;	
-	outline: 0;
+	text-align: center;
+	color: gray;
+	font-weight: bold;
+	margin: -10px;
+	width: 25px;
+	min-height: 720px;
+	float: right;
+	cursor: pointer;
+	outline: 0;	
 	-webkit-transition: all 0.2s ease-in-out;
 	-moz-transition: all 0.2s ease-in-out;
 	-ms-transition: all 0.2s ease-in-out;
 	-o-transition: all 0.2s ease-in-out;
-	transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;		
 }
-#toggle:hover
+#toggle div
 {
+	position:absolute;
+	top: 48%;
+	left:8px;
+	color:#888888;
+}
+#toggle:hover {
 	background-color: #e0e0e0;
 	outline: 0;
 	-webkit-transition: all 0.2s ease-in-out;
@@ -31,44 +37,86 @@
 	-o-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
 }
-#menu ul 
-{
-	margin-left:-10px;
-	
+#menu{background-color: #fbfbfb;}
+#menu ul {
+	margin-left: -10px;
 }
 
-#menu ul li
-{
-	
-	line-height:30px;
-	font-family:"微軟正黑體";
-	padding:5px 0 5px 13px;
-	display:block;
-	white-space:nowrap;
-	cursor:pointer;
-	margin-bottom:1px;
-		
+#menu ul li {
+	line-height: 30px;
+	overflow:hidden;
+	font-family: "微軟正黑體";
+	padding: 5px 0 5px 3px;
+	display: block;
+	white-space: nowrap;
+	cursor: pointer;	
+	/*margin-bottom: 1px;*/
 }
-#menu ul li:hover
-{
-	margin-bottom:0;
-	background-color: #f9f9f9;
-	border-bottom:1px solid #e0e0e0;
+#menu ul li:hover {
+	margin-bottom: 0;
+	/*background-color: #f9f9f9;*/
+	/*border-bottom: 1px solid #e0e0e0;*/
 }
-#menu ul li a 
-{
-	display:block;
-	white-space: nowrap;	
-	font-size:larger;
-	color:#a0a0a0;
+#menu ul li a {
+	display: block;
+	white-space: nowrap;
+	font-size: larger;
+	color: #a0a0a0;
 }
-#menu ul li a:hover
-{
-	color:#888888;
+#menu ul li a:hover {
+	color: #888888;
 	text-decoration: none;
-
 }
-#menu ul li a span
-{
-	margin-left:10px;
+#menu ul li a span {
+	margin: 0 15px 0 0;
+	display:block;
+}
+.icon {
+	padding:2px 1px 2px 34px;
+	height: 30px;	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background: url(../img/icon.png);
+	background-repeat: no-repeat;
+	background-size:30px auto;
+	border:1px solid #f9f9f9;
+}
+.icon:hover {
+	background-color: #ffffff;
+	border:1px solid #e0e0e0;
+	-webkit-box-shadow: #e0e0e0 0px 0px 5px 0px inset;
+	-moz-box-shadow: #e0e0e0 0px 0px 5px 0px inset;
+	box-shadow: #e0e0e0 0px 0px 5px 0px inset;
+}
+.icon:active {
+	border-color:#d0d0d0;
+	background-color: #E0E0E0;
+}
+.icon-member {
+	background-position:2px 0px;	
+}
+.icon-news {
+	background-position:2px -28px;	
+}
+.icon-exam {
+	background-position:2px -58px;	
+}
+.icon-create {
+	background-position:2px -88px;	
+}
+.icon-read {
+	background-position:2px -118px;	
+}
+.icon-edit {
+	background-position:2px -148px;	
+}
+.icon-manage {
+	background-position:2px -178px;	
+}
+.icon-back {
+	background-position:2px -387px;	
+}
+.icon-logout {
+	background-position:2px -418px;	
 }
