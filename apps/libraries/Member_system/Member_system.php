@@ -14,42 +14,46 @@ class Member_system extends CI_Driver_Library {
     public $RANK_STUDENT = 'STUDENT';
     public $RANK_ADMIN = 'ADMIN';
 
-	/**
-	 * 初始化類別，並載入子Drivers
-	 * 
-	 * @access public
-	 * @param 不需傳入參數
-	 */
-    public function __construct() {
+    /**
+     * 初始化類別，並載入子Drivers
+     * 
+     * @access public
+     * @param 不需傳入參數
+     */
+    public function __construct()
+    {
         $this->valid_drivers = array('member_system_authentication');
     }
-	
-    /* 確認指定的使用者層級是否可使用
+
+    /** 確認指定的使用者層級是否可使用
      *
-	 * @access public
-	 * @param $rank，可傳入任何值，通常為一個代表使用者層級的字串
-	 * @return boolean，如果是合法的使用者層級會回傳True，否則回傳False
+     * @access public
+     * @param $rank，可傳入任何值，通常為一個代表使用者層級的字串
+     * @return boolean，如果是合法的使用者層級會回傳True，否則回傳False
      */
-	public function is_rank_avaiable($rank) {
+    public function is_rank_avaiable($rank)
+    {
         $ranks = array($this->RANK_TEACHER,
                        $this->RANK_STUDENT,
                        $this->RANK_ADMIN);
         return in_array($rank, $ranks);
     }
-	
-	/* 取得一個空白的Member類別實體
-	 *
+    
+    /** 取得一個空白的Member類別實體
+     *
      * @access public
-	 * @param 不需傳入參數
-	 * @return 一個空白的Member類別實體
-	 */
-	public function getEmptyMemberInstance() {
+     * @param 不需傳入參數
+     * @return 一個空白的Member類別實體
+     */
+    public function getEmptyMemberInstance()
+    {
         return new Member();
     }
 }
 
-/* Member
- * 
+/** 
+ * Member
+ * 呈現會員的資料
  */
 class Member {
     // 資料庫主鍵值
@@ -96,17 +100,19 @@ class Member {
     private $city_id;
     // 學校縣市
     private $city_name;
-	// 服務單位資料庫主鍵值
-	private $unit_id;
-	// 服務單位名稱;
-	private $unit_name;
+    // 服務單位資料庫主鍵值
+    private $unit_id;
+    // 服務單位名稱;
+    private $unit_name;
     
-    public function __get($name) {
+    public function __get($name)
+    {
         return $this->$name;
     }
     
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $this->$name = $value;
     }
 }
-?>
+// End of file
