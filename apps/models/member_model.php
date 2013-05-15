@@ -13,39 +13,39 @@
 class Member_model extends CI_Model {
     // 此model傳遞資料所使用的鍵值
     // 這些值不應該更動
-    public $CITY_PK = 'city_pk';
-    public $CITY_NAME = 'city_name';
+    const CITY_PK = 'city_pk';
+    const CITY_NAME = 'city_name';
     
-    public $SCHOOL_PK = 'school_pk';
-    public $SCHOOL_TYPE = 'school_type';
-    public $SCHOOL_NAME = 'school_name';
-    public $SCHOOL_ADDRESS = 'school_address';
-    public $SCHOOL_PHONE = 'school_phone';
-    public $SCHOOL_CITY_ID = 'school_city_id';
+    const SCHOOL_PK = 'school_pk';
+    const SCHOOL_TYPE = 'school_type';
+    const SCHOOL_NAME = 'school_name';
+    const SCHOOL_ADDRESS = 'school_address';
+    const SCHOOL_PHONE = 'school_phone';
+    const SCHOOL_CITY_ID = 'school_city_id';
     
-    public $CLASS_PK = 'class_pk';
-    public $CLASS_TYPE = 'class_type';
-    public $CLASS_GRADE = 'class_grae';
-    public $CLASS_NAME = 'class_name';
-    public $CLASS_SCHOOL_ID = 'class_school_id';
+    const CLASS_PK = 'class_pk';
+    const CLASS_TYPE = 'class_type';
+    const CLASS_GRADE = 'class_grae';
+    const CLASS_NAME = 'class_name';
+    const CLASS_SCHOOL_ID = 'class_school_id';
     
-    public $UNIT_PK = 'unit_pk';
-    public $UNIT_NAME = 'unit_name';
+    const UNIT_PK = 'unit_pk';
+    const UNIT_NAME = 'unit_name';
     
-    public $PK = 'id';
-    public $USERNAME = 'username';
-    public $PASSWORD = 'password';
-    public $NAME = 'name';
-    public $SEX = 'sex';
-    public $RANK = 'rank';
-    public $BIRTHDAY = 'birthday';
-    public $IC_NUMBER = 'ic_number';
-    public $PHONE = 'phone';
-    public $TEL = 'tel';
-    public $ADDRESS = 'address';
-    public $EMAIL = 'email';
-    public $UNIT_ID = 'unit_id';
-    public $CLASS_ID = 'class_id';
+    const PK = 'id';
+    const USERNAME = 'username';
+    const PASSWORD = 'password';
+    const NAME = 'name';
+    const SEX = 'sex';
+    const RANK = 'rank';
+    const BIRTHDAY = 'birthday';
+    const IC_NUMBER = 'ic_number';
+    const PHONE = 'phone';
+    const TEL = 'tel';
+    const ADDRESS = 'address';
+    const EMAIL = 'email';
+    const UNIT_ID = 'unit_id';
+    const CLASS_ID = 'class_id';
     
     public function __construct() {
         parent::__construct();
@@ -690,6 +690,15 @@ class Member_model extends CI_Model {
 	 */
     public function getDb() {
         return $this->db;
+    }
+    
+    
+    public function __get($name) {
+        // 是否為常數的名稱
+        if (defined('self::'.$name)) {
+            return constant('self::'.$name);
+        }
+        return parent::__get($name);
     }
 }
 /* End of File */
