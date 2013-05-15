@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if ( ! defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -10,9 +10,9 @@ if ( ! defined('BASEPATH')) {
 class Member_system extends CI_Driver_Library {
     // 使用者層級表示
     // 這些值應該不被更動
-    public $RANK_TEACHER = 'TEACHER';
-    public $RANK_STUDENT = 'STUDENT';
-    public $RANK_ADMIN = 'ADMIN';
+    const RANK_TEACHER = 'TEACHER';
+    const RANK_STUDENT = 'STUDENT';
+    const RANK_ADMIN = 'ADMIN';
 
     /**
      * 初始化類別，並載入子Drivers
@@ -49,6 +49,15 @@ class Member_system extends CI_Driver_Library {
     {
         return new Member();
     }
+    
+    public function __get($name) 
+    {
+        if (defined('self::'.$name))
+        {
+            return constant('self::'.$name);
+        }
+    }
+    
 }
 
 /** 
