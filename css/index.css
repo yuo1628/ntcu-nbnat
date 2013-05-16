@@ -11,7 +11,7 @@
 	
 }
 .banner{height: 230px;	}
-.news{height: 200px;	}
+.news{height: 210px;	}
 .other {
 	margin: 10px 0;
 	padding: 10px 0;
@@ -30,7 +30,7 @@
 	width: 100%;
 	margin: 0 auto;
 	margin-top: 10px;
-	height:155px;
+	height:160px;
 	display: block;	
 	border-top: 1px solid #e0e0e0;
 	border-bottom: 1px solid #e0e0e0;

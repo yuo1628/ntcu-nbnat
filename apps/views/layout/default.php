@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<base href="http://localhost/ntcu-nbnat/">
+		<base href="/ntcu-nbnat/">
 		<script type="application/javascript" src="js/jquery-1.9.1.js"></script>
 		<script type="application/javascript" src="js/toggle.js"></script>
 		<link rel="stylesheet" href="css/master.css" />
