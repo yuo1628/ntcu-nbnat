@@ -21,7 +21,7 @@
 	width: 120px;	
 	color:black;
 }
-#node ul#create div,#node ul#nodeList div {
+#node ul#create div,#node ul#nodeList div.cursor {
 	color: #808080;
 	width: 500px;
 	display: inline-block;
@@ -31,15 +31,13 @@
 #node ul#nodeList li:hover {
 	background-color: #F0F0F0;
 }
-#node ul#nodeList li:active {
-	background-color: #e0e0e0;
-}
 
 #node ul#nodeList li {
 	padding: 6px 0 6px 5px;
 	border-bottom: 1px solid #e0e0e0;
-	cursor:pointer;
+	
 }
-#node ul#nodeList li div{
-	display:block;
+
+#node ul#nodeList li div.cursor,#node ul#nodeList li span{
+	cursor: pointer;
 }

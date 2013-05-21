@@ -7,30 +7,57 @@ $(document).ready(function() {
 function meta(_id) {
 	var _name = $("#li-" + _id + " div span").html();
 	$("#li-" + _id + " div").hide();
-	$("#li-" + _id).append("<div id='div-" + _id + "'><span onclick=\"delNode('" + _id + "')\">刪除</span><br/><h6>指標名稱：</h6><input type='text' id='n_nameText-" + _id + "' value='" + _name + "' /><span onclick=\"updNode('" + _id + "')\">更改</span><br/><div id='nodeToList-" + _id + "'><span onclick=\"delLink('" + _id + "')\">刪除</span></div>" + $("#node_to").html() + "<span onclick=\"addLink('" + _id + "')\">新增</span><br/><h6>建立主細目：</h6><input type='text' id='node_first-"+_id+"' /><br/><span onclick=\"meta_close('" + _id + "')\" >取消</span></div>");
-	$("#li-" + _id + " select.nodeList option[value=" + _id + "]").remove();
 
 	var _href = location.href;
 	$.ajax({
-		url : _href + "/findLinkTo/" + _id,
+		url : _href + "/nodeTemplate/" + _id,
 		cache : false,
 		dataType : "html",
 		success : function(result) {
 
-			$("#nodeToList-" + _id).prepend(result);
+			$("#li-" + _id).append(result);
+			$("#li-" + _id + " select.nodeList option[value=" + _id + "]").remove();
+			$("#n_nameText-" + _id).val(_name);
+			$("#li-" + _id + " select.nodeToList option").each(function() {
+				var _val = $(this).val();
+				$("#li-" + _id + " select.nodeList option").each(function() {
+					if ($(this).val() == _val) {
+						$(this).remove();
+					}
+
+				});
+			});
+
+			$("#childItemList-" + _id + " div.childItem div").each(function() {
+				var _this = $(this);
+				var c_id = $(this).attr("id").replace("child-", "");
+
+				$.ajax({
+					url : _href + "/findRote/" + c_id,
+					cache : false,
+					dataType : "html",
+					success : function(result) {
+						_this.after(result);
+					}
+				});
+
+			});
 
 		}
 	});
+
 }
 
 function addNode() {
 	var _href = location.href;
 	var _value = $("#n_name").val();
-	$.ajax({
-		url : _href + "/addNode/" + _value
-	}).done(function() {
+
+	$.post(_href + "/addNode", {
+		value : _value
+	}, function() {
 		location.href = "./index.php/node";
 	});
+
 }
 
 function delNode(_id) {
@@ -39,6 +66,7 @@ function delNode(_id) {
 		url : _href + "/delNode/" + _id
 	}).done(function() {
 		location.href = "./index.php/node";
+		//$("#child-"+_id).remove();
 	});
 }
 
@@ -62,23 +90,87 @@ function addLink(_from) {
 function delLink(_from) {
 	var _href = location.href;
 	var _to = $("#nodeToList-" + _from + " select.nodeToList option:selected").val();
-
-	$.ajax({
-		url : _href + "/delLink/" + _from + "/" + _to
-	}).done(function() {
+	
+	
+	$.post(_href + "/delLink", {
+		from : _from,to :_to
+	}, function() {
 		location.href = "./index.php/node";
 	});
-
 }
 
 function updNode(_id) {
 	var _href = location.href;
 	var _value = $("#n_nameText-" + _id).val();
 
-	$.ajax({
-		url : _href + "/updNode/" + _id + "/" + _value
-	}).done(function() {
+	$.post(_href + "/updNode/" + _id, {
+		value : _value
+	}, function() {
 		location.href = "./index.php/node";
 	});
 
+}
+
+function addChild(_id) {
+	var _href = location.href;
+	var _value = $("#c_nameText-" + _id).val();
+	var _to = $("#childList-" + _id + " option:selected").val();
+
+	$(".site").each(function() {
+		if ($(this).prop("checked")) {
+			switch ($(this).val()) {
+				case "alone":
+
+					$.post(_href + "/addNode/2/" + _id, {
+						value : _value
+					}, function() {
+						location.href = "./index.php/node";
+					});
+
+					break;
+				case "after":
+
+					$.post(_href + "/addNodeAndLink/" + _id + "/" + _to, {
+						value : _value
+					}, function() {
+						location.href = "./index.php/node";
+					});
+
+					break;
+
+			}
+
+		}
+	});
+
+}
+
+function childEdit(id, child_id) {
+	var grade = $("#child-" + child_id).attr("class");
+	if (grade == "master") {
+		$("#childEditTemp-" + id).html("<input type='text' id='n_nameText-"+child_id+"' value='"+ $("#child-" + child_id).html()+"' /><span onclick=\"updNode('" + child_id + "')\" >修改</span><span onclick=\"delAfterRote('"+ child_id + "')\" >移除後關聯</span>");
+	} else {
+		$("#childEditTemp-" + id).html("<input type='text' id='n_nameText-"+child_id+"' value='"+ $("#child-" + child_id).html()+"' /><span onclick=\"updNode('" + child_id + "')\" >修改</span><span onclick=\"delNode('" + child_id + "')\" >刪除</span><span onclick=\"delBeforeRote('"+ child_id + "')\" >移除前關聯</span><span onclick=\"delAfterRote('"+ child_id + "')\" >移除後關聯</span>");
+
+	}
+
+}
+
+function delAfterRote(_id)
+{
+	var _href = location.href;
+	$.post(_href + "/delLink", {
+		to :_id
+	}, function() {
+		location.href = "./index.php/node";
+	});
+}
+function delBeforeRote(_id)
+{
+	var _href = location.href;
+	$.post(_href + "/delLink", {
+		from :_id
+	}, function() {
+		location.href = "./index.php/node";
+	});
 }

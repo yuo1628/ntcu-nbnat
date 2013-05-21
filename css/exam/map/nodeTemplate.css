@@ -1,0 +1,43 @@
+/*
+ * @description: 指標編輯樣式
+ * @author: shown (2013-05-21 15:00)
+ * @update: shown
+ */
+div.child,div.master
+{
+	display:inline-block;
+	height:40px;
+	width:40px;
+	border:1px solid #000000;
+	border-radius: 80px;
+	-moz-border-radius: 80px;
+  	-webkit-border-radius: 80px;
+  	word-break:break-all;  	
+  	vertical-align:middle;
+  	padding:5px;
+  	font-size:.5em;
+  	cursor:pointer;
+  	margin-top:3px;
+  
+}
+div.child
+{
+	background-color: #CDE5FF;
+}
+div.master
+{
+	background-color: #FFAFD6;
+}
+
+div.child:hover
+{
+	background-color: #5a9ee9;
+}
+div.master:hover
+{
+	background-color: #FF0000;
+}
+div.actTool span
+{
+	margin-right:20px;
+}

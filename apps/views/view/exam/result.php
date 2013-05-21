@@ -1,4 +1,3 @@
-
 <h6>指標上位：</h6>
 <select class="nodeToList">
 <?php foreach ($result as $item):?>
