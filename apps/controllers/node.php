@@ -112,7 +112,7 @@ class NodeController extends MY_Controller {
 		if (!$result) {
 			$item = array("node_rote" => $this->str);
 			$this -> layout -> setLayout('layout/empty');
-			$this -> layout -> view('view/exam/default.php', $item);
+			$this -> layout -> view('view/exam/nodeDefault.php', $item);
 			
 		} else {
 			$this->str.="<= <div class='child' id='child-".$result->node_from."'  onclick=\"childEdit('".$result -> parent_node."','".$result -> node_from."')\">".$result->name."</div>";
