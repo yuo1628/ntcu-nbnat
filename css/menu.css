@@ -14,7 +14,15 @@
 	min-height: 720px;
 	float: right;
 	cursor: pointer;
-	outline: 0;
+	outline: 0;	
+	
+	border-top-right-radius:6px;
+	border-bottom-right-radius:6px;
+	-webkit-border-top-right-radius:6px;
+	-webkit-border-bottom-right-radius:6px;
+	-moz-border-top-right-radius:6px;
+	-moz-border-bottom-right-radius:6px;
+	
 	-webkit-transition: all 0.2s ease-in-out;
 	-moz-transition: all 0.2s ease-in-out;
 	-ms-transition: all 0.2s ease-in-out;
@@ -38,6 +46,7 @@
 }
 #menu {
 	background-color: #fbfbfb;
+	overflow: hidden;
 }
 #menu ul {
 	margin-left: -10px;
