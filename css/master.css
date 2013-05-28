@@ -86,6 +86,7 @@ ul,ol
 	margin-left: 10px;
 	width: 72%;
 	min-height: 700px;
+	overflow: hidden;
 }
 #footer {
 	clear:both;

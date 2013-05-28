@@ -48,13 +48,7 @@ class M_Link extends CI_Model {
 	 * @return Mixed Array or Null.
 	 */
 	public function findLinkToName($_id) {
-		/*$this -> db -> select('*');
-		$this -> db -> from("links,nodes");		
-		$this -> db -> where($conditions);
-		$this -> db -> where('nodes.id = links.node_to');
-
-		$query = $this -> db -> get();
-		 * */
+		
 		$SqlInfo="select * from nodes, links where links.node_from='".$_id."' and nodes.id=links.node_to";
 		$query = $this->db->query($SqlInfo);
 	

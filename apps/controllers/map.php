@@ -13,6 +13,6 @@ class MapController extends MY_Controller {
 			array("logout","./", "登出帳號")
 			));
 
-		$this -> layout -> view('view/exam/default', $itemList);
+		$this -> layout -> view('view/exam/map/default', $itemList);
 	}	
 }
