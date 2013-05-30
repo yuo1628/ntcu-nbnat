@@ -1,9 +1,9 @@
 <?php
 
-// ´£¨Ñ¨Ï¥ÎªÌµn¤J¡Bµn¥X¥\¯à
+// æä¾›ä½¿ç”¨è€…ç™»å…¥ã€ç™»å‡ºåŠŸèƒ½
 class Member_system_authentication extends CI_Driver {
 	
-	// ¬ö¿ýSESSION¨Ï¥Îªº«eºó
+	// ç´€éŒ„SESSIONä½¿ç”¨çš„å‰ç¶´
 	public $PREFIX = 'member_system_authentication_';
 	
 	private $CI;
@@ -14,27 +14,27 @@ class Member_system_authentication extends CI_Driver {
 		$this->CI->load->model('member_model');
 	}
 	
-	// µn¤J
-	// ¦^¶ÇTrueªí¥Üµn¤J¦¨¥\
-	// ¦^¶ÇFalseªí¥Üµn¤J¥¢±Ñ
+	// ç™»å…¥
+	// å›žå‚³Trueè¡¨ç¤ºç™»å…¥æˆåŠŸ
+	// å›žå‚³Falseè¡¨ç¤ºç™»å…¥å¤±æ•—
 	public function login($username, $password) {
 		$userData = array($this->CI->member_model->USERNAME => $username,
 						  $this->CI->member_model->PASSWORD => $password);
 		$users = $this->CI->member_model->get($userData);
-		// §ä¤£¨ì«ü©w¨Ï¥ÎªÌªº¸ê®Æ(±b¸¹©Î±K½X¿é¤J¿ù»~)
+		// æ‰¾ä¸åˆ°æŒ‡å®šä½¿ç”¨è€…çš„è³‡æ–™(å¸³è™Ÿæˆ–å¯†ç¢¼è¼¸å…¥éŒ¯èª¤)
 		if (!$users) {
 			return FALSE;
 		}
-		$user = $users[0]; // get¤èªk¦^¶Ç¥]§t¬d¸ß¨ìªº¨Ï¥ÎªÌªº°}¦C
-		// ¬ö¿ýsession
+		$user = $users[0]; // getæ–¹æ³•å›žå‚³åŒ…å«æŸ¥è©¢åˆ°çš„ä½¿ç”¨è€…çš„é™£åˆ—
+		// ç´€éŒ„session
 		$key_pk = $this->CI->member_model->to_database_column_name($this->CI->member_model->PK);
 		$pk = $user->$key_pk;
 		$this->CI->session->set_userdata($this->PREFIX . $this->CI->member_model->PK, $pk);
 		return TRUE;
 	}
 	
-	// ¬O§_¥Ø«eªº¥Î¤áºÝ¤w¸gµn¤J
-	// ¦^¶ÇTrueªí¥Ü¤w¸gµn¤J¡AFalseªí¥ÜÁÙ¥¼µn¤J
+	// æ˜¯å¦ç›®å‰çš„ç”¨æˆ¶ç«¯å·²ç¶“ç™»å…¥
+	// å›žå‚³Trueè¡¨ç¤ºå·²ç¶“ç™»å…¥ï¼ŒFalseè¡¨ç¤ºé‚„æœªç™»å…¥
 	public function isLogin() {
 		if ($this->CI->session->userdata($this->PREFIX . $this->CI->member_model->PK)) {
 			return TRUE;
@@ -43,53 +43,28 @@ class Member_system_authentication extends CI_Driver {
 		}
 	}
 	
-	// ¨ú±o¤wµn¤J¨Ï¥ÎªÌªº¸ê®Æ
-	// ¦^¶ÇMemberÃþ§O¹êÅé
-	// ¦^¶ÇFalseªí¥Ü¨Ï¥ÎªÌ©|¥¼µn¤J
+	// å–å¾—å·²ç™»å…¥ä½¿ç”¨è€…çš„è³‡æ–™
+	// å›žå‚³Memberé¡žåˆ¥å¯¦é«”
+	// å›žå‚³Falseè¡¨ç¤ºä½¿ç”¨è€…å°šæœªç™»å…¥
 	public function getLoginUser() {
 		$user_pk = $this->CI->session->userdata($this->PREFIX . $this->CI->member_model->PK);
 		if (!$user_pk) {
-			return False;
+			return FALSE;
 		}
-		$member = $this->getEmptyMemberInstance();
-		// ¶ñ¤J¨Ï¥ÎªÌ¸ê®Æ
-		$userData = $this->CI->member_model->get(array($this->CI->member_model->PK => $user_pk))[0]; // array
-		foreach ($userData as $key => $value) {
-			$this->fillUserData($key, $value, $member);
+		$member_model_data_array = $this->CI->member_model->get(
+			array($this->CI->member_model->PK => $user_pk));
+		if (!$member_model_data_array) {
+			return FALSE;
 		}
-		// ¶ñ¤JªA°È³æ¦ì¸ê®Æ
-		$key_unit_id = 'unit_id';
-		$unitPk = $userData->$key_unit_id;
-		$unitData = $this->CI->member_model->get_unit(array($this->CI->member_model->UNIT_PK => $unitPk))[0];
-		foreach ($unitData as $key => $value) {
-			$this->fillUnitData($key, $value, $member);
-		}
-		// ¶ñ¤J¯Z¯Å¸ê®Æ
-		$key_class_id = 'class_id';
-		$classPk = $userData->$key_class_id;
-		$classData = $this->CI->member_model->get_class(array($this->CI->member_model->CLASS_PK => $classPk))[0];
-		foreach ($classData as $key => $value) {
-			$this->fillClassData($key, $value, $member);
-		}
-		// ¶ñ¤J¾Ç®Õ¸ê®Æ
-		$key_school_id = 'school_id';
-		$schoolPk = $classData->$key_school_id;
-		$schoolData = $this->CI->member_model->get_school(array($this->CI->member_model->SCHOOL_PK => $schoolPk))[0];
-		foreach ($classData as $key => $value) {
-			$this->fillClassData($key, $value, $member);
-		}
-		// ¶ñ¤J«°¥«¸ê®Æ
-		$key_city_id = 'city_id';
-		$cityPk = $schoolData->$key_city_id;
-		$cityData = $this->CI->member_model->get_city(array($this->CI->member_model->CITY_PK => $cityPk))[0];
-		foreach ($cityData as $key => $value) {
-			$this->fillCityData($key, $value, $member);
-		}
+		$member_model_data = $member_model_data_array[0];
+		
+		$member = $this->model_to_member($member_model_data);
+		
 		return $member;
 	}
 	
-	// ±N¨Ï¥ÎªÌ¸ê®Æ¶ñ¤JMemberÃþ§O¹êÅé¹ïÀ³ªºÄÝ©Ê
-	// ¦^¶ÇTrueªí¥Ü¶ñ¤J¦¨¥\¡A§_«h¦^¶ÇFalse
+	// å°‡ä½¿ç”¨è€…è³‡æ–™å¡«å…¥Memberé¡žåˆ¥å¯¦é«”å°æ‡‰çš„å±¬æ€§
+	// å›žå‚³Trueè¡¨ç¤ºå¡«å…¥æˆåŠŸï¼Œå¦å‰‡å›žå‚³False
 	protected function fillUserData($key, $value, &$member) {
 		switch ($key) {
 			case 'id':
@@ -134,8 +109,8 @@ class Member_system_authentication extends CI_Driver {
 		return TRUE;
 	}
 	
-	// ±N¯Z¯Å¸ê®Æ¶ñ¤JMemberÃþ§O¹êÅé¹ïÀ³ªºÄÝ©Ê
-	// ¦^¶ÇTrueªí¥Ü¶ñ¤J¦¨¥\¡A§_«h¦^¶ÇFalse
+	// å°‡ç­ç´šè³‡æ–™å¡«å…¥Memberé¡žåˆ¥å¯¦é«”å°æ‡‰çš„å±¬æ€§
+	// å›žå‚³Trueè¡¨ç¤ºå¡«å…¥æˆåŠŸï¼Œå¦å‰‡å›žå‚³False
 	protected function fillClassData($key, $value, &$member) {
 		switch ($key) {
 			case 'id':
@@ -156,8 +131,8 @@ class Member_system_authentication extends CI_Driver {
 		return TRUE;
 	}
 
-	// ±N¾Ç®Õ¸ê®Æ¶ñ¤JMemberÃþ§O¹êÅé¹ïÀ³ªºÄÝ©Ê
-	// ¦^¶ÇTrueªí¥Ü¶ñ¤J¦¨¥\¡A§_«h¦^¶ÇFalse
+	// å°‡å­¸æ ¡è³‡æ–™å¡«å…¥Memberé¡žåˆ¥å¯¦é«”å°æ‡‰çš„å±¬æ€§
+	// å›žå‚³Trueè¡¨ç¤ºå¡«å…¥æˆåŠŸï¼Œå¦å‰‡å›žå‚³False
 	protected function fillSchoolData($key, $value, &$member) {
 		switch ($key) {
 			case 'id':
@@ -180,7 +155,7 @@ class Member_system_authentication extends CI_Driver {
 		return TRUE;
 	}
 	
-	// ±NªA°È³æ¦ì¸ê®Æ¶ñ¤JMemberÃþ§O¹êÅé¹ïÀ³ªºÄÝ©Ê
+	// å°‡æœå‹™å–®ä½è³‡æ–™å¡«å…¥Memberé¡žåˆ¥å¯¦é«”å°æ‡‰çš„å±¬æ€§
 	protected function fillUnitData($key, $value, &$member) {
 		switch ($key) {
 			case 'id':
@@ -195,7 +170,7 @@ class Member_system_authentication extends CI_Driver {
 		return TRUE;
 	}
 	
-	// ±N«°¥«¸ê®Æ¶ñ¤JMemberÃþ§O¹êÅé¹ïÀ³ªºÄÝ©Ê
+	// å°‡åŸŽå¸‚è³‡æ–™å¡«å…¥Memberé¡žåˆ¥å¯¦é«”å°æ‡‰çš„å±¬æ€§
 	protected function fillCityData($key, $value, &$member) {
 		switch ($key) {
 			case 'id':
@@ -210,10 +185,10 @@ class Member_system_authentication extends CI_Driver {
 		return TRUE;
 	}
 	
-	// ¦^¶ÇFalseªí¥Ü¨Ï¥ÎªÌ©|¥¼µn¤J
-	// µn¥X¨t²Î
+	// å›žå‚³Falseè¡¨ç¤ºä½¿ç”¨è€…å°šæœªç™»å…¥
+	// ç™»å‡ºç³»çµ±
 	public function logout() {
-		// ¥u²M°£»Pµn¤J¨t²Î¬ÛÃöªº¸ê®Æ
+		// åªæ¸…é™¤èˆ‡ç™»å…¥ç³»çµ±ç›¸é—œçš„è³‡æ–™
 		$this->CI->session->unset_userdata($this->PREFIX . $this->CI->member_model->PK);
 	}
 }
