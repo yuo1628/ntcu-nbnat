@@ -161,7 +161,7 @@ class Member_model extends CI_Model {
         $this->set('name', $schoolData[$this->SCHOOL_NAME]);
         $this->set('address', $schoolData[$this->SCHOOL_ADDRESS]);
         $this->set('phone', $schoolData[$this->SCHOOL_PHONE]);
-        $this->set('city_id', $schholData[$this->SCHOOL_CITY_ID]);
+        $this->set('city_id', $schoolData[$this->SCHOOL_CITY_ID]);
         $this->db->update('school');
     }
     
@@ -227,11 +227,11 @@ class Member_model extends CI_Model {
     /**
      * 插入服務單位資料
      * 
-	 * @access public
+     * @access public
      * @param array $data 參數data為一陣列，內容為要插入的服務單位資料，
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
      * @return NULL
-	 */
+     */
     public function insert_unit($data) {
         $unitData = elements(array($this->UNIT_PK,
                                    $this->UNIT_NAME),
@@ -241,14 +241,14 @@ class Member_model extends CI_Model {
         $this->db->insert('unit');
     }
 
-	/**
+    /**
      * 插入城市資料
-	 *
-	 * @access public
+     *
+     * @access public
      * @param array $data 參數data為一陣列，內容為要插入的城市資料，
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
      * @return NULL
-	 */
+     */
     public function insert_city($data) {
         $cityData = elements(array($this->CITY_PK,
                                    $this->CITY_NAME),
@@ -258,14 +258,14 @@ class Member_model extends CI_Model {
         $this->db->insert('city');
     }
     
-	/**
+    /**
      * 插入學校資料
      *
-	 * @access public
+     * @access public
      * @param array $data 參數data為一陣列，內容為要插入的學校資料，
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-	 * @return NULL
-	 */
+     * @return NULL
+     */
     public function insert_school($data) {
         $schoolData = elements(array($this->SCHOOL_PK,
                                      $this->SCHOOL_TYPE,
@@ -283,14 +283,14 @@ class Member_model extends CI_Model {
         $this->db->insert('school');
     }
     
-	/**
+    /**
      * 插入班級資料
      *
-	 * @access public
+     * @access public
      * @param array $data 參數data為一陣列，內容為要插入的班級資料，
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-	 * @return NULL
-	 */
+     * @return NULL
+     */
     public function insert_class($data) {
         $classData = elements(array($this->CLASS_PK,
                                     $this->CLASS_TYPE,
@@ -306,14 +306,14 @@ class Member_model extends CI_Model {
         return $this->db->insert('class');
     }
     
-	/**
+    /**
      * 取得縣市資料
      *
-	 * @access public
-	 * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
+     * @access public
+     * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
      * @return array
-	 */
+     */
     public function get_city($data) {
         $cityData = elements(array($this->CITY_PK, $this->CITY_NAME), $data, NULL);
         $this->db->from('city');
@@ -324,14 +324,14 @@ class Member_model extends CI_Model {
         return $this->db->get()->result();
     }
     
-	/**
+    /**
      * 取得學校資料
      *
-	 * @access public
-	 * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
+     * @access public
+     * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
      * @return array
-	 */
+     */
     public function get_school($data) {
         $schoolData = elements(array($this->SCHOOL_PK,
                                     $this->SCHOOL_TYPE,
@@ -348,14 +348,14 @@ class Member_model extends CI_Model {
         return $this->db->get()->result();
     }
     
-	/**
+    /**
      * 取得班級資料
      *
-	 * @access public
-	 * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
+     * @access public
+     * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
      * @return array
-	 */
+     */
     public function get_class($data) {
         $classData = elements(array($this->CLASS_PK,
                                     $this->CLASS_TYPE,
@@ -371,14 +371,14 @@ class Member_model extends CI_Model {
         return $this->db->get()->result();
     }
     
-	/**
+    /**
      * 取得服務單位資料
      *
-	 * @access public
-	 * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
+     * @access public
+     * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
      * @return array
-	 */
+     */
     public function get_unit($data) {
         $unitData = elements(array($this->UNIT_PK,
                                    $this->UNIT_NAME),
@@ -389,14 +389,14 @@ class Member_model extends CI_Model {
         return $this->db->get()->result();
     }
     
-	/**
+    /**
      * 取得會員資料
      *
-	 * @access public
-	 * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
+     * @access public
+     * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
      * @return array
-	 */
+     */
     public function get($data) {
         $userData = elements(array($this->PK,
                                    $this->USERNAME,
@@ -427,16 +427,16 @@ class Member_model extends CI_Model {
         return $this->db->get()->result();
     }
     
-	/**
+    /**
      * 刪除縣市資料
      *
-	 * 使用此方法時如果未傳入要篩選的值，則會刪除所有的縣市資料。
-	 *
-	 * @access public
-	 * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
+     * 使用此方法時如果未傳入要篩選的值，則會刪除所有的縣市資料。
+     *
+     * @access public
+     * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-	 * @return NULL
-	 */
+     * @return int 表示刪除的資料筆數
+     */
     public function delete_city($data) {
         $cityData = elements(array($this->CITY_PK, $this->CITY_NAME), $data, NULL);
         $this->db->from('city');
@@ -444,18 +444,19 @@ class Member_model extends CI_Model {
             $this->where($this->to_database_column_name($key), $value);
         }
         $this->db->delete();
+        return $this->db->affected_rows();
     }
     
-	/**
+    /**
      * 刪除學校資料
      *
-	 * 使用此方法時如果未傳入要篩選的值，則會刪除所有的學校資料。
-	 *
-	 * @access public
-	 * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
+     * 使用此方法時如果未傳入要篩選的值，則會刪除所有的學校資料。
+     *
+     * @access public
+     * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-	 * $return NULL
-	 */
+     * @return int 表示刪除的資料筆數
+     */
     public function delete_school($data) {
         $schoolData = elements(array($this->SCHOOL_PK,
                                     $this->SCHOOL_TYPE,
@@ -469,18 +470,19 @@ class Member_model extends CI_Model {
             $this->where($this->to_database_column_name($key), $value);
         }
         $this->db->delete();
+        return $this->db->affected_rows();
     }
     
-	/**
+    /**
      * 刪除班級資料
      *
-	 * 使用此方法時如果未傳入要篩選的值，則會刪除所有的班級資料。
-	 *
-	 * @access public
-	 * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
+     * 使用此方法時如果未傳入要篩選的值，則會刪除所有的班級資料。
+     *
+     * @access public
+     * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-	 * @return NULL
-	 */
+     * @return int 表示刪除的資料筆數
+     */
     public function delete_class($data) {
         $classData = elements(array($this->CLASS_PK,
                                     $this->CLASS_TYPE,
@@ -493,19 +495,20 @@ class Member_model extends CI_Model {
         foreach ($classData as $key => $value) {
             $this->where($this->to_database_column_name($key), $value);
         }
-        return $this->db->delete();
+        $this->db->delete();
+        return $this->db->affected_rows();
     }
     
-	/**
+    /**
      * 刪除服務單位資料
      *
-	 * 使用此方法時如果未傳入要篩選的值，則會刪除所有的服務單位資料。
-	 *
-	 * @access public
-	 * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
+     * 使用此方法時如果未傳入要篩選的值，則會刪除所有的服務單位資料。
+     *
+     * @access public
+     * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-	 * @return NULL
-	 */
+     * @return int 表示刪除的資料筆數
+     */
     public function delete_unit($data) {
         $unitData = elements(array($this->UNIT_PK,
                                    $this->UNIT_NAME),
@@ -514,19 +517,20 @@ class Member_model extends CI_Model {
         foreach ($unitData as $key => $value) {
             $this->where($this->to_database_column_name($key), $value);
         }
-        return $this->db->delete();
+        $this->db->delete();
+        return $this->db->affected_rows();
     }
     
-	/**
+    /**
      * 刪除會員資料
-	 *
-	 * 如果使用此方法時未傳入要篩選的資料，則會刪除所有的會員資料。
-	 *
-	 * @access public
-	 * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
+     *
+     * 如果使用此方法時未傳入要篩選的資料，則會刪除所有的會員資料。
+     *
+     * @access public
+     * @param array $data 參數data為一陣列，可放入要篩選的值進入陣列中
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-	 * $return NULL
-	 */
+     * @return int 表示刪除的資料筆數
+     */
     public function delete($data) {
         $userData = elements(array($this->PK,
                                    $this->USERNAME,
@@ -545,87 +549,93 @@ class Member_model extends CI_Model {
                              $data, NULL);
         // 篩選
         $this->db->from('user');
-        // 取出需特殊處理的資料
+        // 取出需特殊處理的篩選資料
         $userPassword = $userData[$this->PASSWORD];
-        $this->db->where($this->to_database_column_name($this->PASSWORD), "PASSWORD('$userPassword')", FALSE);
+        if (!is_null($userPassword)) {
+            $this->db->where($this->to_database_column_name($this->PASSWORD), "PASSWORD('$userPassword')", FALSE);
+        }
         unset($userData[$this->PASSWORD]);
+        
+        // 設定每個需篩選的資料
         foreach ($userData as $key => $value) {
             $this->where($this->to_database_column_name($key), $value);
         }
-        return $this->db->delete();
+        
+        $this->db->delete();
+        return $this->db->affected_rows();
     }
     
-	/**
+    /**
      * 對目前db的資料庫語句做 where 篩選
-	 *
+     *
      * 如果data為NULL，則不做篩選
-	 *
-	 * @access protected
-	 * @param string $columnName 資料表中的欄位名稱
-	 * @param mixed $data 指定的資料表欄位要儲存的資料，如果值為NULL，則不做篩選
-	 * @return NULL
-	 */
+     *
+     * @access protected
+     * @param string $columnName 資料表中的欄位名稱
+     * @param mixed $data 指定的資料表欄位要儲存的資料，如果值為NULL，則不做篩選
+     * @return NULL
+     */
     protected function where($columnName, $data) {
         if ( ! is_null($data)) {
             $this->db->where($columnName, $data);
         }
     }
     
-	/**
+    /**
      * 對目前db的資料庫語句做 like 篩選
      *
-	 * 如果data為NULL，則不做篩選
-	 *
-	 * @access protected
-	 * @param string $columnName 資料表中的欄位名稱
-	 * @param mixed $data 指定的資料表欄位要儲存的資料，如果值為NULL，則不做篩選
-	 * @return NULL
-	 */
+     * 如果data為NULL，則不做篩選
+     *
+     * @access protected
+     * @param string $columnName 資料表中的欄位名稱
+     * @param mixed $data 指定的資料表欄位要儲存的資料，如果值為NULL，則不做篩選
+     * @return NULL
+     */
     protected function like($columnName, $data) {
         if ( ! is_null($data) ) {
             $this->db->like($columnName, $data);
         }
     }
     
-	/**
+    /**
      * 設定更新或插入資料的欄位值
-	 *
+     *
      * 參數ignoreNull如果設為True，則可以在參數data為NULL時不做設定欄位值的操作
-	 *
-	 * @access protected
-	 * @param string $columnName 資料表中的欄位名稱
-	 * @param mixed $data 指定的資料表欄位要儲存的資料，如果值為NULL，則不做篩選
-	 * @param boolean $ignoreNull 如果值設為TRUE，則在$data為NULL時不做任何操作，
-	 * 如果為FALSE，則在$data為任意值時都會做設定欄位值的操作
-	 * @return NULL
-	 */
+     *
+     * @access protected
+     * @param string $columnName 資料表中的欄位名稱
+     * @param mixed $data 指定的資料表欄位要儲存的資料，如果值為NULL，則不做篩選
+     * @param boolean $ignoreNull 如果值設為TRUE，則在$data為NULL時不做任何操作，
+     * 如果為FALSE，則在$data為任意值時都會做設定欄位值的操作
+     * @return NULL
+     */
     protected function set($columnName, $data, $ignoreNull=True) {
         if ( !is_null($data) || ! $ignoreNull) {
             $this->db->set($columnName, $data);
         }
     }
     
-	/**
+    /**
      * 可指定欄位來排序排序資料
-	 *
-	 * @access public
-	 * @param string $columnConst 要排序的欄位，名稱使用此類別定義的欄位名稱常數
-	 * @param string $direction 欄位的排序方式，可指定'asc'表示遞增或'desc'表示遞減
-	 * @return NULL
-	 */
+     *
+     * @access public
+     * @param string $columnConst 要排序的欄位，名稱使用此類別定義的欄位名稱常數
+     * @param string $direction 欄位的排序方式，可指定'asc'表示遞增或'desc'表示遞減
+     * @return NULL
+     */
     public function orderby($columnConst, $direction) {
         $columnName = $this->to_database_column_name($columnConst);
         $this->db->order_by($columnName, $direction);
     }
     
-	/**
+    /**
      * 將此類別定義的欄位值轉換成資料庫欄位名稱
      * 如果找不到對應的欄位名稱時，則回傳NULL
-	 *
-	 * @access public
-	 * @param string $columnConst 此類別定義的欄位名稱常數
-	 * @return NULL
-	 */
+     *
+     * @access public
+     * @param string $columnConst 此類別定義的欄位名稱常數
+     * @return NULL
+     */
     public function to_database_column_name($columnConst) {
         switch ($columnConst) {
             case $this->PK:
@@ -679,15 +689,15 @@ class Member_model extends CI_Model {
         }
     }
     
-	/**
+    /**
      * 取得可操作會員系統資料庫的db物件
-	 *
-	 * 使用db物件做任何的篩選動作會影響到接下來的取得、更新和刪除動作。
-	 * 最好在需要特殊的條件篩選時才使用此方法。
-	 *
-	 * @access public
-	 * @return db
-	 */
+     *
+     * 使用db物件做任何的篩選動作會影響到接下來的取得、更新和刪除動作。
+     * 最好在需要特殊的條件篩選時才使用此方法。
+     *
+     * @access public
+     * @return db
+     */
     public function getDb() {
         return $this->db;
     }

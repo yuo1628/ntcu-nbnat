@@ -7,14 +7,14 @@
 class Member_system_member_management extends CI_Driver {
 
     private $CI;
-	
-	public function __construct()
-	{
-		$this->CI = & get_instance();
-		$this->CI->load->model('member_model');
-	}
-	
-	/**
+
+    public function __construct()
+    {
+        $this->CI = & get_instance();
+        $this->CI->load->model('member_model');
+    }
+
+    /**
      * 取得一個空白的Member類別實體
      *
      * @access public
@@ -28,15 +28,21 @@ class Member_system_member_management extends CI_Driver {
     /**
      * 取得填入資料的Member類別實體
      *
-     * 此方法會從傳入的會員編號來尋找並填入會員的資料。
+     * 此方法會從傳入的會員主鍵值來尋找並填入會員的資料。
      * 
      * @access public
-     * @param string $id 會員編號
+     * @param string $id 會員主鍵值
      * @return Member|NULL 如果找不到會員編號為指定值的會員，則會回傳NULL
      */
     public function get_member_by_id($id)
     {
-        return $this->model_to_member(array($this->CI->member_model->PK => $id));
+        $memberArray = $this->CI->member_model->get(array($this->CI->member_model->PK => $id));
+        // 找不到指定的會員
+        if (!$memberArray) {
+            return NULL;
+        }
+        $memberData = $memberArray[0];
+        return $this->model_to_member($memberData);
     }
     
     /**
@@ -50,7 +56,71 @@ class Member_system_member_management extends CI_Driver {
      */
     public function get_member_by_username($username)
     {
-        return $this->model_to_member(array($this->member_model->USERNAME => $username));
+        $memberArray = $this->CI->member_model->get(array($this->CI->member_model->USERNAME => $username));
+        // 找不到指定的會員
+        if (!$memberArray) {
+            return NULL;
+        }
+        $memberData = $memberArray[0];
+        return $this->model_to_member($memberData);
+    }
+    
+    /**
+     * 刪除指定主鍵值的會員
+     *
+     * @access public
+     * @param string $id 會員的主鍵值
+     * @return boolean 刪除成功則回傳TRUE，刪除失敗（如找不到指定主鍵的會員）
+     * 則回傳FALSE
+     */
+    public function delete_member_by_id($id)
+    {
+        $affectedMemberNumber = $this->CI->member_model->delete(array($this->CI->member_model->PK => $id));
+        // 無刪除的會員資料筆數，代表找不到指定的會員
+        if(!$affectedMemberNumber) {
+            return FALSE;
+        }
+        else {
+            return TRUE;
+        }
+    }
+    
+    /**
+     * 刪除指定帳號的會員
+     *
+     * @access public
+     * @param string $username 會員帳號
+     * @return boolean 刪除成功則回傳TRUE，刪除失敗（如找不到指定帳號的會員）
+     * 則回傳FALSE
+     */
+    public function delete_member_by_username($username)
+    {
+        $affectedMemberNumber = $this->CI->member_model->delete(array($this->CI->member_model->USERNAME => $username));
+        // 無刪除的會員資料筆數，代表找不到指定的會員
+        if (!$affectedMemberNumber) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+    
+    /**
+     * 更新或新增會員資料
+     *
+     * @access public
+     * @param Member $member 要更新或新增的使用者資料，如果會員的id有設定，則
+     * 此方法會執行更新操作，否則此方法會執行新增操作
+     * @return boolean 更新或新增成功則回傳True，否則回傳False
+     */
+    public function save_member($member)
+    {
+        $member_data = $this->member_to_array($member);
+        if (is_null($member->id)) {
+            $this->CI->member_model->insert($member_data);
+        }
+        else {
+            $this->CI->member_model->update($member_data);
+        }
     }
 }
 
