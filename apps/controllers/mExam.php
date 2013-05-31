@@ -20,13 +20,12 @@ class MExamController extends MY_Controller {
 			"result"=>$node
 				);
 		$this -> layout -> addStyleSheet("css/exam/create/create.css");
-		$this -> layout -> addScript("js/exam/create/linkUp.js");
+		$this -> layout -> addScript("js/exam/create/default.js");
 		$this -> layout -> view('view/exam/create/default', $itemList);
 	}	
 	function findChild($_id)
 	{
-		$this -> load -> model('exam/map/m_node', 'node');
-		$node = $this -> node -> allNode();
+		$this -> load -> model('exam/map/m_node', 'node');		
 		$itemList = array("childList" => $this -> node -> findNode(array(
 													'parent_node' => $_id 
 													))

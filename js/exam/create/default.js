@@ -5,6 +5,7 @@ $(document).ready(function(){
 	$(".greenBtn").hide();
 	$("select#node").prepend("<option value='0' selected='selected'>請選擇...</option>");
 	$("select#node").change(function(){
+		$("select#node option[value=0]").remove();
 		var _this=$(this);
 		var _childId=$(this).val();
 		var _href = location.href;	
@@ -22,7 +23,7 @@ $(document).ready(function(){
 	});
 	
 	$("select#type").change(function(){
-		
+		$("select#type option[value=0]").remove();
 		var _type=$(this).val();
 		var _href = location.href;	
 		
@@ -67,10 +68,12 @@ function delBtnInit(_index)
 	});
 } 
 
+
 function sendOut()
 {
 	var _nodeId=$("select#child").val();
 	var _topic=$("textarea#topicText").val();
+	var _type=$("select#type").val();
 	var _tips=$("textarea#tipsText").val();
 	var _trLength=$("table#choose tbody tr").size();
 	var _options=new Array();
@@ -82,12 +85,10 @@ function sendOut()
 		_options[i].correct=$("table#choose tbody tr:eq("+i+") input").prop("checked");
 		_options[i].value=$("table#choose tbody tr:eq("+i+") .answerText").val();
 		
-	}
-	
-		
+	}		
 	$.post(_href + "/addQuestion", {
 		topic : _topic,
-		type :"multiChoose",
+		type :_type,
 		tips:_tips,
 		nodes_id:_nodeId,
 		option :_options
@@ -96,9 +97,4 @@ function sendOut()
 		cancel();
 		
 	});
-	
-	
-	
-	
-	
 }

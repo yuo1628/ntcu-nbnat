@@ -5,7 +5,7 @@
  */
 
 
-div#template
+#create div#template
 {
 	margin:3% -2%;
 	padding:2%;
@@ -16,38 +16,38 @@ div#template
 	box-shadow: inset 0px 1px 3px 1px rgba(200,200,200,0.2);
 	
 }
-p#btnTools
+#create p#btnTools
 {
 	display:none;
 	text-align: center;
 }
-p#btnTools span
+#create p#btnTools span
 {
 	margin:0 1%;
 }
 #create ul select#node{margin-right:2%;}
 
 
-table#topic
+#create table#topic
 {
 	margin:2% 0;	
 	width:98%;	
 }
-table#choose{margin:2% 0 2% 0;width:100%;	}
-table#choose th,table#topic th
+#create table#choose{margin:2% 0 2% 0;width:100%;	}
+#create table#choose th,table#topic th
 {
 	width:50px;
 	font-size:.8em;	
 	white-space: nowrap;
 	vertical-align: top;
 }
-table#choose textarea,table#topic textarea
+#create table#choose textarea,table#topic textarea
 {
 	resize:vertical;
 	width:100%;
 	height:50px;
 }
-table#choose td
+#create table#choose td
 {
 	text-align: left;
 	width:86%;

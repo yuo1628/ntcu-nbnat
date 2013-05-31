@@ -1,0 +1,70 @@
+/*
+ * @description: 測驗練習首頁樣式
+ * @author: shown (2013-05-30 15:10)
+ * @update: shown
+ */
+#practice ul#node
+{
+	-webkit-box-shadow: #e0e0e0 2px 2px 3px;
+	-moz-box-shadow: #e0e0e0 2px 2px 3px;
+	box-shadow: #e0e0e0 2px 2px 3px;
+	-webkit-border-top-right-radius: 8px;
+	-webkit-border-top-left-radius: 8px;
+	-moz-border-top-right-radius: 8px;
+	-moz-border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+	-webkit-border-bottom-right-radius: 8px;
+	-webkit-border-bottom-left-radius: 8px;
+	-moz-border-bottom-right-radius: 8px;
+	-moz-border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+	overflow:hidden;
+}
+#practice ul#node li.open:hover{
+	
+	background-color: #d0d0d0;
+}
+#practice ul#node li.open{
+	cursor: pointer;	
+	padding: 10px 5px;
+	background-color: #e0e0e0;
+}
+#practice ul#node li.nodeList:hover
+{
+	background-color: #e0e0e0;
+}
+#practice ul#node li.nodeList{
+	cursor: pointer;	
+	padding: 10px 5px;
+	background-color: #f0f0f0;
+}
+#practice ul#node li.nodeList:active
+{
+	background-color: #d0d0d0;
+}
+#practice ul#node li ul#childList
+{
+	background-color: #fff;
+	-webkit-box-shadow: #e0e0e0 1px 1px 3px inset;
+	-moz-box-shadow: #e0e0e0 1px 1px 3px inset;
+	box-shadow: #e0e0e0 1px 1px 3px inset;
+}
+#practice ul#node li ul#childList li
+{	
+	padding:10px;
+	border-bottom:1px solid #F0f0f0;	
+}
+#practice ul#node li ul#childList li:hover
+{
+	background-color: #EBF5FF;
+	-webkit-box-shadow: #e0e0e0 1px 1px 3px inset;
+	-moz-box-shadow: #e0e0e0 1px 1px 3px inset;
+	box-shadow: #e0e0e0 1px 0px 1px inset;
+}
+#practice ul#node li ul#childList li span.blueBtn
+{	
+	float:right;
+	margin-top:-4px;		
+}

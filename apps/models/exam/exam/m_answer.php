@@ -1,53 +1,53 @@
 <?php
 /**
- * exam_exam_Option Model
+ * exam_exam_Answer Model
  *
  * @author Shown
  */
-class M_Option extends CI_Model {
+class M_Answer extends CI_Model {
 
-	private $tablename= "options";	
+	private $tablename= "answer";	
 
 	/**
-	 * Select all Option.
+	 * Select all Answer.
 	 *
 	 * @return Mixed Array or Null.
 	 */
-	public function allOption() {
+	public function allAnswer() {
 
 		$query = $this -> db -> get_where($this->tablename);
 		return $query -> result();
 	}
 
 	/**
-	 * Select one Option.
+	 * Select one Answer.
 	 *
-	 * @param String Option id.
+	 * @param String Answer id.
 	 * @return Mixed Array or Null.
 	 */
-	public function findOptionByQId($q_id) {
-		$query = $this -> db -> get_where($this->tablename, array('questions_id' => $q_id));
+	public function findAnswerByNId($n_id) {
+		$query = $this -> db -> get_where($this->tablename, array('nodes_id' => $q_id));
 		return $query -> result();
 	}
 
 	/**
-	 * Select Option by conditions.
+	 * Select Answer by conditions.
 	 *
 	 * @param Array conditions.
 	 * @return Mixed Array or Null.
 	 */
-	public function findOption($conditions) {
+	public function findAnswer($conditions) {
 		$query = $this -> db -> get_where($this->tablename, $conditions);
 		return $query -> result();
 	}
 	
 	/**
-	 * Insert Option.
+	 * Insert Answer.
 	 *
-	 * @param Array Option insert data.
+	 * @param Array Answer insert data.
 	 * @return Boolean.
 	 */
-	public function addOption($data) {
+	public function addAnswer($data) {
 
 		if ($this -> db -> insert($this->tablename, $data)) {
 			return true;
@@ -57,13 +57,13 @@ class M_Option extends CI_Model {
 	}
 
 	/**
-	 * Update Option.
+	 * Update Answer.
 	 *
-	 * @param Array Option update data.
+	 * @param Array Answer update data.
 	 * @param Array conditions.
 	 * @return Boolean.
 	 */
-	public function updOption($data, $condition) {
+	public function updAnswer($data, $condition) {
 		if ($this -> db -> update($this->tablename, $data, $condition)) {
 			return true;
 		} else {
@@ -72,12 +72,12 @@ class M_Option extends CI_Model {
 	}
 
 	/**
-	 * Delete Option one data.
+	 * Delete Answer one data.
 	 *
 	 * @param Array conditions.
 	 * @return Boolean.
 	 */
-	public function delOption($condition) {
+	public function delAnswer($condition) {
 		if ($this -> db -> delete($this->tablename, $condition)) {
 			return true;
 		} else {
