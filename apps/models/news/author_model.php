@@ -1,4 +1,5 @@
 <?php
+include APPPATH.'models/news/author.php';
 
 /**
  * Author_model
@@ -65,28 +66,6 @@ class Author_model extends CI_Model {
         $author->name = $model_data->name;
         $author->rank = $model_data->rank;
         return $author;
-    }
-}
-
-/**
- * Author
- *
- * 呈現公告作者的類別
- *
- */
-class Author {
-    private $id;
-    private $name;
-    private $rank;
-    
-    public function __get($name)
-    {
-        return $this->$name;
-    }
-    
-    public function __set($name, $value)
-    {
-        $this->$name = $value;
     }
 }
 // End of file
