@@ -42,7 +42,7 @@ function updateQuiz(_id)
 	
 	/*$.post(_href + "/editQuiz", {
 			id : _id,
-			quizData:"topic:"+_tempTopic+",tips:"+_tempTips
+			data:"topic:"+_tempTopic+",tips:"+_tempTips
 	}, function(result) {	
 	
 		$("div#div-" + _id + " div.topic").html(_tempTopic).show();

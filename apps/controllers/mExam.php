@@ -125,7 +125,7 @@ class MExamController extends MY_Controller {
 	function editQuiz()
 	{
 		$_id = $this -> input -> post("id");
-		$_data = explode(",",$this -> input -> post("quizData"));
+		$_data = explode(",",$this -> input -> post("data"));
 		
 		foreach ($_data as $i => $value) {
 			$temp=explode(":",$value);

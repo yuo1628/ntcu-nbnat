@@ -42,7 +42,7 @@ class PracticeController extends MY_Controller {
 	function countExam($_id)
 	{
 		$this -> load -> model('exam/exam/m_question', 'question');
-		return $this -> question -> countQuestion($_id);		
+		return $this -> question -> countQuestion(array("nodes_uuid"=>$_id,'public' => "true"));		
 	}
 	
 	function countAns($_id)
