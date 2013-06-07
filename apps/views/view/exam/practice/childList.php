@@ -2,11 +2,15 @@
 	<?php foreach ($childList as $item):
 
 	?>
-	<?php echo "<li>" . $item -> name;
-		if ($item -> count > 0) {
-			echo "<span class='blueBtn' onclick=\"enter('" . $item -> id . "')\">進行測驗</span>";
+	<?php echo "<li>" . $item -> name."<div class='btn'>";
+		if ($item -> count_e > 0) {
+			echo "<span class='greenBtn' onclick=\"enter('" . $item -> uuid . "')\">進行測驗</span>";
+			
 		}
-		echo "</li>";
+		if ($item -> count_a > 0) {
+			echo "<span class='blueBtn' onclick=\"result('" . $item -> uuid . "')\">進入查看</span>";
+		}
+		echo "</div></li>";
 	?>
 	<?php endforeach; ?>
 </ul>

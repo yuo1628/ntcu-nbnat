@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="css/master.css" />
 		<link rel="stylesheet" href="css/frame.css" />
 		<link rel="stylesheet" href="css/menu.css" />
-		
+		<link rel="stylesheet" href="css/font.css" />
 		<!-- css & js-->
 		<?php 
 			//include head

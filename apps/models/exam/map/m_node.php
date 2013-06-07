@@ -60,7 +60,7 @@ class M_Node extends CI_Model {
 	 * @return Boolean.
 	 */
 	public function addNode($data) {
-
+		$data["uuid"]=md5(uniqid(rand(), true));
 		if ($this -> db -> insert($this->tablename, $data)) {
 			return $this->db->insert_id();
 		} else {

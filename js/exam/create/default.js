@@ -4,6 +4,7 @@
 $(document).ready(function(){
 	$(".greenBtn").hide();
 	$("select#node").prepend("<option value='0' selected='selected'>請選擇...</option>");
+	
 	$("select#node").change(function(){
 		$("select#node option[value=0]").remove();
 		var _this=$(this);
@@ -17,10 +18,20 @@ $(document).ready(function(){
 			success : function(result) {
 				$("select#node").after(result);
 				$(".greenBtn").show();
+				var _uuid=$("select#child").val();
+				quizList(_uuid);
 				
+				$("select#child").bind("change",function(){
+		
+					var _child=$(this).val();
+					quizList(_child);
+			
+				});
 			}		
 		});		
 	});
+	
+	
 	
 	$("select#type").change(function(){
 		$("select#type option[value=0]").remove();
@@ -40,16 +51,27 @@ $(document).ready(function(){
 	});
 	
 });
+
+function quizList(_uuid)
+{
+	var _href = location.href;	
+	$.post(_href + "/findExamList/" + _uuid,{
+		uid:_uuid
+	},function(result){
+		$("div#quizList").html(result);		
+	});	
+}
+
 function showTemp()
 {
-	$("div#template").show();
-	
+	$("div#template").show();	
 }
 function cancel()
 {
 	$("div#template").hide();
 	$("div#template div#content").empty();
 	$("select#type option:eq(0)").prop("selected",true);
+	$("select#type").prepend("<option value='0' selected='selected'>請選擇...</option>");
 }
 function addoption()
 {
@@ -68,14 +90,15 @@ function delBtnInit(_index)
 	});
 } 
 
-
 function sendOut()
 {
-	var _nodeId=$("select#child").val();
+	var _nodeUId=$("select#child").val();
+	var _score=$("#scoreText").val();
 	var _topic=$("textarea#topicText").val();
 	var _type=$("select#type").val();
 	var _tips=$("textarea#tipsText").val();
 	var _trLength=$("table#choose tbody tr").size();
+	var _show=$("input#show").prop("checked");
 	var _options=new Array();
 	var _href = location.href;
 	
@@ -90,11 +113,15 @@ function sendOut()
 		topic : _topic,
 		type :_type,
 		tips:_tips,
-		nodes_id:_nodeId,
+		nodes_uuid:_nodeUId,
+		score:_score,
+		_public:_show,
 		option :_options
-	}, function(data) {
+	}, function() {
 		
+		var _uuid=$("select#child").val();
+		quizList(_uuid);
 		cancel();
-		
+		showTemp();
 	});
 }

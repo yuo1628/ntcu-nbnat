@@ -1,10 +1,7 @@
-<!-- css & js-->
-<?php
-//include head
-echo $this -> layout -> fetchHead();
-?>
-
 <table id="topic" cellspacing="0">
+	<tr>
+		<th>配分</th><td><input type="text" id="scoreText" /><input type="checkbox" id="show" checked="checked" />開放給學生作答</td>
+	</tr>
 	<tr>
 		<th>題目</th><td><textarea id="topicText"></textarea></td>
 	</tr>

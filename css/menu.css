@@ -89,7 +89,7 @@
 	border-radius: 5px;
 	background: url(../img/icon.png);
 	background-repeat: no-repeat;
-	background-size: 30px auto;
+	background-size: 29px auto;
 	border: 1px solid #f9f9f9;
 }
 .icon:hover {
@@ -98,19 +98,20 @@
 	-webkit-box-shadow: #e0e0e0 0px 0px 5px 0px inset;
 	-moz-box-shadow: #e0e0e0 0px 0px 5px 0px inset;
 	box-shadow: #e0e0e0 0px 0px 5px 0px inset;
+	
 }
 .icon:active {
 	border-color: #d0d0d0;
 	background-color: #E0E0E0;
 }
 .icon-member {
-	background-position: 2px -163px;
+	background-position: 2px -361px;
 }
 .icon-news {
-	background-position: 2px -228px;
+	background-position: 2px -482px;
 }
 .icon-exam {
-	background-position: 2px -260px;
+	background-position: 2px -543px;
 }
 .icon-create {
 	background-position: 2px -88px;
@@ -122,12 +123,13 @@
 	background-position: 2px -148px;
 }
 .icon-manage {
-	background-position: 2px -178px;
+	background-position: 3px -300px;
 }
 .icon-back {
-	background-position: 2px -387px;
+	background-position: 2px -59px;
 }
 .icon-logout {
-	background-position: 2px 1px;
+	background-position: 3px 4px;
 }
+
 

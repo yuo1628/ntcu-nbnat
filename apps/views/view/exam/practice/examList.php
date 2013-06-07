@@ -1,10 +1,18 @@
 <h1><?php echo $examTitle[0]->name;?></h1>
 <ul id="examList">
-	<?php foreach ($examList as $item):
+	<?php foreach ($examList as $j=>$item):
 	?>
-	<?php echo "<li class='topic'>"; ?>	
+	<?php echo "<li class='topicLi' id='li-".$item->id."'>"; ?>	
 		
-		<?php echo $item -> topic."<ul>"; ?>
+		
+		<?php echo "<div class='topic'>".($j+1).".".$item -> topic."</div>"; ?>
+		<?php echo "<div class='tipsBtn' id='tipsBtn-".$item->id."'>"; ?>
+	
+		<?php if($item->tips!=""):?>			
+			<?php echo "<span class='tips' onclick=\"showTips('".$item->id."','".$item->tips."','close')\">提示</span>"; ?>
+		<?php endif;?>
+		<?php echo "</div>"; ?>	
+		<?php echo "<ul>"; ?>
 		<?php switch ($item -> type) : 
 			case 'choose': 
 			?>			
@@ -28,5 +36,6 @@
 	<?php echo "</ul></li>"; ?>
 	<?php endforeach; ?>
 </ul>
-
-<?php echo "<span class=\"greenBtn\" onclick=\"send('".$examTitle[0]->id."')\">送出</span>"; ?>
+<p style="text-align: center;">
+<?php echo "<span class=\"greenBtn\" onclick=\"send('".$examTitle[0]->uuid."')\">送出</span>"; ?>
+</p>

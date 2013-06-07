@@ -25,8 +25,8 @@ class M_Answer extends CI_Model {
 	 * @param String Answer id.
 	 * @return Mixed Array or Null.
 	 */
-	public function findAnswerByNId($n_id) {
-		$query = $this -> db -> get_where($this->tablename, array('nodes_id' => $q_id));
+	public function findAnswerById($_id) {
+		$query = $this -> db -> get_where($this->tablename, array('id' => $_id));
 		return $query -> result();
 	}
 
@@ -42,13 +42,41 @@ class M_Answer extends CI_Model {
 	}
 	
 	/**
+	 * Select Last Answer.
+	 *
+	 * @param Array conditions.
+	 * @return Mixed Array or Null.
+	 */
+	public function findFirstAnswerId($_uid,$_sort="desc") {
+		$this->db->limit(1);
+		$this->db->order_by("id", $_sort); 
+		$query = $this -> db -> get_where($this->tablename, array('nodes_uuid' => $_uid));
+		foreach ($query->result() as $row)
+		{
+    		return $row->id;
+		}		
+		
+	}
+	
+	/**
+	 * count Questions by node's id.
+	 *
+	 * @param Array conditions.
+	 * @return integer.
+	 */
+	public function countAnswer($_uuid)
+	{
+		$query = $this -> db -> get_where($this -> tablename, array('nodes_uuid' => $_uuid));
+		return $query -> num_rows();
+	}
+	
+	/**
 	 * Insert Answer.
 	 *
 	 * @param Array Answer insert data.
 	 * @return Boolean.
 	 */
 	public function addAnswer($data) {
-
 		if ($this -> db -> insert($this->tablename, $data)) {
 			return true;
 		} else {

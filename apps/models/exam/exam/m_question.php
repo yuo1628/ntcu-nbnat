@@ -25,8 +25,8 @@ class M_Question extends CI_Model {
 	 * @param String node id.
 	 * @return Mixed Array or Null.
 	 */
-	public function findQuestionByNodeId($nodeid) {
-		$query = $this -> db -> get_where($this -> tablename, array('nodes_id' => $nodeid));
+	public function findQuestionByNodeUId($nodeUid) {
+		$query = $this -> db -> get_where($this -> tablename, array('nodes_uuid' => $nodeUid));
 		return $query -> result();
 	}
 
@@ -42,14 +42,14 @@ class M_Question extends CI_Model {
 	}
 	
 	/**
-	 * count Questions by node's id.
+	 * count Questions state by conditions.
 	 *
 	 * @param Array conditions.
 	 * @return integer.
 	 */
-	public function countQuestion($_id)
+	public function countQuestion($conditions)
 	{
-		$query = $this -> db -> get_where($this -> tablename, array('nodes_id' => $_id));
+		$query = $this -> db -> get_where($this -> tablename, $conditions);
 		return $query -> num_rows();
 	}
 

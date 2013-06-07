@@ -2,6 +2,11 @@
  * @author Shown
  */
 $(document).ready(function() {
+	$("input#batchScoreText").keyup(function(){
+
+		 $(this).val($(this).val().replace(/[^\d.]/g,""));
+		 $(this).val($(this).val().replace(/^\./g,""));
+ 	});
 
 });
 
@@ -36,28 +41,65 @@ function enter(_id) {
 	var _href = location.href;
 
 	$.post(_href + "/findExamList", {
-		id : _id
+		uid : _id
 	}, function(data) {
-
 		$("div#practice").html(data);
 	});
 
 }
 
-function send(_id) {
-	var n_id=_id;
-	var ans = "";
-	$("ul#examList li.topic").each(function() {
-		var _thisLI = $(this).children("ul").children("li");				
-		_thisLI.each(function() 
-		{
-			if ($(this).children("input").prop("checked") == true)
-			{
-				ans += $(this).children("input").val() + ",";
+function send(_uuid) {
+	var ansArr = new Array();
+
+	$("ul#examList li.topicLi").each(function(i) {
+		var ans = new Object();
+
+		var _thisLI = $(this).children("ul").children("li");
+		var _id = $(this).attr("id").replace("li-", "");
+		ans.topicId = _id;
+		var option = new Array();
+		_thisLI.each(function() {
+			if ($(this).children("input").prop("checked") == true) {
+				option.push($(this).children("input").val());
 			}
-		});			
-		ans += ";";
+		});
+
+		ans.ans = option;
+		ansArr[i] = ans;
 	});
 	
+
+	var _href = location.href;
+	$.post(_href + "/addAnswer", {
+		answer : JSON.stringify(ansArr),
+		spend : "0",
+		uuid : _uuid
+	}, function() {
+		location.href = _href + "/resultRoute/" + _uuid + "/desc";
+	});
+	
+
+}
+
+function result(_uid) {
+	var _href = location.href;
+	location.href = _href + "/resultRoute/" + _uid + "/asc";
+}
+
+function showTips(_id, _tips, _state) {
+	/*
+	 *<div class='arrow-block'><div class='arrow'></div></div>
+	 <div class='tips-content'></div>
+	 * */
+	if (_state == "close") {
+		$("div#tipsBtn-" + _id).after("<div><div class='arrow-block'><div class='arrow'></div></div><div class='tips-content'><div class='tipsMes'>"+_tips+"</div></div></div>");
+		
+		$("div#tipsBtn-" + _id+" span.tips").attr("onclick","showTips('"+_id+"','"+ _tips+"','open')");
+
+	} else {
+		$("div#tipsBtn-" + _id).next("div").remove();
+		$("div#tipsBtn-" + _id+" span.tips").attr("onclick","showTips('"+_id+"','"+ _tips+"','close')");
+
+	}
 }
 

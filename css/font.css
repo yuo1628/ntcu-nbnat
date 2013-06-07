@@ -11,5 +11,13 @@
 }
 .fontBlue
 {
-	
+	color:#0000FF;
+	font-size: .6em;
+	font-weight:normal;
+}
+.fontGreen
+{
+	color:#00A002;
+	font-size: .6em;
+	font-weight:normal;
 }

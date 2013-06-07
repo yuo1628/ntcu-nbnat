@@ -63,8 +63,11 @@
 	-moz-box-shadow: #e0e0e0 1px 1px 3px inset;
 	box-shadow: #e0e0e0 1px 0px 1px inset;
 }
-#practice ul#node li ul#childList li span.blueBtn
+#practice ul#node li ul#childList li div.btn
 {	
-	float:right;
-	margin-top:-4px;		
+	float:right;		
+}
+#practice ul#node li ul#childList li div.btn span
+{
+	margin-left:10px;
 }

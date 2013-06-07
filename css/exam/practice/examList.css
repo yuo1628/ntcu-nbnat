@@ -1,0 +1,133 @@
+/*
+ * @description: 測驗練習習題樣式
+ * @author: shown (2013-06-06 14:30)
+ * @update: shown
+ */
+ul#examList
+{
+	width:100%;	
+}
+ul#examList li.topicLi
+{	
+	margin-left:-10px;
+	width:100%;
+	
+	padding:10px;
+	border-bottom:1px solid #F0f0f0;
+}
+ul#examList li.topicLi div.tipsBtn
+{
+	display:block;	
+	text-align: right;
+	height:20px;
+	padding-bottom:3px;
+}
+
+ul#examList li.topicLi span.tips
+{	
+	cursor: pointer;
+	border:1px solid #a0a0a0;
+	color:#a0a0a0;
+	background-color: #f0f0f0;
+	padding:.2em .5em;	
+	-webkit-border-radius: 3px;	
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-family: "微軟正黑體";
+	font-size:small; 
+	
+} 
+ul#examList li.topicLi span.tips:hover
+{
+	background-color: #f9f9f9;
+}
+ul#examList li.topicLi span.tips:active
+{
+	background-color: #e0e0e0;
+	
+}
+
+ul#examList li.topicLi:hover
+{
+	background-color: #f9f9f9;
+}
+ul#examList li.topicLi ul li
+{
+	margin:3px 0 0 15px;
+	font-family: "標楷體";
+	font-size:medium;	
+}
+ul#examList li.topicLi span.score
+{
+	color:blue;
+	font-size:small;
+}
+ul#examList li.topicLi span.score span
+{
+	color:red;
+	font-size:medium;
+}
+ul#examList li.topicLi div.topic
+{
+	display:block;	
+	font-family: "標楷體";
+	font-size:larger;	
+}
+ul#examList div.arrow 
+{  	
+  	background-color: #e8e8e8;
+	display:block;
+	margin:8px 0 0 8px;
+	height:25px;
+	width:25px;	
+	-webkit-box-shadow: #000000 0px 1px 3px inset;
+	-moz-box-shadow: #e0e0e0 0px 1px 3px inset;
+	box-shadow: #a0a0a0 0px 1px 3px inset;
+	-moz-transform: rotate(45deg);		/*firfox*/
+	-khtml-transform: rotate(45deg);		/*chrome及Safari*/
+	-webkit-transform: rotate(45deg);  	/*chrome及Safari*/
+	-o-transform: rotate(45deg);  		/*opera*/
+	transform:  rotate(45deg);
+}
+ul#examList div.arrow-block
+{	
+	float:right;
+	display:block;
+	height:16px;
+	width:40px;	
+	overflow:hidden;
+	margin:0 0 -2px 0;	
+}
+ul#examList div.tips-content
+{
+	background-color: #e8e8e8;
+	float:right;
+	display:block;	
+	width:105%;		
+	margin-right:-15px;
+	-webkit-box-shadow: #000000 0px 1px 2px inset;
+	-moz-box-shadow: #e0e0e0 0px 1px 2px inset;
+	box-shadow: #a0a0a0 0px 1px 2px inset,#e0e0e0 0px -1px 3px 1px inset;
+	margin-bottom:10px;
+}
+ul#examList div.tips-content div.tipsMes, ul#examList div.tipsMes
+{
+	width:92%;	
+	margin:10px auto;
+	padding:10px;
+ 	border:1px solid #e0e0e0;
+ 	background-color:#ffffff;
+	-webkit-border-radius: 8px;	
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	font-family: "微軟正黑體"; 
+}
+ul#examList div.tipsMes p
+{
+	font-size:smaller;
+	color:#888888;
+	border-bottom: 1px solid #e8e8e8;
+	padding-bottom:5px;
+	margin-bottom:5px;
+ 	
+}

@@ -13,12 +13,13 @@ class MExamController extends MY_Controller {
 				array("news","./index.php/mExam", "管理試題"),				
 				array("exam","./index.php/map", "管理知識結構圖"),
 				array("exam","./index.php/exam", "輸出試題分析"),
-				array("exam","./index.php/practice", "線上測驗練習"),
-				array("exam","./index.php/exam", "測驗成果查詢"),
+				array("exam","./index.php/practice", "線上測驗"),
 				array("logout","./", "登出帳號")
 				),
 			"result"=>$node
 				);
+		$this -> layout -> addScript("js/exam/create/editTemplate.js");
+		$this -> layout -> addStyleSheet("css/exam/create/editTemplate.css");
 		$this -> layout -> addStyleSheet("css/exam/create/create.css");
 		$this -> layout -> addScript("js/exam/create/default.js");
 		$this -> layout -> view('view/exam/create/default', $itemList);
@@ -41,17 +42,21 @@ class MExamController extends MY_Controller {
 		$this -> layout -> view('view/exam/create/'.$_type."Template");
 	}
 	function addQuestion()
-	{		
+	{
+		$_score=$this->input->post("score");
 		$_topic=$this->input->post("topic");
 		$_type=$this->input->post("type");
 		$_tips=$this->input->post("tips");
-		$_nodes_id=$this->input->post("nodes_id");
+		$_nodes_uuid=$this->input->post("nodes_uuid");
 		$_option=$this->input->post("option");
+		$_public=$this->input->post("_public");
 		
 		$input_data = array('topic' => $_topic,
 							'type' => $_type,
-							'tips' => $_tips, 
-							'nodes_id' => $_nodes_id
+							'tips' => $_tips,
+							'score'=> $_score*100,
+							'public'=>$_public,
+							'nodes_uuid' => $_nodes_uuid
 							);
 		$this -> load -> model('exam/exam/m_question', 'question');
 		$q_id = $this -> question -> addQuestion($input_data);
@@ -66,4 +71,90 @@ class MExamController extends MY_Controller {
 			$this -> option -> addOption($_option[$i]);
 		}		
 	}
+	function findExamList() {
+		$_uid = $this -> input -> post("uid");
+		$this -> load -> model('exam/exam/m_question', 'question');
+		$this -> load -> model('exam/map/m_node', 'node');
+		$this -> load -> model('exam/exam/m_option', 'option');
+		
+		$itemList['examList'] =array();	
+		
+		$data = $this -> question -> findQuestion(array('nodes_uuid' => $_uid));	
+		$node = $this -> node -> findNode(array("uuid"=>$_uid));		
+		
+		
+		foreach ($data as $item)
+		{
+			$item->optionList = $this -> option -> findOptionByQId($item->id);
+			$itemList['examList'][]=$item;
+		}
+				
+		$itemList['examTitle'] =$node;
+		$this -> layout -> addScript("js/exam/create/examList.js");
+		$this -> layout -> addStyleSheet("css/exam/create/examList.css");			
+		$this -> layout -> setLayout('layout/empty');
+		$this -> layout -> view('view/exam/create/examList', $itemList);		
+	}
+
+	function findQuizMeta()
+	{
+		$_id = $this -> input -> post("id");
+		$this -> load -> model('exam/exam/m_question', 'question');		
+		$this -> load -> model('exam/exam/m_option', 'option');
+		
+		$itemList['optionList'] =array();	
+		
+		$itemList['quiz']= $this -> question -> findQuestion(array('id' => $_id));	
+		
+		foreach ($itemList['quiz'] as $item)
+		{		
+			$item->optionList = $this -> option -> findOptionByQId($item->id);
+			$itemList['optionList'][]=$item;
+		}
+						
+		$this -> layout -> setLayout('layout/empty');
+		$this -> layout -> view('view/exam/create/quizMeta', $itemList);		
+	}
+	function delQuiz()
+	{
+		$_id = $this -> input -> post("id");
+		$this -> load -> model('exam/exam/m_question', 'question');		
+		$this -> question -> delQuestion(array('id' => $_id));
+	}
+	
+	function editQuiz()
+	{
+		$_id = $this -> input -> post("id");
+		$_data = explode(",",$this -> input -> post("quizData"));
+		
+		foreach ($_data as $i => $value) {
+			$temp=explode(":",$value);
+			$itemList[$temp[0]]=$temp[1];
+		}
+		$this -> load -> model('exam/exam/m_question', 'question');		
+		$this -> question -> updQuestion($itemList,array('id' => $_id));		
+	}
+	
+	
+	function editQuizTemplate()
+	{
+		$_id = $this -> input -> post("id");
+		$this -> load -> model('exam/exam/m_question', 'question');		
+		$this -> load -> model('exam/exam/m_option', 'option');
+		
+		$itemList['optionList'] =array();	
+		
+		$itemList['quiz']= $this -> question -> findQuestion(array('id' => $_id));	
+		
+		foreach ($itemList['quiz'] as $item)
+		{		
+			$item->optionList = $this -> option -> findOptionByQId($item->id);
+			$itemList['optionList'][]=$item;
+		}
+			
+		$this -> layout -> setLayout('layout/empty');
+		$this -> layout -> view('view/exam/create/editTemplate', $itemList);
+	}
+
+
 }

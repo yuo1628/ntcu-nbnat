@@ -1,8 +1,3 @@
-<!-- css & js-->
-<?php
-//include head
-echo $this -> layout -> fetchHead();
-?>
 
 <?php echo "<div id='div-" . $id . "'>"; ?>
 <?php echo "<span onclick=\"delNode('$id')\">刪除</span>"; ?>
