@@ -126,12 +126,49 @@ class MExamController extends MY_Controller {
 	{
 		$_id = $this -> input -> post("id");
 		$_data = explode(",",$this -> input -> post("data"));
+		$_option=$this->input->post("option");
+		$_newOption=$this->input->post("newOption");
+		
 		
 		foreach ($_data as $i => $value) {
 			$temp=explode(":",$value);
 			$itemList[$temp[0]]=$temp[1];
 		}
+				
+		$this -> load -> model('exam/exam/m_option', 'option');
 		$this -> load -> model('exam/exam/m_question', 'question');		
+		
+		$_oldOptionArray = $this -> option ->findOptionByQId($_id);
+		
+		foreach ($_option as $value)
+		{
+			$_newArray[]=$value["id"];	
+			
+		}
+		
+		foreach ($_oldOptionArray as $item)
+		{			
+			if (in_array($item->id, $_newArray)) 
+			{
+	 		  	foreach ($_option as $key => $value)
+				{
+					$this -> option -> updOption(array("correct"=>$value["correct"],"value"=>$value["value"]),array("id"=>$value["id"]));
+				}
+			}
+			else
+			{
+				$this -> option -> delOption(array("id"=>$item->id));
+				
+			}			
+		}
+		
+		
+		foreach ($_newOption as $item)
+		{
+			$item["questions_id"]=$_id;			
+			$this -> option -> addOption($item);
+		}
+		
 		$this -> question -> updQuestion($itemList,array('id' => $_id));		
 	}
 	

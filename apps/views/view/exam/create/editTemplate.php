@@ -1,40 +1,38 @@
-<div id='editTemplate'>
-	<input type="text" value="<?php echo $quiz[0] -> topic;?>" id="edit_topicText" /></div>
+<div class='editTemplate'>
+	<textarea class="edit_topicText"><?php echo $quiz[0] -> topic;?></textarea>
 
 
 <?php echo "<div class='tipsMes'><p>提示：</p>"; ?>	
-<?php echo "<textarea id='tipsTextarea'>".$quiz[0]->tips."</textarea>"; ?>
+<?php echo "<textarea class='tipsTextarea'>".$quiz[0]->tips."</textarea>"; ?>
 <?php echo "</div>"; ?>
 
-	<ul id="editOption">
+	<ul id="editOption-<?php echo $quiz[0] -> id;?>">
 		<?php switch ($quiz[0] -> type) : 
 			case 'choose': 
 			?>			
 				<?php foreach($quiz[0]->optionList as $i => $optionItem):?>
 										
-					<?php echo "<li class='oldOption'><input type='radio' name='item-".$quiz[0]->id."' value='".$optionItem->id."'";
+					<?php echo "<li class='oldOption' id='oldOption-".$optionItem->id."'><input type='radio' name='item-".$quiz[0]->id."' value='".$optionItem->id."'";
 							if ($optionItem->correct=="true")
 							{
 								 echo "checked='checked'";
 							}						
-					 echo "/>"; ?>
-					
-					<?php echo chr ( 0x41+$i).". <textarea class='option' id='option-".$optionItem->id."'>".$optionItem->value."</textarea></li>"; ?>
-					
+					 echo "/><textarea class='option' id='option-".$optionItem->id."'>".$optionItem->value."</textarea><span class='delBtn' onclick=\"removeOption('".$optionItem->id."')\">X</span></li>"?>
 				<?php endforeach; ?>
 				<?php break; ?>
 			<?php case 'multi_choose': ?>
 				<?php foreach($quiz[0]->optionList as $i =>$optionItem):?>
 					
-					<?php echo "<li class='oldOption'><input type='checkbox' value='".$optionItem->id."'";
+					<?php echo "<li class='oldOption' id='oldOption-".$optionItem->id."'><input type='checkbox' value='".$optionItem->id."'";
 						 	if ($optionItem->correct=="true")
 							{
 								 echo "checked='checked'";
 							}						
-					 echo "/>"; ?>
-					
-					<?php echo chr ( 0x41+$i).". <textarea class='option' id='option-".$optionItem->id."'>".$optionItem->value."</textarea></li>"; ?>
+					 echo "/><textarea class='option' id='option-".$optionItem->id."'>".$optionItem->value."</textarea><span class='delBtn' onclick=\"removeOption('".$optionItem->id."')\">X</span></li>"?>
+									<?php echo "</li>"?>
 				<?php endforeach; ?>
 				<?php break; ?>
-		<?php endswitch; ?>		
+		<?php endswitch; ?>				
 	</ul>
+	<span class="newOption" onclick="newOption('<?php echo ($quiz[0] -> id);?>','<?php echo ($quiz[0] -> type);?>')">新增選項</span>
+</div>

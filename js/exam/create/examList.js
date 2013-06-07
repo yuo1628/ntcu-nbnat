@@ -43,11 +43,11 @@ function decideCheck() {
 	});
 	if (_checkCount > 0) {
 		$("div#tools ul ul li.action").attr("class", "action abled");
-		$("div#tools ul ul li.actionScore").attr("class", "actionScore abled");
+		$("div#tools ul ul li.actionScore").attr("class", "actionScore actionScore_abled");
 		$("input#batchScoreText").removeAttr("disabled");
 	} else {
 		$("div#tools ul ul li.action").attr("class", "action unabled");
-		$("div#tools ul ul li.actionScore").attr("class", "actionScore unabled");
+		$("div#tools ul ul li.actionScore").attr("class", "actionScore actionScore_unabled");
 		$("input#batchScoreText").attr("disabled", "disabled");
 	}
 	var _size = $("input.quiz").size();
