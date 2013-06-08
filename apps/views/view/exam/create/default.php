@@ -26,8 +26,7 @@
 		<select id="type">
 			<option selected="selected" value="0">請選擇...</option>
 			<option value="choose">單選題</option>
-			<option value="multi_choose">多選題</option>
-			<option value="fill">填充題</option>			
+			<option value="multi_choose">多選題</option>					
 		</select>
 		<div id="content"></div>
 	</div>
