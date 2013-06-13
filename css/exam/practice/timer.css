@@ -1,0 +1,37 @@
+/**
+ * @author Shown
+ * 	<div id="timer">
+ * 	<div class="min">00</div>
+ * 	<div class="point">：</div>
+ * 	<div class="sec">00</div>
+ * 	</div>
+ */
+
+div#timer div
+{
+	float:left;
+	font-size: .8em;
+}
+div#timer div.point  
+{
+  	
+    -moz-animation: _move 1s ease infinite; 
+    -webkit-animation: _move 1s ease infinite;
+   
+}
+
+
+@-webkit-keyframes _move 
+{
+0% {opacity:1.0; text-shadow:0 0 20px #00c6ff;}
+50% {opacity:0; text-shadow:none; }
+100% {opacity:1.0; text-shadow:0 0 20px #00c6ff; }	
+}
+
+
+@-moz-keyframes _move 
+{
+0% {opacity:1.0; text-shadow:0 0 20px #00c6ff;}
+50% {opacity:0; text-shadow:none; }
+100% {opacity:1.0; text-shadow:0 0 20px #00c6ff; }	
+}

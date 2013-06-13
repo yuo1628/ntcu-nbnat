@@ -20,7 +20,8 @@ $(document).ready(function() {
 						$(this).css('-moz-transform', 'rotate(' + now + 'deg)');
 						$(this).css('-ms-transform', 'rotate(' + now + 'deg)');
 						$(this).css('-o-transform', 'rotate(' + now + 'deg)');
-						$(this).css('transform', 'rotate(' + now + 'deg)');					},
+						$(this).css('transform', 'rotate(' + now + 'deg)');	
+						},
 					duration : 'slow'
 				}, 'linear');
 			$("#main").animate({

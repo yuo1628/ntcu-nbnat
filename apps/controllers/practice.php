@@ -8,11 +8,11 @@ class PracticeController extends MY_Controller {
 		$this -> load -> model('exam/map/m_node', 'node');
 		$node = $this -> node -> allNode();
 		$itemList = array("itemList" => array(
-											array("back", "./index.php/home", "返回主選單"),
-											array("news", "./index.php/mExam", "管理試題"),
-											array("exam", "./index.php/map", "管理知識結構圖"),
-											array("exam", "./index.php/exam", "輸出試題分析"),
-											array("exam", "./index.php/practice", "線上測驗"),											
+											array("back", "./index.php/home", "返回主選單"),											
+											array("examManage","./index.php/exam", "管理試卷"),			
+											array("map","./index.php/map", "知識結構圖"),
+											array("result","./index.php/exam", "試題分析"),
+											array("practice","./index.php/practice", "線上測驗"),											
 											array("logout", "./", "登出帳號")
 										),
 						  "result" => $node);
@@ -69,7 +69,8 @@ class PracticeController extends MY_Controller {
 		}
 				
 		$itemList['examTitle'] =$node;
-		
+		$this -> layout -> addScript("js/exam/practice/timer.js");
+		$this -> layout -> addStyleSheet("css/exam/practice/timer.css");	
 		$this -> layout -> addStyleSheet("css/exam/practice/examList.css");	
 		$this -> layout -> setLayout('layout/empty');
 		$this -> layout -> view('view/exam/practice/examList', $itemList);
@@ -108,7 +109,7 @@ class PracticeController extends MY_Controller {
 		$userAns=$this -> answer -> findAnswerById($_id);
 				
 		$userAnsArray=json_decode($userAns[0]->answer,true);
-		$count=count($userAnsArray);
+		
 		$quizArray=$this->quizToArray($a_uid,$userAnsArray);
 				
 		foreach ($userAnsArray as $userAnsItem) 
@@ -144,6 +145,7 @@ class PracticeController extends MY_Controller {
 				$correct[$i]="0";
 			}				
 		}
+		$count=count($userTemp);
 	
 		$itemList = array("itemList" => array(
 										array("back", "./index.php/home", "返回主選單"),

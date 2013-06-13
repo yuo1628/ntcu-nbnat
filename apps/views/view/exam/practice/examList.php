@@ -1,4 +1,9 @@
 <h1><?php echo $examTitle[0]->name;?></h1>
+<div id="timer">
+	<div class="min">00</div>
+	<div class="point">：</div>
+	<div class="sec">00</div>
+</div>
 <ul id="examList">
 	<?php foreach ($examList as $j=>$item):
 	?>
