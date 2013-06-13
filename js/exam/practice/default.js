@@ -2,11 +2,7 @@
  * @author Shown
  */
 $(document).ready(function() {
-	$("input#batchScoreText").keyup(function(){
-
-		 $(this).val($(this).val().replace(/[^\d.]/g,""));
-		 $(this).val($(this).val().replace(/^\./g,""));
- 	});
+	
 
 });
 

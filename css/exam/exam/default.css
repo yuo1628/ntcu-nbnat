@@ -1,0 +1,59 @@
+/*
+ * @description: 試卷管理首頁樣式
+ * @author: shown 
+ * @update: shown
+ */
+
+ul#childList div.lockState
+{
+	
+	height:40px;
+	width:40px;
+	float: left;
+	
+	display:block;
+	
+}
+ul#childList div.lock,ul#childList div.unlock
+{	
+	margin:5px 0;	
+	display:block;
+	cursor:pointer;
+	
+	height:30px;
+	width:30px;
+	background: url(../../../img/icon.png);
+	background-repeat: no-repeat;
+	background-size: 30px auto;
+	
+}
+
+ul#childList div.lock:hover,ul#childList div.unlock:hover
+{
+	opacity:0.5;
+}
+ul#childList div.lock:active
+{
+	opacity:0.8;
+	background-position: 0px -1083px;
+}
+ul#childList div.unlock:active
+{
+	opacity:0.8;
+	background-position: 0px -1049px;
+}
+ul#childList div.lock
+{
+	background-position: 0px -1049px;
+}
+ul#childList div.unlock
+{
+	background-position: 0px -1083px;
+}
+ul#childList div.quiz
+{
+	border:1px solid #000;
+	display:inline-block;
+	
+	clear:both;
+}

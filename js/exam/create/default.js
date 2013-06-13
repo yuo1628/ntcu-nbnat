@@ -2,6 +2,7 @@
  * @author Shown
  */
 $(document).ready(function() {
+	
 	$(".greenBtn").hide();
 	$("select#node").prepend("<option value='0' selected='selected'>請選擇...</option>");
 
