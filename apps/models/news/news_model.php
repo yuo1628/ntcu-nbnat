@@ -63,6 +63,23 @@ class News_model extends CI_Model {
         return $this;
     }
     
+	/**
+     * 設定取出資料的數量
+     *
+     * 可接受的參數如ActionRecord類別的limit方法一樣
+     * @link http://ellislab.com/codeigniter/user-guide/database/active_record.html#select
+     *
+     * @access public
+     * @method News_model limit(int row_count)
+     * @method News_model limit(int row_count, int offset)
+     * @return News_model 回傳此News_model類別實體，可供方法串接使用
+     */
+	public function limit()
+	{
+		call_user_func_array(array($this->db, 'limit'), func_get_args());
+		return $this;
+	}
+	
     /**
      * 取得公告資料
      *
