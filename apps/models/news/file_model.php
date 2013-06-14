@@ -1,4 +1,6 @@
 <?php
+require_once APPPATH . 'models/news/file.php';
+
 
 /**
  * File_model
