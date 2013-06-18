@@ -7,17 +7,33 @@ class PracticeController extends MY_Controller {
 	public function index() {
 		$this -> load -> model('exam/map/m_node', 'node');
 		$node = $this -> node -> allNode();
-		$itemList = array("itemList" => array(
-											array("back", "./index.php/home", "返回主選單"),											
-											array("examManage","./index.php/exam", "管理試卷"),			
-											array("map","./index.php/map", "知識結構圖"),
-											array("result","./index.php/exam", "試題分析"),
-											array("practice","./index.php/practice", "線上測驗"),											
-											array("logout", "./", "登出帳號")
-										),
+		$itemList = array("itemList"=>array(
+				array("back","./index.php/home", "返回主選單"),
+				array("examManage","./index.php/exam", "管理試卷"),			
+				array("map","./index.php/map", "知識結構圖"),
+				/*array("result","./index.php/exam", "試題分析"),*/
+				array("practice","./index.php/practice", "線上測驗"),			
+				array("logout","./", "登出帳號")
+				),
 						  "result" => $node);
+						  
+				
+		
+		$itemList['childList'] =array();
+		
+		foreach ($node as $item){
+		
+			$item->count_e = $this->countExam($item->uuid);
+			$item->count_a = $this->countAns($item->uuid);
+			$itemList['childList'][] = $item;
+		}
+						  
 		$this -> layout -> addStyleSheet("css/exam/practice/default.css");
 		$this -> layout -> addScript("js/exam/practice/default.js");
+		$this -> layout -> addScript("js/exam/practice/timer.js");
+		$this -> layout -> addStyleSheet("css/exam/practice/timer.css");	
+		$this -> layout -> addStyleSheet("css/exam/practice/examList.css");	
+		
 		$this -> layout -> view('view/exam/practice/default', $itemList);
 	}
 
@@ -69,9 +85,7 @@ class PracticeController extends MY_Controller {
 		}
 				
 		$itemList['examTitle'] =$node;
-		$this -> layout -> addScript("js/exam/practice/timer.js");
-		$this -> layout -> addStyleSheet("css/exam/practice/timer.css");	
-		$this -> layout -> addStyleSheet("css/exam/practice/examList.css");	
+		
 		$this -> layout -> setLayout('layout/empty');
 		$this -> layout -> view('view/exam/practice/examList', $itemList);
 	}
@@ -79,10 +93,11 @@ class PracticeController extends MY_Controller {
 	{
 		$uuid = $this -> input -> post("uuid");
 		$ans = $this -> input -> post("answer");
+		$finish = $this -> input -> post("finish");
 		$spend = $this -> input -> post("spend");
 		
 		
-		$input_data=array("answer"=>$ans,"spend"=>$spend,"nodes_uuid"=>$uuid);
+		$input_data=array("answer"=>$ans,"spend"=>$spend,"nodes_uuid"=>$uuid,"finish"=>$finish);
 		
 		$this -> load -> model('exam/exam/m_answer', 'answer');
 		$this -> answer -> addAnswer($input_data);
@@ -103,7 +118,7 @@ class PracticeController extends MY_Controller {
 		$this -> load -> model('exam/map/m_node', 'node');
 		$this -> load -> model('exam/exam/m_option', 'option');
 		
-		$ansTitle=$this -> answer -> findAnswer(array("nodes_uuid"=>$a_uid));
+		$ansTitle=$this -> answer -> findAnswer(array("nodes_uuid"=>$a_uid,"finish"=>"true"));
 				
 				
 		$userAns=$this -> answer -> findAnswerById($_id);
@@ -147,13 +162,13 @@ class PracticeController extends MY_Controller {
 		}
 		$count=count($userTemp);
 	
-		$itemList = array("itemList" => array(
-										array("back", "./index.php/home", "返回主選單"),
-										array("news", "./index.php/mExam", "管理試題"),
-										array("exam", "./index.php/map", "管理知識結構圖"),
-										array("exam", "./index.php/exam", "輸出試題分析"),
-										array("exam", "./index.php/practice", "線上測驗"),											
-										array("logout", "./", "登出帳號")
+		$itemList = array("itemList"=>array(
+										array("back","./index.php/home", "返回主選單"),
+										array("examManage","./index.php/exam", "管理試卷"),			
+										array("map","./index.php/map", "知識結構圖"),
+										/*array("result","./index.php/exam", "試題分析"),*/
+										array("practice","./index.php/practice", "線上測驗"),			
+										array("logout","./", "登出帳號")
 										),
 						 "uuid"=>$a_uid,
 						 "result"=>$ansTitle,						 
@@ -206,6 +221,17 @@ class PracticeController extends MY_Controller {
 		return $arr;		
 	}
 	
+	function findTips()
+	{
+		$_id=$this->input->post("id");
+		$this -> load -> model('exam/exam/m_question', 'question');
+		
+		$itemList=array("tipStep"=>$this -> question -> findQuestion(array('id' => $_id)));
+		
+		
+		$this -> layout -> setLayout('layout/empty');
+		$this -> layout -> view('view/exam/practice/tipsStep', $itemList);
+	}
 	
 
 }

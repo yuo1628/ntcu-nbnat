@@ -18,7 +18,8 @@ ul#examList li.topicLi
 ul#examList li.topicLi div.tipsBtn
 {
 	display:block;	
-	text-align: right;
+	margin-top:50px;
+	margin-left:15px;
 	height:20px;
 	padding-bottom:3px;
 }
@@ -26,9 +27,9 @@ ul#examList li.topicLi div.tipsBtn
 ul#examList li.topicLi span.tips
 {	
 	cursor: pointer;
-	border:1px solid #a0a0a0;
+	border:1px solid #e0e0e0;
 	color:#a0a0a0;
-	background-color: #f0f0f0;
+	background-color: #f9f9f9;
 	padding:.2em .5em;	
 	-webkit-border-radius: 3px;	
 	-moz-border-radius: 3px;
@@ -39,7 +40,7 @@ ul#examList li.topicLi span.tips
 } 
 ul#examList li.topicLi span.tips:hover
 {
-	background-color: #f9f9f9;
+	background-color: #f0f0f0;
 }
 ul#examList li.topicLi span.tips:active
 {
@@ -91,12 +92,12 @@ ul#examList div.arrow
 }
 ul#examList div.arrow-block
 {	
-	float:right;
+	
 	display:block;
 	height:16px;
 	width:40px;	
 	overflow:hidden;
-	margin:0 0 -2px 0;	
+	margin:0 0 -2px 15px;	
 }
 ul#examList div.tips-content
 {
@@ -128,6 +129,58 @@ ul#examList div.tipsMes p
 	color:#888888;
 	border-bottom: 1px solid #e8e8e8;
 	padding-bottom:5px;
-	margin-bottom:5px;
- 	
+	margin-bottom:5px; 	
+}
+ul#examList div.tipsMes div.tipContent
+{
+	font-size:larger;
+	padding:10px;	
+	display:block;
+}
+
+ul#examList div.tipsMes div.step span.up
+{
+	position: relative;
+	float:left;
+	font-size:.6em;
+	color:#888888;
+	border:1px solid #e0e0e0;
+	padding:3px 8px;
+	-webkit-border-radius: 3px;	
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	cursor:pointer;
+}
+ul#examList div.tipsMes div.step span.up:hover
+{
+	background-color: #f0f0f0;
+}
+ul#examList div.tipsMes div.step span.up:active
+{
+	background-color: #e0e0e0;
+	
+}
+
+ul#examList div.tipsMes div.step span.down
+{
+	position: relative;
+	float:right;
+	font-size:.6em;
+	color:#888888;
+	border:1px solid #e0e0e0;
+	padding:3px 8px;
+	-webkit-border-radius: 3px;	
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	cursor:pointer;
+
+}
+ul#examList div.tipsMes div.step span.down:hover
+{
+	background-color: #f0f0f0;
+}
+ul#examList div.tipsMes div.step span.down:active
+{
+	background-color: #e0e0e0;
+	
 }

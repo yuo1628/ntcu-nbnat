@@ -7,12 +7,12 @@
  * 	</div>
  */
 
-div#timer div
+div#timer div,div#limitTime div
 {
-	float:left;
+	display:inline-block;
 	font-size: .8em;
 }
-div#timer div.point  
+div#timer div.point ,div#limitTime div.point
 {
   	
     -moz-animation: _move 1s ease infinite; 

@@ -3,7 +3,7 @@
 
 	?>
 	<?php echo "<li>" . $item -> name."<div class='btn'>";
-		if ($item -> count_e > 0) {
+		if ($item -> open_answer=="open" && $item -> count_e > 0) {
 			echo "<span class='greenBtn' onclick=\"enter('" . $item -> uuid . "')\">進行測驗</span>";
 			
 		}

@@ -1,4 +1,15 @@
-<?php if($quiz[0]->tips!="") echo "<div class='tipsMes'><p>提示：</p>".$quiz[0]->tips."</div>"; ?>
+<?php $tipsArray=json_decode($quiz[0]->tips,true);
+if(count($tipsArray)>0){
+	echo "<div class='tipsMes'><p>提示：</p>";
+for($i=0;$i<count($tipsArray);$i++)
+{
+	echo "<span class='tipsTopic'>Step ".($i+1)."</span><span class='tipsContent'>".$tipsArray[$i]."</span>";
+}		
+echo "</div>";
+}
+?>
+
+
 	<?php echo "<ul>"; ?>
 		<?php switch ($quiz[0] -> type) : 
 			case 'choose': 

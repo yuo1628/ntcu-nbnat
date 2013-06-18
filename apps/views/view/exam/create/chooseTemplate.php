@@ -1,12 +1,15 @@
 <table id="topic" cellspacing="0">
 	<tr>
-		<th>配分</th><td><input type="text" id="scoreText" /><input type="checkbox" id="show" checked="checked" />開放給學生作答</td>
+		<th>配分</th><td><input type="text" id="scoreText" value="0" /><input type="checkbox" id="show" checked="checked" />開放給學生作答</td>
 	</tr>	
 	<tr>
-		<th>題目</th><td><textarea id="topicText"></textarea></td>
+		<th>題目</th><td colspan="2"><textarea id="topicText"></textarea></td>
 	</tr>
 	<tr>
-		<th>提示</th><td>	<textarea id="tipsText"></textarea></td>
+		<th>提示</th><td colspan="2"><span onclick="addtips()" class="addtips">新增提示</span></td>
+	</tr>
+	<tr class="tipsTemp">
+		<th><?php echo "Step 1";?></th><td colspan="2"><textarea class="tipsText"></textarea></td>
 	</tr>
 </table>
 
@@ -20,7 +23,11 @@
 		<tr>
 			<th>
 			<input type="radio" name="answer" />
-			</th><td><textarea class="answerText"></textarea></td>
+			</th>
+			<td>
+				<textarea class="answerText"></textarea>
+			</td>
+			
 		</tr>
 	</tbody>
 </table>
