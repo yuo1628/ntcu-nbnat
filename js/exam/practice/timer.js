@@ -34,9 +34,24 @@ function checkNum(_num)
 		return _num;
 	}
 }
-
+/*
 function start()
 {
-	var _sec=$("div#limitTime div.limitSec").html();
-
+	var _sec=parseInt($("div#limitTime div.limitSec").html());
+	if(_sec==0)
+	{
+		_sec=60;
+	}
+	else
+	{
+		_sec--;
+	}	
+	$("div#limitTime div.limitSec").html(_sec);
+	start();
 }
+
+function cutSec()
+{
+	
+}
+*/
