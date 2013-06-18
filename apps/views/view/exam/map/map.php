@@ -6,8 +6,8 @@ $n = $node->allNode();
 //print_r(array_merge($l,$n));
 
 ?>
-<div class="mapBox">
-	<div class="controlBar">
+<div class="mapContainer" style="position:fiexed;height: 100%;width:100%;overflow:hidden;left:0;top:0">
+<div class="controlBar">
 			
 			<div class="linkBtn btn cItem">
 				上位連線
@@ -49,17 +49,19 @@ $n = $node->allNode();
 				全部顯示
 			</div>
 		</div>
-		
+	<div class="mapBox">
+	
 		<div class="debug">
 			
 		</div>
 		
-		<div class="msg">
-			
-		</div>
 		
 		<div class="canvas">
 			
 		</div>
+	</div>
 </div>
+
+<div class="mapBg"></div>
+<div class="mapBgClose">X</div>
 

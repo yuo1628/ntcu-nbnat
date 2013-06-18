@@ -64,6 +64,16 @@ var tmpLineIndex = 0;
 
 $(function() {
 	
+	$(".mapBg").width($(document).width());
+	$(".mapBg").height($(document).height());
+	
+	$(".mapBgClose").click(function() {
+		$(".mapBg").remove();
+		$(".mapContainer").remove();
+			
+	})
+	
+	
 	$(".point1").css({
 		'left' : '100px',
 		'top' : '100px',
@@ -88,12 +98,13 @@ $(function() {
 	
 	
 	$(document).mousemove(function(e) {
-		pageX = e.pageX - parseInt($(".mapBox").width()) - parseInt($("#main").css("margin-left"));
-		pageY = e.pageY - parseInt($("#header").height());
+		pageX = e.pageX;
+		pageY = e.pageY;
 		
 		//alert(pageX);
-		//$(".debug").text("mousemove");	
-		$(".msg").text("");
+		/*
+		$(".debug").text(parseInt($(".mapBox").width()) + " pageX " + e.pageX);	
+		$(".msg").text("");*/
 		
 		if(dragBoo)
 		{
@@ -1138,19 +1149,17 @@ function encodeJson() {
 	alert(test_json);
 	
 	var href = window.location.href;
-	//alert(href);
-	if(tmpLineIndex > lineIndex || tmpPointIndex > pointObjIndex)
-	{
+	
 		$.post(
 			href + "/addNode",
 			{
 				data : test_json
 			},
 			function(data) {
-				//alert(data);
+				alert("complete: " + data);
 			}
 		)
-	}
+	
 	
 	
 }

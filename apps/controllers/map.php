@@ -48,7 +48,7 @@ class MapController extends MY_Controller {
 			{
 				$itemList = array(
 				"type" => "point",
-				"pid" => $item->pid,
+				"pid" => $item->pid,				
 				"lid" => $item->lid,
 				"ch_lid" => $item->ch_lid,
 				"name" => $item->text,
