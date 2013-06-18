@@ -34,3 +34,9 @@ function checkNum(_num)
 		return _num;
 	}
 }
+
+function start()
+{
+	var _sec=$("div#limitTime div.limitSec").html();
+
+}

@@ -1,7 +1,7 @@
 <div id="examTitle">
 <h1><?php echo $examTitle[0]->name;?></h1>
 	<?php if($examTitle[0]->limit_time>0):?>	
-		<div id="limitTime" style="display:none;">
+		<div id="limitTime">
 			<div class="limitMin">
 				<?php if(floor($examTitle[0]->limit_time/60)<10):?>
 					<?php echo "0".floor($examTitle[0]->limit_time/60);?>
