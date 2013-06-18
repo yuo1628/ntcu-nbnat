@@ -15,7 +15,8 @@ class M_Node extends CI_Model {
 	 */
 	public function allNode() {
 
-		$query = $this -> db -> get_where($this->tablename,array("level"=>"1"));
+		//$query = $this -> db -> get_where($this->tablename,array("level"=>"1"));
+		$query = $this -> db -> get_where($this->tablename);
 		return $query -> result();
 	}
 
@@ -60,7 +61,8 @@ class M_Node extends CI_Model {
 	 * @return Boolean.
 	 */
 	public function addNode($data) {
-		$data["uuid"]=md5(uniqid(rand(), true));
+		
+		//$data["uuid"]=md5(uniqid(rand(), true));
 		if ($this -> db -> insert($this->tablename, $data)) {
 			return $this->db->insert_id();
 		} else {

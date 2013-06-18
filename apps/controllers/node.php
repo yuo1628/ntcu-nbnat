@@ -9,6 +9,7 @@ class NodeController extends MY_Controller {
 		$this -> load -> model('exam/map/m_node', 'node');
 		$data = $this -> node -> allNode();
 		$item = array(
+				
 				"itemList" => array( 
 					array("back", "./index.php/exam", "返回選單"),
 					array("news", "./index.php/map", "知識結構圖"), 
@@ -20,6 +21,8 @@ class NodeController extends MY_Controller {
 		$this -> layout -> addStyleSheet("css/exam/map/node.css");
 		$this -> layout -> addScript("js/exam/map/node.js");
 		$this -> layout -> view('view/exam/map/node', $item);
+		
+		
 	}
 
 	public function addNode($level = 1, $parent = null, $first = 0) {
@@ -120,7 +123,7 @@ class NodeController extends MY_Controller {
 		if (!$result) {
 			$item = array("node_rote" => $this->str);
 			$this -> layout -> setLayout('layout/empty');
-			$this -> layout -> view('view/exam/map/default.php', $item);
+			//$this -> layout -> view('view/exam/map/default.php', $item);
 			
 		} else {
 			$this->str.="<= <div class='child' id='child-".$result->node_from."'  onclick=\"childEdit('".$result -> parent_node."','".$result -> node_from."')\">".$result->name."</div>";
