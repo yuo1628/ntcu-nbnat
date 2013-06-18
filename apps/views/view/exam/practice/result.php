@@ -18,7 +18,12 @@
 				</select>次答題 </td>
 			</tr>
 			<tr><th>測驗時間：</th><td><span id="time"><?php echo $userAns[0] -> time; ?></span></td></tr>
-			<tr><th>測驗資訊：</th><td class="topic">花費時間﹦<span id="spend"><?php echo $userAns[0] -> spend; ?></span></td></tr>
+			<tr><th>測驗資訊：</th><td class="topic">花費時間﹦<span id="spend">
+				<?php if(floor($userAns[0] -> spend/60)>0):?>
+				<?php echo floor($userAns[0] -> spend/60)." 分 " ?>
+				<?php endif; ?>
+				<?php echo ($userAns[0] -> spend%60)." 秒"; ?>
+				</span></td></tr>
 			<tr><th></th><td class="topic">測驗題數﹦<span id="count"><?php echo $count; ?></span></td></tr>
 			<tr><th></th><td class="topic">答對題數﹦<span id="correct"><?php 					
 					if(in_array("1",$correct))

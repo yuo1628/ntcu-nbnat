@@ -4,9 +4,11 @@
 $(document).ready(function() {
 
 });
+var _hrefTemp=location.href.split("/router/");
+var _href = _hrefTemp[0];
 
 function importTemplate(_id) {
-	var _href = location.href;
+	
 	$.post(_href + "/editQuizTemplate", {
 		id : _id
 	}, function(result) {
@@ -22,8 +24,7 @@ function importTemplate(_id) {
 function updateQuiz(_id) {
 	
 	var _len = $("ul#editOption-" + _id + " li").size();
-	var _oldLen = $("ul#editOption-" + _id + " li.oldOption").size();
-	var _newLen = $("ul#editOption-" + _id + " li.newOption").size();
+	
 	
 	var _ansCount = 0;
 	for ( i = 0; i < _len; i++) {
@@ -33,10 +34,47 @@ function updateQuiz(_id) {
 		}
 	}
 	if (_ansCount > 0) {
-		var _href = location.href;
+		
 		var _tempTopic = $("div#div-" + _id + " textarea.edit_topicText").val();
-		var _tempTips = $("div#div-" + _id + " textarea.tipsTextarea").val();
-		var _options = new Array();
+		
+		
+		var _tempTips = new Array();		
+		
+		$("div#tips-" + _id + " div.tipsDiv").each(function(i){
+			if($(this).children("textarea").val()!=""){
+			_tempTips[i]=$(this).children("textarea").val();
+			}
+		});
+		
+		
+		
+		var _data =new Object();
+				
+		_data["topic"]=_tempTopic;
+		_data["tips"]=JSON.stringify(_tempTips);
+		
+
+		$.post(_href + "/editQuiz", {
+			id : _id,	
+			data:JSON.stringify(_data)
+								
+		}, function(result) {
+			editOption(_id);
+			$("div#div-" + _id + " div.topic").html(_tempTopic).show();
+			$("div#div-" + _id + " div.topic").next("div").remove();
+			$("tr#topicLi-" + _id + " span.show").attr("onclick", "showOption('" + _id + "','close')");
+			$("tr#topicLi-" + _id + " span.show").html("展開").next("span").remove();
+		});
+	} else {
+		alert("請指定選項答案!");
+	}
+}
+function editOption(_id)
+{
+	
+	var _oldLen = $("ul#editOption-" + _id + " li.oldOption").size();
+	var _newLen = $("ul#editOption-" + _id + " li.newOption").size();
+	var _options = new Array();
 		var _newOptions = new Array();
 
 		for ( i = 0; i < _oldLen; i++) {
@@ -52,24 +90,15 @@ function updateQuiz(_id) {
 			_newOptions[i].value = $("ul#editOption-" + _id + " li.newOption:eq(" + i + ") textarea.option").val();			
 		}
 		
-
-
-		$.post(_href + "/editQuiz", {
+	$.post(_href + "/editOption", {
 			id : _id,			
-			data : "topic:" + _tempTopic + ",tips:" + _tempTips,
-			option : _options,
-			newOption:_newOptions
-		}, function(result) {
+			option:_options,
+			newOption:_newOptions					
+		},function(){
 			
-			$("div#div-" + _id + " div.topic").html(_tempTopic).show();
-			$("div#div-" + _id + " div.topic").next("div").remove();
-			$("tr#topicLi-" + _id + " span.show").attr("onclick", "showOption('" + _id + "','close')");
-			$("tr#topicLi-" + _id + " span.show").html("展開").next("span").remove();
+			
 			showOption(_id, 'close');
 		});
-	} else {
-		alert("請指定選項答案!");
-	}
 }
 
 function cancelQuiz(_id) {
@@ -95,7 +124,7 @@ function newOption(_id,_type)
 		$("ul#editOption-"+_id).append(temp);
 		$("ul#editOption-"+_id+" li.newOption span.delBtn").bind("click",function(){
 			
-			$(this).parents("li").remove();
+			$(this).parents("li").first().remove();
 			
 		});
 	}
@@ -107,3 +136,32 @@ function newOption(_id,_type)
 	}	
 }
 
+function removeTips(_index,_id)
+{
+	$("div.tipsMes div#tipsDiv-" + _index).remove();
+	editTipsSortInit(_id);
+}
+
+function tipsAppend(_id)
+{	
+
+	var temp="<div class='tipsDiv'>";
+		temp+="<span class='tipsTopic'></span>";
+		temp+="<textarea class='tipsTextarea'></textarea>";
+		temp+="<span class='delBtn'>X</span>";
+		temp+="</div>";
+		$("div#tips-"+_id).append(temp);
+		$("div#tips-"+_id+" div.tipsDiv span.delBtn").bind("click",function(){
+			
+			$(this).parents("div").first().remove();
+			editTipsSortInit(_id);
+		});
+		editTipsSortInit(_id);
+}
+function editTipsSortInit(_id)
+{
+	$("div#div-"+_id+" div.tipsDiv").each(function(i){
+		$(this).children("span").first().html("Step "+(i+1));		
+		
+	});
+}

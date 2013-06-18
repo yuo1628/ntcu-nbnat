@@ -44,30 +44,63 @@
 {
 	background-color: #d0d0d0;
 }
-#practice ul#node li ul#childList
+#practice ul#childList
 {
 	background-color: #fff;
-	-webkit-box-shadow: #e0e0e0 1px 1px 3px inset;
-	-moz-box-shadow: #e0e0e0 1px 1px 3px inset;
-	box-shadow: #e0e0e0 1px 1px 3px inset;
+	
+	border:1px solid #F0f0f0;	
 }
-#practice ul#node li ul#childList li
+#practice ul#childList li
 {	
 	padding:10px;
-	border-bottom:1px solid #F0f0f0;	
+	
 }
-#practice ul#node li ul#childList li:hover
+#practice ul#childList li:hover
 {
 	background-color: #EBF5FF;
-	-webkit-box-shadow: #e0e0e0 1px 1px 3px inset;
-	-moz-box-shadow: #e0e0e0 1px 1px 3px inset;
-	box-shadow: #e0e0e0 1px 0px 1px inset;
+	
 }
-#practice ul#node li ul#childList li div.btn
+#practice ul#childList li div.btn
 {	
 	float:right;		
 }
-#practice ul#node li ul#childList li div.btn span
+#practice ul#childList li div.btn span
 {
 	margin-left:10px;
+}
+#practice div#examTitle div#timer
+{
+	display:none;
+}
+
+#practice p#examBtn
+{
+	padding:20px 0 20px 0px;
+	text-align: right;
+	
+}
+#practice p#examBtn span 
+{
+	margin:0px 10px;
+			
+}
+#practice p#examBtn span.previousQuiz,#practice p#examBtn span.nextQuiz
+{		
+	color:#888888;
+	font-family:"微軟正黑體";
+	border:1px solid #e0e0e0;
+	padding:3px 8px;
+	-webkit-border-radius: 3px;	
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	cursor:pointer;
+	float:left;
+}
+#practice p#examBtn span.previousQuiz:hover,#practice p#examBtn span.nextQuiz:hover
+{
+	background-color: #f0f0f0;
+}
+#practice p#examBtn span.previousQuiz:active,#practice p#examBtn span.nextQuiz:active
+{
+	background-color: #e0e0e0;
 }

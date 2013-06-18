@@ -15,9 +15,7 @@ class M_Node extends CI_Model {
 	 */
 	public function allNode() {
 
-		//$query = $this -> db -> get_where($this->tablename,array("level"=>"1"));
-		$query = $this -> db -> get_where($this->tablename);
-		return $query -> result();
+		$query = $this -> db -> get_where($this->tablename);		return $query -> result();
 	}
 
 	/**

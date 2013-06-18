@@ -1,10 +1,14 @@
 /**
  * @author Shown
  */
+var _hrefTemp=location.href.split("/router/");
+var _href = _hrefTemp[0];
 $(document).ready(function() {
 	checkNum();
 
 });
+
+
 function checkNum() {
 	$("tr.topicLi").each(function(i) {
 		$("td.number:eq(" + i + ")").html(i + 1);
@@ -14,7 +18,8 @@ function checkNum() {
 function showOption(_id, _type) {
 	if (_type == "close") {
 		$("div#div-" + _id + " div.topic").after("<div></div>");
-		var _href = location.href;
+		
+		
 		$.post(_href + "/findQuizMeta", {
 			id : _id
 		}, function(result) {
@@ -60,7 +65,7 @@ function decideCheck() {
 }
 
 function del(_id) {
-	var _href = location.href;
+	
 	$.post(_href + "/delQuiz", {
 		id : _id
 	}, function() {
@@ -70,6 +75,8 @@ function del(_id) {
 }
 
 function batchDel() {
+	if(confirm("試題一但刪除即無法復原，確定要刪除嗎？")){
+		
 	$("input.quiz").each(function() {
 		var _this = $(this);
 
@@ -77,6 +84,8 @@ function batchDel() {
 			del(_this.val().replace("exam-", ""));
 		}
 	});
+	}
+	
 }
 
 function batchShow(_state) {
@@ -93,24 +102,30 @@ function batchShow(_state) {
 }
 
 function batchPublic(_state) {
+	
+	
+	
 	$("input.quiz").each(function() {
 		var _this = $(this);
 		if (_this.prop("checked")) {
 			var _id = $(this).val().replace("exam-", "");
 			if (_state == "open") {
-				var _href = location.href;
+				var _data =new Object();
+				_data["public"]="true";
 				$.post(_href + "/editQuiz", {
 					id : _id,
-					data : "public:true"
+					data : JSON.stringify(_data)
 				}, function() {
 					$("tr#topicLi-" + _id + " td.public").html("<span class='fontGreen'>開放</span>");
 				});
 
 			} else {
-				var _href = location.href;
+				var _data =new Object();
+				
+				_data["public"]="false";
 				$.post(_href + "/editQuiz", {
 					id : _id,
-					data : "public:false"
+					data : JSON.stringify(_data)
 				}, function() {
 					$("tr#topicLi-" + _id + " td.public").html("<span class='fontRed'>不開放</span>");
 				});
@@ -135,10 +150,11 @@ function batchScore() {
 					var _this = $(this);
 					if (_this.prop("checked")) {
 						var _id = $(this).val().replace("exam-", "");
-						var _href = location.href;
+						var _data =new Object();
+						_data["score"]=_val;
 						$.post(_href + "/editQuiz", {
 							id : _id,
-							data : "score:" + _val
+							data : JSON.stringify(_data)
 						}, function() {
 							$("tr#topicLi-" + _id + " td.score span").html(_val/100);
 						});

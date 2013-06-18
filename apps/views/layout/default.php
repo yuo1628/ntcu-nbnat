@@ -30,7 +30,7 @@
 			<div id="content">
 				<div id="menu" class="divFrame">						
 					<div id="toggle">
-						<div class="arrow"><</div>
+						<div class="arrow"></div>
 						</div>
 					<ul>
 					<?php foreach ($itemList as $item): ?>

@@ -1,10 +1,19 @@
 <div class='editTemplate'>
 	<textarea class="edit_topicText"><?php echo $quiz[0] -> topic;?></textarea>
+<?php $tipsArray=json_decode($quiz[0]->tips,true);
 
+	echo "<div class='tipsMes' id='tips-".$quiz[0] -> id."'><p>提示：<span onclick=\"tipsAppend('".$quiz[0] -> id."')\">新增提示</span></p>";
+for($i=0;$i<count($tipsArray);$i++)
+{
+	echo "<div id='tipsDiv-".$i."' class='tipsDiv'>";
+	echo "<span class='tipsTopic'>Step ".($i+1)."</span>";	
+	echo "<textarea class='tipsTextarea'>".$tipsArray[$i]."</textarea>";
+	echo "<span class='delBtn' onclick=\"removeTips('".$i."','".$quiz[0] -> id."')\">X</span>";
+	echo "</div>";
+}		
+echo "</div>";
 
-<?php echo "<div class='tipsMes'><p>提示：</p>"; ?>	
-<?php echo "<textarea class='tipsTextarea'>".$quiz[0]->tips."</textarea>"; ?>
-<?php echo "</div>"; ?>
+?>
 
 	<ul id="editOption-<?php echo $quiz[0] -> id;?>">
 		<?php switch ($quiz[0] -> type) : 

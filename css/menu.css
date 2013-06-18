@@ -14,8 +14,7 @@
 	min-height: 720px;
 	float: right;
 	cursor: pointer;
-	outline: 0;	
-	
+	outline: 0;		
 	border-top-right-radius:6px;
 	border-bottom-right-radius:6px;
 	-webkit-border-top-right-radius:6px;
@@ -29,10 +28,18 @@
 	-o-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
 }
+#toggle div.arrow {
+	height:30px;
+	width:10px;
+	background: url(../img/icon.png);
+	background-repeat: no-repeat;
+	background-size: 30px auto;
+	background-position: 0px -1020px;
+}
 #toggle div {
 	position: absolute;
 	top: 48%;
-	left: 8px;
+	left: 5px;
 	color: #888888;
 }
 #toggle:hover {
@@ -81,6 +88,7 @@
 	margin: 0 15px 0 0;
 	display: block;
 }
+
 .icon {
 	padding: 2px 1px 2px 34px;
 	height: 30px;
@@ -91,6 +99,7 @@
 	background-repeat: no-repeat;
 	background-size: 29px auto;
 	border: 1px solid #f9f9f9;
+	
 }
 .icon:hover {
 	background-color: #ffffff;
@@ -98,6 +107,7 @@
 	-webkit-box-shadow: #e0e0e0 0px 0px 5px 0px inset;
 	-moz-box-shadow: #e0e0e0 0px 0px 5px 0px inset;
 	box-shadow: #e0e0e0 0px 0px 5px 0px inset;
+	color:#0e6eb8;
 	
 }
 .icon:active {
@@ -105,13 +115,52 @@
 	background-color: #E0E0E0;
 }
 .icon-member {
-	background-position: 2px -361px;
+	background-position: 3px -403px;
+}
+.icon-member:hover {
+	background-position: 3px -439px;
 }
 .icon-news {
-	background-position: 2px -482px;
+	background-position: 3px -475px;
+}
+.icon-news:hover {
+	background-position: 3px -509px;
 }
 .icon-exam {
-	background-position: 2px -543px;
+	background-position: 3px -543px;
+}
+.icon-exam:hover {
+	background-position: 3px -575px;
+}
+.icon-examManage {
+	background-position: 3px -608px;
+}
+.icon-examManage:hover {
+	background-position: 3px -642px;
+}
+.icon-map {
+	background-position: 3px -675px;
+}
+.icon-map:hover {
+	background-position: 3px -704px;
+}
+.icon-result {
+	background-position: 3px -800px;
+}
+.icon-result:hover {
+	background-position: 3px -830px;
+}
+.icon-practice {
+	background-position: 3px -863px;
+}
+.icon-practice:hover {
+	background-position: 3px -893px;
+}
+.icon-node {
+	background-position: 3px -735px;
+}
+.icon-node:hover {
+	background-position: 3px -768px;
 }
 .icon-create {
 	background-position: 2px -88px;
@@ -126,10 +175,15 @@
 	background-position: 3px -300px;
 }
 .icon-back {
-	background-position: 2px -59px;
+	background-position: 3px -68px;
+}
+.icon-back:hover {
+	background-position: 3px -100px;
 }
 .icon-logout {
-	background-position: 3px 4px;
+	background-position: 3px 0px;
 }
-
+.icon-logout:hover {
+	background-position: 3px -34px;
+}
 

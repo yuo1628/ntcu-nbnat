@@ -11,7 +11,8 @@
 	width: 98%;
 }
 .editTemplate textarea.tipsTextarea {
-	width: 98%;
+	width: 90%;
+	vertical-align: top;
 }
 .editTemplate textarea.option {
 	width: 80%;
@@ -20,7 +21,7 @@
 	vertical-align: top;
 	margin-right: 10px;
 }
-.editTemplate li.oldOption textarea.option, .editTemplate li.newOption textarea.option {
+.editTemplate li.oldOption textarea.option, .editTemplate li.newOption textarea.option,.editTemplate textarea.tipsTextarea {
 	margin-right: 10px;
 }
 .editTemplate span.newOption 
