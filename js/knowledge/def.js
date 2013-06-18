@@ -70,7 +70,9 @@ $(function() {
 	$(".mapBgClose").click(function() {
 		$(".mapBg").remove();
 		$(".mapContainer").remove();
-			
+		$(this).css({
+			'display' : 'none'
+		})
 	})
 	
 	
