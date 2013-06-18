@@ -50,8 +50,12 @@
 .mapBgClose {
 	z-index:1000;
 	position:fixed;
-	right:0;
-	bottom:0;
+	right:10px;
+	bottom:10px;
+	cursor: pointer;
+	background-color:#000;
+	color:#fff;
+	padding: 5px 10px;
 }
 
 /**
