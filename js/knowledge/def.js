@@ -201,8 +201,15 @@ $(function() {
 		encodeJson();
 	})
 	
+	
+	//一進來就讀
+	decodeJson();
 	$(".readBtn").click(function() {
 		decodeJson();
+	})
+	
+	$(".updBtn").click(function() {
+		encodeUpdJson();
 	})
 		
 })
@@ -490,6 +497,7 @@ function removeLink(obj) {
 	if(isExist)
 	{
 		//刪除線
+		removeLinkPost($(".line[lid=" + line_id + "]"));
 		$(".line[lid=" + line_id + "]").remove();
 		
 		//取消關聯
@@ -563,6 +571,7 @@ function removeChildLink(obj) {
 	if(isExist)
 	{
 		//刪除線
+		removeLinkChildPost($(".line[ch_lid=" + line_id + "]"));
 		$(".line[ch_lid=" + line_id + "]").remove();
 		
 		//取消關聯
@@ -647,12 +656,14 @@ function removePoint() {
 				
 				}
 			})
-			
+			removeLinkPost(line_obj);
 			$(line_obj).remove();
+			
 			
 		}
 		
 	}
+	//removePointPost(p);
 	$(p).remove();
 	
 	//ch lid
@@ -696,13 +707,16 @@ function removePoint() {
 				
 				}
 			})
-			
+			removeLinkChildPost(line_obj);
 			$(line_obj).remove();
 		
 		}
 	
 	}
+	
 	$(p).remove();
+	
+	removePointPost(p);
 }
 
 
@@ -1191,6 +1205,10 @@ function decodeJson() {
 		href + "/readNode",
 		function(data) {
 			$(".canvas").html("");
+			//隱藏存檔
+			$(".saveBtn").css({
+				'display' : 'none'
+			})
 	
 			json = data;
 			
@@ -1246,10 +1264,155 @@ function decodeJson() {
 			}
 		}
 	)
-	
-	
-	
+		
 }
+
+function encodeUpdJson() {
+	var ary = new Array();
+	
+	$(".canvas").find("div").each(function() {
+		var obj = new Object();
+		
+		if($(this).hasClass("line") && $(this).hasClass("chLine") )
+		{
+			
+				obj.type = "chLine";
+				obj.ch_lid = isEmpty($(this).attr("ch_lid"));
+				obj.cid = isEmpty($(this).attr("cid"));
+				obj.tid = isEmpty($(this).attr("tid"));
+				obj.width = isEmpty($(this).width());
+				obj.deg = isEmpty($(this).attr("deg"));
+				obj.x = parseInt($(this).css("left"));
+				obj.y = parseInt($(this).css("top"));		
+				ary.push(obj);
+			
+		}
+		else if($(this).hasClass("line") )
+		{
+			
+				obj.type = "line";
+				obj.lid = isEmpty($(this).attr("lid"));
+				obj.cid = isEmpty($(this).attr("cid"));
+				obj.tid = isEmpty($(this).attr("tid"));
+				obj.width = isEmpty($(this).width());
+				obj.deg = isEmpty($(this).attr("deg"));
+				obj.x = parseInt($(this).css("left"));
+				obj.y = parseInt($(this).css("top"));		
+				ary.push(obj);
+			
+			
+		}
+		else if($(this).hasClass("point"))
+		{
+			
+				obj.type = "point";
+				obj.pid = isEmpty($(this).attr("pid"));
+				obj.lid = isEmpty($(this).attr("lid"));
+				obj.ch_lid = isEmpty($(this).attr("ch_lid"));
+				obj.text = isEmpty($(this).text());
+				obj.x = parseInt($(this).css("left"));
+				obj.y = parseInt($(this).css("top"));		
+				ary.push(obj);
+			
+		}
+		
+		
+		
+	})
+		
+	var json = JSON.stringify(ary, null, 2);
+	
+	//alert(json);
+	
+	test_json = json;
+	
+	//alert(test_json);
+	
+	var href = window.location.href;
+	
+		$.post(
+			href + "/updNode",
+			{
+				data : test_json
+			},
+			function(data) {
+				alert("complete: " + data);
+			}
+		).fail(function(data) {
+			//alert(data);
+		})
+}
+
+function removePointPost(obj) {
+	var href = window.location.href;
+	var p_obj = new Object();
+	p_obj.type = "point";
+	p_obj.pid = isEmpty($(obj).attr("pid"));
+	p_obj.lid = isEmpty($(obj).attr("lid"));
+	p_obj.ch_lid = isEmpty($(obj).attr("ch_lid"));
+	p_obj.text = isEmpty($(obj).text());
+	p_obj.x = parseInt($(obj).css("left"));
+	p_obj.y = parseInt($(obj).css("top"));	
+	var j = JSON.stringify(p_obj, null,2);
+	$.post(
+		href + "/delNode",
+		{
+			data : j
+		},
+		function(data) {
+			
+		}
+	)
+}
+
+function removeLinkPost(_obj) {
+	
+	var href = window.location.href;
+	var obj = new Object();
+	obj.type = "line";
+	obj.lid = isEmpty($(_obj).attr("lid"));
+	obj.cid = isEmpty($(_obj).attr("cid"));
+	obj.tid = isEmpty($(_obj).attr("tid"));
+	obj.width = isEmpty($(_obj).width());
+	obj.deg = isEmpty($(_obj).attr("deg"));
+	obj.x = parseInt($(_obj).css("left"));
+	obj.y = parseInt($(_obj).css("top"));		
+	var j = JSON.stringify(obj, null,2);
+	$.post(
+		href + "/delLink",
+		{
+			data : j
+		},
+		function(data) {
+			alert("remove: " + data);
+		}
+	)
+}
+
+function removeLinkChildPost(_obj) {
+	
+	var href = window.location.href;
+	var obj = new Object();
+	obj.type = "chLine";
+	obj.ch_lid = isEmpty($(_obj).attr("ch_lid"));
+	obj.cid = isEmpty($(_obj).attr("cid"));
+	obj.tid = isEmpty($(_obj).attr("tid"));
+	obj.width = isEmpty($(_obj).width());
+	obj.deg = isEmpty($(_obj).attr("deg"));
+	obj.x = parseInt($(_obj).css("left"));
+	obj.y = parseInt($(_obj).css("top"));		
+	var j = JSON.stringify(obj, null,2);
+	$.post(
+		href + "/delLink",
+		{
+			data : j
+		},
+		function(data) {
+			alert("child: " + data);
+		}
+	)
+}
+
 
 
 /**
@@ -1285,7 +1448,7 @@ function readLine(x, y ,lid ,cid ,tid,width,deg)
 {
 	
 	$(".canvas").append(
-		"<div class='line' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' lid='" + lid + "' cid='" + cid + "' tid='" + tid + "'></div>"
+		"<div class='line' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' lid='" + lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'></div>"
 	);
 	
 	var line = $(".line[lid=" + lid +"]");
@@ -1300,7 +1463,7 @@ function readChildLine(x, y ,ch_lid ,cid ,tid,width,deg)
 {
 	
 	$(".canvas").append(
-		"<div class='line chLine' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' ch_lid='" + ch_lid + "' cid='" + cid + "' tid='" + tid + "'></div>"
+		"<div class='line chLine' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' ch_lid='" + ch_lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'></div>"
 	);
 	
 	var line = $(".line[ch_lid=" + ch_lid +"]");

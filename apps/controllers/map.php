@@ -110,6 +110,157 @@ class MapController extends MY_Controller {
 		echo json_encode(array_merge($node,$link));
 	}
 	
+	public function updNode() {
+		$this->load->model('exam/map/m_link', 'link');
+		$this->load->model('exam/map/m_node', 'node');
+		
+		$node = $this->node->allNode();
+		$link = $this->link->allLink();
+		
+		$str = $this->input->post("data");
+		$json = json_decode($str);
+		
+		foreach($json as $i => $item)
+		{
+			if($item->type == "point")
+			{
+				$n_ary = array(
+					"pid" => $item->pid
+				);
+				
+				$itemList = array(
+					"type" => "point",
+					"pid" => $item->pid,				
+					"lid" => $item->lid,
+					"ch_lid" => $item->ch_lid,
+					"name" => $item->text,
+					"x" => $item->x,
+					"y" => $item->y
+					);
+					
+				$compare = array(
+				"pid" => $item->pid
+				);
+				if($this->node->findNode($n_ary))
+				{
+					
+					$this->node->updNode($itemList, $compare);
+				}
+				else
+				{
+					$this->node->AddNode($itemList);
+				}
+			}
+			else if($item->type == "line")
+			{
+				$n_ary = array(
+					"lid" => $item->lid
+				);
+				
+				$itemList = array(
+					"type" => "line",
+					"lid" => $item->lid,
+					"node_from" => $item->cid,
+					"node_to" => $item->tid,
+					"width" => $item->width,
+					"z" => $item->deg, //z
+					"x" => $item->x,
+					"y" => $item->y,
+					"is_child" => '0'
+				);
+					
+				$compare = array(
+				"lid" => $item->lid
+				);
+				if($this->link->findLink($n_ary))
+				{
+					
+					$this->link->updLink($itemList, $compare);
+				}
+				else
+				{
+					$this->link->AddLink($itemList);
+				}
+			}
+			else if($item->type == "chLine")
+			{
+				$n_ary = array(
+					"lid" => $item->ch_lid
+				);
+				
+				$itemList = array(
+					"type" => "chLine",
+					"lid" => $item->ch_lid,
+					"node_from" => $item->cid,
+					"node_to" => $item->tid,
+					"width" => $item->width,
+					"z" => $item->deg, //z
+					"x" => $item->x,
+					"y" => $item->y,
+					"is_child" => '1'
+				);
+					
+				$compare = array(
+				"lid" => $item->ch_lid
+				);
+				if($this->link->findLink($n_ary))
+				{
+					
+					$this->link->updLink($itemList, $compare);
+				}
+				else
+				{
+					$this->link->AddLink($itemList);
+				}
+			}
+		}
+	}
+
+	function delNode() {
+		$this->load->model('exam/map/m_node', 'node');
+				
+		$str = $this->input->post("data");
+		$json = json_decode($str);
+		
+		
+		if($json->type == "point")
+		{
+			$item = array(
+				"pid" => $json->pid
+			);
+			$this->node->delNode($item);
+			
+		}
+		
+	}
 	
+	function delLink() {
+		$this->load->model('exam/map/m_link', 'link');
+				
+		$str = $this->input->post("data");
+		$json = json_decode($str);
+		
+		//echo $json;
+		
+		
+		if($json->type == "line")
+		{
+			$item = array(
+				"lid" => $json->lid,
+				"type" => $json->type
+			);
+			$this->link->delLink($item);
+			
+		}
+		else if($json->type == "chLine")
+		{
+			$item = array(
+				"lid" => $json->ch_lid,
+				"type" => $json->type
+			);
+			$this->link->delLink($item);
+		}
+		
+	}
 	
 }

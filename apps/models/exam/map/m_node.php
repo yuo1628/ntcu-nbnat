@@ -37,7 +37,10 @@ class M_Node extends CI_Model {
 	 */
 	public function findNode($conditions) {
 		$query = $this -> db -> get_where($this->tablename, $conditions);
+		
 		return $query -> result();
+		
+		
 	}
 	
 	/**

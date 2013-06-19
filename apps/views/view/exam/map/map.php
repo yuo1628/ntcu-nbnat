@@ -32,6 +32,9 @@ $n = $node->allNode();
 			<div class="saveBtn btn cItem">
 				存檔
 			</div>
+			<div class="updBtn btn cItem">
+				更新
+			</div>
 			<div class="readBtn btn cItem">
 				讀檔
 			</div>
