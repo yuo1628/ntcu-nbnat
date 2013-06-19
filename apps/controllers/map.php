@@ -36,10 +36,7 @@ class MapController extends MY_Controller {
 	public function addNode() {
 		$str = $this->input->post("data");
 		$json = json_decode($str);
-		
-		$itemList = array();
-		
-		
+				
 		//print_r($json) ;
 		foreach($json as $i => $item)
 		{
@@ -73,7 +70,7 @@ class MapController extends MY_Controller {
 				"y" => $item->y,
 				"is_child" => '0'
 				);
-				
+
 				$this->load->model('exam/map/m_link', 'link');
 				$this->link->addLink($itemList);
 			}

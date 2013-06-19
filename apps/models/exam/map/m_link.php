@@ -76,7 +76,7 @@ class M_Link extends CI_Model {
 	 * @return Boolean.
 	 */
 	public function addLink($data) {
-
+	
 		if ($this -> db -> insert($this -> tablename, $data)) {
 			return true;
 		} else {

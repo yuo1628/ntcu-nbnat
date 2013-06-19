@@ -1160,7 +1160,9 @@ function encodeJson() {
 			function(data) {
 				alert("complete: " + data);
 			}
-		)
+		).fail(function(data) {
+			alert(data);
+		})
 	
 	
 	
