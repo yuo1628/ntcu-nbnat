@@ -129,10 +129,10 @@ class News_model extends CI_Model {
         // 設定發佈者
         $news->set_author_by_id($model_data->author_id);
         // 設定檔案
-        $files = $this->file_model->where('news_id', $model_data->id)->get();
-        foreach ($files as $file)
+		$file_relation_rows = $this->db->get_where('news_has_file', array('news_id' => $model_data->id))->result();
+        foreach ($file_relation_rows as $file_relation_row)
         {
-            $news->append_files_by_id($file->id);
+            $news->append_files_by_id($file_relation_row->file_id);
         }
         return $news;
     }

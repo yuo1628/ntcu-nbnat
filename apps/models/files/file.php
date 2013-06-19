@@ -36,8 +36,7 @@ class File {
         // 無設定主鍵值，執行新增操作
         $data = array('id' => $this->id,
                       'name' => $this->name,
-                      'path' => $this->path,
-                      'news_id' => $this->news_id);
+                      'path' => $this->path);
         if (is_null($this->id)) {
             $this->CI->db->insert('file', $data);
             if (!$this->CI->db->_error_message()) {
@@ -73,10 +72,9 @@ class File {
             $this->CI->db->delete();
             if (!$this->CI->db->_error_message()) {
                 return TRUE;
-            } else {
-                return FALSE;
             }
         }
+		return FALSE;
     }
     
     public function __set($name, $value)

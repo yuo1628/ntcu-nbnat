@@ -31,7 +31,7 @@ class News {
         $this->CI->load->database();
         $this->CI->load->model('news/author_model');
         $this->CI->load->model('news/category_model');
-        $this->CI->load->model('news/file_model');
+        $this->CI->load->model('files/file_model');
     }
     
     /**
@@ -72,15 +72,20 @@ class News {
             }
         }
         // 儲存檔案
-        $is_insert_files_success = TRUE;
         foreach ($this->files as $file)
         {
-            $file->news = $this;
             if (!$file->save()) {
-                $is_insert_files_success = FALSE;
+                return FALSE;
             };
+			// 儲存公告與檔案的關聯
+			$relationData = array('news_id' => $this->id,
+								  'file_id' => $file->id);
+			$this->CI->db->insert('news_has_file', $relationData);
+			if ($this->CI->db->_error_message()) {
+				return FALSE;
+			}
         }
-        return $is_insert_files_success;
+        return TRUE;
     }
     
     /**
@@ -94,12 +99,10 @@ class News {
         if (!is_null($this->id)) 
         {
             $this->CI->db->where('id', $this->id);
-            $this->CI->db->delete();
-            if ($this->db->affected_rows()) {
+            $this->CI->db->delete('news');
+            if ($this->CI->db->affected_rows()) {
                 $this->id = NULL;
                 return TRUE;
-            } else {
-                return FALSE;
             }
         }
         return FALSE;
@@ -117,11 +120,15 @@ class News {
     }
     
     /**
-     *
+     * 新增檔案關聯至此實體
+	 *
+	 * @access public
+	 * @param string $file_id 檔案的主鍵值
+	 * @return boolean
      */
     public function append_files_by_id($file_id)
     {
-        $files = $this->CI->file_model->get($file_id);
+        $files = $this->CI->file_model->where('id', $file_id)->get();
         if (!$files) {
             return FALSE;
         }

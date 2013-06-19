@@ -1,5 +1,5 @@
 <?php
-require_once APPPATH . 'models/news/file.php';
+require_once APPPATH . 'models/files/file.php';
 
 
 /**
@@ -14,7 +14,6 @@ class File_model extends CI_Model {
     public function __construct()
     {
         $this->load->database();
-        $this->load->model('news/news_model');
     }
     
     /**
@@ -79,7 +78,6 @@ class File_model extends CI_Model {
         $file->id = $model_data->id;
         $file->name = $model_data->name;
         $file->path = $model_data->path;
-        $file->news_id = $model_data->news_id;
         return $file;
     }
 }
