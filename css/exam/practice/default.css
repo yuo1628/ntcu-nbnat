@@ -52,13 +52,18 @@
 }
 #practice ul#childList li
 {	
-	padding:10px;
-	
+	padding:10px;	
 }
 #practice ul#childList li:hover
 {
 	background-color: #EBF5FF;
 	
+}
+#practice ul#childList li span.quizMeta
+{	
+	font-size:.6em;
+	color:#A0A0A0;
+	margin-left:20px;
 }
 #practice ul#childList li div.btn
 {	
@@ -70,7 +75,7 @@
 }
 #practice div#examTitle div#timer
 {
-	display:none;
+	/*display:none;*/
 }
 
 #practice p#examBtn

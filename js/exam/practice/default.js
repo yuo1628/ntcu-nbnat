@@ -1,6 +1,7 @@
 /**
  * @author Shown
  */
+var _href = location.href;
 $(document).ready(function() {
 	
 });
@@ -8,7 +9,7 @@ $(document).ready(function() {
 function slide(_id, _state) {
 	switch (_state) {
 		case "close":
-			var _href = location.href;
+			
 			$.ajax({
 				url : _href + "/findChild/" + _id,
 				cache : false,
@@ -32,22 +33,53 @@ function slide(_id, _state) {
 
 }
 
-function enter(_id) {
-	var _href = location.href;
+function enter(_uuid) {
+	
 
 	$.post(_href + "/findExamList", {
-		uid : _id
+		uid : _uuid
 	}, function(data) {
 		$("div#practice").html(data);
 		$("ul#examList li.topicLi").hide();
-		$("ul#examList li.topicLi:eq(0)").show();
+		$("ul#examList li.topicLi:eq(0)").show();		
 		$("p#examBtn span.previousQuiz").hide();
 		isLastQuiz();
 		
 		
+		_limitMin=parseInt($("div#limitTime div.limitMin").html(),10);
+		_limitSec=parseInt($("div#limitTime div.limitSec").html(),10);
+		timedCount();
+		start();
+		
 	});
-
 }
+
+function reStart(_uuid)
+{
+	if(confirm("點選續考可從上次作答位置繼續作答。\n重新開始作答會刪除上次作答位置，確定仍要重新開始作答?"))
+	{
+		$.post(_href + "/reStart", {
+		uuid : _uuid
+		},function(){
+			enter(_uuid);
+		});
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function continuePractice(_uuid,_ansId)
+{
+	$.post(_href + "/findExamList", {
+		uid : _uuid,
+		ansId:_ansId
+	},function(data){
+		
+	});
+}
+
 function nextQuiz()
 {
 	$("ul#examList li.topicLi").each(function(i){
@@ -55,6 +87,9 @@ function nextQuiz()
 		{
 			$(this).hide();
 			$(this).next("li").show();
+			var _quizOn=parseInt($("span.quizOn").html());
+			_quizOn++;
+			$("div#quizNum span.quizOn").html(_quizOn);
 			isLastQuiz();
 			return false;
 		}		
@@ -109,7 +144,7 @@ function save(_uuid)
 	var _spend=(_min*60)+_sec;
 	
 
-	var _href = location.href;
+	
 	$.post(_href + "/addAnswer", {
 		answer : JSON.stringify(ansArr),
 		spend : _spend,
@@ -144,7 +179,7 @@ function send(_uuid) {
 	var _sec=parseInt($("div#timer div.sec").html());
 	var _spend=(_min*60)+_sec;
 
-	var _href = location.href;
+	
 	$.post(_href + "/addAnswer", {
 		answer : JSON.stringify(ansArr),
 		spend : _spend,
@@ -158,7 +193,7 @@ function send(_uuid) {
 }
 
 function result(_uid) {
-	var _href = location.href;
+	
 	location.href = _href + "/resultRoute/" + _uid + "/asc";
 }
 
@@ -167,7 +202,7 @@ function showTips(_id, _state) {
 	 *<div class='arrow-block'><div class='arrow'></div></div>
 	 <div class='tips-content'></div>
 	 * */
-	var _href = location.href;
+	
 	$.post(_href + "/findTips", {
 		id : _id		
 	}, function(result) {

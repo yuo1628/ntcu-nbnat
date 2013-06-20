@@ -6,11 +6,20 @@
  * 	<div class="sec">00</div>
  * 	</div>
  */
-
-div#timer div,div#limitTime div
+div#timer ,div#limitTime
 {
 	display:inline-block;
-	font-size: .8em;
+	margin-left:50px;
+	
+}
+div#timer div,div#limitTime div
+{
+	margin:0;
+	display:inline-block;	
+}
+div#timer div:first-child,div#limitTime div:first-child
+{
+	color:#A0A0A0;
 }
 div#timer div.point ,div#limitTime div.point
 {

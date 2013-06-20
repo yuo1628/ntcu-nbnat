@@ -1,35 +1,44 @@
 <div id="examTitle">
 <h1><?php echo $examTitle[0]->name;?></h1>
-	<?php if($examTitle[0]->limit_time>0):?>	
-		<div id="limitTime">
-			<div class="limitMin">
-				<?php if(floor($examTitle[0]->limit_time/60)<10):?>
-					<?php echo "0".floor($examTitle[0]->limit_time/60);?>
-				<?php else:?>
-					<?php echo floor($examTitle[0]->limit_time/60);?>
-				<?php endif;?>
-			</div>
-			<div class="point">：</div>
-			<div class="limitSec">				
-				<?php if(floor($examTitle[0]->limit_time%60)<10):?>
-					<?php echo "0".floor($examTitle[0]->limit_time%60);?>
-				<?php else:?>
-					<?php echo floor($examTitle[0]->limit_time%60);?>
-				<?php endif;?>
-			</div>		
+<div id="examMeta">
+	<div id="quizNum"><div>題數：</div><span class="quizOn">1</span>&nbsp;/&nbsp;<?php echo count($examList); ?></div>
+		
+		<div id="timer">
+			<div>花費時間：</div>
+			<?php /*if(count($lastAns[0])>0): ?>
+			<?php else: ?>
+			<div class="min">00</div>
+			<div class="point">:</div>
+			<div class="sec">00</div>
+			<?php endif;*/ ?>
 		</div>
-	<?php endif;?>
-	
-	<div id="timer">
-		<div class="min">00</div>
-		<div class="point">：</div>
-		<div class="sec">00</div>
+		<?php if($examTitle[0]->limit_time>0):?>	
+			<div id="limitTime" class="fontBlue">
+				<div>剩餘時間：</div>
+				<div class="limitMin">
+					<?php if(floor($examTitle[0]->limit_time/60)<10):?>
+						<?php echo "0".floor($examTitle[0]->limit_time/60);?>
+					<?php else:?>
+						<?php echo floor($examTitle[0]->limit_time/60);?>
+					<?php endif;?>
+				</div>
+				<div class="point">:</div>
+				<div class="limitSec">				
+					<?php if(floor($examTitle[0]->limit_time%60)<10):?>
+						<?php echo "0".floor($examTitle[0]->limit_time%60);?>
+					<?php else:?>
+						<?php echo floor($examTitle[0]->limit_time%60);?>
+					<?php endif;?>
+				</div>		
+			</div>
+		<?php endif;?>
 	</div>
 </div>
 <ul id="examList">
 	<?php foreach ($examList as $j=>$item):
 	?>
-	<?php echo "<li class='topicLi' id='li-".$item->id."'>"; ?>	
+	
+	<?php echo "<li class='topicLi' id='li-".$item->id."'> "; ?>	
 		
 		
 		<?php echo "<div class='topic'>".($j+1).".".$item -> topic."</div>"; ?>
@@ -70,6 +79,8 @@
 <p id="examBtn">
 	<span class="previousQuiz" onclick="previousQuiz()">上一題</span>
 	<span class="nextQuiz" onclick="nextQuiz()">下一題</span>
+	<?php if($examTitle[0]->limit_time==0):?>	
 	<span class="blueBtn" onclick="save('<?php echo $examTitle[0]->uuid ?>')">離開並記錄作答位置</span>
-	<span class="greenBtn" onclick="send('<?php echo $examTitle[0]->uuid ?>')">繳交試卷</span>
+	<?php endif; ?>	
+	<span id="sentOutAns" class="greenBtn" onclick="send('<?php echo $examTitle[0]->uuid ?>')">繳交試卷</span>
 </p>

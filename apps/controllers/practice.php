@@ -6,6 +6,8 @@ class PracticeController extends MY_Controller {
 
 	public function index() {
 		$this -> load -> model('exam/map/m_node', 'node');
+		$this -> load -> model('exam/exam/m_answer', 'answer');
+		
 		$node = $this -> node -> allNode();
 		$itemList = array("itemList"=>array(
 				array("back","./index.php/home", "返回主選單"),
@@ -15,16 +17,25 @@ class PracticeController extends MY_Controller {
 				array("practice","./index.php/practice", "線上測驗"),			
 				array("logout","./", "登出帳號")
 				),
-						  "result" => $node);
-						  
-				
+				"result" => $node);				
 		
 		$itemList['childList'] =array();
 		
 		foreach ($node as $item){
-		
-			$item->count_e = $this->countExam($item->uuid);
-			$item->count_a = $this->countAns($item->uuid);
+			
+			$score=0;
+			$item->count_e = $this->countExam($item->uuid); 		//總試題數
+			$item->count_a = $this->countAns($item->uuid);			//答題次數			
+			$score_temp=$this->countQuizScore($item->uuid);			//總分
+			foreach ($score_temp as $score_item)					
+			{														
+				$score=$score+$score_item->score;					
+			}																	
+			$item->count_score = ($score/100);						
+			
+			$item->isFinish=$this->answer->findAnswer(array("nodes_uuid"=>$item->uuid,"finish"=>"false"));
+			
+			
 			$itemList['childList'][] = $item;
 		}
 						  
@@ -36,7 +47,12 @@ class PracticeController extends MY_Controller {
 		
 		$this -> layout -> view('view/exam/practice/default', $itemList);
 	}
-
+	
+	function countQuizScore($_uuid)
+	{
+		$this -> load -> model('exam/exam/m_question', 'question');
+		return $this -> question -> findQuestion(array("nodes_uuid"=>$_uuid,"public"=>"true"));			
+	}
 	function findChild($_id) {
 		$this -> load -> model('exam/map/m_node', 'node');
 		$itemList = $this -> node -> findNode(array('parent_node' => $_id));
@@ -68,24 +84,33 @@ class PracticeController extends MY_Controller {
 	}
 	function findExamList() {
 		$_uid = $this -> input -> post("uid");
+		$_ansId = $this -> input -> post("ansId");
+		
 		$this -> load -> model('exam/exam/m_question', 'question');
 		$this -> load -> model('exam/map/m_node', 'node');
 		$this -> load -> model('exam/exam/m_option', 'option');
+		$this -> load -> model('exam/exam/m_answer', 'answer');
 		
 		$itemList['examList'] =array();			
-		
+			
 		$data = $this -> question -> findQuestion(array('nodes_uuid' => $_uid,'public' => "true"));	
 		$node = $this -> node -> findNode(array("uuid"=>$_uid));		
-		
-		
+			
+			
 		foreach ($data as $item)
 		{
 			$item->optionList = $this -> option -> findOptionByQId($item->id);
 			$itemList['examList'][]=$item;
 		}
-				
+					
 		$itemList['examTitle'] =$node;
 		
+		if($_ansId)
+		{
+			$itemList['lastAns'] =$this -> answer -> findAnswerById($_ansId);	
+			
+			
+		}
 		$this -> layout -> setLayout('layout/empty');
 		$this -> layout -> view('view/exam/practice/examList', $itemList);
 	}
@@ -119,6 +144,7 @@ class PracticeController extends MY_Controller {
 		$this -> load -> model('exam/exam/m_option', 'option');
 		
 		$ansTitle=$this -> answer -> findAnswer(array("nodes_uuid"=>$a_uid,"finish"=>"true"));
+		$examMes=$this -> node -> findNode(array("uuid"=>$a_uid));
 				
 				
 		$userAns=$this -> answer -> findAnswerById($_id);
@@ -147,6 +173,7 @@ class PracticeController extends MY_Controller {
 		
 		
 		$score=0;
+		$scoreTotal=0;
 		
 		foreach ($userTemp as $i=>$item) 
 		{			
@@ -158,7 +185,8 @@ class PracticeController extends MY_Controller {
 			else
 			{
 				$correct[$i]="0";
-			}				
+			}		
+			$scoreTotal=$scoreTotal+$quizArray[$i]["score"];		
 		}
 		$count=count($userTemp);
 	
@@ -171,8 +199,10 @@ class PracticeController extends MY_Controller {
 										array("logout","./", "登出帳號")
 										),
 						 "uuid"=>$a_uid,
+						 "examMes"=>$examMes,
 						 "result"=>$ansTitle,						 
 						 "count"=>$count,
+						 "scoreTotal"=>$scoreTotal,
 						 "score"=>$score,
 						 "correct"=>$correct,						 
 						 "quizAns"=>$quizArray,
@@ -227,11 +257,17 @@ class PracticeController extends MY_Controller {
 		$this -> load -> model('exam/exam/m_question', 'question');
 		
 		$itemList=array("tipStep"=>$this -> question -> findQuestion(array('id' => $_id)));
-		
-		
+				
 		$this -> layout -> setLayout('layout/empty');
 		$this -> layout -> view('view/exam/practice/tipsStep', $itemList);
 	}
 	
+	function reStart()
+	{
+		$_uuid=$this->input->post("uuid");
+		$this -> load -> model('exam/exam/m_answer', 'answer');
+		$this->answer->updAnswer(array("finish"=>"true"),array("nodes_uuid"=>$_uuid));
+		
+	}
 
 }

@@ -3,6 +3,35 @@
  * @author: shown (2013-06-06 14:30)
  * @update: shown
  */
+div#examTitle
+{
+	
+}
+div#examTitle h1
+{
+	
+}
+div#examTitle div#examMeta div#quizNum 
+{	
+	display:inline-block;
+	margin:0px auto;
+	margin-right:0px;
+	
+}
+div#examTitle div#examMeta div#quizNum div
+{
+	float:left;
+}
+div#examTitle div#examMeta div#quizNum  div:first-child
+{
+	color:#A0A0A0;
+}
+div#examTitle div#examMeta
+{
+	float:right;	
+	font-size: .8em;
+}
+
 ul#examList
 {
 	width:100%;	

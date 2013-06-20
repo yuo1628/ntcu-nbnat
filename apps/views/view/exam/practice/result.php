@@ -3,6 +3,8 @@
 	<div style="display:none;" id="uuid"><?php echo $uuid;?></div>
 	<div id="head">
 		<table cellspacing="0">
+			<tr><th>測驗名稱：</th><td><span><?php echo $examMes[0] -> name; ?></span></td></tr>
+			
 			<tr>
 				<th>測驗次別：</th><td>第
 				<select id="times">
@@ -18,7 +20,8 @@
 				</select>次答題 </td>
 			</tr>
 			<tr><th>測驗時間：</th><td><span id="time"><?php echo $userAns[0] -> time; ?></span></td></tr>
-			<tr><th>測驗資訊：</th><td class="topic">花費時間﹦<span id="spend">
+			<tr><th>測驗資訊：</th><td class="topic">
+				花費時間﹦<span id="spend">
 				<?php if(floor($userAns[0] -> spend/60)>0):?>
 				<?php echo floor($userAns[0] -> spend/60)." 分 " ?>
 				<?php endif; ?>
@@ -36,7 +39,9 @@
 						echo "0";
 					}					
 				?></span></td></tr>
-			<tr><th></th><td class="topic">測驗得分﹦<span id="score"><?php echo $score; ?></span></td></tr>
+			<tr><th></th><td class="topic">測驗總分﹦<span><?php echo $scoreTotal; ?></span></td></tr>
+	
+			<tr><th></th><td class="topic">測驗得分﹦<span id="score" style="color:red;"><?php echo $score; ?></span></td></tr>
 		</table>
 	</div>
 	 	

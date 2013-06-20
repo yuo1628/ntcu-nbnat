@@ -2,13 +2,14 @@
  * @author Shown
  */
 var _min=0,_sec=0;
+var _limitMin,_limitSec;
+
 
 $(document).ready(function(){
-	$("div#timer").append("");
-	timedCount(_sec);
+	
 });
 
-function timedCount(_sec)
+function timedCount()
 {	
 	if(_sec==60)
 	{
@@ -19,7 +20,7 @@ function timedCount(_sec)
 	$("div#timer div.sec").html(checkNum(_sec));
 	
 	_sec++;
-	setTimeout(function(){timedCount(_sec)},1000);
+	setTimeout(function(){timedCount()},1000);
 	
 }
 
@@ -34,24 +35,34 @@ function checkNum(_num)
 		return _num;
 	}
 }
-/*
+
 function start()
 {
-	var _sec=parseInt($("div#limitTime div.limitSec").html());
-	if(_sec==0)
+	
+	$("div#limitTime div.limitMin").html(checkNum(_limitMin));
+	$("div#limitTime div.limitSec").html(checkNum(_limitSec));
+	
+	if(_limitSec==0)
 	{
-		_sec=60;
+		if(_limitMin==0)
+		{
+			$("span#sentOutAns").click();
+		}else{
+			_limitSec=60;
+			_limitMin--;
+		}	
 	}
 	else
 	{
-		_sec--;
-	}	
-	$("div#limitTime div.limitSec").html(_sec);
-	start();
-}
-
-function cutSec()
-{
+		if(_limitSec<=30 && _limitMin==0)
+		{
+			$("div#limitTime div.limitSec").css("color","red");
+		}
+	}
+	
+	_limitSec--;
+	setTimeout(function(){start()},1000);
+	
 	
 }
-*/
+
