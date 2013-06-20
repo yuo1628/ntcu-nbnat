@@ -242,7 +242,6 @@ class MapController extends MY_Controller {
 		
 		//echo $json;
 		
-		
 		if($json->type == "line")
 		{
 			$item = array(

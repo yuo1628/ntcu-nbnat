@@ -8,6 +8,13 @@
 
 var pointObjIndex = 0;
 
+//scene
+var canvasBoo = false;
+var canvasX = 0;
+var canvasY = 0;
+var downX = 0;
+var downY = 0;
+
 //drag
 var dragObj;
 var dragBoo = false;
@@ -28,8 +35,6 @@ var removeChildLinkObj;
 
 //removePoint btn
 var removePointObj;
-
-
 
 //point click
 var pointClickObj;
@@ -76,16 +81,9 @@ $(function() {
 	})
 	
 	
-	$(".point1").css({
-		'left' : '100px',
-		'top' : '100px',
+	$(".canvas").css({
+		'left' : ($("canvas").width() * 0.5) - ($(document).width() * 0.5)
 	})
-	
-	$(".point2").css({
-		'left' : '500px',
-		'top' : '600px',
-	})
-	
 	
 	
 	//setLine();
@@ -104,8 +102,9 @@ $(function() {
 		pageY = e.pageY;
 		
 		//alert(pageX);
+		
+		
 		/*
-		$(".debug").text(parseInt($(".mapBox").width()) + " pageX " + e.pageX);	
 		$(".msg").text("");*/
 		
 		if(dragBoo)
@@ -143,7 +142,32 @@ $(function() {
 			
 			//hitTest(thisPointObj);
 		}
+		else
+		{
+			if(canvasBoo)
+			{
+				setSceneDrag();
+			}
+			
+		}
+		
 	})
+	
+	
+	//event
+	$(".canvas").mousedown(function() {
+		canvasBoo = true;
+		downX = pageX;
+		downY = pageY;
+		canvasX = parseInt($(this).css('left'));
+		canvasY = parseInt($(this).css('top'));
+	})
+	
+	$(".canvas").mouseup(function() {
+		canvasBoo = false;
+	})
+	
+	
 	
 	$(".drag").bind("mousedown", mouseDown);
 	$(".drag").bind("mouseup", mouseUp);
@@ -945,11 +969,20 @@ function get2PointZRotate(o1, o2) {
 
 
 function setDrag() {
+		
 	$(dragObj).css({
-		'left' : pageX - ($(dragObj).width() / 2),
-		'top' : pageY - ($(dragObj).height() / 2),
+		'left' : pageX - ($(dragObj).width() / 2) - parseInt($(".canvas").css("left")),
+		'top' : pageY - ($(dragObj).height() / 2) - parseInt($(".canvas").css("top"))
 	})
 };
+
+function setSceneDrag() {
+	$(".debug").text("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp setDrag cavasY " + canvasY);
+	$(".canvas").css({
+		'left' : canvasX + (pageX - downX), 
+		'top' : canvasY + (pageY - downY)
+	})
+}
 
 function hitTest(obj) {
 	$(".drag").each(function() {
@@ -1005,7 +1038,7 @@ function hitTest(obj) {
 function addPointObj() {
 	
 	$(".canvas").append(
-		"<div class='drag point' style='left:" + (($(".mapBox").width() * 0.5) - ($(".drag").width() * 0.5)) + "px;top: " + (($(".mapBox").height() * 0.5) -($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'></div>"
+		"<div class='drag point' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'></div>"
 	)
 	
 	$(".drag").bind("mousedown", mouseDown);
