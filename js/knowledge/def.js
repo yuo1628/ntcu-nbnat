@@ -333,11 +333,11 @@ function pointClick(obj) {
 }
 
 function setControlVar(obj) {
-	$(".pointText").val($(obj).text());
+	$(".pointText").val($(obj).find(".pointTextDesc").text());
 }
 
 function setPointVar() {
-	$(pointClickObj).text(
+	$(pointClickObj).find(".pointTextDesc").text(
 		$(".pointText").val()
 	)
 }
@@ -1077,7 +1077,7 @@ function hitTest(obj) {
 function addPointObj() {
 	
 	$(".canvas").append(
-		"<div class='drag point' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointBorder'></div><div class='pointBorderShadow'></div></div>"
+		"<div class='drag point' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointBorder'></div><div class='pointBorderShadow'></div><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
 	)
 	
 	$(".drag").bind("mousedown", mouseDown);
@@ -1655,7 +1655,7 @@ function readPoint(x, y, pid, lid, ch_lid, text) {
 	}
 	
 	$(".canvas").append(
-		"<div class='drag point' style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + "><div class='pointBorder'></div><div class='pointBorderShadow'></div>" + text + "</div>"
+		"<div class='drag point' style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + "><div class='pointBorder'></div><div class='pointBorderShadow'></div><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'>" + text + "</div></div></div>"
 	)
 	
 	$(".drag").bind("mousedown", mouseDown);

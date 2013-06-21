@@ -8,24 +8,33 @@
 	width: 960px;	
 	margin: 0 auto;
 	margin-top: 10px;
-	
+	background-color:#fff;
 }
 .banner{height: 230px;	}
 .news{height: 210px;	}
 .other {
-	margin: 10px 0;
+	margin: 10px auto;
 	padding: 10px 0;
-	text-align: center;
-	width: 990px;
+	width: 980px;
+	/*
 	border-top: 1px solid #e0e0e0;
 	border-bottom: 1px solid #e0e0e0;
+	*/
+	
 }
 .other .divFrame {
-	width: 280px;
+	
+	width: 295px;
 	height: 200px;
 	display: inline-block;
-	margin: 0 5px;
+	margin: 0 10px 0 0;
+	background-color:#fff;
 }
+
+.other .divFrame:last-child {
+	margin: 0 0px 0 0;
+}
+
 #msg{
 	width: 100%;
 	margin: 0 auto;

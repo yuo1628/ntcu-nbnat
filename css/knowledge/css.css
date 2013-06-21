@@ -158,5 +158,23 @@
 	*/
 }
 
+.pointTextBox {
+	position: absolute;
+	width: 140px;
+	top: 140px;
+	left: 50%;
+	margin-left: -75px;
+}
 
+.pointTextDesc {	
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	color:#5a9ee9;
+	background-color:#fff;
+	border-radius: 5px;
+	padding: 10px;
+	line-height:normal;
+	opacity: 0.9;
+}
 
