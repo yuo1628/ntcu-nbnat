@@ -3,9 +3,9 @@
 	
 	<ul id="childList">
 	<?php foreach ($childList as $item):?>
-	<li id="li-<?= $item -> uuid; ?>">
+	<li id="li-<?php echo $item -> uuid; ?>">
 	<div class="lockState">
-		<div id="lock-<?= $item -> uuid; ?>" class="<?php echo $item -> lock; ?>" onclick="lockToggle('<?= $item -> uuid; ?>')"></div>
+		<div id="lock-<?php echo $item -> uuid; ?>" class="<?php echo $item -> lock; ?>" onclick="lockToggle('<?= $item -> uuid; ?>')"></div>
 	</div>
 
 	<div class="quiz">
