@@ -241,6 +241,31 @@ $(function() {
 	$(".groupBtn").click(function() {
 		getThisPointGroup();
 	})
+	
+	$(".lockBtn ").click(function() {
+		var _href = window.location.href;
+		lockToggle(
+			$(pointClickObj).attr("uuid"),
+			_href
+		);
+		
+		if($(pointClickObj).hasClass("lock"))
+		{
+			
+			$(".lockBtn").removeClass("unlock");
+			$(".lockBtn").addClass("lock");
+		}
+		else
+		{
+			$(".lockBtn").removeClass("lock");
+			$(".lockBtn").addClass("unlock");
+		}
+	})
+	
+	$(".gotoTopicBtn").click(function() {
+		window.location = "./index.php/practice/?uuid=" + $(pointClickObj).attr("uuid");
+		//enter($(pointClickObj).attr("uuid"));
+	})
 		
 })
 
@@ -374,6 +399,20 @@ function ajaxProgress(url, data) {
 
 function setControlVar(obj) {
 	$(".pointText").val($(obj).find(".pointTextDesc").text());
+	
+	
+	
+	if($(obj).hasClass("lock"))
+	{
+		
+		$(".lockBtn").removeClass("unlock");
+		$(".lockBtn").addClass("lock");
+	}
+	else
+	{
+		$(".lockBtn").removeClass("lock");
+		$(".lockBtn").addClass("unlock");
+	}
 }
 
 function setPointVar() {
@@ -1358,6 +1397,8 @@ function getThisPointGroup() {
 	
 }
 
+
+
 /**
  * save to json 
  */
@@ -1605,7 +1646,8 @@ function decodeJson() {
 						json[i].lid,
 						json[i].ch_lid,
 						json[i].name,
-						json[i].uuid
+						json[i].uuid,
+						json[i].lock
 					)
 					
 					pointObjIndex = parseInt(json[i].pid) + 1;
@@ -1988,7 +2030,7 @@ function removeLinkChildPost(_obj) {
  * @param {Object} lid
  * @param {Object} ch_lid
  */
-function readPoint(x, y, pid, lid, ch_lid, text, uuid) {
+function readPoint(x, y, pid, lid, ch_lid, text, uuid, lock) {
 	var lid_attr = "";
 	var ch_lid_attr = "";
 	if(lid != undefined && lid != "" )
@@ -2001,7 +2043,7 @@ function readPoint(x, y, pid, lid, ch_lid, text, uuid) {
 	}
 	
 	$(".canvas").append(
-		"<div class='drag point' uuid=" + uuid + " style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + "><div class='pointBorder'></div><div class='pointBorderShadow'></div><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'>" + text + "</div></div></div>"
+		"<div class='drag point " + lock + "' uuid=" + uuid + " style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + "><div class='pointBorder'></div><div class='pointBorderShadow'></div><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'>" + text + "</div></div></div>"
 	)
 	
 	$(".drag").bind("mousedown", mouseDown);

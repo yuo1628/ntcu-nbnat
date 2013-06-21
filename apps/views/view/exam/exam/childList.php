@@ -34,11 +34,11 @@
 				<?php echo "<span class='unlockBtn blueBtn' onclick=\"quizManage('".$item -> uuid."')\">管理試題</span>"; ?>	
 				
 				<?php else:?>
-				<?php echo "<span class='unlockBtn blueBtn' style='display:none;' onclick=\"quizManage('".$item -> uuid."')\">管理試題</span>"; ?>					
+				<?php echo "<span class='unlockBtn blueBtn' style='display:none;'  onclick=\"quizManage('".$item -> uuid."')\">管理試題</span>"; ?>					
 				<?php endif;?>
 					<?php if($item -> open_answer=="close"):	?>
 						<?php if($item -> count_open>0):	?>
-							<?php echo "<span class='openBtn blueBtn' onclick=\"openToggle('".$item -> uuid."','open')\">開放作答</span>"; ?>	
+							<?php echo "<span class='openBtn blueBtn'  onclick=\"openToggle('".$item -> uuid."','open')\">開放作答</span>"; ?>	
 						<?php else:?>
 							<?php echo "<span class='openBtn unabledBtn' title='必須設定開放試題，才能開放此試卷作答'>開放作答</span>"; ?>	
 						<?php endif;?>	

@@ -172,3 +172,13 @@
 	
 	text-align:center;
 }
+
+
+/**
+ * 	lock
+ */
+
+.lock {
+	background-color:#ccc;
+	color:#999;
+}

@@ -4,6 +4,19 @@
 var _href = location.href;
 $(document).ready(function() {
 	
+	
+	if(getQueryString("uuid") != "")
+	{
+		var uuid = getQueryString("uuid");
+		enter(uuid);
+	}
+	
+	//alert(uuid);
+	//var o = $(".greenBtn[uuid=" + uuid + "]");
+	//alert($(o).attr("uuid"));
+	//$(o).click();
+	
+	
 });
 
 function slide(_id, _state) {
@@ -36,7 +49,7 @@ function slide(_id, _state) {
 function enter(_uuid) {
 	
 
-	$.post(_href + "/findExamList", {
+	$.post("./index.php/practice/findExamList", {
 		uid : _uuid
 	}, function(data) {
 		$("div#practice").html(data);
@@ -44,6 +57,7 @@ function enter(_uuid) {
 		$("ul#examList li.topicLi:eq(0)").show();		
 		$("p#examBtn span.previousQuiz").hide();
 		isLastQuiz();
+		isLastStep(_uuid);
 		
 		$("div#examMeta span.quizOn").html("1");
 		
@@ -63,7 +77,7 @@ function reStart(_uuid)
 {
 	if(confirm("點選續考可從上次作答位置繼續作答。\n重新開始作答會刪除上次作答位置，確定仍要重新開始作答?"))
 	{
-		$.post(_href + "/reStart", {
+		$.post("./index.php/practice/reStart", {
 		uuid : _uuid
 		},function(){
 			enter(_uuid);
@@ -77,7 +91,7 @@ function reStart(_uuid)
 
 function continuePractice(_uuid,_ansId,_index)
 {
-	$.post(_href + "/findExamList", {
+	$.post("./index.php/practice/findExamList", {
 		uid : _uuid,
 		ansId:_ansId
 	},function(data){
@@ -165,7 +179,7 @@ function finish(_uuid,_finish,_type,_aid)
 	var _spend=(_min*60)+_sec;
 	
 	
-		$.post(_href + "/addAnswer", {
+		$.post("./index.php/practice/addAnswer", {
 			answer : JSON.stringify(ansArr),
 			spend : _spend,
 			finish:_finish,
@@ -175,11 +189,11 @@ function finish(_uuid,_finish,_type,_aid)
 		}, function() {
 			if(_finish)
 			{
-				location.href = _href + "/resultRoute/" + _uuid + "/desc";
+				location.href = "./index.php/practice/resultRoute/" + _uuid + "/desc";
 			}
 			else
 			{
-				location.href = _href ;
+				location.href = "./index.php/practice";
 			}		
 		});
 	
@@ -188,7 +202,7 @@ function finish(_uuid,_finish,_type,_aid)
 
 function result(_uid) {
 	
-	location.href = _href + "/resultRoute/" + _uid + "/asc";
+	location.href = "./index.php/practice	/resultRoute/" + _uid + "/asc";
 }
 
 function showTips(_id, _state) {
@@ -197,7 +211,7 @@ function showTips(_id, _state) {
 	 <div class='tips-content'></div>
 	 * */
 	
-	$.post(_href + "/findTips", {
+	$.post("./index.php/practice/findTips", {
 		id : _id		
 	}, function(result) {
 		if (_state == "close") {
@@ -249,3 +263,12 @@ function isFirstStep(_id)
 	}
 	
 }
+
+function getQueryString( paramName ){ 
+　　paramName = paramName .replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
+　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
+　　var regex = new RegExp( reg ); 
+　　var regResults = regex.exec( window.location.href.toLowerCase() ); 
+　　if( regResults == null ) return ""; 
+　　else return regResults [1]; 
+} 

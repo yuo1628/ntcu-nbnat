@@ -13,12 +13,12 @@
 				if (count($item->isNotFinish )>0)
 				{
 								
-					echo "<span class='greenBtn' onclick=\"continuePractice('". $item -> uuid . "','". $item->isNotFinish[0]->id . "','".count(json_decode($item->isNotFinish[0]->answer))."')\">續考</span>";
+					echo "<span class='greenBtn' uuid='" . $item -> uuid .  "' onclick=\"continuePractice('". $item -> uuid . "','". $item->isNotFinish[0]->id . "','".count(json_decode($item->isNotFinish[0]->answer))."')\">續考</span>";
 					echo "<span class='grayBtn' onclick=\"reStart('" . $item -> uuid . "')\" >進行測驗</span>";
 				}				
 				else
 				{
-					echo "<span class='greenBtn' onclick=\"enter('" . $item -> uuid . "')\">進行測驗</span>";
+					echo "<span class='greenBtn' uuid='" . $item -> uuid .  "' onclick=\"enter('" . $item -> uuid . "')\">進行測驗</span>";
 				}
 				
 			

@@ -23,10 +23,12 @@ class MapController extends MY_Controller {
 			array("logout","./", "登出帳號")
 			));
 			
-			
+		$this -> layout -> addScript("js/exam/exam/examLock.js");
+		$this -> layout -> addScript("js/exam/practice/default.js");
 		$this -> layout -> addScript("js/knowledge/def.js");
 		$this -> layout -> addScript("js/knowledge/json2.js");
 		$this -> layout -> addScript("js/jquery.color.js");
+		
 		$this -> layout -> addStyleSheet("css/knowledge/css.css");
 		$this -> layout -> addStyleSheet("css/knowledge/controlbar.css");
 		$this -> layout -> addStyleSheet("css/knowledge/toolsbar.css");

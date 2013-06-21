@@ -4,7 +4,7 @@
 	?>
 	<?php echo "<li>" . $item -> name."<div class='btn'>";
 		if ($item -> open_answer=="open" && $item -> count_e > 0) {
-			echo "<span class='greenBtn' onclick=\"enter('" . $item -> uuid . "')\">進行測驗</span>";
+			echo "<span class='greenBtn' uuid='" . $item -> uuid .  "' onclick=\"enter('" . $item -> uuid . "')\">進行測驗</span>";
 			
 		}
 		if ($item -> count_a > 0) {
