@@ -26,6 +26,7 @@ class MapController extends MY_Controller {
 			
 		$this -> layout -> addScript("js/knowledge/def.js");
 		$this -> layout -> addScript("js/knowledge/json2.js");
+		$this -> layout -> addScript("js/jquery.color.js");
 		$this -> layout -> addStyleSheet("css/knowledge/css.css");
 		$this -> layout -> addStyleSheet("css/knowledge/controlbar.css");
 		$this -> layout -> addStyleSheet("css/knowledge/toolsbar.css");

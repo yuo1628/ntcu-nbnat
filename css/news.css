@@ -4,6 +4,7 @@
  * @update: shown (2013-05-03 19:30)
  */
 
+
 span.purple, span.green, span.blue, span.red, span.yellow {
 	padding: .2em .3em;
 	color: white;
@@ -48,6 +49,7 @@ span.yellow {
 }
 .more {
 	text-align: right;
+	
 }
 .more a {
 	text-decoration: none;
@@ -55,6 +57,10 @@ span.yellow {
 }
 .more a:hover {
 	font-weight: bold;
+}
+
+.more {
+	background-color:#fff;
 }
 
 #msg .man {
