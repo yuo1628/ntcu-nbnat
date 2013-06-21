@@ -1,16 +1,19 @@
 <div id="examTitle">
 <h1><?php echo $examTitle[0]->name;?></h1>
 <div id="examMeta">
-	<div id="quizNum"><div>題數：</div><span class="quizOn">1</span>&nbsp;/&nbsp;<?php echo count($examList); ?></div>
+	<div id="quizNum"><div>題數：</div><span class="quizOn"></span>&nbsp;/&nbsp;<?php echo count($examList); ?></div>
 		
 		<div id="timer">
 			<div>花費時間：</div>
-			<?php /*if(count($lastAns[0])>0): ?>
+			<?php if(isset($lastAns[0])): ?>				
+				<div class="min"><?php echo (floor($lastAns[0]->spend/60)<10) ? "0".floor($lastAns[0]->spend/60):floor($lastAns[0]->spend/60); ?></div>
+				<div class="point">:</div>
+				<div class="sec"><?php echo (($lastAns[0]->spend%60)<10) ? "0".($lastAns[0]->spend%60) : ($lastAns[0]->spend%60); ?></div>
 			<?php else: ?>
-			<div class="min">00</div>
-			<div class="point">:</div>
-			<div class="sec">00</div>
-			<?php endif;*/ ?>
+				<div class="min">00</div>
+				<div class="point">:</div>
+				<div class="sec">00</div>
+			<?php endif; ?>
 		</div>
 		<?php if($examTitle[0]->limit_time>0):?>	
 			<div id="limitTime" class="fontBlue">
@@ -34,12 +37,13 @@
 		<?php endif;?>
 	</div>
 </div>
+
 <ul id="examList">
+	
 	<?php foreach ($examList as $j=>$item):
 	?>
 	
 	<?php echo "<li class='topicLi' id='li-".$item->id."'> "; ?>	
-		
 		
 		<?php echo "<div class='topic'>".($j+1).".".$item -> topic."</div>"; ?>
 		
@@ -48,8 +52,14 @@
 			case 'choose': 
 			?>			
 				<?php foreach($item->optionList as $i => $optionItem):?>
-										
-					<?php echo "<li><input type='radio' name='item-".$item->id."' value='".$optionItem->id."' />"; ?>
+						
+					
+					<?php echo "<li><input type='radio' name='item-".$item->id."' value='".$optionItem->id."'";
+					if(isset($optionItem->checked))
+					{
+						echo "checked='checked'";
+					}
+					echo " />"; ?>
 					
 					<?php echo chr ( 0x41+$i).". ".$optionItem->value."</li>"; ?>
 					
@@ -58,7 +68,12 @@
 			<?php case 'multi_choose': ?>
 				<?php foreach($item->optionList as $i =>$optionItem):?>
 					
-					<?php echo "<li><input type='checkbox' value='".$optionItem->id."' />"; ?>
+					<?php echo "<li><input type='checkbox' value='".$optionItem->id."'";
+					if(isset($optionItem->checked))
+					{
+						echo "checked='checked'";
+					}
+					echo "/>"; ?>
 					
 					<?php echo chr ( 0x41+$i).". ".$optionItem->value."</li>"; ?>
 				<?php endforeach; ?>
@@ -80,7 +95,7 @@
 	<span class="previousQuiz" onclick="previousQuiz()">上一題</span>
 	<span class="nextQuiz" onclick="nextQuiz()">下一題</span>
 	<?php if($examTitle[0]->limit_time==0):?>	
-	<span class="blueBtn" onclick="save('<?php echo $examTitle[0]->uuid ?>')">離開並記錄作答位置</span>
+	<span class="blueBtn" onclick="finish('<?php echo $examTitle[0]->uuid ?>',false,'<?php echo (isset($lastAns[0])) ? "update','".$lastAns[0]->id : "add" ?>')">離開並記錄作答位置</span>
 	<?php endif; ?>	
-	<span id="sentOutAns" class="greenBtn" onclick="send('<?php echo $examTitle[0]->uuid ?>')">繳交試卷</span>
+	<span id="sentOutAns" class="greenBtn" onclick="finish('<?php echo $examTitle[0]->uuid ?>',true,'<?php echo (isset($lastAns[0])) ? "update','".$lastAns[0]->id : "add" ?>')">繳交試卷</span>
 </p>

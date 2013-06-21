@@ -49,7 +49,8 @@ span.yellow {
 }
 .more {
 	text-align: right;
-	
+	background-color:#fff;
+	margin:0;
 }
 .more a {
 	text-decoration: none;
@@ -57,10 +58,6 @@ span.yellow {
 }
 .more a:hover {
 	font-weight: bold;
-}
-
-.more {
-	background-color:#fff;
 }
 
 #msg .man {

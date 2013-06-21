@@ -23,6 +23,6 @@
 	echo "</td></tr>"; ?>
 	<?php endforeach; ?>
 	<?php else:?>
-	<?php echo "<tr><td class='empty' colspan='5'>尚未新增試題</td></tr>"; ?>	
+	<?php echo "<tr><td class='empty' colspan='6'>尚未新增試題</td></tr>"; ?>	
 	<?php endif;?>	
 </table>

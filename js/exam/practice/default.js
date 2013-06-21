@@ -45,14 +45,19 @@ function enter(_uuid) {
 		$("p#examBtn span.previousQuiz").hide();
 		isLastQuiz();
 		
+		$("div#examMeta span.quizOn").html("1");
+		
+		_min=parseInt($("div#timer div.min").html(),10);
+		_sec=parseInt($("div#timer div.sec").html(),10);
+		timedCount();
 		
 		_limitMin=parseInt($("div#limitTime div.limitMin").html(),10);
 		_limitSec=parseInt($("div#limitTime div.limitSec").html(),10);
-		timedCount();
 		start();
 		
 	});
 }
+
 
 function reStart(_uuid)
 {
@@ -70,15 +75,30 @@ function reStart(_uuid)
 	}
 }
 
-function continuePractice(_uuid,_ansId)
+function continuePractice(_uuid,_ansId,_index)
 {
 	$.post(_href + "/findExamList", {
 		uid : _uuid,
 		ansId:_ansId
 	},function(data){
 		
+		$("div#practice").html(data);
+		$("ul#examList li.topicLi").hide();
+		$("ul#examList li.topicLi:eq("+(_index-1)+")").show();		
+		$("p#examBtn span.previousQuiz").hide();
+		isLastQuiz();
+		
+		$("div#examMeta span.quizOn").html(_index);
+		
+		_min=parseInt($("div#timer div.min").html(),10);
+		_sec=parseInt($("div#timer div.sec").html(),10);
+		timedCount();
+		
+		
+		
 	});
 }
+
 
 function nextQuiz()
 {
@@ -115,7 +135,7 @@ function previousQuiz()
 	});	
 }
 
-function save(_uuid)
+function finish(_uuid,_finish,_type,_aid)
 {
 	var ansArr = new Array();
 
@@ -133,63 +153,37 @@ function save(_uuid)
 		});
 		ans.ans = option;
 		ansArr[i] = ans;
-		if($(this).is(":visible"))
-		{
-			return false;
+		if(!_finish){
+			if($(this).is(":visible"))
+			{
+				return false;
+			}	
 		}		
-		
 	});
 	var _min=parseInt($("div#timer div.min").html());
 	var _sec=parseInt($("div#timer div.sec").html());
 	var _spend=(_min*60)+_sec;
 	
-
 	
-	$.post(_href + "/addAnswer", {
-		answer : JSON.stringify(ansArr),
-		spend : _spend,
-		finish:"false",
-		uuid : _uuid
-	}, function() {
-		location.href = _href ;
-	});
-	
-}
-
-function send(_uuid) {
-	var ansArr = new Array();
-
-	$("ul#examList li.topicLi").each(function(i) {
-		var ans = new Object();
-
-		var _thisLI = $(this).children("ul").children("li");
-		var _id = $(this).attr("id").replace("li-", "");
-		ans.topicId = _id;
-		var option = new Array();
-		_thisLI.each(function() {
-			if ($(this).children("input").prop("checked") == true) {
-				option.push($(this).children("input").val());
+		$.post(_href + "/addAnswer", {
+			answer : JSON.stringify(ansArr),
+			spend : _spend,
+			finish:_finish,
+			uuid : _uuid,
+			aid:_aid,
+			type:_type
+		}, function() {
+			if(_finish)
+			{
+				location.href = _href + "/resultRoute/" + _uuid + "/desc";
 			}
+			else
+			{
+				location.href = _href ;
+			}		
 		});
-
-		ans.ans = option;
-		ansArr[i] = ans;
-	});
-	var _min=parseInt($("div#timer div.min").html());
-	var _sec=parseInt($("div#timer div.sec").html());
-	var _spend=(_min*60)+_sec;
-
 	
-	$.post(_href + "/addAnswer", {
-		answer : JSON.stringify(ansArr),
-		spend : _spend,
-		finish:"true",
-		uuid : _uuid
-	}, function() {
-		location.href = _href + "/resultRoute/" + _uuid + "/desc";
-	});
 	
-
 }
 
 function result(_uid) {

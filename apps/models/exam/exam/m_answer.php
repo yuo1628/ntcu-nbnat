@@ -66,7 +66,7 @@ class M_Answer extends CI_Model {
 	 */
 	public function countAnswer($_uuid)
 	{
-		$query = $this -> db -> get_where($this -> tablename, array('nodes_uuid' => $_uuid));
+		$query = $this -> db -> get_where($this -> tablename, array('nodes_uuid' => $_uuid,"finish"=>"true"));
 		return $query -> num_rows();
 	}
 	

@@ -31,6 +31,9 @@ class ExamController extends MY_Controller {
 			$itemList['childList'][] = $item;
 		}	
 		
+		$this -> layout -> addStyleSheet("css/exam/exam/examLock.css");
+		$this -> layout -> addScript("js/exam/exam/examLock.js");
+		
 		$this -> layout -> addStyleSheet("css/exam/exam/default.css");	
 		$this -> layout -> addStyleSheet("css/exam/practice/default.css");
 		$this -> layout -> addScript("js/exam/exam/default.js");

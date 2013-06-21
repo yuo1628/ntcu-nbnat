@@ -54,12 +54,30 @@
 #create div#quizList {
 	margin-bottom: 15px;
 }
-
-#create div#tools {
-	/*display:none;*/
+#create div#tools
+{
+	position:relative;
+	
+	margin:20px 0;
+}
+#create div#tools div
+{
+	position:absolute;
+	
+	bottom:5px;
+	right:0;
+	
+	display:inline-block;	
+}
+#create div#tools ul
+{
+	display:inline-block;	
+	margin:0;
+	
 }
 #create div#tools ul ul
 {
+	
 	display:inline-block;
 	margin-right: 10px;
 	border: 1px solid #e0e0e0;

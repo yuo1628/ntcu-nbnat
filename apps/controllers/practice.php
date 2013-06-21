@@ -33,7 +33,7 @@ class PracticeController extends MY_Controller {
 			}																	
 			$item->count_score = ($score/100);						
 			
-			$item->isFinish=$this->answer->findAnswer(array("nodes_uuid"=>$item->uuid,"finish"=>"false"));
+			$item->isNotFinish=$this->answer->findAnswer(array("nodes_uuid"=>$item->uuid,"finish"=>"false"));
 			
 			
 			$itemList['childList'][] = $item;
@@ -77,10 +77,10 @@ class PracticeController extends MY_Controller {
 		return $this -> question -> countQuestion(array("nodes_uuid"=>$_id,'public' => "true"));		
 	}
 	
-	function countAns($_id)
+	function countAns($_uuid)
 	{
 		$this -> load -> model('exam/exam/m_answer', 'answer');
-		return $this -> answer -> countAnswer($_id);		
+		return $this -> answer -> countAnswer($_uuid);		
 	}
 	function findExamList() {
 		$_uid = $this -> input -> post("uid");
@@ -96,38 +96,70 @@ class PracticeController extends MY_Controller {
 		$data = $this -> question -> findQuestion(array('nodes_uuid' => $_uid,'public' => "true"));	
 		$node = $this -> node -> findNode(array("uuid"=>$_uid));		
 			
+		if($_ansId)
+		{
+			$_ansMes=$this -> answer -> findAnswerById($_ansId);
+			$itemList['lastAns']=$_ansMes;			
+		}
 			
 		foreach ($data as $item)
 		{
 			$item->optionList = $this -> option -> findOptionByQId($item->id);
-			$itemList['examList'][]=$item;
+			
+			if($_ansId)
+			{					
+				$_ansArr=(json_decode($_ansMes[0]->answer));
+				
+				foreach ($_ansArr as $ansItem)
+				{
+					foreach ($item->optionList as $_optionItem)
+					{						
+						if($ansItem->topicId==$_optionItem->questions_id )
+						{
+							foreach ($ansItem->ans as $_ansItem)
+							{
+								if($_ansItem==$_optionItem->id)
+								{
+									$_optionItem->checked=true;
+								}														
+							}							
+						}
+					}
+				}						
+			}		
+			
+			$itemList['examList'][]=$item;						
 		}
 					
 		$itemList['examTitle'] =$node;
 		
-		if($_ansId)
-		{
-			$itemList['lastAns'] =$this -> answer -> findAnswerById($_ansId);	
-			
-			
-		}
+		
 		$this -> layout -> setLayout('layout/empty');
 		$this -> layout -> view('view/exam/practice/examList', $itemList);
+		
 	}
 	function addAnswer()
 	{
 		$uuid = $this -> input -> post("uuid");
 		$ans = $this -> input -> post("answer");
 		$finish = $this -> input -> post("finish");
-		$spend = $this -> input -> post("spend");
+		$spend = $this -> input -> post("spend");		
+		$type=$this -> input -> post("type");
 		
-		
-		$input_data=array("answer"=>$ans,"spend"=>$spend,"nodes_uuid"=>$uuid,"finish"=>$finish);
 		
 		$this -> load -> model('exam/exam/m_answer', 'answer');
-		$this -> answer -> addAnswer($input_data);
-		
+		if($type=="add"){
+			$input_data=array("answer"=>$ans,"spend"=>$spend,"nodes_uuid"=>$uuid,"finish"=>$finish);
+			$this -> answer -> addAnswer($input_data);
+		}
+		else
+		{
+			$_aid=$this -> input -> post("aid");
+			$input_data=array("answer"=>$ans,"spend"=>$spend,"finish"=>$finish);
+			$this -> answer -> updAnswer($input_data,array("id"=>$_aid));
+		}
 	}
+		
 	
 	function resultRoute($a_uid,$_sort="desc")
 	{

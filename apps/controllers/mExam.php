@@ -35,7 +35,9 @@ class MExamController extends MY_Controller {
 		}
 				
 		$itemList['examTitle'] =$node;
-		
+						
+		$this -> layout -> addStyleSheet("css/exam/exam/examLock.css");
+		$this -> layout -> addScript("js/exam/exam/examLock.js");
 		
 		$this -> layout -> addScript("js/exam/create/editTemplate.js");
 		$this -> layout -> addStyleSheet("css/exam/create/editTemplate.css");

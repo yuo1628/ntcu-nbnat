@@ -44,29 +44,6 @@ function enter(_id) {
 
 }
 
-function lockToggle(_uuid)
-{
-	var _href = location.href;
-	var lock_state=$("div#lock-"+_uuid).prop("class");
-	if(lock_state=="lock")
-		{
-			lock_state="unlock";
-			$("li#li-"+_uuid+" .unlockBtn").show();		
-		}
-		else
-		{
-			lock_state="lock";
-			$("li#li-"+_uuid+" .unlockBtn").hide();
-		}
-	$.post(_href + "/lockToggle", {
-		uuid : _uuid,
-		lock:lock_state
-	}, function() {
-		
-		$("div#lock-"+_uuid).removeClass().addClass(lock_state);
-		
-	});		
-}
 
 function openToggle(_uuid,_state)
 {
@@ -112,25 +89,32 @@ function sentOpen(_uuid)
 	var _min="";
 	var _sec="";
 		
+		
 	if(_limit=="time")
-	{					
+	{							
 		_min=$.trim($("li#li-"+_uuid+" div.setLimit input[type=text]:eq(0)").val());
 		_sec=$.trim($("li#li-"+_uuid+" div.setLimit input[type=text]:eq(1)").val());
-		_time=(_min*60)+(_sec*1);						
-	}
-	if(_time==0)
-	{
-		_timeMes="無期限"
+		if(isNaN(parseInt(_min))  || isNaN(parseInt(_sec)) )
+		{
+			alert("請正確輸入所限制之時間！");	
+		}
+		else
+		{
+			_time=(_min*60)+(_sec*1);			
+			_timeMes=_min+" 分 "+_sec+" 秒";			
+		}						
 	}
 	else
 	{
-		_timeMes=_min+" 分 "+_sec+" 秒";
+		_timeMes="無期限"
 	}
+	
 	if(_limit=="time" && _time==0)
 	{
-		alert("請正確輸入所限制之時間！");			
-	}else{
-	
+		alert("請正確輸入所限制之時間！");	
+	}
+	else
+	{	
 		var _href = location.href;
 		$.post(_href + "/sentOpen", {
 			uuid : _uuid,
@@ -141,7 +125,6 @@ function sentOpen(_uuid)
 			$("li#li-"+_uuid+" div.btn span.openBtn").remove();
 			$("li#li-"+_uuid+" div.btn").append("<span class='closeBtn grayBtn'>取消開放</span>");
 			$("li#li-"+_uuid+" div.btn span.closeBtn").attr("onclick","openToggle('"+_uuid+"','close')");
-	
 			
 		});
 	}	
@@ -150,12 +133,11 @@ function sentOpen(_uuid)
 function quizManage(_uuid)
 {	
 	var _href = location.href;
-		$.post(_href + "/openToggle", {
+	//管理試題 取消開放作答
+	/*	$.post(_href + "/openToggle", {
 			uuid : _uuid,			
 		}, function() {
-			
+	*/		
 			location.href=_href.replace("exam","mExam/router/"+_uuid);	
-		});
-	
-	
+	//	});	
 }

@@ -16,7 +16,7 @@
 	
 }
 
-.greenBtn, .blueBtn, .grayBtn{	
+.greenBtn, .blueBtn, .grayBtn, .unabledBtn{	
 	border: 1px solid #e0e0e0;
 	padding: .2em .8em;
 	-webkit-border-radius: 5px;
@@ -24,12 +24,19 @@
 	border-radius: 5px;	
 	font-family: "微軟正黑體", Arial;
 	font-weight: bold;	
+	
+}
+.greenBtn, .blueBtn, .grayBtn{		
 	cursor:pointer;
 }
 .greenBtn, .blueBtn{
 	color: white;
 }
-
+.unabledBtn
+{
+	background-color: #f9f9f9;
+	color:#d0d0d0;
+}
 .greenBtn:hover {
 	background-color: #178918;
 }

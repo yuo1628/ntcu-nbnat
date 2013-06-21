@@ -8,8 +8,9 @@
 			<ul><li class='action unabled' onclick="batchPublic('open')">開放</li><li class='action unabled' onclick="batchPublic('close')">不開放</li></ul>
 			<ul><li class='actionScore unabled'>修改配分</li><li class='actionScore'><input type="text" id="batchScoreText" disabled="disabled"></input></li><li class='action unabled' onclick="batchScore()">更改</li></ul>
 		</ul>
+		<div ><span class="lockState">開放試卷</span></div>
 	</div>
-	<div></div>
+	
 	<div id="quizList"><table id="examList" cellspacing="0">
 	
 	<?php echo "<tr><th width='50px'><input type='checkbox' class='all' onclick='checkAll()' /></th><th width='50px'>題號</th><th>題目</th><th width='50px'></th><th width='50px'>配分</th><th width='50px'>狀態</th></tr>"; ?>
@@ -35,7 +36,7 @@
 	echo "</td></tr>"; ?>
 	<?php endforeach; ?>
 	<?php else:?>
-	<?php echo "<tr><td class='empty' colspan='5'>尚未新增試題</td></tr>"; ?>	
+	<?php echo "<tr><td class='empty' colspan='6'>尚未新增試題</td></tr>"; ?>	
 	<?php endif;?>	
 </table>
 </div>

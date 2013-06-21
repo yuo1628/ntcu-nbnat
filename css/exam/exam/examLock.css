@@ -1,0 +1,50 @@
+
+div.lockState
+{
+	
+	height:60px;
+	width:40px;
+	float: left;	
+	display:block;
+	
+}
+div.lock, div.unlock
+{	
+	margin:10px 0;	
+	display:block;
+	cursor:pointer;
+	
+	height:30px;
+	width:30px;
+	background: url(../../../img/icon.png);
+	background-repeat: no-repeat;
+	background-size: 30px auto;
+	
+}
+
+div.lock:hover
+{
+	opacity:0.5;
+}
+div.unlock:hover
+{
+	opacity:0.5;
+}
+div.lock:active
+{
+	opacity:0.8;
+	background-position: 0px -1083px;
+}
+ div.unlock:active
+{
+	opacity:0.8;
+	background-position: 0px -1049px;
+}
+ div.lock
+{
+	background-position: 0px -1049px;
+}
+div.unlock
+{
+	background-position: 0px -1083px;
+}

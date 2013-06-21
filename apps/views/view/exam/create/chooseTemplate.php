@@ -1,3 +1,4 @@
+
 <table id="topic" cellspacing="0">
 	<tr>
 		<th>配分</th><td><input type="text" id="scoreText" value="0" /><input type="checkbox" id="show" checked="checked" />開放給學生作答</td>
