@@ -1420,6 +1420,8 @@ function decodeJson() {
 }
 
 function encodeUpdJson() {
+	displayDownPos();
+	
 	var ary = new Array();
 	
 	$(".canvas").find("div").each(function() {
@@ -1479,6 +1481,7 @@ function encodeUpdJson() {
 	test_json = json;
 	
 	//alert(test_json);
+	
 	
 	var href = window.location.href;
 	
