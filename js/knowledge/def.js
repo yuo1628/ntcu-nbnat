@@ -235,6 +235,10 @@ $(function() {
 	$(".updBtn").click(function() {
 		encodeUpdJson();
 	})
+	
+	$(".groupBtn").click(function() {
+		getThisPointGroup();
+	})
 		
 })
 
@@ -843,7 +847,7 @@ function setLine(lineId, p1, p2) {
 	var lineW = get2PointDist($(p1obj), $(p2obj));
 					
 	$(line).css({
-		'left' : get2PointXCenter($(p1obj), $(p2obj)) - getFixX(line) + ($(".p1obj").width() * 0.5 ),
+		'left' : get2PointXCenter($(p1obj), $(p2obj)) - getFixX(line, p1obj, p2obj),
 		'top' : get2PointYCenter($(p1obj), $(p2obj)),
 		'transform' : 'rotate(' + get2PointZRotate($(p1obj), $(p2obj)) + 'deg)'
 	})
@@ -863,9 +867,9 @@ function setChildLine(lineId, p1, p2) {
 	})
 	
 	var lineW = get2PointDist($(p1obj), $(p2obj));
-					
+	//alert($(p1obj).width());
 	$(line).css({
-		'left' : get2PointXCenter($(p1obj), $(p2obj)) - getFixX(line) + ($(".p1obj").width() * 0.5 ),
+		'left' : get2PointXCenter($(p1obj), $(p2obj)) - getFixX(line, p1obj, p2obj),
 		'top' : get2PointYCenter($(p1obj), $(p2obj)),
 		'transform' : 'rotate(' + get2PointZRotate($(p1obj), $(p2obj)) + 'deg)'
 	})
@@ -879,8 +883,8 @@ function setChildLine(lineId, p1, p2) {
 /**
  * @param obj = Object
  */
-function getFixX(obj) {
-	return ($(obj).width() - $(".point").width()) * 0.5;
+function getFixX(obj, p1,p2) {
+	return ($(obj).width() - $(p1).width() + (($(p1).width() * 0.5) - ($(p2).width() * 0.5))) * 0.5 ;
 }
 
 
@@ -895,11 +899,11 @@ function getFixX(obj) {
 function get2PointDist(o1, o2) {
 	
 	var o1x , o1y, o2x, o2y, ab;
-	o1x = parseInt($(o1).css("left"));
-	o1y = parseInt($(o1).css("top"));
+	o1x = parseInt($(o1).css("left")) + ($(o1).width() * 0.5) - ($(o2).width() * 0.5);
+	o1y = parseInt($(o1).css("top")) + ($(o1).height() * 0.5) - ($(o2).height() * 0.5);
 	
-	o2x = parseInt($(o2).css("left"));
-	o2y = parseInt($(o2).css("top"));
+	o2x = parseInt($(o2).css("left")) + ($(o2).width() * 0.5) - ($(o1).width() * 0.5);
+	o2y = parseInt($(o2).css("top")) + ($(o2).height() * 0.5) - ($(o1).height() * 0.5);
 	ab = Math.sqrt(Math.pow(o2x - o1x, 2) + Math.pow(o2y - o1y, 2) )
 	+ parseInt($(o1).css("border-left-width")) + parseInt($(o1).css("border-right-width"))
 	+ parseInt($(o1).css("border-top-width")) + parseInt($(o1).css("border-bottom-width"))
@@ -938,7 +942,7 @@ function get2PointXCenter(o1, o2) {
  */
 function get2PointYCenter(o1, o2) {
 	var o1y = parseInt($(o1).css("top")) + (parseInt($(o1).height()) / 2);
-	var o2y = parseInt($(o2).css("top")) + (parseInt($(o2).height()) / 2);
+	var o2y = parseInt($(o2).css("top")) + (parseInt($(o2).height()) / 2) ;
 		
 	var center = (o1y + o2y ) * 0.5;
 	return center;
@@ -954,11 +958,11 @@ function get2PointYCenter(o1, o2) {
  */
 function get2PointZRotate(o1, o2) {
 	var o1x , o1y, o2x, o2y;
-	o1x = parseInt($(o1).css("left"));
-	o1y = parseInt($(o1).css("top"));
+	o1x = parseInt($(o1).css("left")) + (($(o1).width() - $(o2).width()));
+	o1y = parseInt($(o1).css("top")) + (($(o1).height() - $(o2).height()));
 	
-	o2x = parseInt($(o2).css("left"));
-	o2y = parseInt($(o2).css("top"));
+	o2x = parseInt($(o2).css("left")) - (($(o2).width() - $(o1).width()) * 0.5) ;
+	o2y = parseInt($(o2).css("top")) - (($(o2).width() - $(o1).width()) * 0.5);
 		
 	//var m = parseFloat((o1y - o2y) / (o1x - o2x))  * 180;
 	var m = Math.atan2(o1y - o2y , o1x - o2x) / (Math.PI / 180);
@@ -1049,6 +1053,8 @@ function addPointObj() {
 }
 
 function displayUpPos() {
+	displayDownPos();
+	
 	$(".point").each(function() {
 		
 		var ch_lid = $(this).attr("ch_lid");
@@ -1107,11 +1113,56 @@ function displayUpPos() {
 
 function displayDownPos() {
 	
+	$(".point").css({
+		'display' : 'block',
+		'opacity' : '1',
+		'width' : '80px',
+		'height' : '80px'
+	})
+	
+	
+	/*
+	$(".line").css({
+		'display' : 'block',
+		'opacity' : '1'
+	})*/
+	
+	
 	$(".point").each(function() {
+		//setline
+		var p = $(this);
+		var lid = $(this).attr("lid");
+		var ch_lid = $(this).attr("ch_lid");
+		
+		
+		if(lid != undefined && lid != "")
+		{
+			var lid_ary = lid.split(",");
+			for(var i = 0; i < lid_ary.length; i++){
+				
+				var line = $(".line[lid=" + lid_ary[i] + "]");
+				setLine(lid_ary[i], $(line).attr("cid"), $(line).attr("tid"));
+		
+			}
+		}
+		
+		if(ch_lid != undefined && ch_lid != "")
+		{
+			var ch_lid_ary = ch_lid.split(",");
+			for(var i = 0; i < ch_lid_ary.length; i++){
+				
+				
+				var line = $(".line[ch_lid=" + ch_lid_ary[i] + "]");
+				setChildLine(ch_lid_ary[i], $(line).attr("cid"), $(line).attr("tid"));
+			}
+		}
+		
+				
 		if($(this).css("display") == 'none')
 		{
 			$(this).css({
 				'display' : 'block'
+				
 			})
 			$(this).animate({
 				'opacity' : '1'
@@ -1130,6 +1181,74 @@ function displayDownPos() {
 			})
 		}
 	})
+}
+
+//只顯示該節點下位
+function getThisPointGroup() {
+	$(".point").css({
+		'display' : 'none'
+	})
+	$(".line").css({
+		'display' : 'none'
+		
+	})
+	
+	var p = pointClickObj;
+	
+	
+	$(p).css({
+		'display' : 'block',
+		'opacity' : '1',
+		'width' : '120px',
+		'height' : '120px'
+	})
+	
+	if($(p).attr("ch_lid") != undefined && $(p).attr("ch_lid") != "")
+	{
+		var ary = $(p).attr("ch_lid").split(",");
+		
+		//alert(ary)	;
+		//尋找場上的POINT是否也有與自己相同的CH_LID
+		for(var i = 0; i < ary.length; i++)
+		{
+			$(".point").each(function() {
+				if($(this).attr("ch_lid") != undefined && $(this).attr("ch_lid") != "" && $(this).attr("pid") != $(p).attr("pid"))
+				{
+					var p_ary = $(this).attr("ch_lid").split(",");
+				
+					for(var j = 0; j < p_ary.length; j++)
+					{
+						if(p_ary[j] == ary[i])
+						{
+							$(this).css({
+								'display' : 'block',
+								'opacity' : '1'
+							})
+							
+							//alert($(p).attr("pid") + " " + $(this).attr("pid"));
+							
+							setChildLine(p_ary[j], $(p).attr("pid"), $(this).attr("pid"));
+						}
+						
+						//set ch_line
+							//alert(p_ary[j] + " " + $(p).attr("pid") + " " + $(this).attr("pid"));
+							
+					}
+					
+					
+				}
+				
+			})
+			
+			//顯示該點有連到的CH)LID
+			$(".line[ch_lid=" + ary[i] + "]").css({
+				'display' : 'block',
+				'opacity' : '1'
+			})
+			
+		}
+	}
+	
 }
 
 /**

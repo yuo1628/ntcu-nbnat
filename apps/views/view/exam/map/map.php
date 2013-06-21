@@ -38,6 +38,9 @@ $n = $node->allNode();
 			<div class="readBtn btn cItem">
 				讀檔
 			</div>
+			<div class="groupBtn btn cItem">
+				顯示群組
+			</div>
 			<div class="clearFix"></div>
 		</div>
 		<div class="toolsBar">			
@@ -48,6 +51,8 @@ $n = $node->allNode();
 			<div class="upPosBtn btn">
 				顯示上位
 			</div>
+			
+			
 			<div class="downPosBtn btn">
 				全部顯示
 			</div>
