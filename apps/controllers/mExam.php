@@ -37,7 +37,6 @@ class MExamController extends MY_Controller {
 		$itemList['examTitle'] =$node;
 		
 		
-		
 		$this -> layout -> addScript("js/exam/create/editTemplate.js");
 		$this -> layout -> addStyleSheet("css/exam/create/editTemplate.css");
 		$this -> layout -> addStyleSheet("css/exam/create/create.css");
@@ -46,6 +45,16 @@ class MExamController extends MY_Controller {
 		$this -> layout -> addStyleSheet("css/exam/create/examList.css");
 		$this -> layout -> view('view/exam/create/default', $itemList);
 	}
+
+	/*
+	 * Get node mes
+	 */
+	function getNodeMes($_uuid)
+	{
+		$this -> load -> model('exam/map/m_node', 'node');		
+		echo json_encode($this -> node -> findNode(array("uuid"=>$_uuid)));
+	} 
+
 
 	function router($uuid)
 	{
@@ -67,6 +76,9 @@ class MExamController extends MY_Controller {
 	{
 		//$this -> layout -> addStyleSheet("css/exam/create/".$_type.".css");
 		$this -> layout -> addScript("js/exam/create/".$_type.".js");
+	
+			
+		
 		$this->layout->setLayout('layout/empty');			
 		$this -> layout -> view('view/exam/create/'.$_type."Template");
 	}
