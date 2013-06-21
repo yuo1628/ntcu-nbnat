@@ -70,6 +70,55 @@ $n = $node->allNode();
 	</div>
 </div>
 
-<div class="mapBg"></div>
+<div class="mapBg">
+	
+	<?php
+	for($i = 0; $i < 200 ;$i++):
+		$r = rand(150, 255);
+		$g = rand(150, 255);
+		$b = rand(150, 255);
+		$left = rand(0,1920);
+		$top = rand(0,1080);
+		$width = rand(0,5);
+		$height = rand(0,5);
+		
+		//$left = 960 +round(sin($i) * $i);
+		//$top = 540 + round(cos($i) * $i / 4);
+	?>
+	<div class="star" style="position:fixed;
+	background-color: rgb(<?php echo $r ?>, <?php echo $g ?>, <?php echo $b ?>);
+	width: <?php echo $width ?>px;  
+	height: <?php echo $height ?>px; 
+	left: <?php echo $left ?>px; 
+	top: <?php echo $top ?>px; 
+	
+	"></div>
+	<?php endfor; ?>
+	
+	<?php
+	/*
+	for($i = 0; $i < 1560 ;$i++):
+		$r = rand(150, 255);
+		$g = rand(150, 255);
+		$b = rand(150, 255);
+		//$left = rand(0,2560);
+		//$top = rand(0,1680);
+		$width = rand(0,10);
+		$height = rand(0,10);
+		
+		$left = 960 + round(sin(rand(0,360)) * $i / 6);
+		$top = 540 + round(cos(rand(0,360)) * $i / 12);
+	?>
+	<div style="position:fixed;
+	background-color: rgb(<?php echo $r ?>, <?php echo $g ?>, <?php echo $b ?>);
+	width: <?php echo $width ?>px;  
+	height: <?php echo $height ?>px; 
+	left: <?php echo $left ?>px; 
+	top: <?php echo $top ?>px; 
+	
+	"></div>
+	<?php endfor; */?>
+	
+</div>
 <div class="mapBgClose">X</div>
 

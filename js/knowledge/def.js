@@ -85,6 +85,9 @@ $(function() {
 		'left' : ($("canvas").width() * 0.5) - ($(document).width() * 0.5)
 	})
 	
+	//star effect
+	starEffectTime();
+	
 	
 	//setLine();
 	//fixX = ($(".line1").width() - $("point1").width()) * 0.5;
@@ -225,7 +228,6 @@ $(function() {
 		encodeJson();
 	})
 	
-	
 	//一進來就讀
 	decodeJson();
 	$(".readBtn").click(function() {
@@ -241,6 +243,30 @@ $(function() {
 	})
 		
 })
+
+function starEffect() {
+	
+	//alert("123");
+	
+	var ran = Math.floor(Math.random() * ($(".star").size() - 1));
+	var obj = $(".star").get(ran);
+	
+	$(obj).animate({
+		'opacity' : '0'
+	},300, function() {
+		//alert("123");
+		starEffectTime();
+		$(obj).animate({
+			'opacity' : '1'
+		},300)
+	})
+	
+	
+}
+
+function starEffectTime() {
+	var time = setTimeout("starEffect()", 100);
+}
 
 function mouseDown(){
 	dragObj = $(this);
@@ -283,12 +309,21 @@ function pointClick(obj) {
 	
 		
 	//set select this obj css
+	
+	$(".pointBorderShadow").css({
+		'border-color' : '#fff'
+	})
+	$(obj).find(".pointBorderShadow").animate({
+		'border-color' : '#5a9ee9'
+	})
+	
+	/*
 	$(".drag").css({
-		'border-width' : '1px'
+		'border-width' : '5px'
 	})
 	$(obj).css({
-		'border-width' : '3px'
-	})
+		'border-width' : '5px'
+	})*/
 	
 	//pointClickObj 
 	pointClickObj = $(obj);
@@ -981,7 +1016,7 @@ function setDrag() {
 };
 
 function setSceneDrag() {
-	$(".debug").text("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp setDrag cavasY " + canvasY);
+	//$(".debug").text("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp setDrag cavasY " + canvasY);
 	$(".canvas").css({
 		'left' : canvasX + (pageX - downX), 
 		'top' : canvasY + (pageY - downY)
@@ -1042,7 +1077,7 @@ function hitTest(obj) {
 function addPointObj() {
 	
 	$(".canvas").append(
-		"<div class='drag point' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'></div>"
+		"<div class='drag point' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointBorder'></div><div class='pointBorderShadow'></div></div>"
 	)
 	
 	$(".drag").bind("mousedown", mouseDown);
@@ -1118,6 +1153,20 @@ function displayDownPos() {
 		'opacity' : '1',
 		'width' : '80px',
 		'height' : '80px'
+	})
+	
+	$(".point").find(".pointBorder").css({
+		'display' : 'block',
+		'opacity' : '1',
+		'width' : '100px',
+		'height' : '100px'
+	})
+	
+	$(".point").find(".pointBorderShadow").css({
+		'display' : 'block',
+		'opacity' : '1',
+		'width' : '100px',
+		'height' : '100px'
 	})
 	
 	
@@ -1201,6 +1250,20 @@ function getThisPointGroup() {
 		'opacity' : '1',
 		'width' : '120px',
 		'height' : '120px'
+	})
+	
+	$(p).find(".pointBorder").css({
+		'display' : 'block',
+		'opacity' : '1',
+		'width' : '140px',
+		'height' : '140px'
+	})
+	
+	$(p).find(".pointBorderShadow").css({
+		'display' : 'block',
+		'opacity' : '1',
+		'width' : '140px',
+		'height' : '140px'
 	})
 	
 	if($(p).attr("ch_lid") != undefined && $(p).attr("ch_lid") != "")
@@ -1592,7 +1655,7 @@ function readPoint(x, y, pid, lid, ch_lid, text) {
 	}
 	
 	$(".canvas").append(
-		"<div class='drag point' style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + ">" + text + "</div>"
+		"<div class='drag point' style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + "><div class='pointBorder'></div><div class='pointBorderShadow'></div>" + text + "</div>"
 	)
 	
 	$(".drag").bind("mousedown", mouseDown);
