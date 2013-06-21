@@ -329,7 +329,47 @@ function pointClick(obj) {
 	pointClickObj = $(obj);
 	setControlVar(obj);
 	
-	//$(".debug").text("poinClick: " + $(thisPointObj).attr("pid") + " lid: " + $(thisPointObj).attr("lid"));	
+	//$(".debug").text("poinClick: " + $(thisPointObj).attr("pid") + " lid: " + $(thisPointObj).attr("lid"));
+}
+
+function ajaxProgress(url, data) {
+	
+	var str = "";
+	
+	$.ajax({
+		xhr: function()
+			{
+				var xhr = new window.XMLHttpRequest();
+				//Upload progress
+				xhr.upload.addEventListener("progress", function(evt){
+				if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			      //Do something with upload progress
+				console.log(percentComplete);
+			}
+		}, false);
+		 //Download progress
+		xhr.addEventListener("progress", function(evt){
+			if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			     //Do something with download progress
+				console.log(percentComplete);
+			}
+		}, false);
+		     return xhr;
+		   },
+		   type: 'POST',
+		   url: url,
+		   data: {
+				data : data
+		   },
+		   success: function(data){
+		     //Do something success-ish
+		     str = data;
+		   }
+	 });
+	 
+	 return str;
 }
 
 function setControlVar(obj) {
@@ -1377,8 +1417,9 @@ function encodeJson() {
 	
 	test_json = json;
 	
-	alert(test_json);
+	//alert(test_json);
 	
+	/*
 	var href = window.location.href;
 	
 		$.post(
@@ -1391,10 +1432,56 @@ function encodeJson() {
 			}
 		).fail(function(data) {
 			alert(data);
-		})
+		})*/
 	
-	
-	
+	//test progress	
+	$.ajax({
+		xhr: function()
+			{
+				var xhr = new window.XMLHttpRequest();
+				//Upload progress
+				xhr.upload.addEventListener("progress", function(evt){
+				if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			      //Do something with upload progress
+				//console.log(percentComplete);
+				//alert(percentComplete);
+				$(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		 //Download progress
+		xhr.addEventListener("progress", function(evt){
+			if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			     //Do something with download progress
+			    //alert(percentComplete);
+			    $(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		     return xhr;
+		   },
+		   type: 'POST',
+		   url: href + "/addNode",
+		   data: {
+				data : test_json
+		   },
+		   success: function(data){
+		     //Do something success-ish
+		     //alert("123 complete xhr: " + data);
+		     $(".ajaxProressBg").width(0);
+		     $(".ajaxProressBox").css({
+		     	'display' : 'none'
+		     })
+		   }
+	 });
 }
 
 function isEmpty(str) {
@@ -1416,9 +1503,53 @@ function decodeJson() {
 	//clear sence
 	var json = "";
 	var href = window.location.href;
-	$.post(
-		href + "/readNode",
-		function(data) {
+	
+	$.ajax({
+		xhr: function()
+			{
+				var xhr = new window.XMLHttpRequest();
+				//Upload progress
+				xhr.upload.addEventListener("progress", function(evt){
+				if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			      //Do something with upload progress
+				//console.log(percentComplete);
+				//alert(percentComplete);
+				$(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		 //Download progress
+		xhr.addEventListener("progress", function(evt){
+			if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			     //Do something with download progress
+			    //alert(percentComplete);
+			    $(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+			return xhr;
+			},
+			type: 'POST',
+			url: href + "/readNode",
+			data: {
+				
+			},
+			success: function(data){
+		     //Do something success-ish
+		     //alert("123 complete xhr: " + data);
+		     $(".ajaxProressBg").width(0);
+		     $(".ajaxProressBox").css({
+		     	'display' : 'none'
+			})
+			
 			$(".canvas").html("");
 			//隱藏存檔
 			$(".saveBtn").css({
@@ -1477,9 +1608,18 @@ function decodeJson() {
 					
 				}
 			}
+		     
+		}
+	 });
+	
+	/*
+	$.post(
+		href + "/readNode",
+		function(data) {
+			
 		}
 	)
-		
+		*/
 }
 
 function encodeUpdJson() {
@@ -1547,7 +1687,7 @@ function encodeUpdJson() {
 	
 	
 	var href = window.location.href;
-	
+	/*
 		$.post(
 			href + "/updNode",
 			{
@@ -1558,7 +1698,55 @@ function encodeUpdJson() {
 			}
 		).fail(function(data) {
 			//alert(data);
-		})
+		})*/
+		
+	$.ajax({
+		xhr: function()
+			{
+				var xhr = new window.XMLHttpRequest();
+				//Upload progress
+				xhr.upload.addEventListener("progress", function(evt){
+				if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			      //Do something with upload progress
+				//console.log(percentComplete);
+				//alert(percentComplete);
+				$(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		 //Download progress
+		xhr.addEventListener("progress", function(evt){
+			if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			     //Do something with download progress
+			    //alert(percentComplete);
+			    $(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		     return xhr;
+		   },
+		   type: 'POST',
+		   url: href + "/updNode",
+		   data: {
+				data : test_json
+		   },
+		   success: function(data){
+		     //Do something success-ish
+		     //alert("123 complete xhr: " + data);
+		     $(".ajaxProressBg").width(0);
+		     $(".ajaxProressBox").css({
+		     	'display' : 'none'
+		     })
+		   }
+	 });
 }
 
 function removePointPost(obj) {
@@ -1572,6 +1760,8 @@ function removePointPost(obj) {
 	p_obj.x = parseInt($(obj).css("left"));
 	p_obj.y = parseInt($(obj).css("top"));	
 	var j = JSON.stringify(p_obj, null,2);
+	
+	/*
 	$.post(
 		href + "/delNode",
 		{
@@ -1580,7 +1770,55 @@ function removePointPost(obj) {
 		function(data) {
 			
 		}
-	)
+	)*/
+	
+	$.ajax({
+		xhr: function()
+			{
+				var xhr = new window.XMLHttpRequest();
+				//Upload progress
+				xhr.upload.addEventListener("progress", function(evt){
+				if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			      //Do something with upload progress
+				//console.log(percentComplete);
+				//alert(percentComplete);
+				$(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		 //Download progress
+		xhr.addEventListener("progress", function(evt){
+			if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			     //Do something with download progress
+			    //alert(percentComplete);
+			    $(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		     return xhr;
+		   },
+		   type: 'POST',
+		   url: href + "/delNode",
+		   data: {
+				data : j
+		   },
+		   success: function(data){
+		     //Do something success-ish
+		     //alert("123 complete xhr: " + data);
+		     $(".ajaxProressBg").width(0);
+		     $(".ajaxProressBox").css({
+		     	'display' : 'none'
+		     })
+		   }
+	 });
 }
 
 function removeLinkPost(_obj) {
@@ -1596,6 +1834,56 @@ function removeLinkPost(_obj) {
 	obj.x = parseInt($(_obj).css("left"));
 	obj.y = parseInt($(_obj).css("top"));		
 	var j = JSON.stringify(obj, null,2);
+	
+	$.ajax({
+		xhr: function()
+			{
+				var xhr = new window.XMLHttpRequest();
+				//Upload progress
+				xhr.upload.addEventListener("progress", function(evt){
+				if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			      //Do something with upload progress
+				//console.log(percentComplete);
+				//alert(percentComplete);
+				$(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		 //Download progress
+		xhr.addEventListener("progress", function(evt){
+			if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			     //Do something with download progress
+			    //alert(percentComplete);
+			    $(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		     return xhr;
+		   },
+		   type: 'POST',
+		   url: href + "/delLink",
+		   data: {
+				data : j
+		   },
+		   success: function(data){
+		     //Do something success-ish
+		     //alert("123 complete xhr: " + data);
+		     $(".ajaxProressBg").width(0);
+		     $(".ajaxProressBox").css({
+		     	'display' : 'none'
+		     })
+		   }
+	 });
+	
+	/*
 	$.post(
 		href + "/delLink",
 		{
@@ -1604,7 +1892,7 @@ function removeLinkPost(_obj) {
 		function(data) {
 			alert("remove: " + data);
 		}
-	)
+	)*/
 }
 
 function removeLinkChildPost(_obj) {
@@ -1620,6 +1908,56 @@ function removeLinkChildPost(_obj) {
 	obj.x = parseInt($(_obj).css("left"));
 	obj.y = parseInt($(_obj).css("top"));		
 	var j = JSON.stringify(obj, null,2);
+	
+	$.ajax({
+		xhr: function()
+			{
+				var xhr = new window.XMLHttpRequest();
+				//Upload progress
+				xhr.upload.addEventListener("progress", function(evt){
+				if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			      //Do something with upload progress
+				//console.log(percentComplete);
+				//alert(percentComplete);
+				$(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		 //Download progress
+		xhr.addEventListener("progress", function(evt){
+			if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			     //Do something with download progress
+			    //alert(percentComplete);
+			    $(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		     return xhr;
+		   },
+		   type: 'POST',
+		   url: href + "/delLink",
+		   data: {
+				data : j
+		   },
+		   success: function(data){
+		     //Do something success-ish
+		     //alert("123 complete xhr: " + data);
+		     $(".ajaxProressBg").width(0);
+		     $(".ajaxProressBox").css({
+		     	'display' : 'none'
+		     })
+		   }
+	 });
+	
+	/*
 	$.post(
 		href + "/delLink",
 		{
@@ -1628,7 +1966,7 @@ function removeLinkChildPost(_obj) {
 		function(data) {
 			alert("child: " + data);
 		}
-	)
+	)*/
 }
 
 

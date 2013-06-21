@@ -107,3 +107,45 @@ ul,ol
 	font-size: .6em;
 	color: gray;
 }
+
+/**
+ * 	ajax
+ */
+
+.ajaxProressBox {
+	position:fixed;
+	top: 40%;
+	left: 50%;
+	text-align: center;
+	width: 200px;
+	height: 40px;
+	line-height: 40px;
+	background-color:#fff;
+	border: 1px solid #e0e0e0;
+	box-shadow: 0px 4px 4px 1px #ccc;
+	margin-left: -100px;
+	
+	z-index: 30000;
+	display:none;
+}
+
+.ajaxProressBg {
+	position:absolute;
+	background-color:#5a9ee9;
+	top:0;
+	left: 0;
+	z-index: 30001;
+	width: 0;
+	height: 40px;
+}
+
+.ajaxProressText {
+	position:absolute;
+	background-color:#5a9ee9;
+	top:0;
+	left: 0;
+	z-index: 30002;
+	width: 200px;
+	height: 40px;
+	color:#fff;
+}
