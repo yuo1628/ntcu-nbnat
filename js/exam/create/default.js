@@ -12,7 +12,7 @@ $(document).ready(function() {
 		var _type = $(this).val();		
 
 		$.ajax({
-			url : _href + "/showTemplate/" + _type,
+			url : "./index.php/mExam/showTemplate/" + _type,
 			cache : false,
 			dataType : "html",
 			success : function(result) {
@@ -22,17 +22,13 @@ $(document).ready(function() {
 		});
 
 	});
-	
-	var _exam=_href.replace("mExam","exam");
+		
 	
 	$.ajax({
-		url :_href+"/getNodeMes/"+_urlUid,
+		url :"./index.php/mExam/getNodeMes/"+_urlUid,
 		cache : false,
 		dataType: "json",
 		success : function(data){
-			var _nodeLock=data[0]["lock"];
-			var _nodeUid=data[0]["uuid"];
-			$("div.lockFrame div").attr("id","lock-"+_nodeUid).attr("class",_nodeLock).attr("onclick","lockToggle('"+_nodeUid+"','"+_exam+"')")
 			$("div#nodeMes div#nodeTitle").html("試卷名稱："+data[0]["name"]);
 		
 			
@@ -46,7 +42,7 @@ $(document).ready(function() {
 
 function quizList(_uuid) {
 	
-	$.post(_href + "/findExamList", {
+	$.post("./index.php/mExam/findExamList", {
 		uid : _uuid
 	}, function(result) {
 		$("div#quizList").html(result);
@@ -120,7 +116,7 @@ function sendOut() {
 
 		}
 		
-		$.post(_href + "/addQuestion", {
+		$.post("./index.php/mExam/addQuestion", {
 			topic : _topic,
 			type : _type,
 			tips : JSON.stringify(_tips),

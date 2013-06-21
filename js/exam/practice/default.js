@@ -52,6 +52,7 @@ function enter(_uuid) {
 	$.post("./index.php/practice/findExamList", {
 		uid : _uuid
 	}, function(data) {
+		
 		$("div#practice").html(data);
 		$("ul#examList li.topicLi").hide();
 		$("ul#examList li.topicLi:eq(0)").show();		
