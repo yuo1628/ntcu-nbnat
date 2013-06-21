@@ -17,6 +17,14 @@
 		
 	</head>
 	<body>
+		<div class="ajaxProressBox">
+			<div class="ajaxProressBg">
+				
+			</div>
+			<div class="ajaxProressText">
+				
+			</div>
+		</div>
 		
 		<div id="container">
 			<div id="header">

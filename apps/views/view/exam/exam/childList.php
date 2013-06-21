@@ -5,6 +5,7 @@
 	<?php foreach ($childList as $item):?>
 	<li id="li-<?php echo $item -> uuid; ?>">
 	<div class="lockState">
+		
 		<div id="lock-<?php echo $item -> uuid; ?>" class="<?php echo $item -> lock; ?>" onclick="lockToggle('<?php echo $item -> uuid; ?>','<?php echo $_SERVER['PHP_SELF']; ?>')"></div>
 	</div>
 

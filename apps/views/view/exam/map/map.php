@@ -41,6 +41,19 @@ $n = $node->allNode();
 			<div class="groupBtn btn cItem">
 				顯示群組
 			</div>
+			
+			<div class="splitLine cItem">
+				
+			</div>
+			
+			<div class="lockBtn btn cItem">
+				單元上鎖
+			</div>
+			
+			<div class="gotoTopicBtn btn cItem">
+				前往試卷
+			</div>
+			
 			<div class="clearFix"></div>
 		</div>
 		<div class="toolsBar">			
