@@ -8,12 +8,15 @@ div.lockState
 	display:block;
 	
 }
+div.lockState div.lock, div.lockState div.unlock
+{
+	margin:10px 0;	
+}
 div.lock, div.unlock
 {	
-	margin:10px 0;	
-	display:block;
-	cursor:pointer;
 	
+	display:block;
+	cursor:pointer;	
 	height:30px;
 	width:30px;
 	background: url(../../../img/icon.png);

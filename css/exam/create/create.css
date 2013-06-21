@@ -4,6 +4,11 @@
  * @update: shown
  */
 
+#create div#nodeMes div{
+	display:inline-block;	
+	border:1px solid #000;
+}
+
 #create div#template {
 	margin: 3% -2%;
 	padding: 2%;
@@ -54,21 +59,14 @@
 #create div#quizList {
 	margin-bottom: 15px;
 }
+
 #create div#tools
 {
 	position:relative;
 	
 	margin:20px 0;
 }
-#create div#tools div
-{
-	position:absolute;
-	
-	bottom:5px;
-	right:0;
-	
-	display:inline-block;	
-}
+
 #create div#tools ul
 {
 	display:inline-block;	

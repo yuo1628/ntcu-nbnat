@@ -3,13 +3,13 @@
  */
 var _hrefTemp=location.href.split("/router/");
 var _href = _hrefTemp[0];
+var _urlUid = _hrefTemp[1].replace("/","");
 $(document).ready(function() {
 	
 	
 	$("select#type").change(function() {
 		$("select#type option[value=0]").remove();
-		var _type = $(this).val();
-		
+		var _type = $(this).val();		
 
 		$.ajax({
 			url : _href + "/showTemplate/" + _type,
@@ -22,6 +22,25 @@ $(document).ready(function() {
 		});
 
 	});
+	
+	var _exam=_href.replace("mExam","exam");
+	
+	$.ajax({
+		url :_href+"/getNodeMes/"+_urlUid,
+		cache : false,
+		dataType: "json",
+		success : function(data){
+			var _nodeLock=data[0]["lock"];
+			var _nodeUid=data[0]["uuid"];
+			$("div.lockFrame div").attr("id","lock-"+_nodeUid).attr("class",_nodeLock).attr("onclick","lockToggle('"+_nodeUid+"','"+_exam+"')")
+			$("div#nodeMes div#nodeTitle").html("試卷名稱："+data[0]["name"]);
+		
+			
+		}
+	});
+	
+	
+	
 
 });
 
@@ -105,13 +124,13 @@ function sendOut() {
 			topic : _topic,
 			type : _type,
 			tips : JSON.stringify(_tips),
-			nodes_uuid : _hrefTemp[1],
+			nodes_uuid : _urlUid,
 			score : _score,
 			_public : _show,
 			option : _options
 		}, function() {
 			
-			quizList(_hrefTemp[1]);
+			quizList(_urlUid);
 			cancel();
 			showTemp();
 		});

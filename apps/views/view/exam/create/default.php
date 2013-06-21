@@ -1,6 +1,9 @@
 <div id="create">
 	<h1>管理試題</h1>
-	
+	<div id="nodeMes">
+		<div id="nodeTitle"></div>
+		<div class="lockFrame">試卷開放狀態：<div></div></div>
+	</div>
 	<div id='tools'>
 		<ul>
 			<ul><li class='action unabled' onclick='batchDel()'>刪除</li></ul>
@@ -8,7 +11,7 @@
 			<ul><li class='action unabled' onclick="batchPublic('open')">開放</li><li class='action unabled' onclick="batchPublic('close')">不開放</li></ul>
 			<ul><li class='actionScore unabled'>修改配分</li><li class='actionScore'><input type="text" id="batchScoreText" disabled="disabled"></input></li><li class='action unabled' onclick="batchScore()">更改</li></ul>
 		</ul>
-		<div ><span class="lockState">開放試卷</span></div>
+		
 	</div>
 	
 	<div id="quizList"><table id="examList" cellspacing="0">
