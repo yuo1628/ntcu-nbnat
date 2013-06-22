@@ -96,6 +96,7 @@ class PracticeController extends MY_Controller {
 		$data = $this -> question -> findQuestion(array('nodes_uuid' => $_uid,'public' => "true"));	
 		$node = $this -> node -> findNode(array("uuid"=>$_uid));		
 			
+					
 		if($_ansId)
 		{
 			$_ansMes=$this -> answer -> findAnswerById($_ansId);
@@ -161,15 +162,17 @@ class PracticeController extends MY_Controller {
 	}
 		
 	
-	function resultRoute($a_uid,$_sort="desc")
+	function resultRoute()
 	{
+		$a_uid=$this->input->get("id");
+		$_sort=$this->input->get("sort");
 		$this -> load -> model('exam/exam/m_answer', 'answer');
 		$_id=$this -> answer -> findFirstAnswerId($a_uid,$_sort);
 		$this ->result($a_uid,$_id);
 	}
 	
 	function result($a_uid,$_id)
-	{
+	{		
 		$this -> load -> model('exam/exam/m_answer', 'answer');
 		$this -> load -> model('exam/exam/m_question', 'question');
 		$this -> load -> model('exam/map/m_node', 'node');
@@ -222,7 +225,7 @@ class PracticeController extends MY_Controller {
 		}
 		$count=count($userTemp);
 	
-		$itemList = array("itemList"=>array(
+		$itemList = array("itemList" =>	array(
 										array("back","./index.php/home", "返回主選單"),
 										array("examManage","./index.php/exam", "管理試卷"),			
 										array("map","./index.php/map", "知識結構圖"),

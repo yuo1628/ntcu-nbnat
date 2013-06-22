@@ -4,8 +4,8 @@
 $(document).ready(function() {
 
 });
-var _hrefTemp=location.href.split("/router/");
-var _href = _hrefTemp[0];
+
+var _href = "./index.php/mExam";
 
 function importTemplate(_id) {
 	
@@ -45,9 +45,7 @@ function updateQuiz(_id) {
 			_tempTips[i]=$(this).children("textarea").val();
 			}
 		});
-		
-		
-		
+				
 		var _data =new Object();
 				
 		_data["topic"]=_tempTopic;
@@ -59,7 +57,7 @@ function updateQuiz(_id) {
 			data:JSON.stringify(_data)
 								
 		}, function(result) {
-			editOption(_id);
+			updateOption(_id);
 			$("div#div-" + _id + " div.topic").html(_tempTopic).show();
 			$("div#div-" + _id + " div.topic").next("div").remove();
 			$("tr#topicLi-" + _id + " span.show").attr("onclick", "showOption('" + _id + "','close')");
@@ -69,7 +67,7 @@ function updateQuiz(_id) {
 		alert("請指定選項答案!");
 	}
 }
-function editOption(_id)
+function updateOption(_id)
 {
 	
 	var _oldLen = $("ul#editOption-" + _id + " li.oldOption").size();
@@ -77,26 +75,35 @@ function editOption(_id)
 	var _options = new Array();
 		var _newOptions = new Array();
 
-		for ( i = 0; i < _oldLen; i++) {
-			_options[i] = new Object();
+		for ( i = 0; i < _oldLen; i++) 
+		{			
 			var o_id = $("ul#editOption-" + _id + " li.oldOption:eq(" + i + ") input").val();
-			_options[i].id = o_id;
-			_options[i].correct = $("ul#editOption-" + _id + " li.oldOption:eq(" + i + ") input").prop("checked");
-			_options[i].value = $("ul#editOption-" + _id + " li.oldOption textarea#option-" + o_id).val();			
+			var _value=$("ul#editOption-" + _id + " li.oldOption textarea#option-" + o_id).val();
+			if(_value!="")
+			{
+				_options[i] = new Object();
+				_options[i].id = o_id;
+				_options[i].correct = $("ul#editOption-" + _id + " li.oldOption:eq(" + i + ") input").prop("checked");
+				_options[i].value = _value;
+			}			
 		}
-		for ( i = 0; i < _newLen; i++) {
-			_newOptions[i] = new Object();			
-			_newOptions[i].correct = $("ul#editOption-" + _id + " li.newOption:eq(" + i + ") input").prop("checked");
-			_newOptions[i].value = $("ul#editOption-" + _id + " li.newOption:eq(" + i + ") textarea.option").val();			
+		for ( i = 0; i < _newLen; i++)
+		{
+			var _value=$("ul#editOption-" + _id + " li.newOption:eq(" + i + ") textarea.option").val();
+			
+			if(_value!="")
+			{
+				_newOptions[i] = new Object();			
+				_newOptions[i].correct = $("ul#editOption-" + _id + " li.newOption:eq(" + i + ") input").prop("checked");
+				_newOptions[i].value = _value;
+			}			
 		}
 		
 	$.post(_href + "/editOption", {
 			id : _id,			
 			option:_options,
 			newOption:_newOptions					
-		},function(){
-			
-			
+		},function(){			
 			showOption(_id, 'close');
 		});
 }

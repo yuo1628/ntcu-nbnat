@@ -3,16 +3,15 @@
  */
 $(document).ready(function(){
 	
-	var _href = location.href;
-	var _hrefArr=_href.split('/practice/');
+	
+	
 	var _uuid=$("div#uuid").html();
-	var _url=_hrefArr[0];
 	
-	
-	
-	$("select#times").change(function(){
-				
-		location.href=_url+"/practice/result/"+_uuid+"/"+$(this).val();
+		
+	$("select#times").change(function(){				
+		location.href="./index.php/practice/result/"+_uuid+"/"+$(this).val();
+		//location.href = "./index.php/practice/resultRoute/?id=" + _uid + "&sort=desc";
+
 	});
 });
 

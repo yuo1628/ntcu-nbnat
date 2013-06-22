@@ -32,7 +32,7 @@ class ExamController extends MY_Controller {
 		}	
 		
 		$this -> layout -> addStyleSheet("css/exam/exam/examLock.css");
-		$this -> layout -> addScript("js/exam/exam/examLock.js");
+		
 		
 		$this -> layout -> addStyleSheet("css/exam/exam/default.css");	
 		$this -> layout -> addStyleSheet("css/exam/practice/default.css");
@@ -89,7 +89,7 @@ class ExamController extends MY_Controller {
 		$this -> node -> updNode(array('lock' => $_lock),array('uuid' => $_uuid));	
 	}
 	
-	function openToggle()
+	function closePractice()
 	{
 		$_uuid = $this -> input -> post("uuid");
 		

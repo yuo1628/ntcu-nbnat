@@ -1,5 +1,6 @@
 <div id="examTitle">
 <h1><?php echo $examTitle[0]->name;?></h1>
+<div id="openState" style="display:none;"><?php echo $examTitle[0]->open_answer;?></div>
 <div id="examMeta">
 	<div id="quizNum"><div>題數：</div><span class="quizOn"></span>&nbsp;/&nbsp;<?php echo count($examList); ?></div>
 		

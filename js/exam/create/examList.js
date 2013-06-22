@@ -1,8 +1,8 @@
 /**
  * @author Shown
  */
-var _hrefTemp=location.href.split("/router/");
-var _href = _hrefTemp[0];
+
+var _href = "./index.php/mExam";
 $(document).ready(function() {
 	checkNum();
 

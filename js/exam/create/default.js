@@ -1,9 +1,9 @@
 /**
  * @author Shown
  */
-var _hrefTemp=location.href.split("/router/");
-var _href = _hrefTemp[0];
-var _urlUid = _hrefTemp[1].replace("/","");
+
+
+var _urlUid = getQueryString("id");
 $(document).ready(function() {
 	
 	
@@ -20,28 +20,130 @@ $(document).ready(function() {
 				$("div#content p").show();
 			}
 		});
-
 	});
-		
 	
-	$.ajax({
-		url :"./index.php/mExam/getNodeMes/"+_urlUid,
-		cache : false,
-		dataType: "json",
-		success : function(data){
-			$("div#nodeMes div#nodeTitle").html("試卷名稱："+data[0]["name"]);
-		
-			
+	setLockFuncion();
+	
+	if($("span#openState").attr("class")=="open")
+	{
+		$("span#openState").html("取消開放");
+		var _limitTime=	$("span#limitTime").html();
+		if(_limitTime=="0")
+		{
+			$("span#limitTime").html("限制時間："+"無限期");
 		}
+		else
+		{
+			var _min=parseInt(_limitTime/60);
+			var _sec=parseInt(_limitTime%60);
+			$("span#limitTime").html("限制時間："+_min+"分"+_sec+"秒");
+		}		
+	}
+	else
+	{		
+		$("span#openState").html("開放試卷");
+		$("span#limitTime").remove();		
+	}
+	
+	$("span#openState").click(function(){
+		
+		$.post("./index.php/exam/closePractice", {
+			uuid : _urlUid,			
+		}, function() {
+			$("span#openState").html("開放試卷");
+			$("span#limitTime").remove();	
+		
+		});
 	});
 	
 	
-	
-
 });
 
-function quizList(_uuid) {
+function setLockFuncion()
+{
+	if($("span#lockState").attr("class")=="lock")
+	{
+		$("span#lockState").html("試卷解鎖");
+		actionCover();
+	}
+	else
+	{
+		$("span#lockState").html("試卷上鎖");		
+	}
 	
+	$("span#lockState").click(function(){
+		var lock_state=$(this).attr("class");
+		if(lock_state=="lock")
+		{
+			lock_state="unlock";				
+		}
+		else
+		{
+			lock_state="lock";			
+		}
+		$.post(
+			"./index.php/exam/lockToggle", {
+			uuid : _urlUid,
+			lock : lock_state
+		}, function() {			
+			if(lock_state=="unlock")
+			{
+				$("div#create div:eq(0)").removeAttr("style");
+				$("span#lockState").removeClass().addClass("unlock");
+				$("span#lockState").html("試卷上鎖");
+			}
+			else
+			{		
+				actionCover();
+				$("span#lockState").removeClass().addClass("lock");
+				$("span#lockState").html("試卷解鎖");
+			}			
+		});		
+	});
+	
+}
+
+function actionCover()
+{
+	$("div#create").css({
+			"position":"relative"		
+	});
+	$("div#create div:eq(0)").css({
+		"position":"absolute",
+		"width":"100%",		
+		"height":"700px",
+		"background-color":"white",
+		"opacity":"0.5",
+		"z-index":"999"
+	});
+}
+
+function lockToggle()
+{
+	var lock_state=$("div#lock-"+_uuid).prop("class");
+	if(lock_state=="lock")
+	{
+		lock_state="unlock";
+		$("li#li-"+_uuid+" .unlockBtn").show();		
+	}
+	else
+	{
+		lock_state="lock";
+		$("li#li-"+_uuid+" .unlockBtn").hide();
+	}
+	$.post(
+		"./index.php/exam/lockToggle", {
+		uuid : _uuid,
+		lock : lock_state
+	}, function() {
+		
+		$("div#lock-"+_uuid).removeClass().addClass(lock_state);
+		
+	});			
+}
+
+function quizList(_uuid) 
+{
 	$.post("./index.php/mExam/findExamList", {
 		uid : _uuid
 	}, function(result) {
@@ -49,7 +151,8 @@ function quizList(_uuid) {
 	});
 }
 
-function showTemp() {
+function showTemp() 
+{
 	$("div#template").show();
 }
 
@@ -157,3 +260,13 @@ function tipsSortInit()
 	});
 	
 }
+
+function getQueryString( paramName ){ 
+　　paramName = paramName .replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
+　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
+　　var regex = new RegExp( reg ); 
+　　var regResults = regex.exec( window.location.href.toLowerCase() ); 
+　　if( regResults == null ) return ""; 
+　　else return regResults [1]; 
+} 
+

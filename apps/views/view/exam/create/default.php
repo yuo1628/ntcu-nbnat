@@ -1,16 +1,18 @@
 <div id="create">
-	<h1 id="nodeTitle">管理試題</h1>
-			
-		
+	<h1 id="nodeTitle"><?php echo $result[0]->name?></h1>
 	
+		<span id="limitTime"><?php echo $result[0]->limit_time?></span>	
+		<span id="lockState" class="<?php echo $result[0]->lock; ?>"></span>		
+		<span id="openState" class="<?php echo $result[0]->open_answer; ?>"></span>
+	<hr/>
+	<div></div>
 	<div id='tools'>
 		<ul>
 			<ul><li class='action unabled' onclick='batchDel()'>刪除</li></ul>
 			<ul><li class='action unabled' onclick="batchShow('close')">展開</li><li class='action unabled' onclick="batchShow('open')">收合</li></ul>
 			<ul><li class='action unabled' onclick="batchPublic('open')">開放</li><li class='action unabled' onclick="batchPublic('close')">不開放</li></ul>
 			<ul><li class='actionScore unabled'>修改配分</li><li class='actionScore'><input type="text" id="batchScoreText" disabled="disabled"></input></li><li class='action unabled' onclick="batchScore()">更改</li></ul>
-		</ul>
-		<div><span></span></div>
+		</ul>		
 	</div>
 	
 	<div id="quizList"><table id="examList" cellspacing="0">

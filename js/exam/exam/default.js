@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 });
 
-function slide(_id, _state) {
+/*function slide(_id, _state) {
 	switch (_state) {
 		case "close":
 			var _href = location.href;
@@ -32,7 +32,8 @@ function slide(_id, _state) {
 	}
 
 }
-
+*/
+/*
 function enter(_id) {
 	var _href = location.href;
 
@@ -43,7 +44,7 @@ function enter(_id) {
 	});
 
 }
-
+*/
 
 function openToggle(_uuid,_state)
 {
@@ -58,8 +59,8 @@ function openToggle(_uuid,_state)
 	}
 	else
 	{
-		var _href = location.href;
-		$.post(_href + "/openToggle", {
+		
+		$.post("./index.php/exam/closePractice", {
 			uuid : _uuid,			
 		}, function() {
 			$("li#li-"+_uuid+" span.openState").html("開放狀態：<span class='fontRed'>不開放作答</span>");
@@ -71,7 +72,32 @@ function openToggle(_uuid,_state)
 	}
 	
 }
-
+function lockToggle(_uuid)
+{
+	
+	
+	var lock_state=$("div#lock-"+_uuid).prop("class");
+	if(lock_state=="lock")
+	{
+		lock_state="unlock";
+		$("li#li-"+_uuid+" .unlockBtn").show();		
+	}
+	else
+	{
+		lock_state="lock";
+		$("li#li-"+_uuid+" .unlockBtn").hide();
+	}
+	$.post(
+		"./index.php/exam/lockToggle", {
+		uuid : _uuid,
+		lock : lock_state
+	}, function() {
+		
+		$("div#lock-"+_uuid).removeClass().addClass(lock_state);
+		
+	});
+			
+}
 function cancelOpen(_uuid)
 {
 	$("li#li-"+_uuid+" div.setLimit").remove();
@@ -115,8 +141,8 @@ function sentOpen(_uuid)
 	}
 	else
 	{	
-		var _href = location.href;
-		$.post(_href + "/sentOpen", {
+		
+		$.post("./index.php/exam/sentOpen", {
 			uuid : _uuid,
 			time:_time
 		}, function() {
@@ -132,12 +158,12 @@ function sentOpen(_uuid)
 
 function quizManage(_uuid)
 {	
-	var _href = location.href;
+	
 	//管理試題 取消開放作答
 	/*	$.post(_href + "/openToggle", {
 			uuid : _uuid,			
 		}, function() {
 	*/		
-			location.href=_href.replace("exam","mExam/router/"+_uuid);	
+	location.href="./index.php/mExam/?id="+_uuid;	
 	//	});	
 }

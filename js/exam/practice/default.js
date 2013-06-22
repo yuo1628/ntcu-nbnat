@@ -1,7 +1,7 @@
 /**
  * @author Shown
  */
-var _href = location.href;
+
 $(document).ready(function() {
 	
 	
@@ -18,13 +18,13 @@ $(document).ready(function() {
 	
 	
 });
-
+/*
 function slide(_id, _state) {
 	switch (_state) {
 		case "close":
 			
 			$.ajax({
-				url : _href + "/findChild/" + _id,
+				url : "./index.php/practice/findChild/" + _id,
 				cache : false,
 				dataType : "html",
 				success : function(result) {
@@ -45,6 +45,7 @@ function slide(_id, _state) {
 	}
 
 }
+*/
 
 function enter(_uuid) {
 	
@@ -54,21 +55,35 @@ function enter(_uuid) {
 	}, function(data) {
 		
 		$("div#practice").html(data);
-		$("ul#examList li.topicLi").hide();
-		$("ul#examList li.topicLi:eq(0)").show();		
-		$("p#examBtn span.previousQuiz").hide();
-		isLastQuiz();
-		isLastStep(_uuid);
-		
-		$("div#examMeta span.quizOn").html("1");
-		
-		_min=parseInt($("div#timer div.min").html(),10);
-		_sec=parseInt($("div#timer div.sec").html(),10);
-		timedCount();
-		
-		_limitMin=parseInt($("div#limitTime div.limitMin").html(),10);
-		_limitSec=parseInt($("div#limitTime div.limitSec").html(),10);
-		start();
+		if($("div#openState").html()=="open"){
+			if($("ul#examList li.topicLi").size()>0)
+			{
+				$("ul#examList li.topicLi").hide();
+				$("ul#examList li.topicLi:eq(0)").show();		
+				$("p#examBtn span.previousQuiz").hide();
+				isLastQuiz();
+				isLastStep(_uuid);
+				
+				$("div#examMeta span.quizOn").html("1");
+				
+				_min=parseInt($("div#timer div.min").html(),10);
+				_sec=parseInt($("div#timer div.sec").html(),10);
+				timedCount();
+				
+				_limitMin=parseInt($("div#limitTime div.limitMin").html(),10);
+				_limitSec=parseInt($("div#limitTime div.limitSec").html(),10);
+				start();
+			}
+			else
+			{
+				alert("目前此試卷尚無新增試題");
+				history.back();
+			}
+		}else
+		{
+			alert("目前此試卷並未開放作答");
+			history.back();
+		}
 		
 	});
 }
@@ -190,7 +205,7 @@ function finish(_uuid,_finish,_type,_aid)
 		}, function() {
 			if(_finish)
 			{
-				location.href = "./index.php/practice/resultRoute/" + _uuid + "/desc";
+				location.href = "./index.php/practice/resultRoute/?id=" + _uuid + "&sort=desc";
 			}
 			else
 			{
@@ -201,17 +216,12 @@ function finish(_uuid,_finish,_type,_aid)
 	
 }
 
-function result(_uid) {
-	
-	location.href = "./index.php/practice	/resultRoute/" + _uid + "/asc";
+function result(_uid) {	
+	location.href = "./index.php/practice/resultRoute/?id=" + _uid + "&sort=asc";
 }
 
 function showTips(_id, _state) {
-	/*
-	 *<div class='arrow-block'><div class='arrow'></div></div>
-	 <div class='tips-content'></div>
-	 * */
-	
+
 	$.post("./index.php/practice/findTips", {
 		id : _id		
 	}, function(result) {
@@ -227,7 +237,8 @@ function showTips(_id, _state) {
 			$("div#tipsBtn-" + _id).next("div").remove();
 			$("div#tipsBtn-" + _id+" span.tips").attr("onclick","showTips('"+_id+"','close')");
 	
-		}	
+		}
+		isLastStep(_id);	
 	});
 		
 }

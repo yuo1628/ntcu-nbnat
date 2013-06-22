@@ -4,11 +4,11 @@ if (!defined('BASEPATH'))
 
 class MExamController extends MY_Controller {
 	
-	public function index($uuid) {
+	public function index() {
 		
-		
+		$uuid=$this->input->get("id");
 		$this -> load -> model('exam/map/m_node', 'node');
-		$allnode = $this -> node -> allNode();
+		$node = $this -> node -> findNode(array("uuid"=>$uuid));
 		$this -> load -> model('exam/exam/m_question', 'question');
 		$this -> load -> model('exam/exam/m_option', 'option');
 		$itemList = array(
@@ -20,7 +20,7 @@ class MExamController extends MY_Controller {
 				array("practice","./index.php/practice", "線上測驗"),			
 				array("logout","./", "登出帳號")
 				),
-			"result"=>$allnode
+			"result"=>$node
 				);
 		$itemList['examList'] =array();	
 		
@@ -57,12 +57,7 @@ class MExamController extends MY_Controller {
 		echo json_encode($this -> node -> findNode(array("uuid"=>$_uuid)));
 	} 
 
-
-	function router($uuid)
-	{
-		$this->index($uuid);
-	}	
-
+	
 
 	function findChild($_id)
 	{
