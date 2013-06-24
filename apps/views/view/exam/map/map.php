@@ -60,7 +60,11 @@ $n = $node->allNode();
 		<div class="zoomIn">
 			+
 		</div>
-		<br>
+		<div class="zoomScrollBar">
+			<div class="zoomScrollRect">
+			
+			</div>
+		</div>
 		<div class="zoomOut">
 			-
 		</div>

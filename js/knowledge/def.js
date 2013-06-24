@@ -367,6 +367,7 @@ function zoom(s) {
 	switch(s) {
 		case 0:
 			zoomOut();
+			
 		break;
 		case 1:
 			zoomAll();
@@ -376,6 +377,16 @@ function zoom(s) {
 			zoomIn();
 		break;
 	}
+	
+	zoomScrollRect(s);
+}
+
+function zoomScrollRect(s) {
+	
+	$(".zoomScrollRect").animate({
+		'top' : 223 - (s * 27)
+	})
+	
 }
 
 //zoom
