@@ -35,10 +35,11 @@ class MExamController extends MY_Controller {
 		}
 				
 		$itemList['examTitle'] =$node;
-						
+		
+					
 		$this -> layout -> addStyleSheet("css/exam/exam/examLock.css");
 		$this -> layout -> addScript("js/exam/exam/examLock.js");
-		
+		$this -> layout -> addScript("tinymce/js/tinymce/tinymce.js");	
 		$this -> layout -> addScript("js/exam/create/editTemplate.js");
 		$this -> layout -> addStyleSheet("css/exam/create/editTemplate.css");
 		$this -> layout -> addStyleSheet("css/exam/create/create.css");
@@ -236,6 +237,13 @@ class MExamController extends MY_Controller {
 			
 		$this -> layout -> setLayout('layout/empty');
 		$this -> layout -> view('view/exam/create/editTemplate', $itemList);
+	}
+	function showTinymce()
+	{
+			
+		$this -> layout -> setLayout('layout/empty');
+		return $this -> layout -> view('view/exam/create/tinymceTemplate.php');
+		
 	}
 
 

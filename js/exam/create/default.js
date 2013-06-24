@@ -7,6 +7,7 @@ var _urlUid = getQueryString("id");
 $(document).ready(function() {
 	
 	
+	
 	$("select#type").change(function() {
 		$("select#type option[value=0]").remove();
 		var _type = $(this).val();		
@@ -23,55 +24,126 @@ $(document).ready(function() {
 	});
 	
 	setLockFuncion();
+	setOpenfunction();
+	setQuizMetaFunction();
 	
-	if($("span#openState").attr("class")=="open")
+});
+
+function setOpenfunction()
+{
+	if($("span#openBtn").attr("class")=="open")
 	{
-		$("span#openState").html("取消開放");
+		$("span#openBtn").html("取消開放");
 		var _limitTime=	$("span#limitTime").html();
 		if(_limitTime=="0")
 		{
-			$("span#limitTime").html("限制時間："+"無限期");
+			$("span#limitTime").html("試卷開放狀態：<span class='fontGreen'>開放作答中</span>　限制時間：<span class='fontBlue'>無限期</span>");
 		}
 		else
 		{
 			var _min=parseInt(_limitTime/60);
 			var _sec=parseInt(_limitTime%60);
-			$("span#limitTime").html("限制時間："+_min+"分"+_sec+"秒");
-		}		
+			$("span#limitTime").html("試卷開放狀態：<span class='fontGreen'>開放作答中</span>　限制時間：<span class='fontBlue'>"+_min+" 分 "+_sec+" 秒</span>");
+		}	
+		$("span#openBtn").click(function(){
+		
+			$.post("./index.php/exam/closePractice", {
+				uuid : _urlUid,			
+			}, function() {
+				$("span#openBtn").html("開放試卷");
+				$("span#openBtn").attr("onclick","limitTimeSetting()");	
+				$("span#limitTime").remove();	
+			
+			});
+		});	
 	}
 	else
 	{		
-		$("span#openState").html("開放試卷");
-		$("span#limitTime").remove();		
+		$("span#openBtn").html("開放試卷");
+		$("span#limitTime").remove();	
+		$("span#openBtn").attr("onclick","limitTimeSetting()");	
+		
+	}	
+}
+
+function limitTimeSetting()
+{						
+	$("span#openBtn").after("<div class='setLimit'>限制時間：<input type='radio' checked='checked' name='radio' value='none'>無限期</input><input type='radio' name='radio' value='time'>作答時間達到<input type='text' class='min' style='width:50px;' value='0' />分<input type='text' class='sec' style='width:50px;' value='0' />秒時，系統自動交卷</input><div><span class='greenBtn' onclick=\"sentLimitTimeSetting()\">確認</span><span class='grayBtn' onclick=\"closeLimitTimeSetting()\">取消</span></div></div>");
+			
+	$("div.setLimit input[type=text]").bind("keydown",function(){
+		$("div.setLimit input[type=radio]:eq(1)").prop("checked","checked");
+	});		
+	$("span#openBtn").removeAttr("onclick")
+}
+
+function closeLimitTimeSetting()
+{
+	$("div.setLimit").remove();
+	$("span#openBtn").attr("onclick","limitTimeSetting()");
+}
+
+function sentLimitTimeSetting()
+{
+	var _limit=$("div.setLimit input[type=radio]:checked").val();
+	var	_time=0;
+	var _timeMes="";
+	var _min="";
+	var _sec="";
+		
+		
+	if(_limit=="time")
+	{							
+		_min=$.trim($("div.setLimit input[type=text]:eq(0)").val());
+		_sec=$.trim($("div.setLimit input[type=text]:eq(1)").val());
+		if(isNaN(parseInt(_min))  || isNaN(parseInt(_sec)) )
+		{
+			alert("請正確輸入所限制之時間！");	
+		}
+		else
+		{
+			_time=(_min*60)+(_sec*1);			
+			_timeMes=_min+" 分 "+_sec+" 秒";			
+		}						
+	}
+	else
+	{
+		_timeMes="無期限"
 	}
 	
-	$("span#openState").click(function(){
+	if(_limit=="time" && _time==0)
+	{
+		alert("請正確輸入所限制之時間！");	
+	}
+	else
+	{	
 		
-		$.post("./index.php/exam/closePractice", {
-			uuid : _urlUid,			
+		$.post("./index.php/exam/sentOpen", {
+			uuid : _urlUid,
+			time:_time
 		}, function() {
-			$("span#openState").html("開放試卷");
-			$("span#limitTime").remove();	
+			$("span#openBtn").after("<span id='limitTime'></span>");
+			$("span#limitTime").html("試卷開放狀態：<span class='fontGreen'>開放作答中</span>　限制時間：<span class='fontBlue'>"+_timeMes+"</span>");
 		
+			closeLimitTimeSetting();
+			
 		});
-	});
-	
-	
-});
+		
+	}	
+}
 
 function setLockFuncion()
 {
-	if($("span#lockState").attr("class")=="lock")
+	if($("span#lockBtn").attr("class")=="lock")
 	{
-		$("span#lockState").html("試卷解鎖");
+		$("span#lockBtn").html("試卷解鎖");
 		actionCover();
 	}
 	else
 	{
-		$("span#lockState").html("試卷上鎖");		
+		$("span#lockBtn").html("試卷上鎖");		
 	}
 	
-	$("span#lockState").click(function(){
+	$("span#lockBtn").click(function(){
 		var lock_state=$(this).attr("class");
 		if(lock_state=="lock")
 		{
@@ -88,15 +160,15 @@ function setLockFuncion()
 		}, function() {			
 			if(lock_state=="unlock")
 			{
-				$("div#create div:eq(0)").removeAttr("style");
-				$("span#lockState").removeClass().addClass("unlock");
-				$("span#lockState").html("試卷上鎖");
+				$("div#create div#lockCover").removeAttr("style");
+				$("span#lockBtn").removeClass().addClass("unlock");
+				$("span#lockBtn").html("試卷上鎖");
 			}
 			else
 			{		
 				actionCover();
-				$("span#lockState").removeClass().addClass("lock");
-				$("span#lockState").html("試卷解鎖");
+				$("span#lockBtn").removeClass().addClass("lock");
+				$("span#lockBtn").html("試卷解鎖");
 			}			
 		});		
 	});
@@ -108,7 +180,7 @@ function actionCover()
 	$("div#create").css({
 			"position":"relative"		
 	});
-	$("div#create div:eq(0)").css({
+	$("div#create div#lockCover").css({
 		"position":"absolute",
 		"width":"100%",		
 		"height":"700px",
@@ -118,29 +190,7 @@ function actionCover()
 	});
 }
 
-function lockToggle()
-{
-	var lock_state=$("div#lock-"+_uuid).prop("class");
-	if(lock_state=="lock")
-	{
-		lock_state="unlock";
-		$("li#li-"+_uuid+" .unlockBtn").show();		
-	}
-	else
-	{
-		lock_state="lock";
-		$("li#li-"+_uuid+" .unlockBtn").hide();
-	}
-	$.post(
-		"./index.php/exam/lockToggle", {
-		uuid : _uuid,
-		lock : lock_state
-	}, function() {
-		
-		$("div#lock-"+_uuid).removeClass().addClass(lock_state);
-		
-	});			
-}
+
 
 function quizList(_uuid) 
 {
@@ -148,6 +198,7 @@ function quizList(_uuid)
 		uid : _uuid
 	}, function(result) {
 		$("div#quizList").html(result);
+		setQuizMetaFunction();
 	});
 }
 
@@ -232,6 +283,7 @@ function sendOut() {
 			quizList(_urlUid);
 			cancel();
 			showTemp();
+			setQuizMetaFunction();
 		});
 		
 	}
@@ -252,6 +304,7 @@ function addtips()
 
 	});
 	tipsSortInit();
+	setQuizMetaFunction();
 }
 function tipsSortInit()
 {
@@ -260,13 +313,26 @@ function tipsSortInit()
 	});
 	
 }
-
-function getQueryString( paramName ){ 
+function setQuizMetaFunction()
+{
+	$("div#quizMeta span:eq(0)").html($("table#examList tr").size()-1);
+	$("div#quizMeta span:eq(1)").html($("table#examList tr td.public span.fontGreen").size());
+	var totalScore=0;
+	$("table#examList tr td.public span.fontGreen").each(function(){
+		totalScore=totalScore+parseInt($(this).parent().prev("td.score").children("span").html());
+		
+	});
+	$("div#quizMeta span:eq(2)").html(totalScore);
+	
+	
+}
+function getQueryString( paramName )
+{ 	
 　　paramName = paramName .replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
 　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
 　　var regex = new RegExp( reg ); 
 　　var regResults = regex.exec( window.location.href.toLowerCase() ); 
 　　if( regResults == null ) return ""; 
-　　else return regResults [1]; 
+　 else return regResults [1]; 
 } 
 

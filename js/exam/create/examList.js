@@ -5,6 +5,7 @@
 var _href = "./index.php/mExam";
 $(document).ready(function() {
 	checkNum();
+	
 
 });
 
@@ -71,19 +72,21 @@ function del(_id) {
 	}, function() {
 		$("tr#topicLi-" + _id).remove();
 		checkNum();
+		setQuizMetaFunction();
 	});
 }
 
 function batchDel() {
 	if(confirm("試題一但刪除即無法復原，確定要刪除嗎？")){
 		
-	$("input.quiz").each(function() {
-		var _this = $(this);
-
-		if (_this.prop("checked")) {
-			del(_this.val().replace("exam-", ""));
-		}
-	});
+		$("input.quiz").each(function() {
+			var _this = $(this);
+	
+			if (_this.prop("checked")) {
+				del(_this.val().replace("exam-", ""));
+				
+			}
+		});
 	}
 	
 }
@@ -117,6 +120,7 @@ function batchPublic(_state) {
 					data : JSON.stringify(_data)
 				}, function() {
 					$("tr#topicLi-" + _id + " td.public").html("<span class='fontGreen'>開放</span>");
+					setQuizMetaFunction();
 				});
 
 			} else {
@@ -128,6 +132,7 @@ function batchPublic(_state) {
 					data : JSON.stringify(_data)
 				}, function() {
 					$("tr#topicLi-" + _id + " td.public").html("<span class='fontRed'>不開放</span>");
+					setQuizMetaFunction();
 				});
 			}
 		}
@@ -157,6 +162,8 @@ function batchScore() {
 							data : JSON.stringify(_data)
 						}, function() {
 							$("tr#topicLi-" + _id + " td.score span").html(_val/100);
+							
+							setQuizMetaFunction();
 						});
 					}
 				});

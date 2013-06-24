@@ -1,18 +1,27 @@
 <div id="create">
 	<h1 id="nodeTitle"><?php echo $result[0]->name?></h1>
+	<div id="nodeMes">		
+		<span id="lockBtn" class="<?php echo $result[0]->lock; ?>"></span>				
+		<span id="openBtn" class="<?php echo $result[0]->open_answer; ?>"></span>
+		<span id="limitTime"><?php echo $result[0]->limit_time?></span>						
+	</div>
 	
-		<span id="limitTime"><?php echo $result[0]->limit_time?></span>	
-		<span id="lockState" class="<?php echo $result[0]->lock; ?>"></span>		
-		<span id="openState" class="<?php echo $result[0]->open_answer; ?>"></span>
-	<hr/>
-	<div></div>
+	<div id="lockCover"></div>
+	
 	<div id='tools'>
 		<ul>
 			<ul><li class='action unabled' onclick='batchDel()'>刪除</li></ul>
 			<ul><li class='action unabled' onclick="batchShow('close')">展開</li><li class='action unabled' onclick="batchShow('open')">收合</li></ul>
 			<ul><li class='action unabled' onclick="batchPublic('open')">開放</li><li class='action unabled' onclick="batchPublic('close')">不開放</li></ul>
 			<ul><li class='actionScore unabled'>修改配分</li><li class='actionScore'><input type="text" id="batchScoreText" disabled="disabled"></input></li><li class='action unabled' onclick="batchScore()">更改</li></ul>
-		</ul>		
+		</ul>
+		<div id="quizMeta">
+			<ul>
+				<li>總題數：<span class="fontBlue"></span></li>
+				<li>開放題數：<span class="fontGreen"></span></li>
+				<li>總得分：<span class="fontBlue"></span></li>
+			</ul>
+		</div>		
 	</div>
 	
 	<div id="quizList"><table id="examList" cellspacing="0">

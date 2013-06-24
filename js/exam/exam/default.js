@@ -53,7 +53,7 @@ function openToggle(_uuid,_state)
 	{		
 		$("li#li-"+_uuid+" div.btn span.openBtn").parent().after("<div class='setLimit'>限制時間：<input type='radio' checked='checked' name='radio-"+_uuid+"' value='none'>無限期</input><input type='radio' name='radio-"+_uuid +"' value='time'>作答時間達到<input type='text' class='min' style='width:50px;' value='0' />分<input type='text' class='sec' style='width:50px;' value='0' />秒時，系統自動交卷</input><div><span class='greenBtn' onclick=\"sentOpen('"+_uuid+"')\">確認</span><span class='grayBtn' onclick=\"cancelOpen('"+_uuid+"')\">取消</span></div></div>");
 				
-		$("li#li-"+_uuid+" div.setLimit input[type=text]").bind("click",function(){
+		$("li#li-"+_uuid+" div.setLimit input[type=text]").bind("keydown",function(){
 			$("li#li-"+_uuid+" div.setLimit input[type=radio]:eq(1)").prop("checked","checked");
 		});
 	}

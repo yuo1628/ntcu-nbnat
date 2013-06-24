@@ -4,11 +4,64 @@
  * @update: shown
  */
 
-#create div#nodeMes div{
-	display:inline-block;	
-	border:1px solid #000;
+#create div#nodeMes{
+	/*display:inline-block;*/
+	margin:10px 0;	
+	padding:10px 0 20px 0;
+	border-bottom:1px solid #333333;	
+	/*position:relative;	*/
 }
-
+#create div#nodeMes span#lockBtn
+{
+	/*position:absolute;
+	right:0;
+	top:0;*/
+}
+#create div#nodeMes span#openBtn
+{
+	/*position:absolute;
+	left:0;
+	top:0;*/
+}
+#create div#nodeMes span#lockBtn,#create div#nodeMes span#openBtn
+{
+	padding: .5em .8em;
+	border: 1px solid #e0e0e0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-family: "微軟正黑體";
+	font-size:.9em;
+	cursor:pointer;	
+	font-weight: bold;
+	color:#fff;	
+	background-color: #313131;
+	
+}
+#create div#nodeMes span#lockBtn:hover,#create div#nodeMes span#openBtn:hover
+{
+	color:#fff;	
+	background-color: #626262;
+}
+#create div#nodeMes div.setLimit,#create div#nodeMes span#limitTime
+{
+	font-size:.8em;
+	padding:30px 0 0 3px;
+	color:gray;
+}
+#create div#nodeMes div.setLimit div
+{
+	font-size:.8em;
+	display: inline-block;
+}
+#create div#nodeMes div.setLimit input[type=text]
+{
+	text-align: right;
+}
+#create div#nodeMes div.setLimit input[type=text],#create div#nodeMes div.setLimit div span
+{
+	margin:0 5px;
+}
 #create div#template {
 	margin: 3% -2%;
 	padding: 2%;
@@ -116,10 +169,10 @@
 #create div#tools li.abled:hover
 {
 	
-	background-color: #f0f0f0;
-	color:#AAAAAA;
-	-webkit-box-shadow:  inset 1px 1px 3px 2px rgba(200,200,200,0.2);
-	-moz-box-shadow: inset 1px 1px 3px 2px rgba(200,200,200,0.2);
+	background-color: #f9f9f9;
+	color:#999999;
+	-webkit-box-shadow:  inset 0px 1px 20px 2px rgba(100,100,100,0.1);
+	-moz-box-shadow:inset 0px 1px 20px 2px rgba(100,100,100,0.1);
 	box-shadow: inset 0px 1px 20px 2px rgba(100,100,100,0.1);
 }
 #create div#tools li.abled:active
@@ -141,9 +194,10 @@
 }
 #create div#tools li.actionScore input#batchScoreText
 {
-	width:80px;
-	height:.8em;
-	text-indent: 5px;
+	width:80px;	
+	margin:-.2em;
+	text-align: right;
+	font-size:8px;
 	
 }
 #create div#tools li.actionScore input#batchScoreText:disabled
@@ -157,4 +211,63 @@
 	cursor:pointer;
 	font-size:.8em;
 	color:#A0A0A0;
+}
+
+#create div#quizMeta
+{
+	margin-top:10px;
+	color:gray;
+	font-size: .8em;
+	font-weight:normal;
+}
+#create div#quizMeta ul li
+{
+	display:inline-block;
+	margin-right:10px;	
+}
+
+div.useTinymce
+{
+	display:block;
+	width:30px;
+	height:30px;	
+	border:1px solid #000;	
+	cursor:pointer;	
+}
+div#tinymceFrame
+{
+	position: fixed;
+	left:0;
+	top:0px;
+	width:100%;
+	height:100%;			
+}
+div#tinymceFrame #tinymceFrameBg
+{
+	position: fixed;
+	left:0;
+	top:0px;
+	width:100%;
+	height:100%;	
+	background-color:#000000;
+	opacity: 0.5;
+	z-index:998;
+		
+}
+div#tinymceFrame div#tinymceCon
+{
+	display:block;
+	position: relative;
+	text-align:center;
+	vertical-align:middle;
+	width:806px;
+	height:100%;		
+	margin: 0 auto;
+	z-index:999;
+}
+div#tinymceFrame div#tinymceCon textarea#tinymceText
+{
+	position: relative;
+	height:80%;
+	
 }
