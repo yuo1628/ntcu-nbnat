@@ -18,7 +18,7 @@
  * 	btn
  */
 
-.addPointBtn {
+.addPointL1Btn {
 	cursor: pointer;
 	padding: 5px 10px;
 	color:#333;
@@ -32,7 +32,26 @@
 	margin: 0 0 10px 0;
 }
 
-.addPointBtn:hover {
+.addPointL1Btn:hover {
+	border: 1px solid #1c72d0;
+	background-color:#5a9ee9;
+}
+
+.addPointL0Btn {
+	cursor: pointer;
+	padding: 5px 10px;
+	color:#333;
+	font-size: 15px;
+	border: 1px solid #5a9ee9;
+	color:#fff;
+	border-radius: 3px;
+	
+	background-color:#5a9ee9;
+	
+	margin: 0 0 10px 0;
+}
+
+.addPointL0Btn:hover {
 	border: 1px solid #1c72d0;
 	background-color:#5a9ee9;
 }

@@ -67,10 +67,16 @@ var test_json;
 var tmpPointIndex = 0; 
 var tmpLineIndex = 0;
 
+//level
+var lvl = 0;
+var LEVEL_0 = 0;
+var LEVEL_1 = 1;
+var zoomCount = 0;
+
 $(function() {
 	
-	$(".mapBg").width($(document).width());
-	$(".mapBg").height($(document).height());
+	$(".mapBg").width(5000);
+	$(".mapBg").height(5000);
 	
 	$(".mapBgClose").click(function() {
 		$(".mapBg").remove();
@@ -94,8 +100,13 @@ $(function() {
 	//setLine();
 	
 	//add point
-	$(".addPointBtn").click(function() {
-		
+	$(".addPointL1Btn").click(function() {
+		lvl = LEVEL_1;
+		addPointObj();
+	})
+	
+	$(".addPointL0Btn").click(function() {
+		lvl = LEVEL_0;
 		addPointObj();
 	})
 	
@@ -266,6 +277,65 @@ $(function() {
 		window.location = "./index.php/practice/?uuid=" + $(pointClickObj).attr("uuid");
 		//enter($(pointClickObj).attr("uuid"));
 	})
+	
+	//預設縮小
+	zoomOut();
+	
+	//zoom in 放大
+	$(".zoomIn").click(function() {
+		
+		if(zoomCount == 2 )
+		{
+			zoomCount = 2;
+		}
+		else
+		{
+			zoomCount++;
+		}
+		zoom(zoomCount);
+	})
+	
+	//zoom out 縮小
+	$(".zoomOut").click(function() {
+		if(zoomCount == 0 )
+		{
+			zoomCount = 0;
+		}
+		else
+		{
+			zoomCount--;
+		}
+		zoom(zoomCount);
+	})
+	
+	$(".canvas").bind("mousewheel", function(e) {
+		if(e.originalEvent.wheelDelta == "120")
+		{
+			//alert("up")
+			if(zoomCount == 2 )
+			{
+				zoomCount = 2;
+			}
+			else
+			{
+				zoomCount++;
+			}
+		}
+		else
+		{
+			if(zoomCount == 0 )
+			{
+				zoomCount = 0;
+			}
+			else
+			{
+				zoomCount--;
+			}
+			//alert("down")
+		}
+		
+		zoom(zoomCount);
+	})
 		
 })
 
@@ -291,6 +361,145 @@ function starEffect() {
 
 function starEffectTime() {
 	var time = setTimeout("starEffect()", 100);
+}
+
+function zoom(s) {
+	switch(s) {
+		case 0:
+			zoomOut();
+			
+		break;
+		case 1:
+			zoomAll();
+		break;
+		case 2:
+			
+			zoomIn();
+		break;
+	}
+	
+	zoomScrollRect(s);
+}
+
+function zoomScrollRect(s) {
+	
+	$(".zoomScrollRect").animate({
+		'top' : 223 - (s * 27)
+	})
+	
+}
+
+//zoom
+function zoomIn() {
+	lvl = LEVEL_0;
+	$(".point[level=1]").animate({
+		'opacity' : '0'
+	},200)
+	$(".point[level=1]").css({
+		'display' : 'none'
+	})
+	$(".line[level=1]").animate({
+		'opacity' : '0'
+	},200)
+	$(".line[level=1]").css({
+		'display' : 'none'
+	})
+	$(".addPointL1Btn").css({
+		'display' : 'none'
+	})
+	
+	
+	$(".point[level=0]").animate({
+		'opacity' : '1'
+	},200)
+	$(".line[level=0]").animate({
+		'opacity' : '1'
+	},200)
+	$(".point[level=0]").css({
+		'display' : 'block'
+	})
+	$(".line[level=0]").css({
+		'display' : 'block'
+	})
+	$(".addPointL0Btn").css({
+		'display' : 'block'
+	})
+	
+}
+
+function zoomAll() {
+	$(".point[level=1]").animate({
+		'opacity' : '1'
+	},200)
+	$(".point[level=1]").css({
+		'display' : 'block'
+	})
+	$(".line[level=1]").animate({
+		'opacity' : '1'
+	},200)
+	$(".line[level=1]").css({
+		'display' : 'block'
+	})
+	$(".addPointL1Btn").css({
+		'display' : 'block'
+	})
+	
+	
+	$(".point[level=0]").animate({
+		'opacity' : '1'
+	},200)
+	$(".line[level=0]").animate({
+		'opacity' : '1'
+	},200)
+	$(".point[level=0]").css({
+		'display' : 'block'
+	})
+	$(".line[level=0]").css({
+		'display' : 'block'
+	})
+	$(".addPointL0Btn").css({
+		'display' : 'block'
+	})
+}
+
+function zoomOut() {
+	lvl = LEVEL_1;
+	$(".point[level=0]").animate({
+		'opacity' : '0'
+	},200)
+	$(".line[level=0]").animate({
+		'opacity' : '0'
+	},200)
+	
+	$(".point[level=0]").css({
+		'display' : 'none'
+	})
+	$(".line[level=0]").css({
+		'display' : 'none'
+	})
+	
+	$(".addPointL0Btn").css({
+		'display' : 'none'
+	})
+	
+	
+	$(".point[level=1]").animate({
+		'opacity' : '1'
+	},200)
+	$(".line[level=1]").animate({
+		'opacity' : '1'
+	},200)
+	
+	$(".point[level=1]").css({
+		'display' : 'block'
+	})
+	$(".line[level=1]").css({
+		'display' : 'block'
+	})
+	$(".addPointL1Btn").css({
+		'display' : 'block'
+	})
+	
 }
 
 function mouseDown(){
@@ -335,11 +544,11 @@ function pointClick(obj) {
 		
 	//set select this obj css
 	
-	$(".pointBorderShadow").css({
+	$(".point").css({
 		'border-color' : '#fff'
 	})
-	$(obj).find(".pointBorderShadow").animate({
-		'border-color' : '#5a9ee9'
+	$(obj).animate({
+		'border-color' : '#ccc'
 	})
 	
 	/*
@@ -401,7 +610,7 @@ function setControlVar(obj) {
 	$(".pointText").val($(obj).find(".pointTextDesc").text());
 	
 	
-	
+	//lock
 	if($(obj).hasClass("lock"))
 	{
 		
@@ -412,6 +621,23 @@ function setControlVar(obj) {
 	{
 		$(".lockBtn").removeClass("lock");
 		$(".lockBtn").addClass("unlock");
+	}
+	
+	//open answer
+	//暫時先用關閉的方式 日後gotoTopic會改成別的功能 此時就可開放
+	if($(obj).attr("open_anser") == "open")
+	{
+		
+		$(".gotoTopicBtn ").css({
+			'display' : 'block'
+		})
+		
+	}
+	else
+	{
+		$(".gotoTopicBtn ").css({
+			'display' : 'none'
+		})
 	}
 }
 
@@ -803,11 +1029,13 @@ function removePoint() {
 			
 			
 		}
-		$(p).remove();
+		
 	
-		removePointPost(p);
+		
 		
 	}
+	removePointPost(p);
+	$(p).remove();
 	//removePointPost(p);
 	//$(p).remove();
 	
@@ -856,11 +1084,12 @@ function removePoint() {
 			$(line_obj).remove();
 		
 		}
-		$(p).remove();
+		
 	
-		removePointPost(p);
+		
 	}
-	
+	removePointPost(p);	
+	$(p).remove();
 	
 	
 }
@@ -896,7 +1125,7 @@ function addLine(childObj, targetObj)
 	
 	
 	$(".canvas").append(
-		"<div class='line' lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'></div>"
+		"<div class='line' level='" + lvl + "' lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'></div>"
 	);
 	
 	$(childObj).attr("lid", c_lid);
@@ -938,7 +1167,7 @@ function addChildLine(childObj, targetObj)
 	
 	
 	$(".canvas").append(
-		"<div class='line chLine' ch_lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'  ></div>"
+		"<div class='line chLine' level='" + lvl + "' ch_lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'  ></div>"
 	);
 	
 	$(childObj).attr("ch_lid", c_lid);
@@ -1023,10 +1252,6 @@ function get2PointDist(o1, o2) {
 	o2x = parseInt($(o2).css("left")) + ($(o2).width() * 0.5) - ($(o1).width() * 0.5);
 	o2y = parseInt($(o2).css("top")) + ($(o2).height() * 0.5) - ($(o1).height() * 0.5);
 	ab = Math.sqrt(Math.pow(o2x - o1x, 2) + Math.pow(o2y - o1y, 2) )
-	+ parseInt($(o1).css("border-left-width")) + parseInt($(o1).css("border-right-width"))
-	+ parseInt($(o1).css("border-top-width")) + parseInt($(o1).css("border-bottom-width"))
-	+ parseInt($(o2).css("border-left-width")) + parseInt($(o2).css("border-right-width"))
-	+ parseInt($(o2).css("border-top-width")) + parseInt($(o2).css("border-bottom-width"))
 	;
 	
 	return ab;
@@ -1104,6 +1329,74 @@ function setSceneDrag() {
 		'left' : canvasX + (pageX - downX), 
 		'top' : canvasY + (pageY - downY)
 	})
+	
+	$(".mapBg").css({
+		'left' : canvasX + (pageX - downX), 
+		'top' : canvasY + (pageY - downY)
+	})
+	
+	if(parseInt($(".canvas").css("left")) >= 0 )
+	{
+		//alert(parseInt($(".canvas").css("left")));
+		$(".canvas").css({
+			'left' : '0px'
+		})
+		
+		$(".mapBg").css({
+			'left' : '0px'
+		})
+				
+	}
+	
+	
+	//alert(-(5000 - parseInt($(document).width())));
+	if(parseInt($(".canvas").css("left")) <= -(5000 - parseInt($(document).width())))
+	{
+		$(".canvas").css({
+			'left' : -(5000 - $(document).width())
+			
+		})
+		
+		$(".mapBg").css({
+			'left' : -(5000 - $(document).width())
+		})
+	}
+	
+	
+	if(parseInt($(".canvas").css("top")) >= 0)
+	{
+		$(".canvas").css({
+			'top' : '0px'
+		})
+		
+		$(".mapBg").css({
+			'top' : '0px'
+		})
+		
+	}
+	
+	if(parseInt($(".canvas").css("top")) <= -(5000 - $(document).height()))
+	{
+		$(".canvas").css({
+			'top' : -(5000 - $(document).height())
+		})
+		
+		$(".mapBg").css({
+			'top' : -(5000 - $(document).height())
+		})
+	}
+	
+		
+	/*
+	$(".canvas").css({
+			'left' : canvasX + (pageX - downX), 
+			'top' : canvasY + (pageY - downY)
+		})
+		
+		$(".mapBg").css({
+			'left' : canvasX + (pageX - downX), 
+			'top' : canvasY + (pageY - downY)
+		})*/
 }
 
 function hitTest(obj) {
@@ -1159,9 +1452,11 @@ function hitTest(obj) {
 
 function addPointObj() {
 	
+	
 	$(".canvas").append(
-		"<div class='drag point' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointBorder'></div><div class='pointBorderShadow'></div><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
+		"<div class='drag point' level='" + lvl + "' open_answer='close' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
 	)
+	
 	
 	$(".drag").bind("mousedown", mouseDown);
 	$(".drag").bind("mouseup", mouseUp);
@@ -1419,7 +1714,8 @@ function encodeJson() {
 				obj.width = isEmpty($(this).width());
 				obj.deg = isEmpty($(this).attr("deg"));
 				obj.x = parseInt($(this).css("left"));
-				obj.y = parseInt($(this).css("top"));		
+				obj.y = parseInt($(this).css("top"));	
+				obj.level = parseInt($(this).attr("level"));	
 				ary.push(obj);
 			
 		}
@@ -1433,7 +1729,8 @@ function encodeJson() {
 				obj.width = isEmpty($(this).width());
 				obj.deg = isEmpty($(this).attr("deg"));
 				obj.x = parseInt($(this).css("left"));
-				obj.y = parseInt($(this).css("top"));		
+				obj.y = parseInt($(this).css("top"));	
+				obj.level = parseInt($(this).attr("level"));		
 				ary.push(obj);
 			
 			
@@ -1447,7 +1744,8 @@ function encodeJson() {
 				obj.ch_lid = isEmpty($(this).attr("ch_lid"));
 				obj.text = isEmpty($(this).text());
 				obj.x = parseInt($(this).css("left"));
-				obj.y = parseInt($(this).css("top"));		
+				obj.y = parseInt($(this).css("top"));	
+				obj.level = parseInt($(this).attr("level"));	
 				ary.push(obj);
 			
 		}
@@ -1616,7 +1914,8 @@ function decodeJson() {
 						json[i].node_from,
 						json[i].node_to,
 						json[i].width,
-						json[i].z
+						json[i].z,
+						json[i].level
 					)
 					lineIndex = parseInt(json[i].lid) + 1;
 					tmpLineIndex = parseInt(json[i].lid);
@@ -1631,7 +1930,8 @@ function decodeJson() {
 						json[i].node_from,
 						json[i].node_to,
 						json[i].width,
-						json[i].z
+						json[i].z,
+						json[i].level
 					)
 					
 					lineIndex = parseInt(json[i].lid) + 1;
@@ -1647,7 +1947,9 @@ function decodeJson() {
 						json[i].ch_lid,
 						json[i].name,
 						json[i].uuid,
-						json[i].lock
+						json[i].lock,
+						json[i].level,
+						json[i].open_answer
 					)
 					
 					pointObjIndex = parseInt(json[i].pid) + 1;
@@ -1656,6 +1958,8 @@ function decodeJson() {
 				}
 			}
 		     
+		    //zoom out
+		    zoomOut();
 		}
 	 });
 	
@@ -1688,6 +1992,7 @@ function encodeUpdJson() {
 				obj.deg = isEmpty($(this).attr("deg"));
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));		
+				obj.level = parseInt($(this).attr("level"));	
 				ary.push(obj);
 			
 		}
@@ -1701,7 +2006,8 @@ function encodeUpdJson() {
 				obj.width = isEmpty($(this).width());
 				obj.deg = isEmpty($(this).attr("deg"));
 				obj.x = parseInt($(this).css("left"));
-				obj.y = parseInt($(this).css("top"));		
+				obj.y = parseInt($(this).css("top"));	
+				obj.level = parseInt($(this).attr("level"));	
 				ary.push(obj);
 			
 			
@@ -1715,7 +2021,8 @@ function encodeUpdJson() {
 				obj.ch_lid = isEmpty($(this).attr("ch_lid"));
 				obj.text = isEmpty($(this).text());
 				obj.x = parseInt($(this).css("left"));
-				obj.y = parseInt($(this).css("top"));		
+				obj.y = parseInt($(this).css("top"));	
+				obj.level = parseInt($(this).attr("level"));	
 				ary.push(obj);
 			
 		}
@@ -2030,7 +2337,7 @@ function removeLinkChildPost(_obj) {
  * @param {Object} lid
  * @param {Object} ch_lid
  */
-function readPoint(x, y, pid, lid, ch_lid, text, uuid, lock) {
+function readPoint(x, y, pid, lid, ch_lid, text, uuid, lock, level, open_answer) {
 	var lid_attr = "";
 	var ch_lid_attr = "";
 	if(lid != undefined && lid != "" )
@@ -2043,18 +2350,18 @@ function readPoint(x, y, pid, lid, ch_lid, text, uuid, lock) {
 	}
 	
 	$(".canvas").append(
-		"<div class='drag point " + lock + "' uuid=" + uuid + " style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + "><div class='pointBorder'></div><div class='pointBorderShadow'></div><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'>" + text + "</div></div></div>"
+		"<div class='drag point " + lock + "' uuid=" + uuid + " level='" + level + "' open_answer='" + open_answer + "' style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + "><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'>" + text + "</div></div></div>"
 	)
 	
 	$(".drag").bind("mousedown", mouseDown);
 	$(".drag").bind("mouseup", mouseUp);
 }
 
-function readLine(x, y ,lid ,cid ,tid,width,deg)
+function readLine(x, y ,lid ,cid ,tid,width,deg, level)
 {
 	
 	$(".canvas").append(
-		"<div class='line' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' lid='" + lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'></div>"
+		"<div class='line' level='" + level + "' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' lid='" + lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'></div>"
 	);
 	
 	var line = $(".line[lid=" + lid +"]");
@@ -2065,11 +2372,11 @@ function readLine(x, y ,lid ,cid ,tid,width,deg)
 		
 }
 
-function readChildLine(x, y ,ch_lid ,cid ,tid,width,deg)
+function readChildLine(x, y ,ch_lid ,cid ,tid,width,deg, level)
 {
 	
 	$(".canvas").append(
-		"<div class='line chLine' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' ch_lid='" + ch_lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'></div>"
+		"<div class='line chLine' level='" + level + "' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' ch_lid='" + ch_lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'></div>"
 	);
 	
 	var line = $(".line[ch_lid=" + ch_lid +"]");

@@ -53,7 +53,8 @@ class MapController extends MY_Controller {
 				"ch_lid" => $item->ch_lid,
 				"name" => $item->text,
 				"x" => $item->x,
-				"y" => $item->y
+				"y" => $item->y,
+				"level" => $item->level
 				);
 				
 				//寫入資料庫
@@ -71,6 +72,7 @@ class MapController extends MY_Controller {
 				"z" => $item->deg, //z
 				"x" => $item->x,
 				"y" => $item->y,
+				"level" => $item->level,
 				"is_child" => '0'
 				);
 
@@ -88,6 +90,7 @@ class MapController extends MY_Controller {
 				"z" => $item->deg, //z
 				"x" => $item->x,
 				"y" => $item->y,
+				"level" => $item->level,
 				"is_child" => '1'
 				);
 				
@@ -138,7 +141,8 @@ class MapController extends MY_Controller {
 					"ch_lid" => $item->ch_lid,
 					"name" => $item->text,
 					"x" => $item->x,
-					"y" => $item->y
+					"y" => $item->y,
+					"level" => $item->level
 					);
 					
 				$compare = array(
@@ -169,7 +173,8 @@ class MapController extends MY_Controller {
 					"z" => $item->deg, //z
 					"x" => $item->x,
 					"y" => $item->y,
-					"is_child" => '0'
+					"is_child" => '0',
+					"level" => $item->level
 				);
 					
 				$compare = array(
@@ -200,7 +205,8 @@ class MapController extends MY_Controller {
 					"z" => $item->deg, //z
 					"x" => $item->x,
 					"y" => $item->y,
-					"is_child" => '1'
+					"is_child" => '1',
+					"level" => $item->level
 				);
 					
 				$compare = array(
