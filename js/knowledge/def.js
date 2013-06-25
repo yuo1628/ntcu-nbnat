@@ -280,7 +280,7 @@ $(function() {
 	})
 	
 	$(".gotoTopicBtn").click(function() {
-		window.location = "./index.php/mExam/router/" + $(pointClickObj).attr("uuid");
+		window.location = "./index.php/mExam/?id=" + $(pointClickObj).attr("uuid");
 		//enter($(pointClickObj).attr("uuid"));
 	})
 	
