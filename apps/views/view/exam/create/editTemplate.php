@@ -1,5 +1,7 @@
 <div class='editTemplate'>
 	<textarea class="edit_topicText"><?php echo $quiz[0] -> topic;?></textarea>
+<span>教學影片</span>
+	<input type="text" class="edit_mediaText" value='<?php echo $quiz[0] -> media_url; ?>'></input>
 <?php $tipsArray=json_decode($quiz[0]->tips,true);
 
 	echo "<div class='tipsMes' id='tips-".$quiz[0] -> id."'><p>提示：<span onclick=\"tipsAppend('".$quiz[0] -> id."')\">新增提示</span></p>";

@@ -19,9 +19,7 @@
 				else
 				{
 					echo "<span class='greenBtn' uuid='" . $item -> uuid .  "' onclick=\"enter('" . $item -> uuid . "')\">進行測驗</span>";
-				}
-				
-			
+				}			
 		}
 		if ($item -> count_a > 0 ) 
 		{

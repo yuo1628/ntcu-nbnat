@@ -1,4 +1,7 @@
 <?php $tipsArray=json_decode($quiz[0]->tips,true);
+echo "<span>教學影片</span><div class='teachMedia'>".$quiz[0] -> media_url."</div>";
+
+
 if(count($tipsArray)>0){
 	echo "<div class='tipsMes'><p>提示：</p>";
 for($i=0;$i<count($tipsArray);$i++)
@@ -8,8 +11,6 @@ for($i=0;$i<count($tipsArray);$i++)
 echo "</div>";
 }
 ?>
-
-
 	<?php echo "<ul>"; ?>
 		<?php switch ($quiz[0] -> type) : 
 			case 'choose': 

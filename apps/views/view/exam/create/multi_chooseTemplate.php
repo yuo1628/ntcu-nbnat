@@ -6,6 +6,9 @@
 		<th>題目</th><td colspan="2"><textarea id="topicText"></textarea></td>
 	</tr>
 	<tr>
+		<th>影片</th><td colspan="2"><input type="text" id="mediaUrl"></input></td>
+	</tr>
+	<tr>
 		<th>提示</th><td colspan="2"><span onclick="addtips()" class="addtips">新增提示</span></td>
 	</tr>
 	<tr class="tipsTemp">

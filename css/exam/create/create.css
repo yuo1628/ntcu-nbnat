@@ -226,14 +226,26 @@
 	margin-right:10px;	
 }
 
+div.useTinymce,div.useText
+{
+	display:inline-block;
+	width:30px;
+	height:30px;			
+	cursor:pointer;	
+	background: url(../../../img/icon.png);
+	background-repeat: no-repeat;
+	background-size: 30px auto;
+	
+}
 div.useTinymce
 {
-	display:block;
-	width:30px;
-	height:30px;	
-	border:1px solid #000;	
-	cursor:pointer;	
+	background-position: 0px -893px;
 }
+div.useText
+{
+	background-position: 0px -925px;
+}
+
 div#tinymceFrame
 {
 	position: fixed;
@@ -262,12 +274,37 @@ div#tinymceFrame div#tinymceCon
 	vertical-align:middle;
 	width:806px;
 	height:100%;		
-	margin: 0 auto;
+	margin: 2% auto;
+	
 	z-index:999;
 }
 div#tinymceFrame div#tinymceCon textarea#tinymceText
 {
-	position: relative;
-	height:80%;
-	
+	position: relative;	
+	height:70%;	
+}
+div#tinymceFrame div#tinymceClose
+{
+	position: fixed;
+	right:0;
+	display:inline-block;
+	border:1px solid #000000;
+	padding:.2em .5em;
+	background-color:#000000;
+	color:white;
+	z-index:999;
+	cursor: pointer;
+}
+div#tinymceFrame div#tinymceOk
+{	
+	position: fixed;
+	right:10px;
+	bottom:10px;
+	display:inline-block;		
+	z-index:999;
+}
+#create div#template #mediaUrl
+{
+	width:500px;
+	height:1.5em;
 }

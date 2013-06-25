@@ -53,7 +53,7 @@ ul#examList li.topicLi div.tipsBtn
 	padding-bottom:3px;
 }
 
-ul#examList li.topicLi span.tips
+ul#examList li.topicLi span.tips,ul#examList li.topicLi span.media
 {	
 	cursor: pointer;
 	border:1px solid #e0e0e0;
@@ -65,13 +65,14 @@ ul#examList li.topicLi span.tips
 	border-radius: 3px;
 	font-family: "微軟正黑體";
 	font-size:small; 
+	margin-right:5px;
 	
 } 
-ul#examList li.topicLi span.tips:hover
+ul#examList li.topicLi span.tips:hover,ul#examList li.topicLi span.media:hover
 {
 	background-color: #f0f0f0;
 }
-ul#examList li.topicLi span.tips:active
+ul#examList li.topicLi span.tips:active,ul#examList li.topicLi span.media:active
 {
 	background-color: #e0e0e0;
 	
@@ -210,6 +211,56 @@ ul#examList div.tipsMes div.step span.down:hover
 }
 ul#examList div.tipsMes div.step span.down:active
 {
-	background-color: #e0e0e0;
+	background-color: #e0e0e0;	
+}
+/*div#mediaFrame'><div id='mediaBg'></div><div id='mediaClose'>X</div><div id='mediaCon'>"+html+"</div></div>");*/	
+div#mediaFrame
+{
+	position: fixed;
+	left:0;
+	top:0px;
+	width:100%;
+	height:100%;			
+}
+div#mediaFrame #mediaBg
+{
+	position: fixed;
+	left:0;
+	top:0px;
+	width:100%;
+	height:100%;	
+	background-color:#000000;
+	opacity: 0.5;
+	z-index:998;
+		
+}
+div#mediaFrame div#mediaCon
+{
+	display:block;
+	position: relative;
+	text-align:center;
+	vertical-align:middle;
+	width:806px;
+	height:100%;		
+	margin: 2% auto;
 	
+	z-index:999;
+}
+div#mediaFrame div#mediaCon iframe
+{
+	position: relative;	
+	height:80%;
+	width:80%;	
+}
+div#mediaFrame div#mediaClose
+{
+	position: fixed;
+	right:0;
+	display:inline-block;
+	border:1px solid #000000;
+	padding:.2em .5em;
+	background-color:#000000;
+	color:white;
+	z-index:999;
+	cursor: pointer;
 }

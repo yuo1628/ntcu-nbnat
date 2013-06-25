@@ -18,6 +18,65 @@ $(document).ready(function() {
 	
 	
 });
+
+function showMedia(_url)
+{
+	var parser = document.createElement('a');
+	parser.href = _url;
+	var matches;
+	var _html="";
+	var _parm=(getQueryStringByUrl(_url,"v"));
+	/*
+	 * 
+	 if ( ( matches = parser.search.match("v=([\w[\-]]*)")) != null) 
+	{
+		_html = "<iframe src=\"http://www.youtube.com/embed/" + matches[1] + "\" frameborder=\"0\" allowfullscreen></iframe>"
+	}
+	else if ( ( matches = parser.search.match("http://youtu.be/(.*)") ) != null)
+	{
+		_html = "<iframe src=\"http://www.youtube.com/embed/" + matches[1] + "\" frameborder=\"0\" allowfullscreen></iframe>"
+	}	
+	*/
+	if(_parm)
+	{
+		_html = "<iframe src=\"http://www.youtube.com/embed/" + _parm + "\" frameborder=\"0\" allowfullscreen></iframe>";
+	}
+	else
+	{
+		var _urlParm=_url.split("/");
+		
+		_html = "<iframe src=\"http://www.youtube.com/embed/" +_urlParm[_urlParm.length-1]  + "\" frameborder=\"0\" allowfullscreen></iframe>";
+		
+
+	}
+	
+	$("div#practice").after("<div id='mediaFrame'><div id='mediaBg'></div><div id='mediaClose'>X</div><div id='mediaCon'>"+_html+"</div></div>");	
+	
+	$("div#mediaClose").click(function(){
+		$("div#mediaFrame").remove();
+	});
+}
+function getQueryString( paramName )
+{ 
+　　paramName = paramName .replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
+　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
+　　var regex = new RegExp( reg ); 
+　　var regResults = regex.exec( window.location.href.toLowerCase() ); 
+　　if( regResults == null ) return ""; 
+　 else return regResults [1]; 
+} 
+
+function getQueryStringByUrl(_url,paramName)
+{ 	
+　　paramName = paramName.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
+　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
+　　var regex = new RegExp( reg ); 
+　　var regResults = regex.exec(_url); 
+　　if( regResults == null ) return false; 
+　 else return regResults [1]; 
+} 
+
+
 /*
 function slide(_id, _state) {
 	switch (_state) {
@@ -275,12 +334,3 @@ function isFirstStep(_id)
 	}
 	
 }
-
-function getQueryString( paramName ){ 
-　　paramName = paramName .replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
-　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
-　　var regex = new RegExp( reg ); 
-　　var regResults = regex.exec( window.location.href.toLowerCase() ); 
-　　if( regResults == null ) return ""; 
-　　else return regResults [1]; 
-} 

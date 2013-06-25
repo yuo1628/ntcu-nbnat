@@ -7,7 +7,7 @@
 .editTemplate textarea {
 	resize: vertical;
 }
-.editTemplate textarea.edit_topicText {
+.editTemplate textarea.edit_topicText,.editTemplate input.edit_mediaText {
 	width: 98%;
 }
 .editTemplate textarea.tipsTextarea {

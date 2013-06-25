@@ -215,26 +215,63 @@ function cancel() {
 }
 
 function addoption() {
-	var _temp = $("table#choose tbody tr:eq(0)").html();
-	$("table#choose tbody").append("<tr>" + _temp + "<th><span class='delBtn'>X</span></th></tr>");
+	var _temp = $("table#choose tbody tr:eq(0)").clone();
+	_temp.children("td").children("div.tinymceView").empty().hide();
+	_temp.children("td").children("textarea.answerText").show();
+	$("table#choose tbody").append("<tr>" + _temp.html() + "<th><span class='delBtn'>X</span></th></tr>");
 	var _index = $("table#choose tbody tr").size() - 2;
 	$("table#choose tbody .delBtn:eq(" + _index + ")").bind("click", function() {
 		var _sort = $(this).parents("tr").remove();
-
 	});
+	
+	$("table#choose tbody .useTinymce:eq(" + (_index+1) + ")").bind("click",function(){
+		var _this=$(this);
+		
+		$("div#create").after("<div id='tinymceFrame'><div id='tinymceFrameBg'></div><div id='tinymceClose'>X</div><div id='tinymceOk' class='greenBtn'>完成</div><div id='tinymceCon'></div></div>");
+		var _oldCon=_this.nextAll("textarea").val();
+		$.post(
+			"./index.php/mExam/showTinymce",
+			{
+				content: _oldCon
+			},
+			function(data)
+			{				
+				$("div#tinymceFrame div#tinymceCon").html(data);								
+				$("div#tinymceClose").click(function(){
+					$("div#tinymceFrame").remove();										
+				});
+				
+				$("div#tinymceOk").click(function(){					
+					//tinymce.triggerSave();
+					var _con=tinymce.activeEditor.getContent();
+					
+					_this.nextAll("div.tinymceView").html(_con).show();
+					_this.nextAll("textarea").val(_con).hide();
+					$("div#tinymceFrame").remove();						
+				});				
+			});
+	});
+	
+	$("table#choose tbody div.useText:eq(" + (_index+1) + ")").bind("click",function(){
+		var _this=$(this);
+		_this.nextAll("div.tinymceView").hide();
+		_this.nextAll("textarea").show();
+		
+	});
+	
 }
 
 function sendOut() {
 
 
 	var _ansCount = 0;
-
 	var _trLength = $("table#choose tbody tr").size();
 	
-	for ( i = 0; i < _trLength; i++) {
-		if ($("table#choose tbody tr:eq(" + i + ") input").prop("checked")) {
+	for ( i = 0; i < _trLength; i++) 
+	{
+		if ($("table#choose tbody tr:eq(" + i + ") input").prop("checked")) 
+		{
 			_ansCount++;
-
 		}
 	}
 	var _score = $("#scoreText").val();
@@ -245,29 +282,27 @@ function sendOut() {
 	else if(_score=="")
 	{
 		alert("配分欄位不得為空白!");
-	} else {
-		
+	} else {		
 		
 		var _topic = $("textarea#topicText").val();
 		var _type = $("select#type").val();
+		var _url = $("input#mediaUrl").val();
+		
 		var _tips = new Array();
 		$("textarea.tipsText").each(function(i){
 			if($(this).val()!=""){
 				_tips[i]=$(this).val();
 			}
-		});
-		
-		
+		});		
 
 		var _show = $("input#show").prop("checked");
-		var _options = new Array();
-		
+		var _options = new Array();		
 
-		for ( i = 0; i < _trLength; i++) {
+		for ( i = 0; i < _trLength; i++)
+		{
 			_options[i] = new Object();
 			_options[i].correct = $("table#choose tbody tr:eq(" + i + ") input").prop("checked");
 			_options[i].value = $("table#choose tbody tr:eq(" + i + ") .answerText").val();
-
 		}
 		
 		$.post("./index.php/mExam/addQuestion", {
@@ -276,6 +311,7 @@ function sendOut() {
 			tips : JSON.stringify(_tips),
 			nodes_uuid : _urlUid,
 			score : _score,
+			url:_url,
 			_public : _show,
 			option : _options
 		}, function() {
@@ -284,6 +320,7 @@ function sendOut() {
 			cancel();
 			showTemp();
 			setQuizMetaFunction();
+			
 		});
 		
 	}
@@ -293,6 +330,10 @@ function addtips()
 {
 	var _temp=$("tr.tipsTemp:eq(0)").clone();
 	$("td",_temp).removeAttr("colspan");
+	
+	
+	
+	
 	var _html=_temp.html();
 	var _len=$("tr.tipsTemp").size()+1;
 	
@@ -302,9 +343,46 @@ function addtips()
 		var _sort = $(this).parents("tr").remove();
 		tipsSortInit();
 
+	});	
+	
+	$("table#topic tbody .useTinymce:eq(" + (_index+2) + ")").bind("click",function(){
+		var _this=$(this);
+		
+		$("div#create").after("<div id='tinymceFrame'><div id='tinymceFrameBg'></div><div id='tinymceClose'>X</div><div id='tinymceOk' class='greenBtn'>完成</div><div id='tinymceCon'></div></div>");
+		var _oldCon=_this.nextAll("textarea").val();
+		$.post(
+			"./index.php/mExam/showTinymce",
+			{
+				content: _oldCon
+			},
+			function(data)
+			{				
+				$("div#tinymceFrame div#tinymceCon").html(data);								
+				$("div#tinymceClose").click(function(){
+					$("div#tinymceFrame").remove();										
+				});
+				
+				$("div#tinymceOk").click(function(){					
+					//tinymce.triggerSave();
+					var _con=tinymce.activeEditor.getContent();
+					
+					_this.nextAll("div.tinymceView").html(_con).show();
+					_this.nextAll("textarea").val(_con).hide();
+					$("div#tinymceFrame").remove();						
+				});				
+			});
 	});
+	
+	$("table#topic tbody div.useText:eq(" + (_index+2) + ")").bind("click",function(){
+		var _this=$(this);
+		_this.nextAll("div.tinymceView").hide();
+		_this.nextAll("textarea").show();
+		
+	});
+	
+	
 	tipsSortInit();
-	setQuizMetaFunction();
+	setQuizMetaFunction();	
 }
 function tipsSortInit()
 {
@@ -323,7 +401,7 @@ function setQuizMetaFunction()
 		
 	});
 	$("div#quizMeta span:eq(2)").html(totalScore);
-	
+	checkNum();
 	
 }
 function getQueryString( paramName )

@@ -87,6 +87,9 @@
 		<?php if(count(json_decode($item->tips,true))>0):?>			
 			<?php echo "<span class='tips' onclick=\"showTips('".$item->id."','close')\">提示</span>"; ?>
 		<?php endif;?>
+		<?php if($item->media_url!=""&&$item->media_url!=null&&$item->media_url!="0"):?>			
+			<?php echo "<span class='media' onclick=\"showMedia('".$item->media_url."')\">教學影片</span>"; ?>
+		<?php endif;?>
 		<?php echo "</div>"; ?>	
 	
 	<?php echo "</li>"; ?>

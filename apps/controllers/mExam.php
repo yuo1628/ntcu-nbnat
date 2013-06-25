@@ -89,12 +89,14 @@ class MExamController extends MY_Controller {
 		$_nodes_uuid=$this->input->post("nodes_uuid");
 		$_option=$this->input->post("option");
 		$_public=$this->input->post("_public");
+		$_url=$this->input->post("url");
 		
 		$input_data = array('topic' => $_topic,
 							'type' => $_type,
 							'tips' => $_tips,
 							'score'=> $_score*100,
 							'public'=>$_public,
+							'media_url'=>$_url,
 							'nodes_uuid' => $_nodes_uuid
 							);
 							
@@ -240,9 +242,9 @@ class MExamController extends MY_Controller {
 	}
 	function showTinymce()
 	{
-			
+		$content=$this->input->post("content");	
 		$this -> layout -> setLayout('layout/empty');
-		return $this -> layout -> view('view/exam/create/tinymceTemplate.php');
+		return $this -> layout -> view('view/exam/create/tinymceTemplate.php',array("content"=>$content));
 		
 	}
 
