@@ -54,7 +54,8 @@ class MapController extends MY_Controller {
 				"name" => $item->text,
 				"x" => $item->x,
 				"y" => $item->y,
-				"level" => $item->level
+				"level" => $item->level,
+				"media" => $item->media
 				);
 				
 				//寫入資料庫
@@ -134,6 +135,8 @@ class MapController extends MY_Controller {
 					"pid" => $item->pid
 				);
 				
+				//echo "media: " . $item->media;
+				
 				$itemList = array(
 					"type" => "point",
 					"pid" => $item->pid,				
@@ -142,7 +145,8 @@ class MapController extends MY_Controller {
 					"name" => $item->text,
 					"x" => $item->x,
 					"y" => $item->y,
-					"level" => $item->level
+					"level" => $item->level,
+					"media" => $item->media
 					);
 					
 				$compare = array(

@@ -182,3 +182,79 @@
 	background-color:#ccc;
 	color:#999;
 }
+
+
+/**
+ * 	movie
+ */
+
+.updMovieBtn {
+	cursor: pointer;
+	padding: 5px 10px;
+	font-size: 15px;
+	border: 1px solid #e0e0e0;
+	color:#333;
+	border-radius: 3px;
+	
+	text-align:center;
+}
+
+.checkMovieUrlBtn {
+	cursor: pointer;
+	padding: 5px 10px;
+	font-size: 15px;
+	border: 1px solid #e0e0e0;
+	color:#333;
+	border-radius: 3px;
+	
+	text-align:center;
+	display: none;
+}
+
+.edtMovieBtn {
+	cursor: pointer;
+	padding: 5px 10px;
+	font-size: 15px;
+	border: 1px solid #e0e0e0;
+	color:#333;
+	border-radius: 3px;
+	
+	text-align:center;
+	display: none;
+}
+
+.lookMovieBtn {
+	cursor: pointer;
+	padding: 5px 10px;
+	font-size: 15px;
+	border: 1px solid #e0e0e0;
+	color:#333;
+	border-radius: 3px;
+	
+	text-align:center;
+	display: none;
+}
+
+.updMovieUrlText {
+	width: 100px;
+	display: none;
+	padding: 10px;
+}
+
+.movieFrameBox {
+	display: none;
+	position: fixed;
+	z-index: 30002;
+}
+
+.movieFrameBg {
+	position: fixed;
+	display: none;
+	background-color:#fff;
+	opacity: 0.8;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	z-index: 30000;
+}

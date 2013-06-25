@@ -342,6 +342,50 @@ $(function() {
 		
 		zoom(zoomCount);
 	})
+	
+	//影片
+	$(".updMovieBtn").click(function() {
+		$(".checkMovieUrlBtn").show();
+		$(".updMovieUrlText").show();
+		$(this).hide();
+	})
+	
+	$(".checkMovieUrlBtn").click(function() {
+		$(pointClickObj).attr("media", getQueryStringByUrl($(".updMovieUrlText").val(), "v"));
+		
+		//alert("checkMovieUrlBtn media: " + $(pointClickObj).attr("media"));
+		encodeUpdJson();
+		
+		$(".checkMovieUrlBtn").hide();
+		$(".updMovieUrlText").hide();
+		
+		$(".lookMovieBtn").show();
+	})
+	
+	$(".lookMovieBtn").click(function() {
+		$(".movieFrameBox").show();
+		$(".movieFrameBg").show();
+		
+		$(".movieFrameBox").css({
+			'left' : ($(document).width() * 0.5) - ($(".movieFrameBox").width() * 0.5),
+			'top' : ($(document).height() * 0.5) - ($(".movieFrameBox").height() * 0.5)
+		})
+		
+		$(".movieFrameBg").css({
+			'width' : $(document).width(),
+			'height' : $(document).height()
+		})
+		
+		$(".movieFrameBox").find("iframe").attr("src", "http://www.youtube.com/embed/" + $(pointClickObj).attr("media"));
+	})
+	
+	$(".movieFrameBg").click(function() {
+		$(".movieFrameBox").hide();
+		$(".movieFrameBg").hide();
+		$(".movieFrameBox").find("iframe").attr("src", "");
+	})
+	
+	
 		
 })
 
@@ -656,6 +700,23 @@ function setControlVar(obj) {
 			'display' : 'none'
 		})
 	}*/
+	
+	if($(obj).attr("media") == undefined || $(obj).attr("media") == "")
+	{
+		$(".updMovieBtn").show();
+		$(".checkMovieUrlBtn").hide();
+		$(".lookMovieBtn").hide();
+		$(".updMovieUrlText").hide();
+		
+	}
+	else
+	{
+		$(".updMovieUrlText").val($(obj).attr("media"));
+		$(".updMovieBtn").hide();
+		$(".checkMovieUrlBtn").show();
+		$(".updMovieUrlText").show();
+		$(".lookMovieBtn").show();
+	}
 }
 
 function setPointVar() {
@@ -1467,20 +1528,7 @@ function hitTest(obj) {
 	})
 }
 
-function addPointObj() {
-	
-	
-	$(".canvas").append(
-		"<div class='drag point' level='" + lvl + "' open_answer='close' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
-	)
-	
-	
-	$(".drag").bind("mousedown", mouseDown);
-	$(".drag").bind("mouseup", mouseUp);
-	
-	
-	pointObjIndex++;
-}
+
 
 function displayUpPos() {
 	displayDownPos();
@@ -1956,6 +2004,8 @@ function decodeJson() {
 				}
 				else if(json[i].type == "point")
 				{
+					
+					
 					readPoint(
 						json[i].x,
 						json[i].y,
@@ -1966,7 +2016,8 @@ function decodeJson() {
 						json[i].uuid,
 						json[i].lock,
 						json[i].level,
-						json[i].open_answer
+						json[i].open_answer,
+						json[i].media
 					)
 					
 					pointObjIndex = parseInt(json[i].pid) + 1;
@@ -1989,6 +2040,166 @@ function decodeJson() {
 	)
 		*/
 }
+
+function addPointObj() {
+	
+	var href = window.location.href;
+	
+	$(".canvas").append(
+		"<div class='drag point' level='" + lvl + "' open_answer='close' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
+	)	
+	
+	$(".drag").bind("mousedown", mouseDown);
+	$(".drag").bind("mouseup", mouseUp);
+	
+	
+	addPointPostAjax(pointObjIndex);
+		 
+}
+
+function addPointPostAjax(pointObjIndex) {
+	var ary = new Array();
+	
+	$(".canvas").find("div").each(function() {
+		var obj = new Object();
+		
+		if($(this).hasClass("point"))
+		{
+			
+				obj.type = "point";
+				obj.pid = isEmpty($(this).attr("pid"));
+				obj.lid = isEmpty($(this).attr("lid"));
+				obj.ch_lid = isEmpty($(this).attr("ch_lid"));
+				obj.text = isEmpty($(this).text());
+				obj.x = parseInt($(this).css("left"));
+				obj.y = parseInt($(this).css("top"));	
+				obj.level = parseInt($(this).attr("level"));	
+				ary.push(obj);
+			
+		}
+		
+	})
+		
+	var json = JSON.stringify(ary, null, 2);
+	test_json = json;
+	var href = window.location.href;
+	
+	$.ajax({
+		xhr: function()
+			{
+				var xhr = new window.XMLHttpRequest();
+				//Upload progress
+				xhr.upload.addEventListener("progress", function(evt){
+				if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			      //Do something with upload progress
+				//console.log(percentComplete);
+				//alert(percentComplete);
+				$(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		 //Download progress
+		xhr.addEventListener("progress", function(evt){
+			if (evt.lengthComputable) {
+				var percentComplete = evt.loaded / evt.total;
+			     //Do something with download progress
+			    //alert(percentComplete);
+			    $(".ajaxProressBox").css({
+			     	'display' : 'block'
+			     })
+			    $(".ajaxProressBg").width(percentComplete * 200);
+				$(".ajaxProressText").text(percentComplete * 100);
+			}
+		}, false);
+		     return xhr;
+		   },
+		   type: 'POST',
+		   url: href + "/updNode",
+		   data: {
+				data : test_json
+		   },
+		   success: function(data){
+		     //Do something success-ish
+		     //alert("123 complete xhr: " + data);
+		     $(".ajaxProressBg").width(0);
+		     $(".ajaxProressBox").css({
+		     	'display' : 'none'
+		     })
+		     
+					$.ajax({
+					xhr: function()
+						{
+							var xhr = new window.XMLHttpRequest();
+							//Upload progress
+							xhr.upload.addEventListener("progress", function(evt){
+							if (evt.lengthComputable) {
+							var percentComplete = evt.loaded / evt.total;
+						      //Do something with upload progress
+							//console.log(percentComplete);
+							//alert(percentComplete);
+							$(".ajaxProressBox").css({
+						     	'display' : 'block'
+						     })
+						    $(".ajaxProressBg").width(percentComplete * 200);
+							$(".ajaxProressText").text(percentComplete * 100);
+						}
+					}, false);
+					 //Download progress
+					xhr.addEventListener("progress", function(evt){
+						if (evt.lengthComputable) {
+							var percentComplete = evt.loaded / evt.total;
+						     //Do something with download progress
+						    //alert(percentComplete);
+						    $(".ajaxProressBox").css({
+						     	'display' : 'block'
+						     })
+						    $(".ajaxProressBg").width(percentComplete * 200);
+							$(".ajaxProressText").text(percentComplete * 100);
+						}
+					}, false);
+					     return xhr;
+					   },
+					   type: 'POST',
+					   url: href + "/readNode",
+					   success: function(data){
+					     //Do something success-ish
+					     //alert("123 complete xhr: " + data);
+					     $(".ajaxProressBg").width(0);
+					     $(".ajaxProressBox").css({
+					     	'display' : 'none'
+					     })
+					     
+						var json = JSON.parse(data);
+						//alert(json);
+						for(var i = 0; i < json.length;i++)
+						{
+							//alert(json[i].pid);
+							if(json[i].type == "point")
+							{
+								//alert(json[i].pid + " " + pointObjIndex);
+								if(json[i].pid == pointObjIndex)
+								{
+									$(".point[pid=" + pointObjIndex + "]").attr("uuid" , json[i].uuid);
+									
+								}
+								
+								
+							}
+						}
+					     
+					     pointObjIndex++;
+					   }
+				 });
+				 
+		   }
+	 });
+}
+
+
 
 function encodeUpdJson() {
 	//displayDownPos();
@@ -2032,6 +2243,7 @@ function encodeUpdJson() {
 		else if($(this).hasClass("point"))
 		{
 			
+			//alert("encode obj media: " + parseInt($(this).attr("pid")) + " " + $(this).attr("media"));
 				obj.type = "point";
 				obj.pid = isEmpty($(this).attr("pid"));
 				obj.lid = isEmpty($(this).attr("lid"));
@@ -2040,6 +2252,7 @@ function encodeUpdJson() {
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));	
 				obj.level = parseInt($(this).attr("level"));	
+				obj.media = isEmpty($(this).attr("media"));
 				ary.push(obj);
 			
 		}
@@ -2116,6 +2329,8 @@ function encodeUpdJson() {
 		     $(".ajaxProressBox").css({
 		     	'display' : 'none'
 		     })
+		     
+		     //alert("encode upd json:" + data);
 		   }
 	 });
 }
@@ -2354,7 +2569,7 @@ function removeLinkChildPost(_obj) {
  * @param {Object} lid
  * @param {Object} ch_lid
  */
-function readPoint(x, y, pid, lid, ch_lid, text, uuid, lock, level, open_answer) {
+function readPoint(x, y, pid, lid, ch_lid, text, uuid, lock, level, open_answer, media) {
 	var lid_attr = "";
 	var ch_lid_attr = "";
 	if(lid != undefined && lid != "" )
@@ -2367,7 +2582,7 @@ function readPoint(x, y, pid, lid, ch_lid, text, uuid, lock, level, open_answer)
 	}
 	
 	$(".canvas").append(
-		"<div class='drag point " + lock + "' uuid=" + uuid + " level='" + level + "' open_answer='" + open_answer + "' style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + "><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'>" + text + "</div></div></div>"
+		"<div class='drag point " + lock + "' media='" + media + "' uuid=" + uuid + " level='" + level + "' open_answer='" + open_answer + "' style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + "><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'>" + text + "</div></div></div>"
 	)
 	
 	$(".drag").bind("mousedown", mouseDown);
@@ -2404,5 +2619,13 @@ function readChildLine(x, y ,ch_lid ,cid ,tid,width,deg, level)
 		
 }
 
-
+function getQueryStringByUrl(_url,paramName)
+{ 	
+　　paramName = paramName.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
+　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
+　　var regex = new RegExp( reg ); 
+　　var regResults = regex.exec(_url); 
+　　if( regResults == null ) return false; 
+　 else return regResults [1]; 
+} 
 

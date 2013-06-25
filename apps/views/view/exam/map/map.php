@@ -7,6 +7,12 @@ $n = $node->allNode();
 
 ?>
 <div class="mapContainer" style="position:fiexed;height: 100%;width:100%;overflow:hidden;left:0;top:0">
+	
+	<div class="movieFrameBox">
+		<iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+	</div>
+	<div class="movieFrameBg"></div>
+	
 	<div class="controlBar">
 			
 		<div class="linkBtn btn cItem">
@@ -38,9 +44,11 @@ $n = $node->allNode();
 		<div class="readBtn btn cItem">
 			讀檔
 		</div>
+		<!--
 		<div class="groupBtn btn cItem">
 			顯示群組
 		</div>
+		-->
 		
 		<div class="splitLine cItem">
 			
@@ -52,6 +60,23 @@ $n = $node->allNode();
 		
 		<div class="gotoTopicBtn btn cItem">
 			管理試題
+		</div>
+		
+		<div class="splitLine cItem">
+			
+		</div>
+		
+		<div class="updMovieBtn btn cItem">
+			加入影片
+		</div>
+		<div class="checkMovieUrlBtn btn cItem">
+			確定
+		</div>
+		<input class="updMovieUrlText cItem" type="text" />
+			
+		
+		<div class="lookMovieBtn btn cItem">
+			觀看影片
 		</div>
 		
 		<div class="clearFix"></div>
