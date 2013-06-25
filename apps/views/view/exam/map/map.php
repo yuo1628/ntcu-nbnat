@@ -51,7 +51,7 @@ $n = $node->allNode();
 		</div>
 		
 		<div class="gotoTopicBtn btn cItem">
-			前往試卷
+			管理試題
 		</div>
 		
 		<div class="clearFix"></div>

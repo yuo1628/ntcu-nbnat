@@ -265,16 +265,22 @@ $(function() {
 			
 			$(".lockBtn").removeClass("unlock");
 			$(".lockBtn").addClass("lock");
+			$(".gotoTopicBtn ").css({
+				'display' : 'none'
+			})
 		}
 		else
 		{
 			$(".lockBtn").removeClass("lock");
 			$(".lockBtn").addClass("unlock");
+			$(".gotoTopicBtn ").css({
+				'display' : 'block'
+			})
 		}
 	})
 	
 	$(".gotoTopicBtn").click(function() {
-		window.location = "./index.php/practice/?uuid=" + $(pointClickObj).attr("uuid");
+		window.location = "./index.php/mExam/router/" + $(pointClickObj).attr("uuid");
 		//enter($(pointClickObj).attr("uuid"));
 	})
 	
@@ -616,15 +622,26 @@ function setControlVar(obj) {
 		
 		$(".lockBtn").removeClass("unlock");
 		$(".lockBtn").addClass("lock");
+		$(".gotoTopicBtn ").css({
+			'display' : 'none'
+		})
+		
 	}
 	else
 	{
 		$(".lockBtn").removeClass("lock");
 		$(".lockBtn").addClass("unlock");
+		
+		
+		
+		$(".gotoTopicBtn ").css({
+			'display' : 'block'
+		})
 	}
 	
 	//open answer
 	//暫時先用關閉的方式 日後gotoTopic會改成別的功能 此時就可開放
+	/*
 	if($(obj).attr("open_anser") == "open")
 	{
 		
@@ -638,7 +655,7 @@ function setControlVar(obj) {
 		$(".gotoTopicBtn ").css({
 			'display' : 'none'
 		})
-	}
+	}*/
 }
 
 function setPointVar() {
