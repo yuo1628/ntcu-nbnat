@@ -70,6 +70,17 @@ class News_library {
 		}
 	}
 	
+	/**
+	 * 建立一個新的公告
+	 *
+	 * @access public
+	 * @retrun News
+	 */
+	public function create()
+	{
+	    return $this->CI->news_model->create();
+	}
+	
 	public function __get($name)
 	{
 		if (defined("SELF::$name"))
