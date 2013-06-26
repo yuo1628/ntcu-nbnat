@@ -79,6 +79,10 @@ $n = $node->allNode();
 			觀看影片
 		</div>
 		
+		<div class="gotoExamBtn btn cItem">
+			進行測驗
+		</div>
+		
 		<div class="clearFix"></div>
 	</div>
 	<div class="zoomBox">

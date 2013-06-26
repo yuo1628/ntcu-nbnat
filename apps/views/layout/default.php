@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -42,7 +44,15 @@
 						</div>
 					<ul>
 					<?php foreach ($itemList as $item): ?>
-						<li class="item"><a href="<?php echo $item[1] ?>"><span class="icon icon-<?php echo $item[0]?>"><span><?php echo $item[2] ?></span></span></a></li>
+						<li class="item">
+							<a href="<?php echo $item[1] ?>">
+								<span class="icon icon-<?php echo $item[0]?>">
+									<span><?php echo $item[2] ?>
+										
+									</span>
+								</span>
+							</a>
+						</li>
 					<?php endforeach; ?>
 					
 					 </ul>

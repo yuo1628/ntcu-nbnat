@@ -9,7 +9,13 @@ class PracticeController extends MY_Controller {
 		$this -> load -> model('exam/exam/m_answer', 'answer');
 		
 		$node = $this -> node -> allNode();
-		$itemList = array("itemList"=>array(
+		
+				
+		$session = $this->session->userdata('who');
+		
+		if(empty($session) || $session == '0')
+		{
+			$itemList = array("itemList"=>array(
 				array("back","./index.php/home", "返回主選單"),
 				array("examManage","./index.php/exam", "管理試卷"),			
 				array("map","./index.php/map", "知識結構圖"),
@@ -17,7 +23,17 @@ class PracticeController extends MY_Controller {
 				array("practice","./index.php/practice", "線上測驗"),			
 				array("logout","./", "登出帳號")
 				),
-				"result" => $node);				
+				"result" => $node);		
+		}
+		else
+		{
+			$itemList = array("itemList"=>array(
+				array("map","./index.php/map", "知識結構圖"),
+				array("practice","./index.php/practice", "線上測驗"),
+				array("logout","./", "登出帳號")
+				));
+			
+		}		
 		
 		$itemList['childList'] =array();
 		

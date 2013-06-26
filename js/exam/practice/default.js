@@ -11,11 +11,6 @@ $(document).ready(function() {
 		enter(uuid);
 	}
 	
-	//alert(uuid);
-	//var o = $(".greenBtn[uuid=" + uuid + "]");
-	//alert($(o).attr("uuid"));
-	//$(o).click();
-	
 	
 });
 

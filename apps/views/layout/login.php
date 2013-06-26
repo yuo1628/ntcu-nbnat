@@ -1,9 +1,12 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<base href="/ntcu-nbnat/">
 		<script type="application/javascript" src="js/jquery-1.9.1.js"></script>
+		<script type="application/javascript" src="js/main.js"></script>
 		<link rel="stylesheet" href="css/master.css" />
 		<link rel="stylesheet" href="css/frame.css" />
 		<link rel="stylesheet" href="css/index.css" />
@@ -30,7 +33,10 @@
 								<a href=""><h6>忘記密碼？</h6></a>
 							</li>
 							<li>
-								<a href="./index.php/home" style="text-decoration:none;"><span class="greenBtn">登入</span></a>
+								<a href="./index.php/home" onclick="login('0');return false;" style="text-decoration:none;"><span class="greenBtn">登入</span></a>
+							</li>
+							<li>
+								<a href="./index.php/home" onclick="login('1');return false;" style="text-decoration:none;"><span class="greenBtn">學生登入</span></a>
 							</li>
 						</ul>
 

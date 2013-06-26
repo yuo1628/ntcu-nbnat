@@ -11,8 +11,12 @@ class MapController extends MY_Controller {
 	public function index() {
 		$this -> load -> model('exam/map/m_link', 'link');
 		$this -> load -> model('exam/map/m_node', 'node');
+					
+		$session = $this->session->userdata('who');
 		
-		$itemList = array(
+		if(empty($session) || $session == '0')
+		{
+			$itemList = array(
 			"link" => $this -> link,
 			"node" => $this -> node,
 			"controllerInstance" => $this,
@@ -22,6 +26,20 @@ class MapController extends MY_Controller {
 			array("node","./index.php/node", "指標管理"),			
 			array("logout","./", "登出帳號")
 			));
+		}
+		else
+		{
+			$itemList = array(
+			"link" => $this -> link,
+			"node" => $this -> node,
+			"controllerInstance" => $this,
+			"itemList"=>array(
+				array("map","./index.php/map", "知識結構圖"),
+				array("practice","./index.php/practice", "線上測驗"),
+				array("logout","./", "登出帳號")
+				));
+			
+		}		
 			
 		$this -> layout -> addScript("js/exam/exam/examLock.js");
 		$this -> layout -> addScript("js/exam/practice/default.js");

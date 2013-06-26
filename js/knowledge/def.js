@@ -73,6 +73,11 @@ var LEVEL_0 = 0;
 var LEVEL_1 = 1;
 var zoomCount = 0;
 
+//who
+var who = 0;
+var STUDENT = 1;
+var TEACHER = 0;
+
 $(function() {
 	
 	$(".mapBg").width(5000);
@@ -385,9 +390,54 @@ $(function() {
 		$(".movieFrameBox").find("iframe").attr("src", "");
 	})
 	
+	//exam btn
+	$(".gotoExamBtn").click(function() {
+		if(pointClickObj != null)
+		{
+			window.location = "./index.php/practice/?uuid=" + $(pointClickObj).attr("uuid");
+		}
+		
+	})
 	
+	//login
+	getLoginWho();
 		
 })
+
+function getLoginWho() {
+	$.post(
+		"./index.php/login/getSessionValue",
+		{
+			key : 'who',
+			
+		},
+		function(data) {
+			who = data;
+			setUI();
+		}
+	)
+}
+
+function setUI() {
+	if(who == TEACHER)
+	{
+		$(".controlBar").find("div").show();
+		$(".toolsBar").show();
+		
+	}
+	else
+	{
+		$(".controlBar").find("div").hide();
+		$(".controlBar").find("label").hide();
+		$(".controlBar").find("input").hide();
+		$(".controlBar").find(".lookMovieBtn").show();
+		
+		
+		$(".toolsBar").hide();
+		$(".point").unbind("mousedown");
+	}
+	$(".controlBar").find(".gotoExamBtn").show();
+}
 
 function starEffect() {
 	
@@ -657,32 +707,51 @@ function ajaxProgress(url, data) {
 }
 
 function setControlVar(obj) {
-	$(".pointText").val($(obj).find(".pointTextDesc").text());
+	
 	
 	
 	//lock
-	if($(obj).hasClass("lock"))
-	{
+	if(who == TEACHER){
+		$(".pointText").val($(obj).find(".pointTextDesc").text());
+		if($(obj).hasClass("lock"))
+		{
+			
+			$(".lockBtn").removeClass("unlock");
+			$(".lockBtn").addClass("lock");
+			$(".gotoTopicBtn ").css({
+				'display' : 'none'
+			})
+			
+		}
+		else
+		{
+			$(".lockBtn").removeClass("lock");
+			$(".lockBtn").addClass("unlock");
+			
+			
+			
+			$(".gotoTopicBtn ").css({
+				'display' : 'block'
+			})
+		}
 		
-		$(".lockBtn").removeClass("unlock");
-		$(".lockBtn").addClass("lock");
-		$(".gotoTopicBtn ").css({
-			'display' : 'none'
-		})
-		
+		if($(obj).attr("media") == undefined || $(obj).attr("media") == "")
+		{
+			$(".updMovieBtn").show();
+			$(".checkMovieUrlBtn").hide();
+			$(".lookMovieBtn").hide();
+			$(".updMovieUrlText").hide();
+			
+		}
+		else
+		{
+			$(".updMovieUrlText").val($(obj).attr("media"));
+			$(".updMovieBtn").hide();
+			$(".checkMovieUrlBtn").show();
+			$(".updMovieUrlText").show();
+			$(".lookMovieBtn").show();
+		}
 	}
-	else
-	{
-		$(".lockBtn").removeClass("lock");
-		$(".lockBtn").addClass("unlock");
-		
-		
-		
-		$(".gotoTopicBtn ").css({
-			'display' : 'block'
-		})
-	}
-	
 	//open answer
 	//暫時先用關閉的方式 日後gotoTopic會改成別的功能 此時就可開放
 	/*
@@ -701,22 +770,7 @@ function setControlVar(obj) {
 		})
 	}*/
 	
-	if($(obj).attr("media") == undefined || $(obj).attr("media") == "")
-	{
-		$(".updMovieBtn").show();
-		$(".checkMovieUrlBtn").hide();
-		$(".lookMovieBtn").hide();
-		$(".updMovieUrlText").hide();
-		
-	}
-	else
-	{
-		$(".updMovieUrlText").val($(obj).attr("media"));
-		$(".updMovieBtn").hide();
-		$(".checkMovieUrlBtn").show();
-		$(".updMovieUrlText").show();
-		$(".lookMovieBtn").show();
-	}
+	
 }
 
 function setPointVar() {
