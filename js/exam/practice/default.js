@@ -39,13 +39,13 @@ function showMedia(_url)
 	*/
 	if(_parm)
 	{
-		_html = "<iframe src=\"http://www.youtube.com/embed/" + _parm + "\" frameborder=\"0\" allowfullscreen></iframe>";
+		_html = "<iframe width='480' height='360' src=\"http://www.youtube.com/embed/" + _parm + "\" frameborder=\"0\" allowfullscreen></iframe>";
 	}
 	else
 	{
 		var _urlParm=_url.split("/");
 		
-		_html = "<iframe src=\"http://www.youtube.com/embed/" +_urlParm[_urlParm.length-1]  + "\" frameborder=\"0\" allowfullscreen></iframe>";
+		_html = "<iframe width='480' height='360' src=\"http://www.youtube.com/embed/" +_urlParm[_urlParm.length-1]  + "\" frameborder=\"0\" allowfullscreen></iframe>";
 		
 
 	}
@@ -196,7 +196,15 @@ function nextQuiz()
 		{
 			$(this).hide();
 			$(this).next("li").show();
+			
+			
+			
 			var _quizOn=parseInt($("span.quizOn").html());
+			//show media
+			$(".mediaBtn").hide();
+			var m = $(".mediaBtn").get(_quizOn);
+			$(m).show();
+			
 			_quizOn++;
 			$("div#quizNum span.quizOn").html(_quizOn);
 			isLastQuiz();

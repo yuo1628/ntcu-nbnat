@@ -3,6 +3,39 @@
  * @author: shown (2013-06-06 14:30)
  * @update: shown
  */
+
+/*
+ * nav
+ */
+
+.navMenu {
+	float:left;
+	padding: 10px;
+}
+
+.navItem {
+	border: 1px solid #e0e0e0;
+	padding: 10px;
+	color:#333;
+	font-size: 15px;
+	margin: 0 0 10px 0;
+	cursor : pointer;
+}
+
+.navItem:hover {
+	background-color:#f5f5f5;
+}
+
+
+/*
+ * exam  	
+ */
+
+.examBox {
+	float:left;
+	width: 570px;
+}
+
 div#examTitle
 {
 	
@@ -40,8 +73,8 @@ ul#examList li.topicLi
 {	
 	margin-left:-10px;
 	width:100%;
-	
-	padding:10px;
+	margin: 10px;
+	padding:10px 0;
 	border-bottom:1px solid #F0f0f0;
 }
 ul#examList li.topicLi div.tipsBtn
@@ -134,8 +167,8 @@ ul#examList div.tips-content
 	background-color: #e8e8e8;
 	float:right;
 	display:block;	
-	width:105%;		
-	margin-right:-15px;
+	width:100%;		
+	margin-right:0;
 	-webkit-box-shadow: #000000 0px 1px 2px inset;
 	-moz-box-shadow: #e0e0e0 0px 1px 2px inset;
 	box-shadow: #a0a0a0 0px 1px 2px inset,#e0e0e0 0px -1px 3px 1px inset;
@@ -240,17 +273,18 @@ div#mediaFrame div#mediaCon
 	position: relative;
 	text-align:center;
 	vertical-align:middle;
-	width:806px;
-	height:100%;		
-	margin: 2% auto;
+	max-width:806px;
+	max-height:480px;	
+		
+	margin: 10% auto 0 auto;
 	
 	z-index:999;
 }
 div#mediaFrame div#mediaCon iframe
 {
 	position: relative;	
-	height:80%;
-	width:80%;	
+	max-height:80%;
+	max-width:80%;	
 }
 div#mediaFrame div#mediaClose
 {

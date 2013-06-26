@@ -57,7 +57,9 @@ ul,ol
 	padding-left:0;	
 }
 
-
+.clearfix {
+	clear: both;
+}
 
 #container {
 	width: 990px;
