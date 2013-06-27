@@ -1,0 +1,14 @@
+/*
+ * @description: 建立會員帳號
+ * @author: shown (2013-06-27 16:40)
+ * @update: shown
+ */
+
+.inputNewText
+{
+	cursor: pointer;
+}
+.inputNewText:hover
+{
+	color:#c0c0c0;	
+}

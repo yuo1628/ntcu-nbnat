@@ -5,7 +5,8 @@
  */
 
 
-span.purple, span.green, span.blue, span.red, span.yellow {
+span.purple, span.green, span.blue, span.red, span.yellow
+{
 	padding: .2em .3em;
 	color: white;
 	font-size: .9em;

@@ -163,16 +163,25 @@
 	background-position: 3px -768px;
 }
 .icon-create {
-	background-position: 2px -88px;
+	background-position: 3px -133px;
+}
+.icon-create:hover {
+	background-position: 3px -167px;
 }
 .icon-read {
 	background-position: 2px -118px;
 }
 .icon-edit {
-	background-position: 2px -148px;
+	background-position: 3px -265px;
+}
+.icon-edit:hover {
+	background-position: 3px -297px;
 }
 .icon-manage {
-	background-position: 3px -300px;
+	background-position: 3px -332px;
+}
+.icon-manage:hover {
+	background-position: 3px -367px;
 }
 .icon-back {
 	background-position: 3px -68px;
@@ -181,9 +190,9 @@
 	background-position: 3px -100px;
 }
 .icon-logout {
-	background-position: 3px 0px;
+	background-position: 3px -1px;
 }
 .icon-logout:hover {
-	background-position: 3px -34px;
+	background-position: 3px -35px;
 }
 

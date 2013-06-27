@@ -250,12 +250,12 @@ class Member_model extends CI_Model {
      * @return NULL
      */
     public function insert_city($data) {
-        $cityData = elements(array($this->CITY_PK,
-                                   $this->CITY_NAME),
+        $cityData = elements(array($this->CITY_NAME),
                              $data, NULL);
-        $this->set('id', $cityData[$this->CITY_PK]);
+       // $this->set('id', $cityData[$this->CITY_PK]);
         $this->set('name', $cityData[$this->CITY_NAME]);
         $this->db->insert('city');
+		return $this->db->insert_id();
     }
     
     /**
@@ -281,6 +281,7 @@ class Member_model extends CI_Model {
         $this->set('phone', $schoolData[$this->SCHOOL_PHONE]);
         $this->set('city_id', $schoolData[$this->SCHOOL_CITY_ID]);
         $this->db->insert('school');
+		return $this->db->insert_id();
     }
     
     /**
@@ -303,7 +304,8 @@ class Member_model extends CI_Model {
         $this->set('grade', $classData[$this->CLASS_GRADE]);
         $this->set('name', $classData[$this->CLASS_NAME]);
         $this->set('school_id', $classData[$this->CLASS_SCHOOL_ID]);
-        return $this->db->insert('class');
+        $this->db->insert('class');
+        return $this->db->insert_id();
     }
     
     /**
@@ -321,9 +323,10 @@ class Member_model extends CI_Model {
         foreach ($cityData as $key => $value) {
             $this->where($this->to_database_column_name($key), $value);
         }
+		
         return $this->db->get()->result();
     }
-    
+   
     /**
      * 取得學校資料
      *
@@ -346,8 +349,20 @@ class Member_model extends CI_Model {
             $this->where($this->to_database_column_name($key), $value);
         }
         return $this->db->get()->result();
-    }
-    
+    }    
+	
+	 /**
+     * 取得學校類型資料
+     *
+     * @access public     * 
+     * @return array
+     */
+    public function get_schoolType() {
+    	$this->db->group_by("type"); 
+        $query = $this -> db -> get_where("school");
+		return $query -> result();      
+    }    
+	 	 
     /**
      * 取得班級資料
      *
@@ -356,7 +371,7 @@ class Member_model extends CI_Model {
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
      * @return array
      */
-    public function get_class($data) {
+    public function _get_class($data) {
         $classData = elements(array($this->CLASS_PK,
                                     $this->CLASS_TYPE,
                                     $this->CLASS_GRADE,
@@ -370,7 +385,19 @@ class Member_model extends CI_Model {
         }
         return $this->db->get()->result();
     }
-    
+   
+    /**
+     * 取得學校類型資料
+     *
+     * @access public     * 
+     * @return array
+     */
+    public function get_classType() {
+    	$this->db->group_by("type"); 
+        $query = $this -> db -> get_where("class");
+		return $query -> result();      
+    }    
+	 	 
     /**
      * 取得服務單位資料
      *
