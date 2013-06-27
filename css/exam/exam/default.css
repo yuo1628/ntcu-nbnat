@@ -1,0 +1,57 @@
+/*
+ * @description: 試卷管理首頁樣式
+ * @author: shown 
+ * @update: shown
+ */
+
+ul#childList div.quiz
+{	
+		
+	
+	
+}
+ul#childList div.quiz div.state
+{
+	color:#A0A0A0;
+	font-family: "微軟正黑體";
+	font-size:.6em;
+}
+ul#childList div.quiz div.state span
+{
+	margin-right:10px;
+}
+ul#childList div.quiz div.btn
+{	
+	font-size:medium;
+	margin-top:-5px;	
+}
+ul#childList div.quiz div.btn span
+{
+	margin-right:0px;
+}
+
+div.setLimit
+{
+	display:block;
+	margin-left:40px;
+	
+	clear:left;
+	line-height:3em;
+	text-align: right;
+}
+div.setLimit div
+{
+	display:inline-block;
+	padding-left:10px;
+	
+}
+
+div.setLimit input
+{
+	margin:0 3px;
+	text-align: right;
+}
+div.setLimit div span
+{
+	
+}

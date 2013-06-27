@@ -1,0 +1,310 @@
+/*
+ * @description: 建立試題樣式
+ * @author: shown (2013-05-27 18:00)
+ * @update: shown
+ */
+
+#create div#nodeMes{
+	/*display:inline-block;*/
+	margin:10px 0;	
+	padding:10px 0 20px 0;
+	border-bottom:1px solid #333333;	
+	/*position:relative;	*/
+}
+#create div#nodeMes span#lockBtn
+{
+	/*position:absolute;
+	right:0;
+	top:0;*/
+}
+#create div#nodeMes span#openBtn
+{
+	/*position:absolute;
+	left:0;
+	top:0;*/
+}
+#create div#nodeMes span#lockBtn,#create div#nodeMes span#openBtn
+{
+	padding: .5em .8em;
+	border: 1px solid #e0e0e0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-family: "微軟正黑體";
+	font-size:.9em;
+	cursor:pointer;	
+	font-weight: bold;
+	color:#fff;	
+	background-color: #313131;
+	
+}
+#create div#nodeMes span#lockBtn:hover,#create div#nodeMes span#openBtn:hover
+{
+	color:#fff;	
+	background-color: #626262;
+}
+#create div#nodeMes div.setLimit,#create div#nodeMes span#limitTime
+{
+	font-size:.8em;
+	padding:30px 0 0 3px;
+	color:gray;
+}
+#create div#nodeMes div.setLimit div
+{
+	font-size:.8em;
+	display: inline-block;
+}
+#create div#nodeMes div.setLimit input[type=text]
+{
+	text-align: right;
+}
+#create div#nodeMes div.setLimit input[type=text],#create div#nodeMes div.setLimit div span
+{
+	margin:0 5px;
+}
+#create div#template {
+	margin: 3% -2%;
+	padding: 2%;
+	background-color: #f5f5f5;
+	-webkit-box-shadow:inset 0px 1px 3px 1px rgba(200,200,200,0.2);
+	-moz-box-shadow: inset 0px 1px 3px 1px rgba(200,200,200,0.2);
+	box-shadow: inset 0px 1px 3px 1px rgba(200,200,200,0.2);
+}
+#create p#btnTools {
+	display: none;
+	text-align: center;
+}
+#create p#btnTools span {
+	margin: 0 1%;
+}
+#create ul select#node {
+	margin-right: 2%;
+}
+
+#create table#topic {
+	margin: 2% 0;
+	width: 98%;
+}
+#create table#choose {
+	margin: 2% 0 2% 0;
+	width: 100%;
+}
+#create table#choose th, table#topic th {
+	width: 50px;
+	font-size: .8em;
+	white-space: nowrap;
+	vertical-align: top;
+}
+
+#create table#choose textarea, table#topic textarea {
+	resize: vertical;
+	width: 100%;
+	height: 50px;
+}
+#create table #scoreText {
+	width: 80px;
+	margin-right: 10px;
+}
+#create table#choose td {
+	text-align: left;
+	width: 86%;
+}
+#create div#quizList {
+	margin-bottom: 15px;
+}
+
+#create div#tools
+{
+	position:relative;
+	
+	margin:20px 0;
+}
+
+#create div#tools ul
+{
+	display:inline-block;	
+	margin:0;
+	
+}
+#create div#tools ul ul
+{
+	
+	display:inline-block;
+	margin-right: 10px;
+	border: 1px solid #e0e0e0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	overflow:hidden;
+	
+}
+#create div#tools li.action
+{
+	display:inline-block;	
+	padding: .5em .8em;
+	border-right:1px solid #e0e0e0;
+	font-family: "微軟正黑體";
+	font-size:.9em;
+	
+}
+#create div#tools li.unabled,#create div#tools li.actionScore_unabled
+{
+	background-color: #f9f9f9;
+	color:#d0d0d0;
+	
+}
+#create div#tools li.abled,#create div#tools li.actionScore_abled 
+{
+	color:#333333;	
+	
+	background-color: #ffffff;
+	-webkit-box-shadow:  inset 1px 1px 3px 2px rgba(200,200,200,0.2);
+	-moz-box-shadow: inset 1px 1px 3px 2px rgba(200,200,200,0.2);
+	box-shadow: inset 1px 1px 3px 2px rgba(200,200,200,0.2);
+}
+#create div#tools li.abled
+{
+	cursor:pointer;	
+}
+#create div#tools li.abled:hover
+{
+	
+	background-color: #f9f9f9;
+	color:#999999;
+	-webkit-box-shadow:  inset 0px 1px 20px 2px rgba(100,100,100,0.1);
+	-moz-box-shadow:inset 0px 1px 20px 2px rgba(100,100,100,0.1);
+	box-shadow: inset 0px 1px 20px 2px rgba(100,100,100,0.1);
+}
+#create div#tools li.abled:active
+{
+	color:#888888;
+	background-color: #e0e0e0;
+} 
+#create div#tools li.action:last-child
+{
+	border-right-width:0px;
+}
+#create div#tools li.actionScore
+{
+	display:inline-block;	
+	padding: .5em .8em;
+	border-right:1px solid #e0e0e0;
+	font-family: "微軟正黑體";
+	font-size:.9em;	
+}
+#create div#tools li.actionScore input#batchScoreText
+{
+	width:80px;	
+	margin:-.2em;
+	text-align: right;
+	font-size:8px;
+	
+}
+#create div#tools li.actionScore input#batchScoreText:disabled
+{
+	background-color: #f9f9f9;	
+	border:1px solid #e0e0e0;
+}
+
+#create table#topic span.addtips
+{
+	cursor:pointer;
+	font-size:.8em;
+	color:#A0A0A0;
+}
+
+#create div#quizMeta
+{
+	margin-top:10px;
+	color:gray;
+	font-size: .8em;
+	font-weight:normal;
+}
+#create div#quizMeta ul li
+{
+	display:inline-block;
+	margin-right:10px;	
+}
+
+div.useTinymce,div.useText
+{
+	display:inline-block;
+	width:30px;
+	height:30px;			
+	cursor:pointer;	
+	background: url(../../../img/icon.png);
+	background-repeat: no-repeat;
+	background-size: 30px auto;
+	
+}
+div.useTinymce
+{
+	background-position: 0px -893px;
+}
+div.useText
+{
+	background-position: 0px -925px;
+}
+
+div#tinymceFrame
+{
+	position: fixed;
+	left:0;
+	top:0px;
+	width:100%;
+	height:100%;			
+}
+div#tinymceFrame #tinymceFrameBg
+{
+	position: fixed;
+	left:0;
+	top:0px;
+	width:100%;
+	height:100%;	
+	background-color:#000000;
+	opacity: 0.5;
+	z-index:998;
+		
+}
+div#tinymceFrame div#tinymceCon
+{
+	display:block;
+	position: relative;
+	text-align:center;
+	vertical-align:middle;
+	width:806px;
+	height:100%;		
+	margin: 2% auto;
+	
+	z-index:999;
+}
+div#tinymceFrame div#tinymceCon textarea#tinymceText
+{
+	position: relative;	
+	height:70%;	
+}
+div#tinymceFrame div#tinymceClose
+{
+	position: fixed;
+	right:0;
+	display:inline-block;
+	border:1px solid #000000;
+	padding:.2em .5em;
+	background-color:#000000;
+	color:white;
+	z-index:999;
+	cursor: pointer;
+}
+div#tinymceFrame div#tinymceOk
+{	
+	position: fixed;
+	right:10px;
+	bottom:10px;
+	display:inline-block;		
+	z-index:999;
+}
+#create div#template #mediaUrl
+{
+	width:500px;
+	height:1.5em;
+}

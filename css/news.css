@@ -1,0 +1,68 @@
+/*
+ * @description: 首頁樣是
+ * @author: shown (2013-05-03 17:00)
+ * @update: shown (2013-05-03 19:30)
+ */
+
+
+span.purple, span.green, span.blue, span.red, span.yellow {
+	padding: .2em .3em;
+	color: white;
+	font-size: .9em;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+span.purple {
+	background-color: #D8AFFF;
+}
+span.green {
+	background-color: #8fc31f;
+}
+span.blue {
+	background-color: #5A9EE9;
+}
+span.red {
+	background-color: #BE0200;
+}
+span.yellow {
+	background-color: #BBBD1F;
+}
+#msg table {
+	width: 100%;	
+}
+#msg table tr {
+	line-height: 25px;
+}
+#msg .time {
+	color: #808080;
+	font-size: 12px;
+	width:100px;
+}
+#msg table tr a {
+	text-decoration: none;
+}
+
+#msg table tr a:hover {
+	text-decoration: underline;
+}
+.more {
+	text-align: right;
+	background-color:#fff;
+	margin:0;
+}
+.more a {
+	text-decoration: none;
+	color: gray;
+}
+.more a:hover {
+	font-weight: bold;
+}
+
+#msg .man {
+	font-family: "微軟正黑體";
+	font-weight: bold;
+	font-size: 14px;
+	margin-right: 1%;
+}

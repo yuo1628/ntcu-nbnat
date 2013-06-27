@@ -1,0 +1,153 @@
+/*
+ * @description: 版面基本樣式宣告
+ * @author: shown
+ * @update: shown (2013-05-03 17:00)
+ */
+body, html {
+	width: 100%;
+	height: 100%;
+	font-family: Arial;
+	font-size:16px;
+}
+body, html, h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	
+}
+
+body {
+	
+	background-image: url(../img/bg.png);
+}
+h1, h2, h3, h4, h5, h6 {
+	display: inline-block;
+}
+
+a {
+	color: #666;	
+	text-decoration: none;	
+}
+a:link {
+	color: #5a9ee9;
+}
+a:visited {
+	color: #5a9ee9;
+}
+a:hover {
+	text-decoration: underline;	
+}
+a:active {
+	text-decoration: underline;	
+}
+
+img {
+	border: 0;
+}
+h1 {
+	color: #333;
+	font-size: 18px;
+}
+h2 {
+	color: #666;
+	font-size: 15px;
+}
+ul,ol
+{
+	list-style-type:none;
+	list-style-position:outside;
+	padding-left:0;	
+}
+
+.clearfix {
+	clear: both;
+}
+
+#container {
+	width: 990px;
+	margin: 0 auto;
+}
+#content {
+	width: 100%;
+	display: inline-block;
+}
+#header {
+	height: 100px;
+}
+#logo a{
+	width: 128px;
+	height: 80px;
+	margin: 10px;
+	float: left;
+	background-image: url(../img/logo.png);
+}
+#nav {
+	width: 824px;
+	height: 80px;
+	margin: 10px 0;
+	display: inline-block;
+}
+#menu {
+	clear: left;
+	width: 22%;
+	min-height: 700px;
+	display: inline-block;
+	float: left;
+	overflow: hidden;
+}
+#main {
+	display: inline-block;
+	float: right;
+	margin-left: 10px;
+	width: 72%;
+	min-height: 700px;
+	overflow: hidden;
+	background-color:#fff;
+}
+#footer {
+	clear:both;
+	margin-top: 10px;
+	text-align: center;
+	font-size: .6em;
+	color: gray;
+}
+
+/**
+ * 	ajax
+ */
+
+.ajaxProressBox {
+	position:fixed;
+	top: 40%;
+	left: 50%;
+	text-align: center;
+	width: 200px;
+	height: 40px;
+	line-height: 40px;
+	background-color:#fff;
+	border: 1px solid #e0e0e0;
+	box-shadow: 0px 4px 4px 1px #ccc;
+	margin-left: -100px;
+	
+	z-index: 30000;
+	display:none;
+}
+
+.ajaxProressBg {
+	position:absolute;
+	background-color:#5a9ee9;
+	top:0;
+	left: 0;
+	z-index: 30001;
+	width: 0;
+	height: 40px;
+}
+
+.ajaxProressText {
+	position:absolute;
+	background-color:#5a9ee9;
+	top:0;
+	left: 0;
+	z-index: 30002;
+	width: 200px;
+	height: 40px;
+	color:#fff;
+}

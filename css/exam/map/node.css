@@ -1,0 +1,43 @@
+/*
+ * @description: 指標管理樣式
+ * @author: shown (2013-05-17 10:30)
+ * @update: shown
+ */
+
+#node ul#create,#node ul#nodeList {
+	width: 98%;
+	margin: 0 auto;
+	border-top: 1px solid #888888;
+	border-bottom: 1px solid #888888;
+}
+#node ul#create li {
+	padding: 6px 0 6px 5px;
+	background-color: #F0F0F0;
+	
+}
+#node ul#create li h5,#node ul#nodeList li h5  {
+	display: inline-block;
+	white-space: nowrap;
+	width: 120px;	
+	color:black;
+}
+#node ul#create div,#node ul#nodeList div.cursor {
+	color: #808080;
+	width: 500px;
+	display: inline-block;
+}
+
+
+#node ul#nodeList li:hover {
+	background-color: #F0F0F0;
+}
+
+#node ul#nodeList li {
+	padding: 6px 0 6px 5px;
+	border-bottom: 1px solid #e0e0e0;
+	
+}
+
+#node ul#nodeList li div.cursor,#node ul#nodeList li span{
+	cursor: pointer;
+}

@@ -1,0 +1,35 @@
+/*
+ * @description: 文字樣式
+ * @author: shown (2013-05-07 17:30)
+ * @update: shown
+ */
+.fontRed
+{
+	color:#FF0000;
+	font-size: .6em;
+	font-weight:normal;
+}
+.fontBlue
+{
+	color:#0000FF;
+	font-size: .6em;
+	font-weight:normal;
+}
+.fontGreen
+{
+	color:#00A002;
+	font-size: .6em;
+	font-weight:normal;
+}
+.fontGray
+{
+	color:gray;
+	font-size: .6em;
+	font-weight:normal;
+}
+.fontBlack
+{
+	color:black;
+	font-size: .6em;
+	font-weight:normal;
+}
