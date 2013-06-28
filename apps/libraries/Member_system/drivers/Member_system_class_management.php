@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Member_system_class_management

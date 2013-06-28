@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * Member_system_city_management

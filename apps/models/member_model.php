@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
   * Member_model
   *
@@ -358,8 +358,10 @@ class Member_model extends CI_Model {
      * @return array
      */
     public function get_schoolType() {
-    	$this->db->group_by("type"); 
-        $query = $this -> db -> get_where("school");
+    	
+    	$this->db->select('type');
+    	$this->db->group_by("type"); 		
+        $query = $this -> db -> get("school");
 		return $query -> result();      
     }    
 	 	 
@@ -371,7 +373,7 @@ class Member_model extends CI_Model {
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
      * @return array
      */
-    public function _get_class($data) {
+    public function get_class($data) {
         $classData = elements(array($this->CLASS_PK,
                                     $this->CLASS_TYPE,
                                     $this->CLASS_GRADE,
@@ -385,19 +387,20 @@ class Member_model extends CI_Model {
         }
         return $this->db->get()->result();
     }
-   
-    /**
-     * 取得學校類型資料
+	
+	 /**
+     * 取得學制資料
      *
      * @access public     * 
      * @return array
      */
-    public function get_classType() {
-    	$this->db->group_by("type"); 
-        $query = $this -> db -> get_where("class");
+    public function get_classGroupBy($field) {    	
+    	$this->db->select('type');
+    	$this->db->group_by($field); 		
+        $query = $this -> db -> get("class");
 		return $query -> result();      
-    }    
-	 	 
+    } 
+    
     /**
      * 取得服務單位資料
      *

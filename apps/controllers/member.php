@@ -1,7 +1,6 @@
 <?php
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
-
 class MemberController extends MY_Controller {
 
 	/**
@@ -17,9 +16,11 @@ class MemberController extends MY_Controller {
 		$this -> load -> model('member_model', 'member');		
 		$itemList=$this->_mainmenu();
 		
-		$itemList["city_list"]=$this -> member -> get_city("");
-		$itemList["school_type"]=$this -> member -> get_schoolType();
-		$itemList["class_list"]=$this -> member -> _get_class("");
+		$itemList["city_list"]	=	$this -> member -> get_city("");
+		$itemList["school_type"]=	$this -> member -> get_schoolType();
+		$itemList["class_type"]	=	$this -> member -> get_classGroupBy("type");
+		$itemList["class_grade"]	=	$this -> member -> get_classGroupBy("grade");
+		$itemList["class_name"]	=	$this -> member -> get_classGroupBy("name");
 		$this -> layout -> addScript("js/member/create.js");		
 		$this -> layout -> addStyleSheet("css/member/create.css");
 		$this -> layout -> view('view/member/create',$itemList);
@@ -38,7 +39,22 @@ class MemberController extends MY_Controller {
 		 array("logout", "./", "會員登出")
 		));
 		return $itemList;
+	}	
+	public function selectOption()
+	{
+		$key			=	$this->input->post("key");
+		$value			=	$this->input->post("value");
+		$search_index	=	array();
+		foreach ($key as $i=>$column) {
+           $search_index[$column]=$value[$i];
+        }
+		$this -> load -> model('member_model', 'member');			
+		$optionList		=	$this -> member -> get_school($search_index);
+		echo json_encode($optionList);
+		//$this -> layout -> setLayout('layout/empty');
+		//$this -> layout -> view('view/member/selectOption', $optionList);
 	}
+	
 	public function insertCity()
 	{
 		$this -> load -> model('member_model', 'member');	

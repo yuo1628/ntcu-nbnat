@@ -69,29 +69,30 @@ class Member_system extends CI_Driver_Library {
         // 填入服務單位資料
         $key_unit_id = 'unit_id';
         $unitPk = $memberData->$key_unit_id;
-        $unitData = $this->CI->member_model->get_unit(array($this->CI->member_model->UNIT_PK => $unitPk))[0];
-        foreach ($unitData as $key => $value) {
+		
+        $unitData = $this->CI->member_model->get_unit(array($this->CI->member_model->UNIT_PK => $unitPk));
+        foreach ($unitData[0] as $key => $value) {
             $this->fill_member_unit_data($key, $value, $member);
         }
         // 填入班級資料
         $key_class_id = 'class_id';
         $classPk = $memberData->$key_class_id;
-        $classData = $this->CI->member_model->get_class(array($this->CI->member_model->CLASS_PK => $classPk))[0];
-        foreach ($classData as $key => $value) {
+        $classData = $this->CI->member_model->get_class(array($this->CI->member_model->CLASS_PK => $classPk));
+        foreach ($classData[0] as $key => $value) {
             $this->fill_member_class_data($key, $value, $member);
         }
         // 填入學校資料
         $key_school_id = 'school_id';
         $schoolPk = $classData->$key_school_id;
-        $schoolData = $this->CI->member_model->get_school(array($this->CI->member_model->SCHOOL_PK => $schoolPk))[0];
-        foreach ($classData as $key => $value) {
+        $schoolData = $this->CI->member_model->get_school(array($this->CI->member_model->SCHOOL_PK => $schoolPk));
+        foreach ($classData[0] as $key => $value) {
             $this->fill_member_school_data($key, $value, $member);
         }
         // 填入城市資料
         $key_city_id = 'city_id';
         $cityPk = $schoolData->$key_city_id;
-        $cityData = $this->CI->member_model->get_city(array($this->CI->member_model->CITY_PK => $cityPk))[0];
-        foreach ($cityData as $key => $value) {
+        $cityData = $this->CI->member_model->get_city(array($this->CI->member_model->CITY_PK => $cityPk));
+        foreach ($cityData[0] as $key => $value) {
             $this->fill_member_city_data($key, $value, $member);
         }
         return $member;

@@ -192,4 +192,3 @@ class Member_system_authentication extends CI_Driver {
 		$this->CI->session->unset_userdata($this->PREFIX . $this->CI->member_model->PK);
 	}
 }
-?>
