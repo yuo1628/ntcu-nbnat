@@ -6,6 +6,8 @@ var user_rank="0";
 
 
 $(document).ready(function() {
+	settingRank();
+	checkPWD();
 	if(user_rank=="0") //最高權限管理者
 	{	
 		inputToggle 	= 	function() {
@@ -58,20 +60,35 @@ $(document).ready(function() {
 			$("table tr td#schoolName").html("<input type=\"text\" id=\"schoolNameText\"/>");				
 		}	
 		optionBindInit();	
-		settingRank();
+	
 		$("table tr[rank=0]").hide();
 	}
 	else if(user_rank=="1") //一般管理者
 	{
 		
 	}
-});
+});	
+
+function checkPWD()
+{
+	$("input#secondPwd").keyup(function(){
+		if($(this).val()!=$("input#password").val())
+		{
+			$(this).next("span").html("X");
+		}else
+		{
+			$(this).next("span").html("O");
+		}
+		
+	});
+}
+
 function settingRank()
 {
 	var randArr=new Array("管理者","老師","學生");
 	var temp="";	
 	for (var i = user_rank; i < randArr.length; i++) {
-		temp+="<option value='"+(i+1)+"'>";
+		temp+="<option value='"+(parseInt(i)+1)+"'>";
 		temp+=randArr[i];
 		temp+="</option>";
 	}
@@ -164,12 +181,25 @@ function selectSchoolName()
 
 function createMember()
 {
-	var _cityPk			=	"";
-	var _cityName		=	"";
-	var school_type;
-	var school_name;
-	var school_address	=	$("input#schoolAddressText").val();
-	var school_phone	=	$("input#schoolPhoneText").val();	
+	var	username		=	$("input#username").val(),	
+		password		=	$("input#password").val(),		
+		_rank			=	$("select#rank").val();
+	var _name,
+		_sex,
+		_birthday,
+		_icNum,
+		_phone,
+		_tel,
+		_address,
+		_email;		
+	var	_cityPk			=	"",
+		_cityName		=	"",		
+		school_type,
+		school_name,
+		school_address	=	$("input#schoolAddressText").val(),
+		school_phone	=	$("input#schoolPhoneText").val();
+		
+	
 		
 	if($("select#schoolNameSelect").length>0)
 	{
@@ -186,7 +216,9 @@ function createMember()
 	else
 	{
 		school_type		=	$("input#schoolTypeText").val();
-	}	
+	}
+	
+	/*	
 	if($("select#citySelect").length>0)
 	{
 		_cityPk			=	$("select#citySelect").val();
@@ -220,7 +252,7 @@ function createMember()
 		});
 					
 	}
-	
+	*/
 	/*
 	 $.post("./index.php/member/insertCity",{
 			city_name:$("input#cityText").val()

@@ -1,9 +1,9 @@
 <div id="member">
 	<h1>建立帳號</h1>
 	<table>
-		<tr><th>使用者帳號</th><td><input type="text"/></td></tr>
-		<tr><th>使用者密碼</th><td><input type="password"/></td></tr>
-		<tr><th>再次輸入密碼</th><td><input type="password"/></td></tr>
+		<tr><th>使用者帳號</th><td><input type="text" id="username" /></td></tr>
+		<tr><th>使用者密碼</th><td><input type="password" id="password" /></td></tr>
+		<tr><th>再次輸入密碼</th><td><input type="password" id="secondPwd" /><span></span></td></tr>
 		<tr><th>權限</th><td>
 			<select id="rank"></select>
 		</td></tr>
@@ -82,17 +82,17 @@
 			<?php endif; ?>	
 		</td></tr>
 		<tr><th colspan="2">基本資料</th></tr>
-		<tr><th>姓名</th><td></td></tr>
+		<tr><th>姓名</th><td><input type="text" id="name" /></td></tr>
 		<tr><th>性別</th><td>
 			<input type="radio" name="sex" value="0" checked="checked"/>男
 			<input type="radio" name="sex" value="1"/>女
 		</td></tr>
-		<tr><th>生日</th><td></td></tr>
-		<tr><th>身分證字號</th><td></td></tr>
-		<tr><th>行動電話</th><td></td></tr>
-		<tr><th>電話</th><td></td></tr>
-		<tr><th>住址</th><td></td></tr>
-		<tr><th>電子信箱</th><td></td></tr>
+		<tr><th>生日</th><td><input type="text" id="birthday" /></td></tr>
+		<tr><th>身分證字號</th><td><input type="text" id="icNum" /></td></tr>
+		<tr><th>行動電話</th><td><input type="text" id="phone" /></td></tr>
+		<tr><th>電話</th><td><input type="text" id="tel" /></td></tr>
+		<tr><th>住址</th><td><input type="text" id="address" /></td></tr>
+		<tr><th>電子信箱</th><td><input type="text" id="email" /></td></tr>
 	</table>		
 	<br />
 	<span class="blueBtn" onclick="createMember()">建立</span>
