@@ -1,0 +1,28 @@
+/**
+ * @author Shown
+ */
+#result div#head 
+{
+	padding:10px;
+	-webkit-border-radius: 8px;	
+	-moz-border-radius: 8px;	
+	border-radius: 8px;
+	margin-top:10px;
+	border:1px solid #CDE5FF;
+	-webkit-box-shadow: #CDE5FF 2px 2px 3px;
+	-moz-box-shadow: #CDE5FF 2px 2px 3px;
+	box-shadow: #CDE5FF 2px 2px 3px;
+	font-family: "微軟正黑體";	
+	background-color: #EBF5FF;
+}
+
+#result div#head table td span#time
+{
+	font-size: .8em;
+	color:#999999;
+}
+
+#result li.green
+{
+	background-color: #8FC31F;
+}

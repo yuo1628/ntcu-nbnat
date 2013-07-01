@@ -1,0 +1,38 @@
+/*
+ * @description: 試題修改樣板樣式
+ * @author: shown (2013-06-07 16:00)
+ * @update: shown
+ */
+
+.editTemplate textarea {
+	resize: vertical;
+}
+.editTemplate textarea.edit_topicText,.editTemplate input.edit_mediaText {
+	width: 98%;
+}
+.editTemplate textarea.tipsTextarea {
+	width: 90%;
+	vertical-align: top;
+}
+.editTemplate textarea.option {
+	width: 80%;
+}
+.editTemplate li.oldOption, .editTemplate li.oldOption input, .editTemplate li.oldOption span.delBtn, .editTemplate li.newOption, .editTemplate li.newOption input, .editTemplate li.newOption span.delBtn {
+	vertical-align: top;
+	margin-right: 10px;
+}
+.editTemplate li.oldOption textarea.option, .editTemplate li.newOption textarea.option,.editTemplate textarea.tipsTextarea {
+	margin-right: 10px;
+}
+.editTemplate span.newOption 
+{
+	font-size: smaller;
+color: #A0A0A0;
+cursor: pointer;
+}
+.editTemplate  span.newOption:hover {
+
+}
+.editTemplate  span.newOption:active {
+
+}

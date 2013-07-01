@@ -1,0 +1,151 @@
+/*
+ * @description: 外框設計
+ * @author: shown (2013-05-03 15:55)
+ * @update: shown (2013-05-16 12:00)
+ */
+
+.divFrame {
+	padding: 10px;
+	border: 1px solid #e0e0e0;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	-webkit-box-shadow: #e0e0e0 0px 2px 3px;
+	-moz-box-shadow: #e0e0e0 0px 2px 3px;
+	box-shadow: #e0e0e0 0px 2px 3px;
+	
+}
+
+.greenBtn, .blueBtn, .grayBtn, .unabledBtn{	
+	border: 1px solid #e0e0e0;
+	padding: .2em .8em;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+	font-family: "微軟正黑體", Arial;
+	font-weight: bold;	
+	
+}
+.greenBtn, .blueBtn, .grayBtn{		
+	cursor:pointer;
+}
+.greenBtn, .blueBtn{
+	color: white;
+}
+.unabledBtn
+{
+	background-color: #f9f9f9;
+	color:#d0d0d0;
+}
+.greenBtn:hover {
+	background-color: #178918;
+}
+.blueBtn:hover {
+	background-color: #1989FF;
+}
+.grayBtn:hover {
+	background-color: #e0e0e0;
+}
+.greenBtn ,.greenBtn:active {
+	background-color: #8fc31f;
+}
+.blueBtn,.blueBtn:active {
+	background-color: #5a9ee9;
+}
+.grayBtn,.grayBtn:active{
+	color: #aaaaaa;
+	background-color: #f9f9f9;
+}
+
+.delBtn:hover
+{
+	color:#808080;
+	outline: 0;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+.delBtn,.delBtn:active
+{
+	font-family:Tunga;
+	font-weight:bold;
+	font-size:1.5em;
+	cursor:pointer;
+	color:#D0D0D0;
+}
+
+
+.textStyle {
+	border: 2px solid #e0e0e0;	
+	resize: none;
+	padding: .5em;
+	border-radius: 0.3em;
+	-moz-border-radius: 0.3em; /*firefox*/
+	-webkit-border-radius: 0.3em; /*chrome*/
+	outline: 0;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+.textStyle:active, .textStyle:focus {
+	box-shadow: 0 0 .5em #5a9ee9;
+	border-color: #CDE5FF;
+}
+.buttonset li:hover
+{	
+	background-color: #f0f0f0;
+}
+.buttonset li
+{	
+	display:inline-block;
+	white-space: nowrap;	
+	color: #aaaaaa;
+	background-color: #f9f9f9;
+	padding: .2em .8em;
+	border-right: 1px solid #e0e0e0;
+	
+}
+
+.buttonset{	
+	border: 1px solid #e0e0e0;
+	margin:0;
+	padding:0;
+	display:inline-block;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+	font-family: "微軟正黑體", Arial;
+	font-weight: bold;	
+	cursor:pointer;
+	
+}
+
+.buttonset li:first-child
+{
+	-webkit-border-top-left-radius: 5px;
+	-moz-border-top-left-radius: 5px;
+	border-top-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-bottom-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	
+	border-right-width:0px;
+	
+}
+.buttonset li:nth-child(2)
+{
+	border-left: 1px solid #e0e0e0;
+}
+.buttonset li:last-child{	
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-top-right-radius: 5px;
+	border-top-right-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-bottom-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-right-width:0px;
+}
