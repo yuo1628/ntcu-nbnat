@@ -18,14 +18,11 @@ class MemberController extends MY_Controller {
 		
 		$itemList["city_list"]	=	$this -> member -> get_city("");
 		$itemList["school_type"]=	$this -> member -> get_schoolType();
-		$itemList["class_type"]	=	$this -> member -> get_classGroupBy("type");
-		$itemList["class_grade"]	=	$this -> member -> get_classGroupBy("grade");
-		$itemList["class_name"]	=	$this -> member -> get_classGroupBy("name");
 		$this -> layout -> addScript("js/member/create.js");		
 		$this -> layout -> addStyleSheet("css/member/create.css");
 		$this -> layout -> view('view/member/create',$itemList);
 		
-	}
+	}	
 	public function manage() {
 		$this -> layout -> view('view/member/manage', $this->_mainmenu());
 	}
@@ -39,8 +36,8 @@ class MemberController extends MY_Controller {
 		 array("logout", "./", "會員登出")
 		));
 		return $itemList;
-	}	
-	public function selectOption()
+	}			
+	public function selectSchoolOption()
 	{
 		$key			=	$this->input->post("key");
 		$value			=	$this->input->post("value");
@@ -51,10 +48,20 @@ class MemberController extends MY_Controller {
 		$this -> load -> model('member_model', 'member');			
 		$optionList		=	$this -> member -> get_school($search_index);
 		echo json_encode($optionList);
-		//$this -> layout -> setLayout('layout/empty');
-		//$this -> layout -> view('view/member/selectOption', $optionList);
-	}
-	
+		
+	}	
+	public function selectClassOption()
+	{
+		$key			=	$this->input->post("key");
+		$value			=	$this->input->post("value");
+		$search_index	=	array();
+		foreach ($key as $i=>$column) {
+           $search_index[$column]=$value[$i];
+        }
+		$this -> load -> model('member_model', 'member');			
+		$optionList		=	$this -> member -> get_class($search_index);
+		echo json_encode($optionList);		
+	}	
 	public function insertCity()
 	{
 		$this -> load -> model('member_model', 'member');	
@@ -66,18 +73,30 @@ class MemberController extends MY_Controller {
 	{		
 		$this -> load -> model('member_model', 'member');	
 		$_schoolId=$this->member->insert_school(array(
-									"school_type"=>$this->input->post("school_type"),
-									"school_name"=>$this->input->post("school_name"),
-									"school_address"=>$this->input->post("school_address"),
-									"school_phone"=>$this->input->post("school_phone"),
-									"school_city_id"=>$this->input->post("city_id")
+									"school_type"	=>	$this->input->post("school_type"),
+									"school_name"	=>	$this->input->post("school_name"),
+									"school_address"=>	$this->input->post("school_address"),
+									"school_phone"	=>	$this->input->post("school_phone"),
+									"school_city_id"=>	$this->input->post("city_id")
 									));	
 		echo $_schoolId;			
 	}
 	
-	public function insertClass($_schoolId)
+	public function insertClass()
 	{
-		
-	}
-
+		$this -> load -> model('member_model', 'member');	
+		$_classId=$this->member->insert_class(array(
+									"class_type"	=>	$this->input->post("class_type"),
+									"class_grade"	=>	$this->input->post("class_grade"),
+									"class_name"=>	$this->input->post("class_name"),
+									"class_school_id"	=>	$this->input->post("class_school_id")									
+									));	
+		echo $_classId;	
+	}	
+	public function insertUser()
+	{
+		$user_value	=	$this->input->post("value");		
+		$this -> load -> model('member_model', 'member');				
+		$this -> member -> insert($user_value);	
+	}	
 }

@@ -25,7 +25,7 @@ class Member_model extends CI_Model {
     
     const CLASS_PK = 'class_pk';
     const CLASS_TYPE = 'class_type';
-    const CLASS_GRADE = 'class_grae';
+    const CLASS_GRADE = 'class_grade';
     const CLASS_NAME = 'class_name';
     const CLASS_SCHOOL_ID = 'class_school_id';
     
@@ -212,8 +212,8 @@ class Member_model extends CI_Model {
                                    $this->PHONE,
                                    $this->TEL,
                                    $this->ADDRESS,
-                                   $this->EMAIL,
-                                   $this->UNIT_ID,
+                                   $this->EMAIL, 
+                                 //$this->UNIT_ID,                                  
                                    $this->CLASS_ID),
                             $data, NULL);
         // 取出要特殊處理的資料
@@ -318,12 +318,13 @@ class Member_model extends CI_Model {
      */
     public function get_city($data) {
         $cityData = elements(array($this->CITY_PK, $this->CITY_NAME), $data, NULL);
+		
         $this->db->from('city');
         // 篩選
         foreach ($cityData as $key => $value) {
             $this->where($this->to_database_column_name($key), $value);
         }
-		
+		$this->db->order_by("name desc");
         return $this->db->get()->result();
     }
    
@@ -385,6 +386,8 @@ class Member_model extends CI_Model {
         foreach ($classData as $key => $value) {
             $this->where($this->to_database_column_name($key), $value);
         }
+		$this->where('id !=','0');
+       
         return $this->db->get()->result();
     }
 	
@@ -395,7 +398,7 @@ class Member_model extends CI_Model {
      * @return array
      */
     public function get_classGroupBy($field) {    	
-    	$this->db->select('type');
+    	$this->db->select($field);
     	$this->db->group_by($field); 		
         $query = $this -> db -> get("class");
 		return $query -> result();      
