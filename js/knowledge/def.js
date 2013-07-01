@@ -1257,7 +1257,7 @@ function addLine(childObj, targetObj)
 	
 	
 	$(".canvas").append(
-		"<div class='line' level='" + lvl + "' lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'></div>"
+		"<div class='line' level='" + lvl + "' lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'><div class='lineArrow'></div></div>"
 	);
 	
 	$(childObj).attr("lid", c_lid);
@@ -1329,6 +1329,11 @@ function setLine(lineId, p1, p2) {
 		'left' : get2PointXCenter($(p1obj), $(p2obj)) - getFixX(line, p1obj, p2obj),
 		'top' : get2PointYCenter($(p1obj), $(p2obj)),
 		'transform' : 'rotate(' + get2PointZRotate($(p1obj), $(p2obj)) + 'deg)'
+	})
+	
+	$(line).find(".lineArrow").css({
+		'right' : $(line).find(".lineArrow").css("right") + 80,
+		'transform' : 'rotate(' + get2PointZRotate($(p1obj), $(p2obj)) - 45 + ')'
 	})
 	
 	$(line).attr("deg", get2PointZRotate($(p1obj), $(p2obj)));
@@ -2384,7 +2389,7 @@ function encodeUpdJson() {
 		   },
 		   success: function(data){
 		     //Do something success-ish
-		     //alert("123 complete xhr: " + data);
+		     //alert("upd data ajax: " + data);
 		     $(".ajaxProressBg").width(0);
 		     $(".ajaxProressBox").css({
 		     	'display' : 'none'

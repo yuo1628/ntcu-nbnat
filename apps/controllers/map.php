@@ -192,6 +192,8 @@ class MapController extends MY_Controller {
 			
 			else if($item->type == "line")
 			{
+				
+				
 				$n_ary = array(
 					"lid" => $item->lid
 				);
@@ -208,6 +210,8 @@ class MapController extends MY_Controller {
 					"is_child" => '0',
 					"level" => $item->level
 				);
+				
+				//echo 'upd line data: ';
 					
 				$compare = array(
 				"lid" => $item->lid

@@ -134,11 +134,21 @@
 	/*
 	border : 1px solid #e0e0e0;*/
 	
+	
 }
 
 .chLine {
 	background-color:#9fc7f2;
 	height: 1px;
+}
+
+.lineArrow {
+	border-right: 1px solid #fff;
+	border-top: 1px solid #fff;
+	right:0;
+	top: 0;
+	width: 10px;
+	height: 10px;
 }
 
 .point {
