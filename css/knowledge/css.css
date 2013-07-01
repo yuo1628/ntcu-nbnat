@@ -143,10 +143,10 @@
 }
 
 .lineArrow {
-	border-right: 1px solid #fff;
-	border-top: 1px solid #fff;
+	border-left: 2px solid #fff;
+	border-bottom: 2px solid #fff;
 	right:0;
-	top: 0;
+	top: -4px;
 	width: 10px;
 	height: 10px;
 }

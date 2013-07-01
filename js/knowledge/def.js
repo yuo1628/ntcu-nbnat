@@ -1299,7 +1299,7 @@ function addChildLine(childObj, targetObj)
 	
 	
 	$(".canvas").append(
-		"<div class='line chLine' level='" + lvl + "' ch_lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'  ></div>"
+		"<div class='line chLine' level='" + lvl + "' ch_lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'  ><div class='lineArrow'></div></div>"
 	);
 	
 	$(childObj).attr("ch_lid", c_lid);
@@ -1327,14 +1327,16 @@ function setLine(lineId, p1, p2) {
 					
 	$(line).css({
 		'left' : get2PointXCenter($(p1obj), $(p2obj)) - getFixX(line, p1obj, p2obj),
-		'top' : get2PointYCenter($(p1obj), $(p2obj)),
+		'top' : get2PointYCenter($(p1obj), $(p2obj)) + 5, // 5 = border width
 		'transform' : 'rotate(' + get2PointZRotate($(p1obj), $(p2obj)) + 'deg)'
 	})
 	
 	$(line).find(".lineArrow").css({
-		'right' : $(line).find(".lineArrow").css("right") + 80,
-		'transform' : 'rotate(' + get2PointZRotate($(p1obj), $(p2obj)) - 45 + ')'
+		'left' : 45,
+		'transform' : 'rotate(' + 45 + 'deg)'
 	})
+	
+	//alert($(line).html());
 	
 	$(line).attr("deg", get2PointZRotate($(p1obj), $(p2obj)));
 	
@@ -1354,8 +1356,13 @@ function setChildLine(lineId, p1, p2) {
 	//alert($(p1obj).width());
 	$(line).css({
 		'left' : get2PointXCenter($(p1obj), $(p2obj)) - getFixX(line, p1obj, p2obj),
-		'top' : get2PointYCenter($(p1obj), $(p2obj)),
+		'top' : get2PointYCenter($(p1obj), $(p2obj)) + 5,
 		'transform' : 'rotate(' + get2PointZRotate($(p1obj), $(p2obj)) + 'deg)'
+	})
+	
+	$(line).find(".lineArrow").css({
+		'left' : 25,
+		'transform' : 'rotate(' + 45 + 'deg)'
 	})
 	
 	$(line).attr("deg", get2PointZRotate($(p1obj), $(p2obj)));
@@ -1368,7 +1375,7 @@ function setChildLine(lineId, p1, p2) {
  * @param obj = Object
  */
 function getFixX(obj, p1,p2) {
-	return ($(obj).width() - $(p1).width() + (($(p1).width() * 0.5) - ($(p2).width() * 0.5))) * 0.5 ;
+	return (($(obj).width() - $(p1).width() + (($(p1).width() * 0.5) - ($(p2).width() * 0.5))) * 0.5) - 5 ;// 5 = border width
 }
 
 
@@ -2658,7 +2665,7 @@ function readLine(x, y ,lid ,cid ,tid,width,deg, level)
 {
 	
 	$(".canvas").append(
-		"<div class='line' level='" + level + "' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' lid='" + lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'></div>"
+		"<div class='line' level='" + level + "' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' lid='" + lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'><div class='lineArrow'></div></div>"
 	);
 	
 	var line = $(".line[lid=" + lid +"]");
@@ -2667,6 +2674,7 @@ function readLine(x, y ,lid ,cid ,tid,width,deg, level)
 		'transform': 'rotate(' + deg + 'deg)'
 	})
 		
+	setLine(lid, cid, tid);
 }
 
 
@@ -2674,7 +2682,7 @@ function readChildLine(x, y ,ch_lid ,cid ,tid,width,deg, level)
 {
 	
 	$(".canvas").append(
-		"<div class='line chLine' level='" + level + "' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' ch_lid='" + ch_lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'></div>"
+		"<div class='line chLine' level='" + level + "' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' ch_lid='" + ch_lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'><div class='lineArrow'></div></div>"
 	);
 	
 	var line = $(".line[ch_lid=" + ch_lid +"]");
@@ -2683,6 +2691,7 @@ function readChildLine(x, y ,ch_lid ,cid ,tid,width,deg, level)
 		'transform': 'rotate(' + deg + 'deg)'
 	})
 		
+	setChildLine(ch_lid, cid, tid);
 }
 
 function getQueryStringByUrl(_url, paramName)
