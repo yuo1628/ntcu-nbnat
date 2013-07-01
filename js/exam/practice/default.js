@@ -102,7 +102,6 @@ function slide(_id, _state) {
 */
 
 function enter(_uuid) {
-	
 
 	$.post("./index.php/practice/findExamList", {
 		uid : _uuid

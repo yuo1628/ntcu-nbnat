@@ -35,9 +35,11 @@ $n = $node->allNode();
 		<div class="checkBtn cItem">
 			設定
 		</div>
+		<!--
 		<div class="saveBtn btn cItem">
 			存檔
 		</div>
+		-->
 		<div class="updBtn btn cItem">
 			更新
 		</div>

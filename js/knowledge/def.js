@@ -117,8 +117,8 @@ $(function() {
 	
 	
 	$(document).mousemove(function(e) {
-		pageX = e.pageX;
-		pageY = e.pageY;
+		pageX = e.pageX - $(document).scrollLeft();
+		pageY = e.pageY - $(document).scrollTop();
 		
 		//alert(pageX);
 		
@@ -1865,6 +1865,7 @@ function encodeJson() {
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));	
 				obj.level = parseInt($(this).attr("level"));	
+				obj.media = isEmpty($(this).attr("media"));
 				ary.push(obj);
 			
 		}
@@ -1931,7 +1932,7 @@ function encodeJson() {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/addNode",
+		   url: "./index.php/map/addNode",
 		   data: {
 				data : test_json
 		   },
@@ -2000,7 +2001,7 @@ function decodeJson() {
 			return xhr;
 			},
 			type: 'POST',
-			url: href + "/readNode",
+			url: "./index.php/map/readNode",
 			data: {
 				
 			},
@@ -2111,7 +2112,9 @@ function addPointObj() {
 		 
 }
 
-function addPointPostAjax(pointObjIndex) {
+function addPointPostAjax(pid) {
+	
+	
 	var ary = new Array();
 	
 	$(".canvas").find("div").each(function() {
@@ -2128,6 +2131,7 @@ function addPointPostAjax(pointObjIndex) {
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));	
 				obj.level = parseInt($(this).attr("level"));	
+				obj.media = isEmpty($(this).attr("media"));	
 				ary.push(obj);
 			
 		}
@@ -2172,13 +2176,14 @@ function addPointPostAjax(pointObjIndex) {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/updNode",
+		   url: "./index.php/map/updNode",
 		   data: {
 				data : test_json
 		   },
 		   success: function(data){
 		     //Do something success-ish
-		     //alert("123 complete xhr: " + data);
+		    // alert("add Point ajax: " + data);
+		     
 		     $(".ajaxProressBg").width(0);
 		     $(".ajaxProressBox").css({
 		     	'display' : 'none'
@@ -2218,7 +2223,7 @@ function addPointPostAjax(pointObjIndex) {
 					     return xhr;
 					   },
 					   type: 'POST',
-					   url: href + "/readNode",
+					   url: "./index.php/map/readNode",
 					   success: function(data){
 					     //Do something success-ish
 					     //alert("123 complete xhr: " + data);
@@ -2235,9 +2240,9 @@ function addPointPostAjax(pointObjIndex) {
 							if(json[i].type == "point")
 							{
 								//alert(json[i].pid + " " + pointObjIndex);
-								if(json[i].pid == pointObjIndex)
+								if(json[i].pid == pid)
 								{
-									$(".point[pid=" + pointObjIndex + "]").attr("uuid" , json[i].uuid);
+									$(".point[pid=" + pid + "]").attr("uuid" , json[i].uuid);
 									
 								}
 								
@@ -2246,6 +2251,7 @@ function addPointPostAjax(pointObjIndex) {
 						}
 					     
 					     pointObjIndex++;
+					     //alert("pid: " + pointObjIndex);
 					   }
 				 });
 				 
@@ -2372,7 +2378,7 @@ function encodeUpdJson() {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/updNode",
+		   url: "./index.php/map/updNode",
 		   data: {
 				data : test_json
 		   },
@@ -2448,7 +2454,7 @@ function removePointPost(obj) {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/delNode",
+		   url: "./index.php/map/delNode",
 		   data: {
 				data : j
 		   },
@@ -2512,7 +2518,7 @@ function removeLinkPost(_obj) {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/delLink",
+		   url: "./index.php/map/delLink",
 		   data: {
 				data : j
 		   },
@@ -2586,7 +2592,7 @@ function removeLinkChildPost(_obj) {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/delLink",
+		   url: "./index.php/map/delLink",
 		   data: {
 				data : j
 		   },
@@ -2658,6 +2664,7 @@ function readLine(x, y ,lid ,cid ,tid,width,deg, level)
 		
 }
 
+
 function readChildLine(x, y ,ch_lid ,cid ,tid,width,deg, level)
 {
 	
@@ -2673,13 +2680,13 @@ function readChildLine(x, y ,ch_lid ,cid ,tid,width,deg, level)
 		
 }
 
-function getQueryStringByUrl(_url,paramName)
+function getQueryStringByUrl(_url, paramName)
 { 	
-　　paramName = paramName.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
-　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
-　　var regex = new RegExp( reg ); 
-　　var regResults = regex.exec(_url); 
-　　if( regResults == null ) return false; 
-　 else return regResults [1]; 
+	paramName = paramName.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
+	var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
+	var regex = new RegExp( reg ); 
+	var regResults = regex.exec(_url); 
+	if( regResults == null ) return false; 
+	else return regResults [1]; 
 } 
 
