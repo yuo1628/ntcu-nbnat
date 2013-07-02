@@ -117,6 +117,7 @@ $(function() {
 	
 	
 	$(document).mousemove(function(e) {
+		
 		pageX = e.pageX - $(document).scrollLeft();
 		pageY = e.pageY - $(document).scrollTop();
 		
@@ -320,6 +321,8 @@ $(function() {
 	})
 	
 	$(".canvas").bind("mousewheel", function(e) {
+		
+		
 		if(e.originalEvent.wheelDelta == "120")
 		{
 			//alert("up")
@@ -331,6 +334,7 @@ $(function() {
 			{
 				zoomCount++;
 			}
+			//zoomCanvasScaleOut();
 		}
 		else
 		{
@@ -343,9 +347,12 @@ $(function() {
 				zoomCount--;
 			}
 			//alert("down")
+			//zoomCanvasScaleIn();
 		}
 		
 		zoom(zoomCount);
+		
+		//alert(((parseInt($(".canvas").width()) * (1 + zoomCount * 0.05)) - parseInt($(".canvas").width())));
 	})
 	
 	//影片
@@ -477,9 +484,21 @@ function zoom(s) {
 			zoomIn();
 		break;
 	}
-	
 	zoomScrollRect(s);
 }
+
+function zoomCanvasScale(scale) {/*
+	$(".canvas").animate({
+		transform : 'scale(' + scale + ', ' + scale + ')'
+	},500)*/
+
+	$(".canvas").find(".point").animate({
+		transform : 'scale(' + scale + ', ' + scale + ')'
+	},500)
+	//alert($(".canvas").css("left"));
+}
+
+
 
 function zoomScrollRect(s) {
 	
@@ -491,6 +510,8 @@ function zoomScrollRect(s) {
 
 //zoom
 function zoomIn() {
+	zoomCanvasScale(1.16);
+	
 	lvl = LEVEL_0;
 	$(".point[level=1]").animate({
 		'opacity' : '0'
@@ -525,9 +546,18 @@ function zoomIn() {
 		'display' : 'block'
 	})
 	
+	/*
+	$(".point").css({
+		transform : 'scale(1.1)'
+	})*/
+	
+	
+	
 }
 
 function zoomAll() {
+	zoomCanvasScale(1.08);
+	
 	$(".point[level=1]").animate({
 		'opacity' : '1'
 	},200)
@@ -560,9 +590,18 @@ function zoomAll() {
 	$(".addPointL0Btn").css({
 		'display' : 'block'
 	})
+	
+	/*
+	$(".point").css({
+		transform : 'scale(1)'
+	})*/
+	
+	
 }
 
 function zoomOut() {
+	zoomCanvasScale(1);
+	
 	lvl = LEVEL_1;
 	$(".point[level=0]").animate({
 		'opacity' : '0'
@@ -599,6 +638,12 @@ function zoomOut() {
 	$(".addPointL1Btn").css({
 		'display' : 'block'
 	})
+	/*
+	$(".point").css({
+		transform : 'scale(0.9)'
+	})*/
+	
+	
 	
 }
 
@@ -770,6 +815,21 @@ function setControlVar(obj) {
 		})
 	}*/
 	
+	//link
+	$(".linkBtn").hide();
+	$(".removeLinkBtn").hide();
+	$(".linkChildBtn").hide();
+	$(".removeChildLinkBtn").hide();
+	if($(obj).attr("level") == '0')
+	{
+		$(".linkChildBtn").show();
+		$(".removeChildLinkBtn").show();
+	}
+	else
+	{
+		$(".linkBtn").show();
+		$(".removeLinkBtn").show();
+	}
 	
 }
 
@@ -777,6 +837,12 @@ function setPointVar() {
 	$(pointClickObj).find(".pointTextDesc").text(
 		$(".pointText").val()
 	)
+	
+	var prev_uuid = $(pointClickObj).attr("uuid");
+	$(".point[uuid=" + prev_uuid + "]").find(".pointTextDesc").text(
+		$(".pointText").val()
+	)
+	
 }
 
 function pointLinkObj(obj) {
@@ -1236,37 +1302,44 @@ function addLine(childObj, targetObj)
 	var c_lid = $(childObj).attr("lid");
 	var t_lid = $(targetObj).attr("lid");
 	
-	//alert(t_lid);
-	if(t_lid != undefined && t_lid != "")
-	{
-		t_lid += "," + lineIndex;
+	var target_level = $(targetObj).attr("level");
+	
+	if(target_level == '1'){
+		
+		if(t_lid != undefined && t_lid != "")
+		{
+			t_lid += "," + lineIndex;
+		}
+		else
+		{
+			t_lid = lineIndex;
+		}
+		
+		if(c_lid != undefined && c_lid != "")
+		{
+			c_lid += "," + lineIndex;
+		}
+		else
+		{
+			c_lid = lineIndex;
+		}
+		
+		
+		$(".canvas").append(
+			"<div class='line' level='" + lvl + "' lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'><div class='lineArrow'></div></div>"
+		);
+		
+		$(childObj).attr("lid", c_lid);
+		$(targetObj).attr("lid", t_lid);
+		setLine(lineIndex, cid, tid);
+		
+		lineIndex++;
+		linkBoo = false;
 	}
 	else
 	{
-		t_lid = lineIndex;
+		alert("請連至大節點");
 	}
-	
-	if(c_lid != undefined && c_lid != "")
-	{
-		c_lid += "," + lineIndex;
-	}
-	else
-	{
-		c_lid = lineIndex;
-	}
-	
-	
-	$(".canvas").append(
-		"<div class='line' level='" + lvl + "' lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'><div class='lineArrow'></div></div>"
-	);
-	
-	$(childObj).attr("lid", c_lid);
-	$(targetObj).attr("lid", t_lid);
-	setLine(lineIndex, cid, tid);
-	
-	lineIndex++;
-	linkBoo = false;
-	
 }
 
 
@@ -1278,37 +1351,45 @@ function addChildLine(childObj, targetObj)
 	var c_lid = $(childObj).attr("ch_lid");
 	var t_lid = $(targetObj).attr("ch_lid");
 	
-	//alert(t_lid);
-	if(t_lid != undefined && t_lid != "")
-	{
-		t_lid += "," + lineIndex;
+	var target_level = $(targetObj).attr("level");
+	
+	if(target_level == '0'){
+	
+		if(t_lid != undefined && t_lid != "")
+		{
+			t_lid += "," + lineIndex;
+		}
+		else
+		{
+			t_lid = lineIndex;
+		}
+		
+		if(c_lid != undefined && c_lid != "")
+		{
+			c_lid += "," + lineIndex;
+		}
+		else
+		{
+			c_lid = lineIndex;
+		}
+		
+		
+		$(".canvas").append(
+			"<div class='line chLine' level='" + lvl + "' ch_lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'  ><div class='lineArrow'></div></div>"
+		);
+		
+		$(childObj).attr("ch_lid", c_lid);
+		$(targetObj).attr("ch_lid", t_lid);
+		setChildLine(lineIndex, cid, tid);
+		
+		lineIndex++;
+		linkBoo = false;
+	
 	}
 	else
 	{
-		t_lid = lineIndex;
+		alert("請連至小節點");
 	}
-	
-	if(c_lid != undefined && c_lid != "")
-	{
-		c_lid += "," + lineIndex;
-	}
-	else
-	{
-		c_lid = lineIndex;
-	}
-	
-	
-	$(".canvas").append(
-		"<div class='line chLine' level='" + lvl + "' ch_lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'  ><div class='lineArrow'></div></div>"
-	);
-	
-	$(childObj).attr("ch_lid", c_lid);
-	$(targetObj).attr("ch_lid", t_lid);
-	setChildLine(lineIndex, cid, tid);
-	
-	lineIndex++;
-	linkBoo = false;
-	
 }
 
 
@@ -1460,7 +1541,12 @@ function get2PointZRotate(o1, o2) {
 
 
 function setDrag() {
-		
+		/*
+	$(dragObj).css({
+		'left' : pageX - ($(dragObj).width() / 2) - parseInt($(".canvas").css("left")),
+		'top' : pageY - ($(dragObj).height() / 2) - parseInt($(".canvas").css("top"))
+	})*/
+	
 	$(dragObj).css({
 		'left' : pageX - ($(dragObj).width() / 2) - parseInt($(".canvas").css("left")),
 		'top' : pageY - ($(dragObj).height() / 2) - parseInt($(".canvas").css("top"))
@@ -1469,6 +1555,12 @@ function setDrag() {
 
 function setSceneDrag() {
 	//$(".debug").text("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp setDrag cavasY " + canvasY);
+	/*
+	$(".canvas").css({
+		'left' : canvasX + (pageX - downX), 
+		'top' : canvasY + (pageY - downY)
+	})*/
+	
 	$(".canvas").css({
 		'left' : canvasX + (pageX - downX), 
 		'top' : canvasY + (pageY - downY)
@@ -2111,23 +2203,40 @@ function decodeJson() {
 function addPointObj() {
 	
 	var href = window.location.href;
+		
+	var prev_pid = "";
+	//新增一個小的
+	if(lvl == 1)
+	{
+		$(".canvas").append(
+			"<div class='drag point' level='" + 0 + "' prev_pid='" + pointObjIndex + "' open_answer='close' style='left:" + (((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + 0) + "px;top: " + (((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) - 40) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
+		)
+		
+		prev_pid = "prev_pid='" + pointObjIndex + "'";
+		pointObjIndex++;
+		
+	}
 	
 	$(".canvas").append(
-		"<div class='drag point' level='" + lvl + "' open_answer='close' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
-	)	
+		"<div class='drag point' level='" + lvl + "' " + prev_pid +  " open_answer='close' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
+	)
 	
 	$(".drag").bind("mousedown", mouseDown);
 	$(".drag").bind("mouseup", mouseUp);
 	
 	
+	
 	addPointPostAjax(pointObjIndex);
+	
+	
 		 
 }
 
-function addPointPostAjax(pid) {
+function addPointPostAjax(pid, lvl) {
 	
 	
 	var ary = new Array();
+	var prev_uuid = 0;
 	
 	$(".canvas").find("div").each(function() {
 		var obj = new Object();
@@ -2153,6 +2262,8 @@ function addPointPostAjax(pid) {
 	var json = JSON.stringify(ary, null, 2);
 	test_json = json;
 	var href = window.location.href;
+	
+	
 	
 	$.ajax({
 		xhr: function()
@@ -2254,8 +2365,16 @@ function addPointPostAjax(pid) {
 								//alert(json[i].pid + " " + pointObjIndex);
 								if(json[i].pid == pid)
 								{
-									$(".point[pid=" + pid + "]").attr("uuid" , json[i].uuid);
 									
+									$(".point[pid=" + pid + "]").attr("uuid" , json[i].uuid);
+									//如果增加大節點 則複製大節點的UUID到小節點上
+									
+									var prev_pid = $(".point[pid=" + pid + "]").attr("prev_pid");
+									
+									$(".point[prev_pid=" + prev_pid + "][level=0]").attr("uuid",json[i].uuid );
+									
+									//prev_uuid = json[i].uuid;
+									encodeUpdJson();
 								}
 								
 								
@@ -2320,6 +2439,7 @@ function encodeUpdJson() {
 				obj.pid = isEmpty($(this).attr("pid"));
 				obj.lid = isEmpty($(this).attr("lid"));
 				obj.ch_lid = isEmpty($(this).attr("ch_lid"));
+				obj.uuid = isEmpty($(this).attr("uuid"));
 				obj.text = isEmpty($(this).text());
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));	

@@ -40,7 +40,8 @@ class MapController extends MY_Controller {
 				));
 			
 		}		
-			
+		
+		$this -> layout -> addScript("js/jquery.transform2d.js");
 		$this -> layout -> addScript("js/exam/exam/examLock.js");
 		$this -> layout -> addScript("js/exam/practice/default.js");
 		$this -> layout -> addScript("js/knowledge/def.js");
@@ -169,7 +170,8 @@ class MapController extends MY_Controller {
 					"x" => $item->x,
 					"y" => $item->y,
 					"level" => $item->level,
-					"media" => $item->media
+					"media" => $item->media,
+					"uuid" => $item->uuid
 					);
 					
 				$compare = array(
