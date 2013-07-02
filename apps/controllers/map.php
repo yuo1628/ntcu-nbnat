@@ -297,6 +297,6 @@ class MapController extends MY_Controller {
 		
 	}
 	private function userMeta() {
-		$this -> load -> view('view/userMeta');
+		return $this -> load -> view('view/userMeta',"",true);
 	}
 }

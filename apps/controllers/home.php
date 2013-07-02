@@ -60,7 +60,7 @@ class HomeController extends MY_Controller {
 	}
 
 	private function userMeta() {
-		$this -> load -> view('view/userMeta');
+		return $this -> load -> view('view/userMeta',"",TRUE);
 	}
 
 }

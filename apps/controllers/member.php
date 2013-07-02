@@ -41,7 +41,7 @@ class MemberController extends MY_Controller {
 		return $itemList;
 	}	
 	private function userMeta() {
-		$this -> load -> view('view/userMeta');
+		return $this -> load -> view('view/userMeta',"",TRUE);
 	}		
 	public function selectSchoolOption()
 	{

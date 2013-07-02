@@ -7,13 +7,22 @@ $(document).ready(function() {
 });
 
 function login() {
-	if($("input#username").val()=="" || $("input#password").val()=="")
+	if($("input#username").val()=="")
 	{
-		$("input#username").css({"border":"1px solid #ff0000"});
-		/*$("div#login ul li span.fontRed").html("請確認帳號與密碼已正確輸入");*/
+		$("input#username").css({"border":"2px solid #ff0000"});
+		$("input#password").css({"border":"2px solid #e0e0e0"});
+		
+		
+	}else if($("input#password").val()=="")
+	{
+		$("input#password").css({"border":"2px solid #ff0000"});
+		$("input#username").css({"border":"2px solid #e0e0e0"});
+		
 	}
 	else
 	{	
+		$("input#username").css({"border":"2px solid #e0e0e0"});
+		$("input#password").css({"border":"2px solid #e0e0e0"});
 		$.post(
 			"./index.php/login/login",
 			{

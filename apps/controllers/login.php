@@ -15,7 +15,7 @@ class LoginController extends MY_Controller {
 		{
 			$state["state"]=$this->loginView($mes);	
 		}
-			
+				
 		$this->layout->setLayout('layout/login');		
 		$this->layout->view('view/login/default',$state);
 	}
@@ -24,10 +24,10 @@ class LoginController extends MY_Controller {
 		{
 			$mes="帳號或密碼錯誤";
 		}	
-		$this->load->view('view/login/login',array("mes"=>$mes));		
+		return $this->load->view('view/login/login',array("mes"=>$mes),TRUE);		
 	}
 	private function userMeta() {		
-		$this->load->view('view/userMeta');		
+		return $this->load->view('view/userMeta',"",TRUE);		
 	}
 	public function setSessionValue() {
 		/*$value = $this->input->post("value");
