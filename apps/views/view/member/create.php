@@ -43,13 +43,13 @@
 		</tr>
 		
 		<tr rank="0"><th>學制</th><td id="classType" level='6'>		
-			<input type='text' id='classTypeText' disabled="disabled"/>				
+			<input type='text' id='classTypeText'/>				
 		</td></tr>
 		<tr rank="0"><th>年級</th><td id="classGrade" level='7'>	
-			<input type='text' id='classGradeText' disabled="disabled"/>					
+			<input type='text' id='classGradeText'/>					
 		</td></tr>
 		<tr rank="0"><th>班別</th><td id="className" level='8'>	
-			<input type='text' id='classNameText' disabled="disabled"/>			
+			<input type='text' id='classNameText' />			
 		</td></tr>
 		<tr><th colspan="2">基本資料</th></tr>
 		<tr><th>姓名</th><td><input type="text" id="name" /></td></tr>

@@ -7,9 +7,12 @@ class MemberController extends MY_Controller {
 	 * Home Page for Home controller.
 	 */
 	public function index() {
+		$guest=array("user"=>"GUEST","page"=>"member");
+		$this->session->set_userdata('USER', $guest);	
 		$this->edit();
 	}
 	public function edit() {
+		
 		$this -> layout -> view('view/member/default', $this->_mainmenu());
 	}
 	public function create() {
@@ -33,10 +36,13 @@ class MemberController extends MY_Controller {
 		 array("edit", "./index.php/member", "修改個人資料"), 
 		 array("create", "./index.php/member/create", "建立會員帳號"), 
 		 array("manage", "./index.php/member/manage", "管理會員帳號"),
-		 array("logout", "./", "會員登出")
-		));
+		 array("logout", "./index.php/login/logout", "登出帳號")
+		),"state"=>$this->userMeta());
 		return $itemList;
-	}			
+	}	
+	private function userMeta() {
+		$this -> load -> view('view/userMeta');
+	}		
 	public function selectSchoolOption()
 	{
 		$key			=	$this->input->post("key");

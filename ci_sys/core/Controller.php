@@ -44,7 +44,9 @@ class CI_Controller {
 		foreach (is_loaded() as $var => $class)
 		{
 			$this->$var =& load_class($class);
+			
 		}
+		
 
 		$this->load =& load_class('Loader', 'core');
 

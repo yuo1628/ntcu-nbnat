@@ -313,6 +313,8 @@ function selectSchoolName()
 			$("table tr td#schoolName").html(temp);	
 			$("table tr td#schoolAddress input").val("");	
 			$("table tr td#schoolPhone input").val("");	
+			$("table tr td#schoolAddress input").removeAttr("disabled");	
+			$("table tr td#schoolPhone input").removeAttr("disabled");
 			getClassType();	
 					
 		}

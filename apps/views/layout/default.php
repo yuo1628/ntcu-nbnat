@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -9,6 +7,7 @@
 		<script type="application/javascript" src="js/toggle.js"></script>
 		<link rel="stylesheet" href="css/master.css" />
 		<link rel="stylesheet" href="css/frame.css" />
+		<link rel="stylesheet" href="css/index.css" />
 		<link rel="stylesheet" href="css/menu.css" />
 		<link rel="stylesheet" href="css/font.css" />
 		<!-- css & js-->
@@ -34,7 +33,7 @@
 					<a href="./"></a>
 				</div>
 				<div id="nav">
-
+					<?php echo $state;?>
 				</div>
 			</div>
 			<div id="content">

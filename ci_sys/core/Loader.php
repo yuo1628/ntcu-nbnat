@@ -881,7 +881,8 @@ class CI_Loader {
 		// Get the class name, and while we're at it trim any slashes.
 		// The directory path can be included as part of the class name,
 		// but we don't want a leading slash
-		$class = str_replace('.php', '', trim($class, '/'));
+		$class = str_replace('.php', '', trim($class, '/'));		
+	       
 
 		// Was the path included with the class name?
 		// We look for a slash to determine this

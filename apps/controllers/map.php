@@ -12,9 +12,10 @@ class MapController extends MY_Controller {
 		$this -> load -> model('exam/map/m_link', 'link');
 		$this -> load -> model('exam/map/m_node', 'node');
 					
-		$session = $this->session->userdata('who');
+		$user = $this -> session -> userdata('user');
+		$rank = $user[0] -> rank;
 		
-		if(empty($session) || $session == '0')
+		if($rank<3)
 		{
 			$itemList = array(
 			"link" => $this -> link,
@@ -24,8 +25,9 @@ class MapController extends MY_Controller {
 			array("back","./index.php/exam", "返回選單"),
 			array("map","./index.php/map", "知識結構圖"),
 			array("node","./index.php/node", "指標管理"),			
-			array("logout","./", "登出帳號")
-			));
+			array("logout","./index.php/login/logout", "登出帳號")
+			),
+			"state"	=>$this->userMeta());
 		}
 		else
 		{
@@ -34,10 +36,12 @@ class MapController extends MY_Controller {
 			"node" => $this -> node,
 			"controllerInstance" => $this,
 			"itemList"=>array(
+				array("back","./index.php/home", "返回主選單"),									
 				array("map","./index.php/map", "知識結構圖"),
 				array("practice","./index.php/practice", "線上測驗"),
-				array("logout","./", "登出帳號")
-				));
+				array("logout","./index.php/login/logout", "登出帳號")
+				),
+			"state"	=>$this->userMeta());
 			
 		}		
 			
@@ -292,5 +296,7 @@ class MapController extends MY_Controller {
 		}
 		
 	}
-	
+	private function userMeta() {
+		$this -> load -> view('view/userMeta');
+	}
 }

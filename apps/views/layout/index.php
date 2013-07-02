@@ -9,7 +9,6 @@
 		<link rel="stylesheet" href="css/frame.css" />
 		<link rel="stylesheet" href="css/index.css" />
 		<link rel="stylesheet" href="css/news.css" />
-		<link rel="stylesheet" href="css/font.css" />
 	</head>
 	<body>
 		<div id="container">
@@ -18,11 +17,33 @@
 					<a href="./"></a>
 				</div>
 				<nav id="nav">
-					<?php echo $state;?>
+					<div id="login">
+						<ul>
+							<li>
+								<h6>使用者帳號</h6>
+								<input type="text" id="username" class="textStyle" />
+							</li>
+							<li>
+								<h6>使用者密碼</h6>
+								<input type="text" id="password" class="textStyle" />
+							</li>
+							<li>
+								<a href=""><h6>忘記密碼？</h6></a>
+							</li>
+							<li>
+								<a href="./index.php/home" onclick="login('0');return false;" style="text-decoration:none;"><span class="greenBtn">登入</span></a>
+							</li>
+							<li>
+								<a href="./index.php/home" onclick="login('1');return false;" style="text-decoration:none;"><span class="greenBtn">學生登入</span></a>
+							</li>
+						</ul>
+
+					</div>
 				</nav>
 			</div>
 			<div id="content">
-				<?php echo $content;?>
+				<?php echo $content
+				?>
 			</div>
 			<p id="footer">
 				法律顧問 : 令衍法律事務所　台灣黃頁名錄 | 長泓露天拍賣 | 長泓資訊粉絲專頁　© 2013長泓資訊有限公司

@@ -8,26 +8,27 @@ class ExamController extends MY_Controller {
 		$this -> load -> model('exam/map/m_node', 'node');
 		$node = $this -> node -> allNode();
 			
-		$session = $this->session->userdata('who');
+		$user = $this -> session -> userdata('user');
+		$rank = $user[0] -> rank;
 		
-		if(empty($session) || $session == '0')
+		if($rank<3)
 		{
 			$itemList = array("itemList"=>array(
-			array("back","./index.php/home", "返回主選單"),
-			array("examManage","./index.php/exam", "管理試卷"),			
-			array("map","./index.php/map", "知識結構圖"),
-			/*array("result","./index.php/exam", "試題分析"),*/
-			array("practice","./index.php/practice", "線上測驗"),			
-			array("logout","./", "登出帳號")
-			), "result" => $node);
+							array("back","./index.php/home", "返回主選單"),
+							array("examManage","./index.php/exam", "管理試卷"),			
+							array("map","./index.php/map", "知識結構圖"),
+							/*array("result","./index.php/exam", "試題分析"),*/
+							array("practice","./index.php/practice", "線上測驗"),			
+							array("logout","./index.php/login/logout", "登出帳號")
+			), "result" => $node,"state"=>$this->userMeta());
 		}
 		else
 		{
 			$itemList = array("itemList"=>array(
-				array("map","./index.php/map", "知識結構圖"),
-				array("practice","./index.php/practice", "線上測驗"),
-				array("logout","./", "登出帳號")
-				));
+							array("map","./index.php/map", "知識結構圖"),
+							array("practice","./index.php/practice", "線上測驗"),
+							array("logout","./index.php/login/logout", "登出帳號")
+				),"state"=>$this->userMeta());
 			
 		}
 			
@@ -119,6 +120,10 @@ class ExamController extends MY_Controller {
 		$this -> node -> updNode(array('limit_time' => $_time,'open_answer' => 'open'),array('uuid' => $_uuid));	
 	
 	}
+	private function userMeta() {
+		$this -> load -> view('view/userMeta');
+	}
+	
 
 
 }

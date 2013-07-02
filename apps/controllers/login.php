@@ -5,19 +5,39 @@ class LoginController extends MY_Controller {
 	/**
 	 * Index Page for Login controller.
 	 */
-	public function index()
+	public function index($mes="")
 	{
-		$this->layout->setLayout('layout/login');
-		
-		$this->layout->view('view/login/default');
+				
+		if($this->session->userdata("user")){
+			$state["state"]=$this->userMeta();	
+		}
+		else
+		{
+			$state["state"]=$this->loginView($mes);	
+		}
+			
+		$this->layout->setLayout('layout/login');		
+		$this->layout->view('view/login/default',$state);
 	}
-	
+	private function loginView($mes) {
+		if($mes=="error")
+		{
+			$mes="帳號或密碼錯誤";
+		}	
+		$this->load->view('view/login/login',array("mes"=>$mes));		
+	}
+	private function userMeta() {		
+		$this->load->view('view/userMeta');		
+	}
 	public function setSessionValue() {
-		$value = $this->input->post("value");
+		/*$value = $this->input->post("value");
 		$key = $this->input->post("key");
 		
 		$this->session->set_userdata($key, $value);
 		echo $this->session->userdata($key);
+		 * 
+		 */
+		
 	}
 	
 	public function getSessionValue() {
@@ -26,9 +46,35 @@ class LoginController extends MY_Controller {
 		{
 			echo $this->session->userdata($key);
 		}
-		else {
+		else 
+		{
 			echo '0';
 		}
 	}
 	
+	public function login() 
+	{
+		$username=$this->input->post("username");
+		$password=$this->input->post("password");
+		
+		$this -> load -> model('member_model', 'member');			
+		$userMeta	=	$this -> member -> get(array(
+													"username"=>$username,
+													"password"=>$password));
+		if(count($userMeta)>0)
+		{
+			$this->session->set_userdata("user", $userMeta);
+			echo "success";
+		}
+		else
+		{
+			//$this->index("error");
+			echo "error";
+		}
+	}
+	public function logout() 
+	{		
+		$this->session->unset_userdata("user");
+		$this->index();
+	}
 }

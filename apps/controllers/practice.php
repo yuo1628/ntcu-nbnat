@@ -11,27 +11,30 @@ class PracticeController extends MY_Controller {
 		$node = $this -> node -> allNode();
 		
 				
-		$session = $this->session->userdata('who');
+		$user = $this -> session -> userdata('user');
+		$rank = $user[0] -> rank;
 		
-		if(empty($session) || $session == '0')
+		if($rank<3)
 		{
-			$itemList = array("itemList"=>array(
-				array("back","./index.php/home", "返回主選單"),
-				array("examManage","./index.php/exam", "管理試卷"),			
-				array("map","./index.php/map", "知識結構圖"),
-				/*array("result","./index.php/exam", "試題分析"),*/
-				array("practice","./index.php/practice", "線上測驗"),			
-				array("logout","./", "登出帳號")
-				),
-				"result" => $node);		
+			$itemList = array("itemList"	=>array(
+									array("back","./index.php/home", "返回主選單"),
+									array("examManage","./index.php/exam", "管理試卷"),			
+									array("map","./index.php/map", "知識結構圖"),
+									/*array("result","./index.php/exam", "試題分析"),*/
+									array("practice","./index.php/practice", "線上測驗"),			
+									array("logout","./index.php/login/logout", "登出帳號")
+									),
+								"result" 	=> $node,
+								"state"		=>$this->userMeta());		
 		}
 		else
 		{
 			$itemList = array("itemList"=>array(
+				array("back","./index.php/home", "返回主選單"),									
 				array("map","./index.php/map", "知識結構圖"),
 				array("practice","./index.php/practice", "線上測驗"),
-				array("logout","./", "登出帳號")
-				));
+				array("logout","./index.php/login/logout", "登出帳號")
+				),"state"=>$this->userMeta());
 			
 		}		
 		
@@ -247,7 +250,7 @@ class PracticeController extends MY_Controller {
 										array("map","./index.php/map", "知識結構圖"),
 										/*array("result","./index.php/exam", "試題分析"),*/
 										array("practice","./index.php/practice", "線上測驗"),			
-										array("logout","./", "登出帳號")
+										array("logout","./index.php/login/logout", "登出帳號")
 										),
 						 "uuid"=>$a_uid,
 						 "examMes"=>$examMes,
@@ -258,8 +261,8 @@ class PracticeController extends MY_Controller {
 						 "correct"=>$correct,						 
 						 "quizAns"=>$quizArray,
 						 "userAns"=>$userAns,
-						 "userOptionAns"=>$userTemp
-						 
+						 "userOptionAns"=>$userTemp,
+						 "state"=>$this->userMeta()						 
 						 );
 		$this -> layout -> addStyleSheet("css/exam/practice/examList.css");					  
 		$this -> layout -> addStyleSheet("css/exam/practice/result.css");
@@ -319,6 +322,9 @@ class PracticeController extends MY_Controller {
 		$this -> load -> model('exam/exam/m_answer', 'answer');
 		$this->answer->updAnswer(array("finish"=>"true"),array("nodes_uuid"=>$_uuid));
 		
+	}
+	private function userMeta() {
+		$this -> load -> view('view/userMeta');
 	}
 
 }

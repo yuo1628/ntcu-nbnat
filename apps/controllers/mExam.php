@@ -18,7 +18,7 @@ class MExamController extends MY_Controller {
 				array("map","./index.php/map", "知識結構圖"),
 				/*array("result","./index.php/exam", "試題分析"),*/
 				array("practice","./index.php/practice", "線上測驗"),			
-				array("logout","./", "登出帳號")
+				array("logout","./index.php/login/logout", "登出帳號")
 				),
 			"result"=>$node
 				);
