@@ -426,6 +426,7 @@ function getLoginWho() {
 		function(rank) {
 			
 			setUI(rank);
+			who = rank;
 			
 		}
 	)
@@ -762,7 +763,7 @@ function setControlVar(obj) {
 	
 	
 	//lock
-	if(who == TEACHER){
+	if(who < 3){
 		$(".pointText").val($(obj).find(".pointTextDesc").text());
 		if($(obj).hasClass("lock"))
 		{
@@ -802,6 +803,21 @@ function setControlVar(obj) {
 			$(".updMovieUrlText").show();
 			$(".lookMovieBtn").show();
 		}
+		
+		$(".linkBtn").hide();
+		$(".removeLinkBtn").hide();
+		$(".linkChildBtn").hide();
+		$(".removeChildLinkBtn").hide();
+		if($(obj).attr("level") == '0')
+		{
+			$(".linkChildBtn").show();
+			$(".removeChildLinkBtn").show();
+		}
+		else
+		{
+			$(".linkBtn").show();
+			$(".removeLinkBtn").show();
+		}
 	}
 	//open answer
 	//暫時先用關閉的方式 日後gotoTopic會改成別的功能 此時就可開放
@@ -822,20 +838,9 @@ function setControlVar(obj) {
 	}*/
 	
 	//link
-	$(".linkBtn").hide();
-	$(".removeLinkBtn").hide();
-	$(".linkChildBtn").hide();
-	$(".removeChildLinkBtn").hide();
-	if($(obj).attr("level") == '0')
-	{
-		$(".linkChildBtn").show();
-		$(".removeChildLinkBtn").show();
-	}
-	else
-	{
-		$(".linkBtn").show();
-		$(".removeLinkBtn").show();
-	}
+	
+	
+	
 	
 }
 

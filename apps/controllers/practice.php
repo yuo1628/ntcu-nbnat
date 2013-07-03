@@ -252,13 +252,19 @@ class PracticeController extends MY_Controller {
 			$scoreTotal=$scoreTotal+$quizArray[$i]["score"];		
 		}
 		$count=count($userTemp);
-		$itemList = array("itemList" =>	array(
+		$user = $this -> session -> userdata('user');
+		$rank = $user[0] -> rank;
+		$user_id = $user[0] -> id;
+		
+		if($rank<3)
+		{
+				$itemList = array("itemList" =>	array(
 										array("back","./index.php/home", "返回主選單"),
-										array("examManage","./index.php/exam", "管理試卷"),			
-										array("map","./index.php/map", "知識結構圖"),
-										/*array("result","./index.php/exam", "試題分析"),*/
-										array("practice","./index.php/practice", "線上測驗"),			
-										array("logout","./index.php/login/logout", "登出帳號")
+									array("examManage","./index.php/exam", "管理試卷"),			
+									array("map","./index.php/map", "知識結構圖"),
+									/*array("result","./index.php/exam", "試題分析"),*/
+									array("practice","./index.php/practice", "線上測驗"),			
+									array("logout","./index.php/login/logout", "登出帳號")
 										),
 						 "uuid"=>$a_uid,
 						 "examMes"=>$examMes,
@@ -272,6 +278,33 @@ class PracticeController extends MY_Controller {
 						 "userOptionAns"=>$userTemp,
 						 "state"=>$this->userMeta()						 
 						 );
+		}
+		else
+		{
+			
+				$itemList = array("itemList" =>	array(
+										array("back","./index.php/home", "返回主選單"),									
+				array("map","./index.php/map", "知識結構圖"),
+				array("practice","./index.php/practice", "線上測驗"),
+				array("logout","./index.php/login/logout", "登出帳號")
+										),
+						 "uuid"=>$a_uid,
+						 "examMes"=>$examMes,
+						 "result"=>$ansTitle,						 
+						 "count"=>$count,
+						 "scoreTotal"=>$scoreTotal,
+						 "score"=>$score,
+						 "correct"=>$correct,						 
+						 "quizAns"=>$quizArray,
+						 "userAns"=>$userAns,
+						 "userOptionAns"=>$userTemp,
+						 "state"=>$this->userMeta()						 
+						 );
+				
+			
+		}		
+		
+		
 		
 	
 		
