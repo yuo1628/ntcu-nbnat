@@ -40,25 +40,25 @@ class PracticeController extends MY_Controller {
 		}		
 		
 		$itemList['childList'] =array();
-		
+		$exist_uuid = '0';
 		foreach ($node as $item){
+			if($exist_uuid != $item->uuid)
+			{
+				$score=0;
+				$item->count_e = $this->countExam($item->uuid); 		//總試題數
+				$item->count_a = $this->countAns($item->uuid);			//答題次數			
+				$score_temp=$this->countQuizScore($item->uuid);			//總分
+				foreach ($score_temp as $score_item)					
+				{														
+					$score=$score+$score_item->score;					
+				}																	
+				$item->count_score = ($score/100);						
 			
-			$score=0;
-			$item->count_e = $this->countExam($item->uuid); 		//總試題數
-			$item->count_a = $this->countAns($item->uuid);			//答題次數			
-			$score_temp=$this->countQuizScore($item->uuid);			//總分
-			foreach ($score_temp as $score_item)					
-			{														
-				$score=$score+$score_item->score;					
-			}																	
-			$item->count_score = ($score/100);						
-			
-			$user_id=$user[0]->id;		
-		
-			$item->isNotFinish=$this->answer->findAnswer(array("nodes_uuid"=>$item->uuid,"finish"=>"false","user_id"=>$user_id));
-			
-			
-			$itemList['childList'][] = $item;
+				$user_id=$user[0]->id;		
+				$item->isNotFinish=$this->answer->findAnswer(array("nodes_uuid"=>$item->uuid,"finish"=>"false","user_id"=>$user_id));
+				$itemList['childList'][] = $item;
+			}
+			$exist_uuid = $item->uuid;
 		}
 						  
 		$this -> layout -> addStyleSheet("css/exam/practice/default.css");
