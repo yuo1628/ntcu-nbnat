@@ -59,6 +59,7 @@
 														"reStart"
 														),
 								"map"		=>	array(	"index",
+														"map",
 														"addNode",
 														"readNode",
 														"updNode",

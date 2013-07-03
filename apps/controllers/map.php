@@ -9,6 +9,9 @@ class MapController extends MY_Controller {
 	 * 知識結構圖
 	 */
 	public function index() {
+		
+		//echo $this->input->get("id");;
+		
 		$this -> load -> model('exam/map/m_link', 'link');
 		$this -> load -> model('exam/map/m_node', 'node');
 		$this -> load -> model('exam/map/m_subject', 'subject');
@@ -65,7 +68,67 @@ class MapController extends MY_Controller {
 		$this -> layout -> addStyleSheet("css/knowledge/toolsbar.css");
 		//$this -> layout -> view('view/exam/map/map', $itemList);
 		$this -> layout -> view('view/exam/map/default', $itemList);
+		
+		//echo $this->input->get("id");;
 	}	
+
+	public function map() {
+		//echo '123';
+		
+		$this -> load -> model('exam/map/m_link', 'link');
+		$this -> load -> model('exam/map/m_node', 'node');
+		$this -> load -> model('exam/map/m_subject', 'subject');
+		$this -> load -> model('member_model', 'member');	
+		
+		$user = $this -> session -> userdata('user');
+		$rank = $user[0] -> rank;
+		
+		if($rank<3)
+		{
+			$itemList = array(
+			"link" => $this -> link,
+			"node" => $this -> node,
+			"controllerInstance" => $this,
+			"sunjectList"	=>	$this->subject->allSubject() ,
+			"teacherList"	=>	$this->member->get(array("rank"=>"2")),
+			"itemList"=>array(
+							array("back","./index.php/home", "返回主選單"),
+							array("examManage","./index.php/exam", "管理試卷"),			
+							array("map","./index.php/map", "知識結構圖"),
+							array("practice","./index.php/practice", "線上測驗"),			
+							array("logout","./index.php/login/logout", "登出帳號")
+			),
+			"state"	=>$this->userMeta());
+		}
+		else
+		{
+			$itemList = array(
+			"link" => $this -> link,
+			"node" => $this -> node,
+			"controllerInstance" => $this,
+			"itemList"=>array(
+				array("back","./index.php/home", "返回主選單"),									
+				array("map","./index.php/map", "知識結構圖"),
+				array("practice","./index.php/practice", "線上測驗"),
+				array("logout","./index.php/login/logout", "登出帳號")
+				),
+			"state"	=>$this->userMeta());
+			
+		}		
+		
+		$this -> layout -> addScript("js/jquery.transform2d.js");
+		//$this -> layout -> addScript("js/exam/exam/examLock.js");
+		//$this -> layout -> addScript("js/exam/practice/default.js");
+		$this -> layout -> addScript("js/knowledge/def.js");
+		$this -> layout -> addScript("js/knowledge/json2.js");
+		$this -> layout -> addScript("js/jquery.color.js");
+		//$this -> layout -> addScript("js/exam/map/default.js");
+		
+		$this -> layout -> addStyleSheet("css/knowledge/css.css");
+		$this -> layout -> addStyleSheet("css/knowledge/controlbar.css");
+		$this -> layout -> addStyleSheet("css/knowledge/toolsbar.css");
+		$this -> layout -> view('view/exam/map/map', $itemList);
+	}
 	
 	public function addNode() {
 		$str = $this->input->post("data");
@@ -86,7 +149,8 @@ class MapController extends MY_Controller {
 				"x" => $item->x,
 				"y" => $item->y,
 				"level" => $item->level,
-				"media" => $item->media
+				"media" => $item->media,
+				"km_id" => $item->km_id
 				);
 				
 				//寫入資料庫
@@ -105,7 +169,8 @@ class MapController extends MY_Controller {
 				"x" => $item->x,
 				"y" => $item->y,
 				"level" => $item->level,
-				"is_child" => '0'
+				"is_child" => '0',
+				"km_id" => $item->km_id
 				);
 
 				$this->load->model('exam/map/m_link', 'link');
@@ -123,7 +188,8 @@ class MapController extends MY_Controller {
 				"x" => $item->x,
 				"y" => $item->y,
 				"level" => $item->level,
-				"is_child" => '1'
+				"is_child" => '1',
+				"km_id" => $item->km_id
 				);
 				
 				//寫入資料庫
@@ -139,11 +205,16 @@ class MapController extends MY_Controller {
 	}
 	
 	public function readNode() {
+		$km_id = $this->input->post("km_id");
 		$this->load->model('exam/map/m_link', 'link');
 		$this->load->model('exam/map/m_node', 'node');
 		
-		$node = $this->node->allNode();
-		$link = $this->link->allLink();
+		$con = array(
+			"km_id" => $km_id
+		);
+		
+		$node = $this->node->findNode($con);
+		$link = $this->link->findLink($con);
 		
 		echo json_encode(array_merge($node,$link));
 	}
@@ -183,7 +254,8 @@ class MapController extends MY_Controller {
 					"y" => $item->y,
 					"level" => $item->level,
 					"media" => $item->media,
-					"uuid" => $item->uuid
+					"uuid" => $item->uuid,
+					"km_id" => $item->km_id
 					);
 					
 				$compare = array(
@@ -222,7 +294,8 @@ class MapController extends MY_Controller {
 					"x" => $item->x,
 					"y" => $item->y,
 					"is_child" => '0',
-					"level" => $item->level
+					"level" => $item->level,
+					"km_id" => $item->km_id
 				);
 				
 				//echo 'upd line data: ';
@@ -256,7 +329,8 @@ class MapController extends MY_Controller {
 					"x" => $item->x,
 					"y" => $item->y,
 					"is_child" => '1',
-					"level" => $item->level
+					"level" => $item->level,
+					"km_id" => $item->km_id
 				);
 					
 				$compare = array(
