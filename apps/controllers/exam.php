@@ -35,16 +35,25 @@ class ExamController extends MY_Controller {
 			
 		$itemList['childList'] =array();
 		
+		$exist_uuid = '0';
+		
 		foreach ($node as $item){
-			$score=0;
-			$item->count_total = $this->countQuizTotal($item->uuid);
-			$item->count_open = $this->countQuizOpen($item->uuid);
-			$score_temp=$this->countQuizScore($item->uuid);
-			foreach ($score_temp as $score_item){
-				$score=$score+$score_item->score;
+			//print_r($item);
+			if($exist_uuid != $item->uuid)
+			{
+				$score=0;
+				$item->count_total = $this->countQuizTotal($item->uuid);
+				$item->count_open = $this->countQuizOpen($item->uuid);
+				$score_temp=$this->countQuizScore($item->uuid);
+				foreach ($score_temp as $score_item){
+					$score=$score+$score_item->score;
+				}
+				$item->count_score = ($score/100);
+				$itemList['childList'][] = $item;
 			}
-			$item->count_score = ($score/100);
-			$itemList['childList'][] = $item;
+			
+			
+			$exist_uuid = $item->uuid;
 		}	
 		
 		$this -> layout -> addStyleSheet("css/exam/exam/examLock.css");

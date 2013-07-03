@@ -51,7 +51,8 @@ class MapController extends MY_Controller {
 			"state"	=>$this->userMeta());
 			
 		}		
-			
+		
+		$this -> layout -> addScript("js/jquery.transform2d.js");
 		$this -> layout -> addScript("js/exam/exam/examLock.js");
 		$this -> layout -> addScript("js/exam/practice/default.js");
 		$this -> layout -> addScript("js/knowledge/def.js");
@@ -151,16 +152,21 @@ class MapController extends MY_Controller {
 		$this->load->model('exam/map/m_link', 'link');
 		$this->load->model('exam/map/m_node', 'node');
 		
+		
 		$node = $this->node->allNode();
 		$link = $this->link->allLink();
 		
 		$str = $this->input->post("data");
 		$json = json_decode($str);
 		
+		
 		foreach($json as $i => $item)
 		{
 			if($item->type == "point")
 			{
+					
+				
+				
 				$n_ary = array(
 					"pid" => $item->pid
 				);
@@ -176,12 +182,16 @@ class MapController extends MY_Controller {
 					"x" => $item->x,
 					"y" => $item->y,
 					"level" => $item->level,
-					"media" => $item->media
+					"media" => $item->media,
+					"uuid" => $item->uuid
 					);
 					
 				$compare = array(
 				"pid" => $item->pid
 				);
+				
+				//echo "media =>" . $item->media;
+				
 				if($this->node->findNode($n_ary))
 				{
 					
@@ -189,11 +199,15 @@ class MapController extends MY_Controller {
 				}
 				else
 				{
+					
 					$this->node->AddNode($itemList);
 				}
 			}
+			
 			else if($item->type == "line")
 			{
+				
+				
 				$n_ary = array(
 					"lid" => $item->lid
 				);
@@ -210,6 +224,8 @@ class MapController extends MY_Controller {
 					"is_child" => '0',
 					"level" => $item->level
 				);
+				
+				//echo 'upd line data: ';
 					
 				$compare = array(
 				"lid" => $item->lid
@@ -257,6 +273,8 @@ class MapController extends MY_Controller {
 				}
 			}
 		}
+		
+		
 	}
 
 	function delNode() {

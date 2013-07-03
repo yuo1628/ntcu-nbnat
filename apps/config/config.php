@@ -14,9 +14,8 @@
 | path to your installation.
 |
 */
-//$config['base_url']	= 'http://www.chee.com.tw/nbnat/';
-$config['base_url']	= 'http://localhost/ntcu-nbnat/index.php/';
 
+$config['base_url']	= 'http://www.chee.com.tw/ntcu-nbnat/';
 /*
 |--------------------------------------------------------------------------
 | Index File
