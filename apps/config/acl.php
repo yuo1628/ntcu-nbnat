@@ -9,7 +9,9 @@
 		//超級管理員
 		"0" 		=> array(	"login"		=>	array(	"index",
 														"login",
-														"logout"),
+														"logout",
+														"getSessionValue"
+														),
 								"home"		=>	array(),
 								"member"	=>	array(	"index"			,
 														"edit"			,
@@ -71,7 +73,8 @@
 		//一般管理員
 		"1" 		=> array(	"login"		=>	array(	"index",
 														"login",
-														"logout"),
+														"logout",
+														"getSessionValue"),
 								"home"		=>	array(),
 								"member"	=>	array(	"index",
 														"edit",
@@ -119,6 +122,7 @@
 														"reStart"),
 								"map"		=>	array(	"index",
 														"addNode",
+														"map",
 														"readNode",
 														"updNode",
 														"delNode",
@@ -126,7 +130,7 @@
 														"kmList")								
 							),
 		//老師
-		"2" 		=> array(	"login"		=>	array("index","login","logout"),
+		"2" 		=> array(	"login"		=>	array("index","login","logout","getSessionValue"),
 								"home"		=>	array(),
 								"member"	=>	array("index","edit","create","manage","selectSchoolOption","selectClassOption","insertCity","insertSchool","insertClass","insertUser","findUserRank"),
 								"exam"		=>	array("index","findChild","countQuizTotal","countQuizOpen","countQuizScore","lockToggle","closePractice","sentOpen"),
@@ -144,13 +148,13 @@
 														"showTinymce"														
 														),
 								"practice"	=>	array("index","countQuizScore","findChild","countExam","countAns","findExamList","addAnswer","resultRoute","result","quizToArray","findTips","reStart"),
-								"map"		=>	array("index","addNode","readNode","updNode","delNode","delLink","kmList")								
+								"map"		=>	array("index","addNode","map","readNode","updNode","delNode","delLink","kmList")								
 							),
 		//學生
-		"3" 		=> array(	"login"	=>	array("index","login","logout"),
+		"3" 		=> array(	"login"	=>	array("index","login","logout","getSessionValue"),
 								"home"	=>	array(),
 								"practice"	=>	array("index","countQuizScore","findChild","countExam","countAns","findExamList","addAnswer","resultRoute","result","quizToArray","findTips","reStart"),
-								"map"		=>	array("index","addNode","readNode","updNode","delNode","delLink","kmList")
+								"map"		=>	array("index","addNode","map","readNode","updNode","delNode","delLink","kmList")
 								
 								
 							),

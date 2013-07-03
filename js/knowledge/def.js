@@ -422,20 +422,17 @@ $(function() {
 
 function getLoginWho() {
 	$.post(
-		"./index.php/login/getSessionValue",
-		{
-			key : 'who',
+		"./index.php/login/getSessionValue",		
+		function(rank) {
 			
-		},
-		function(data) {
-			who = data;
-			setUI();
+			setUI(rank);
+			
 		}
 	)
 }
 
-function setUI() {
-	if(who == TEACHER)
+function setUI(rank) {
+	if(rank <3)
 	{
 		$(".controlBar").find("div").show();
 		$(".toolsBar").show();

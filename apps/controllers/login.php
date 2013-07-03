@@ -41,7 +41,7 @@ class LoginController extends MY_Controller {
 	}
 	
 	public function getSessionValue() {
-		$key = $this->input->post("key");
+		/*$key = $this->input->post("key");
 		if($this->session->userdata($key))
 		{
 			echo $this->session->userdata($key);
@@ -49,7 +49,9 @@ class LoginController extends MY_Controller {
 		else 
 		{
 			echo '0';
-		}
+		}*/
+		$user=$this->session->userdata("user");
+		echo $user[0]->rank;
 	}
 	
 	public function login() 

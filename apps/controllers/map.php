@@ -45,6 +45,8 @@ class MapController extends MY_Controller {
 			"link" => $this -> link,
 			"node" => $this -> node,
 			"controllerInstance" => $this,
+			"sunjectList"	=>	$this->subject->allSubject() ,
+			"teacherList"	=>	$this->member->get(array("rank"=>"2")),
 			"itemList"=>array(
 				array("back","./index.php/home", "返回主選單"),									
 				array("map","./index.php/map", "知識結構圖"),
