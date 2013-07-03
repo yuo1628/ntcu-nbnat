@@ -78,7 +78,15 @@ var who = 0;
 var STUDENT = 1;
 var TEACHER = 0;
 
+//subject
+var subject_id = 0;
+
 $(function() {
+	
+	//alert("123");
+	
+	subject_id = getQueryStringByUrl(window.location.href, "id");
+	//alert(subject_id);
 	
 	$(".mapBg").width(5000);
 	$(".mapBg").height(5000);
@@ -90,7 +98,8 @@ $(function() {
 			'display' : 'none'
 		})
 	})
-	$(".mapBgClose").click();
+	
+	//$(".mapBgClose").click();
 	
 	$(".canvas").css({
 		'left' : ($("canvas").width() * 0.5) - ($(document).width() * 0.5)
@@ -1939,6 +1948,7 @@ function encodeJson() {
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));	
 				obj.level = parseInt($(this).attr("level"));	
+				obj.km_id = subject_id;
 				ary.push(obj);
 			
 		}
@@ -1953,7 +1963,8 @@ function encodeJson() {
 				obj.deg = isEmpty($(this).attr("deg"));
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));	
-				obj.level = parseInt($(this).attr("level"));		
+				obj.level = parseInt($(this).attr("level"));
+				obj.km_id = subject_id;		
 				ary.push(obj);
 			
 			
@@ -1970,6 +1981,7 @@ function encodeJson() {
 				obj.y = parseInt($(this).css("top"));	
 				obj.level = parseInt($(this).attr("level"));	
 				obj.media = isEmpty($(this).attr("media"));
+				obj.km_id = subject_id;
 				ary.push(obj);
 			
 		}
@@ -2107,7 +2119,7 @@ function decodeJson() {
 			type: 'POST',
 			url: "./index.php/map/readNode",
 			data: {
-				
+				km_id : subject_id
 			},
 			success: function(data){
 		     //Do something success-ish
@@ -2253,6 +2265,7 @@ function addPointPostAjax(pid, lvl) {
 				obj.y = parseInt($(this).css("top"));	
 				obj.level = parseInt($(this).attr("level"));	
 				obj.media = isEmpty($(this).attr("media"));	
+				obj.km_id = subject_id;
 				ary.push(obj);
 			
 		}
@@ -2347,6 +2360,9 @@ function addPointPostAjax(pid, lvl) {
 					   },
 					   type: 'POST',
 					   url: "./index.php/map/readNode",
+					   data: {
+					   	km_id : subject_id
+					   },
 					   success: function(data){
 					     //Do something success-ish
 					     //alert("123 complete xhr: " + data);
@@ -2412,6 +2428,7 @@ function encodeUpdJson() {
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));		
 				obj.level = parseInt($(this).attr("level"));	
+				obj.km_id = subject_id;
 				ary.push(obj);
 			
 		}
@@ -2426,7 +2443,8 @@ function encodeUpdJson() {
 				obj.deg = isEmpty($(this).attr("deg"));
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));	
-				obj.level = parseInt($(this).attr("level"));	
+				obj.level = parseInt($(this).attr("level"));
+				obj.km_id = subject_id;	
 				ary.push(obj);
 			
 			
@@ -2445,6 +2463,7 @@ function encodeUpdJson() {
 				obj.y = parseInt($(this).css("top"));	
 				obj.level = parseInt($(this).attr("level"));	
 				obj.media = isEmpty($(this).attr("media"));
+				obj.km_id = subject_id;
 				ary.push(obj);
 			
 		}
