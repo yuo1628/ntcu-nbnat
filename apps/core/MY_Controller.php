@@ -21,5 +21,6 @@ class MY_Controller extends CI_Controller
 		
 		$this->layout = new DLayout(); 
 		$this->layout->setLayout('layout/default');		
+		
 	}
 }

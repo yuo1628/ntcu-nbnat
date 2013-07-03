@@ -3,7 +3,11 @@
  */
 $(document).ready(function(){
 	
-	
+	if($("select#times option").size()==0)
+	{
+		location.href="./index.php/login";
+		
+	}
 	
 	var _uuid=$("div#uuid").html();
 	

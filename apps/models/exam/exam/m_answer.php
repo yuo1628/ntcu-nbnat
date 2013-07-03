@@ -47,10 +47,10 @@ class M_Answer extends CI_Model {
 	 * @param Array conditions.
 	 * @return Mixed Array or Null.
 	 */
-	public function findFirstAnswerId($_uid,$_sort="desc") {
+	public function findFirstAnswerId($_uid,$_sort="desc",$user_id) {
 		$this->db->limit(1);
 		$this->db->order_by("id", $_sort); 
-		$query = $this -> db -> get_where($this->tablename, array('nodes_uuid' => $_uid));
+		$query = $this -> db -> get_where($this->tablename, array('nodes_uuid' => $_uid,"user_id"=>$user_id));
 		foreach ($query->result() as $row)
 		{
     		return $row->id;
@@ -64,9 +64,9 @@ class M_Answer extends CI_Model {
 	 * @param Array conditions.
 	 * @return integer.
 	 */
-	public function countAnswer($_uuid)
+	public function countAnswer($_uuid,$user_id)
 	{
-		$query = $this -> db -> get_where($this -> tablename, array('nodes_uuid' => $_uuid,"finish"=>"true"));
+		$query = $this -> db -> get_where($this -> tablename, array('nodes_uuid' => $_uuid,"finish"=>"true","user_id"=>$user_id));
 		return $query -> num_rows();
 	}
 	

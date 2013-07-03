@@ -12,6 +12,7 @@ $(document).ready(function() {
 	}
 	
 	
+	
 });
 
 function showMedia(_url)
@@ -102,6 +103,7 @@ function slide(_id, _state) {
 */
 
 function enter(_uuid) {
+
 
 	$.post("./index.php/practice/findExamList", {
 		uid : _uuid

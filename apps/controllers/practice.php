@@ -3,7 +3,7 @@ if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
 class PracticeController extends MY_Controller {
-
+	
 	public function index() {
 		$this -> load -> model('exam/map/m_node', 'node');
 		$this -> load -> model('exam/exam/m_answer', 'answer');
@@ -13,6 +13,7 @@ class PracticeController extends MY_Controller {
 				
 		$user = $this -> session -> userdata('user');
 		$rank = $user[0] -> rank;
+		$user_id = $user[0] -> id;
 		
 		if($rank<3)
 		{
@@ -52,7 +53,9 @@ class PracticeController extends MY_Controller {
 			}																	
 			$item->count_score = ($score/100);						
 			
-			$item->isNotFinish=$this->answer->findAnswer(array("nodes_uuid"=>$item->uuid,"finish"=>"false"));
+			$user_id=$user[0]->id;		
+		
+			$item->isNotFinish=$this->answer->findAnswer(array("nodes_uuid"=>$item->uuid,"finish"=>"false","user_id"=>$user_id));
 			
 			
 			$itemList['childList'][] = $item;
@@ -98,8 +101,10 @@ class PracticeController extends MY_Controller {
 	
 	function countAns($_uuid)
 	{
+		$user = $this -> session -> userdata('user');		
+		$user_id = $user[0] -> id;
 		$this -> load -> model('exam/exam/m_answer', 'answer');
-		return $this -> answer -> countAnswer($_uuid);		
+		return $this -> answer -> countAnswer($_uuid,$user_id);		
 	}
 	function findExamList() {
 		$_uid = $this -> input -> post("uid");
@@ -165,11 +170,12 @@ class PracticeController extends MY_Controller {
 		$finish = $this -> input -> post("finish");
 		$spend = $this -> input -> post("spend");		
 		$type=$this -> input -> post("type");
-		
+		$user=$this->session->userdata("user");
+		$user_id=$user[0]->id;
 		
 		$this -> load -> model('exam/exam/m_answer', 'answer');
 		if($type=="add"){
-			$input_data=array("answer"=>$ans,"spend"=>$spend,"nodes_uuid"=>$uuid,"finish"=>$finish);
+			$input_data=array("answer"=>$ans,"spend"=>$spend,"nodes_uuid"=>$uuid,"finish"=>$finish,"user_id"=>$user_id);
 			$this -> answer -> addAnswer($input_data);
 		}
 		else
@@ -185,8 +191,10 @@ class PracticeController extends MY_Controller {
 	{
 		$a_uid=$this->input->get("id");
 		$_sort=$this->input->get("sort");
+		$user=$this->session->userdata("user");
+		$user_id=$user[0]->id;
 		$this -> load -> model('exam/exam/m_answer', 'answer');
-		$_id=$this -> answer -> findFirstAnswerId($a_uid,$_sort);
+		$_id=$this -> answer -> findFirstAnswerId($a_uid,$_sort,$user_id);
 		$this ->result($a_uid,$_id);
 	}
 	
@@ -196,13 +204,14 @@ class PracticeController extends MY_Controller {
 		$this -> load -> model('exam/exam/m_question', 'question');
 		$this -> load -> model('exam/map/m_node', 'node');
 		$this -> load -> model('exam/exam/m_option', 'option');
+		$user=$this->session->userdata("user");
+		$user_id=$user[0]->id;
 		
-		$ansTitle=$this -> answer -> findAnswer(array("nodes_uuid"=>$a_uid,"finish"=>"true"));
+		$ansTitle=$this -> answer -> findAnswer(array("nodes_uuid"=>$a_uid,"finish"=>"true","user_id"=>$user_id));
 		$examMes=$this -> node -> findNode(array("uuid"=>$a_uid));
 				
-				
 		$userAns=$this -> answer -> findAnswerById($_id);
-				
+	
 		$userAnsArray=json_decode($userAns[0]->answer,true);
 		
 		$quizArray=$this->quizToArray($a_uid,$userAnsArray);
@@ -243,7 +252,6 @@ class PracticeController extends MY_Controller {
 			$scoreTotal=$scoreTotal+$quizArray[$i]["score"];		
 		}
 		$count=count($userTemp);
-	
 		$itemList = array("itemList" =>	array(
 										array("back","./index.php/home", "返回主選單"),
 										array("examManage","./index.php/exam", "管理試卷"),			
@@ -264,6 +272,10 @@ class PracticeController extends MY_Controller {
 						 "userOptionAns"=>$userTemp,
 						 "state"=>$this->userMeta()						 
 						 );
+		
+	
+		
+		
 		$this -> layout -> addStyleSheet("css/exam/practice/examList.css");					  
 		$this -> layout -> addStyleSheet("css/exam/practice/result.css");
 		$this -> layout -> addScript("js/exam/practice/result.js");

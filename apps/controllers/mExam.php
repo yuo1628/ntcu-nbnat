@@ -20,7 +20,8 @@ class MExamController extends MY_Controller {
 				array("practice","./index.php/practice", "線上測驗"),			
 				array("logout","./index.php/login/logout", "登出帳號")
 				),
-			"result"=>$node
+			"result"=>$node,
+			"state"=>$this->userMeta()
 				);
 		$itemList['examList'] =array();	
 		
@@ -247,6 +248,8 @@ class MExamController extends MY_Controller {
 		return $this -> layout -> view('view/exam/create/tinymceTemplate.php',array("content"=>$content));
 		
 	}
-
+	private function userMeta() {
+		return $this -> load -> view('view/userMeta',"",TRUE);
+	}
 
 }
