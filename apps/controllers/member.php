@@ -7,8 +7,7 @@ class MemberController extends MY_Controller {
 	 * Home Page for Home controller.
 	 */
 	public function index() {
-		$guest=array("user"=>"GUEST","page"=>"member");
-		$this->session->set_userdata('USER', $guest);	
+		
 		$this->edit();
 	}
 	public function edit() {
@@ -105,4 +104,9 @@ class MemberController extends MY_Controller {
 		$this -> load -> model('member_model', 'member');				
 		$this -> member -> insert($user_value);	
 	}	
+	public function findUserRank()
+	{
+		$user=$this->session->userdata("user");
+		echo $user[0]->rank;
+	}
 }

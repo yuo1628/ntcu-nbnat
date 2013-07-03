@@ -20,7 +20,6 @@ class MY_Controller extends CI_Controller
 		dimport('view.layout');
 		
 		$this->layout = new DLayout(); 
-		$this->layout->setLayout('layout/default');
-		
+		$this->layout->setLayout('layout/default');		
 	}
 }

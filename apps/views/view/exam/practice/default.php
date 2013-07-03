@@ -5,7 +5,7 @@
 	<?php foreach ($childList as $item):
 
 	?>
-	<?php echo "<li>" . $item -> name."<span class='quizMeta'>題數：". $item ->count_e."</span><span class='quizMeta'>總分：".$item ->count_score."</span><div class='btn'>";
+	<?php echo "<li><h2>" . $item -> name."</h2><span class='quizMeta'>題數：". $item ->count_e."</span><span class='quizMeta'>總分：".$item ->count_score."</span><div class='btn'>";
 		 ?>
 		 
 			<?php 

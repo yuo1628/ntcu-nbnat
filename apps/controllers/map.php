@@ -11,7 +11,10 @@ class MapController extends MY_Controller {
 	public function index() {
 		$this -> load -> model('exam/map/m_link', 'link');
 		$this -> load -> model('exam/map/m_node', 'node');
-					
+		$this -> load -> model('exam/map/m_subject', 'subject');
+		$this -> load -> model('member_model', 'member');	
+		
+		
 		$user = $this -> session -> userdata('user');
 		$rank = $user[0] -> rank;
 		
@@ -21,11 +24,15 @@ class MapController extends MY_Controller {
 			"link" => $this -> link,
 			"node" => $this -> node,
 			"controllerInstance" => $this,
+			"sunjectList"	=>	$this->subject->allSubject() ,
+			"teacherList"	=>	$this->member->get(array("rank"=>"2")),
 			"itemList"=>array(
-			array("back","./index.php/exam", "返回選單"),
-			array("map","./index.php/map", "知識結構圖"),
-			array("node","./index.php/node", "指標管理"),			
-			array("logout","./index.php/login/logout", "登出帳號")
+							array("back","./index.php/home", "返回主選單"),
+							array("examManage","./index.php/exam", "管理試卷"),			
+							array("map","./index.php/map", "知識結構圖"),
+							/*array("result","./index.php/exam", "試題分析"),*/
+							array("practice","./index.php/practice", "線上測驗"),			
+							array("logout","./index.php/login/logout", "登出帳號")
 			),
 			"state"	=>$this->userMeta());
 		}
@@ -50,12 +57,13 @@ class MapController extends MY_Controller {
 		$this -> layout -> addScript("js/knowledge/def.js");
 		$this -> layout -> addScript("js/knowledge/json2.js");
 		$this -> layout -> addScript("js/jquery.color.js");
+		$this -> layout -> addScript("js/exam/map/default.js");
 		
 		$this -> layout -> addStyleSheet("css/knowledge/css.css");
 		$this -> layout -> addStyleSheet("css/knowledge/controlbar.css");
 		$this -> layout -> addStyleSheet("css/knowledge/toolsbar.css");
-		$this -> layout -> view('view/exam/map/map', $itemList);
-		
+		//$this -> layout -> view('view/exam/map/map', $itemList);
+		$this -> layout -> view('view/exam/map/default', $itemList);
 	}	
 	
 	public function addNode() {
@@ -293,9 +301,26 @@ class MapController extends MY_Controller {
 				"type" => $json->type
 			);
 			$this->link->delLink($item);
-		}
-		
+		}		
 	}
+	
+	public function kmList(){
+		$t	=$this->input->post("tId");
+		$sub=$this->input->post("subjectId");
+		$this -> load -> model('exam/map/m_km', 'km');		
+		if(empty($sub))
+		{
+			$search=array("t_id"=>$t);
+		}else if(empty($t))
+		{
+			$search=array("subject_id"=>$sub);
+		}else{
+			$search=array("subject_id"=>$sub,"t_id"=>$t);
+		}		
+		
+		echo json_encode($this->km->findKm($search));		
+	}
+	
 	private function userMeta() {
 		return $this -> load -> view('view/userMeta',"",true);
 	}

@@ -20,7 +20,8 @@ class ExamController extends MY_Controller {
 							/*array("result","./index.php/exam", "試題分析"),*/
 							array("practice","./index.php/practice", "線上測驗"),			
 							array("logout","./index.php/login/logout", "登出帳號")
-			), "result" => $node,"state"=>$this->userMeta());
+			), 	"result" 	=> 	$node,
+				"state"		=>	$this->userMeta());
 		}
 		else
 		{

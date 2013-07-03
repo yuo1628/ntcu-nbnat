@@ -90,7 +90,7 @@ $(function() {
 			'display' : 'none'
 		})
 	})
-	
+	$(".mapBgClose").click();
 	
 	$(".canvas").css({
 		'left' : ($("canvas").width() * 0.5) - ($(document).width() * 0.5)

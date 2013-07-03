@@ -2,10 +2,20 @@
  * @author Shown
  */
 var inputToggle;
-var user_rank="0";
+var user_rank;
 
 
 $(document).ready(function() {
+	
+	$.ajax({			
+			url		:"./index.php/member/findUserRank",
+			async	:false,			
+			success	:function(rank)
+			{
+				user_rank=rank;
+			}			
+		});
+	
 	settingRank();
 	checkPWD();
 		
@@ -59,6 +69,7 @@ $(document).ready(function() {
 	
 
 });	
+
 
 function checkRank(_level)
 {
