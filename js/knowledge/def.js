@@ -117,8 +117,9 @@ $(function() {
 	
 	
 	$(document).mousemove(function(e) {
-		pageX = e.pageX;
-		pageY = e.pageY;
+		
+		pageX = e.pageX - $(document).scrollLeft();
+		pageY = e.pageY - $(document).scrollTop();
 		
 		//alert(pageX);
 		
@@ -320,6 +321,8 @@ $(function() {
 	})
 	
 	$(".canvas").bind("mousewheel", function(e) {
+		
+		
 		if(e.originalEvent.wheelDelta == "120")
 		{
 			//alert("up")
@@ -331,6 +334,7 @@ $(function() {
 			{
 				zoomCount++;
 			}
+			//zoomCanvasScaleOut();
 		}
 		else
 		{
@@ -343,9 +347,12 @@ $(function() {
 				zoomCount--;
 			}
 			//alert("down")
+			//zoomCanvasScaleIn();
 		}
 		
 		zoom(zoomCount);
+		
+		//alert(((parseInt($(".canvas").width()) * (1 + zoomCount * 0.05)) - parseInt($(".canvas").width())));
 	})
 	
 	//影片
@@ -477,9 +484,21 @@ function zoom(s) {
 			zoomIn();
 		break;
 	}
-	
 	zoomScrollRect(s);
 }
+
+function zoomCanvasScale(scale) {/*
+	$(".canvas").animate({
+		transform : 'scale(' + scale + ', ' + scale + ')'
+	},500)*/
+
+	$(".canvas").find(".point").animate({
+		transform : 'scale(' + scale + ', ' + scale + ')'
+	},500)
+	//alert($(".canvas").css("left"));
+}
+
+
 
 function zoomScrollRect(s) {
 	
@@ -491,6 +510,8 @@ function zoomScrollRect(s) {
 
 //zoom
 function zoomIn() {
+	zoomCanvasScale(1.16);
+	
 	lvl = LEVEL_0;
 	$(".point[level=1]").animate({
 		'opacity' : '0'
@@ -525,9 +546,18 @@ function zoomIn() {
 		'display' : 'block'
 	})
 	
+	/*
+	$(".point").css({
+		transform : 'scale(1.1)'
+	})*/
+	
+	
+	
 }
 
 function zoomAll() {
+	zoomCanvasScale(1.08);
+	
 	$(".point[level=1]").animate({
 		'opacity' : '1'
 	},200)
@@ -560,9 +590,18 @@ function zoomAll() {
 	$(".addPointL0Btn").css({
 		'display' : 'block'
 	})
+	
+	/*
+	$(".point").css({
+		transform : 'scale(1)'
+	})*/
+	
+	
 }
 
 function zoomOut() {
+	zoomCanvasScale(1);
+	
 	lvl = LEVEL_1;
 	$(".point[level=0]").animate({
 		'opacity' : '0'
@@ -599,6 +638,12 @@ function zoomOut() {
 	$(".addPointL1Btn").css({
 		'display' : 'block'
 	})
+	/*
+	$(".point").css({
+		transform : 'scale(0.9)'
+	})*/
+	
+	
 	
 }
 
@@ -770,6 +815,21 @@ function setControlVar(obj) {
 		})
 	}*/
 	
+	//link
+	$(".linkBtn").hide();
+	$(".removeLinkBtn").hide();
+	$(".linkChildBtn").hide();
+	$(".removeChildLinkBtn").hide();
+	if($(obj).attr("level") == '0')
+	{
+		$(".linkChildBtn").show();
+		$(".removeChildLinkBtn").show();
+	}
+	else
+	{
+		$(".linkBtn").show();
+		$(".removeLinkBtn").show();
+	}
 	
 }
 
@@ -777,6 +837,12 @@ function setPointVar() {
 	$(pointClickObj).find(".pointTextDesc").text(
 		$(".pointText").val()
 	)
+	
+	var prev_uuid = $(pointClickObj).attr("uuid");
+	$(".point[uuid=" + prev_uuid + "]").find(".pointTextDesc").text(
+		$(".pointText").val()
+	)
+	
 }
 
 function pointLinkObj(obj) {
@@ -1236,37 +1302,44 @@ function addLine(childObj, targetObj)
 	var c_lid = $(childObj).attr("lid");
 	var t_lid = $(targetObj).attr("lid");
 	
-	//alert(t_lid);
-	if(t_lid != undefined && t_lid != "")
-	{
-		t_lid += "," + lineIndex;
+	var target_level = $(targetObj).attr("level");
+	
+	if(target_level == '1'){
+		
+		if(t_lid != undefined && t_lid != "")
+		{
+			t_lid += "," + lineIndex;
+		}
+		else
+		{
+			t_lid = lineIndex;
+		}
+		
+		if(c_lid != undefined && c_lid != "")
+		{
+			c_lid += "," + lineIndex;
+		}
+		else
+		{
+			c_lid = lineIndex;
+		}
+		
+		
+		$(".canvas").append(
+			"<div class='line' level='" + lvl + "' lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'><div class='lineArrow'></div></div>"
+		);
+		
+		$(childObj).attr("lid", c_lid);
+		$(targetObj).attr("lid", t_lid);
+		setLine(lineIndex, cid, tid);
+		
+		lineIndex++;
+		linkBoo = false;
 	}
 	else
 	{
-		t_lid = lineIndex;
+		alert("請連至大節點");
 	}
-	
-	if(c_lid != undefined && c_lid != "")
-	{
-		c_lid += "," + lineIndex;
-	}
-	else
-	{
-		c_lid = lineIndex;
-	}
-	
-	
-	$(".canvas").append(
-		"<div class='line' level='" + lvl + "' lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'></div>"
-	);
-	
-	$(childObj).attr("lid", c_lid);
-	$(targetObj).attr("lid", t_lid);
-	setLine(lineIndex, cid, tid);
-	
-	lineIndex++;
-	linkBoo = false;
-	
 }
 
 
@@ -1278,37 +1351,45 @@ function addChildLine(childObj, targetObj)
 	var c_lid = $(childObj).attr("ch_lid");
 	var t_lid = $(targetObj).attr("ch_lid");
 	
-	//alert(t_lid);
-	if(t_lid != undefined && t_lid != "")
-	{
-		t_lid += "," + lineIndex;
+	var target_level = $(targetObj).attr("level");
+	
+	if(target_level == '0'){
+	
+		if(t_lid != undefined && t_lid != "")
+		{
+			t_lid += "," + lineIndex;
+		}
+		else
+		{
+			t_lid = lineIndex;
+		}
+		
+		if(c_lid != undefined && c_lid != "")
+		{
+			c_lid += "," + lineIndex;
+		}
+		else
+		{
+			c_lid = lineIndex;
+		}
+		
+		
+		$(".canvas").append(
+			"<div class='line chLine' level='" + lvl + "' ch_lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'  ><div class='lineArrow'></div></div>"
+		);
+		
+		$(childObj).attr("ch_lid", c_lid);
+		$(targetObj).attr("ch_lid", t_lid);
+		setChildLine(lineIndex, cid, tid);
+		
+		lineIndex++;
+		linkBoo = false;
+	
 	}
 	else
 	{
-		t_lid = lineIndex;
+		alert("請連至小節點");
 	}
-	
-	if(c_lid != undefined && c_lid != "")
-	{
-		c_lid += "," + lineIndex;
-	}
-	else
-	{
-		c_lid = lineIndex;
-	}
-	
-	
-	$(".canvas").append(
-		"<div class='line chLine' level='" + lvl + "' ch_lid='" + lineIndex + "' cid='" + cid + "' tid='" + tid + "'  ></div>"
-	);
-	
-	$(childObj).attr("ch_lid", c_lid);
-	$(targetObj).attr("ch_lid", t_lid);
-	setChildLine(lineIndex, cid, tid);
-	
-	lineIndex++;
-	linkBoo = false;
-	
 }
 
 
@@ -1327,9 +1408,16 @@ function setLine(lineId, p1, p2) {
 					
 	$(line).css({
 		'left' : get2PointXCenter($(p1obj), $(p2obj)) - getFixX(line, p1obj, p2obj),
-		'top' : get2PointYCenter($(p1obj), $(p2obj)),
+		'top' : get2PointYCenter($(p1obj), $(p2obj)) + 5, // 5 = border width
 		'transform' : 'rotate(' + get2PointZRotate($(p1obj), $(p2obj)) + 'deg)'
 	})
+	
+	$(line).find(".lineArrow").css({
+		'left' : 45,
+		'transform' : 'rotate(' + 45 + 'deg)'
+	})
+	
+	//alert($(line).html());
 	
 	$(line).attr("deg", get2PointZRotate($(p1obj), $(p2obj)));
 	
@@ -1349,8 +1437,13 @@ function setChildLine(lineId, p1, p2) {
 	//alert($(p1obj).width());
 	$(line).css({
 		'left' : get2PointXCenter($(p1obj), $(p2obj)) - getFixX(line, p1obj, p2obj),
-		'top' : get2PointYCenter($(p1obj), $(p2obj)),
+		'top' : get2PointYCenter($(p1obj), $(p2obj)) + 5,
 		'transform' : 'rotate(' + get2PointZRotate($(p1obj), $(p2obj)) + 'deg)'
+	})
+	
+	$(line).find(".lineArrow").css({
+		'left' : 25,
+		'transform' : 'rotate(' + 45 + 'deg)'
 	})
 	
 	$(line).attr("deg", get2PointZRotate($(p1obj), $(p2obj)));
@@ -1363,7 +1456,7 @@ function setChildLine(lineId, p1, p2) {
  * @param obj = Object
  */
 function getFixX(obj, p1,p2) {
-	return ($(obj).width() - $(p1).width() + (($(p1).width() * 0.5) - ($(p2).width() * 0.5))) * 0.5 ;
+	return (($(obj).width() - $(p1).width() + (($(p1).width() * 0.5) - ($(p2).width() * 0.5))) * 0.5) - 5 ;// 5 = border width
 }
 
 
@@ -1448,7 +1541,12 @@ function get2PointZRotate(o1, o2) {
 
 
 function setDrag() {
-		
+		/*
+	$(dragObj).css({
+		'left' : pageX - ($(dragObj).width() / 2) - parseInt($(".canvas").css("left")),
+		'top' : pageY - ($(dragObj).height() / 2) - parseInt($(".canvas").css("top"))
+	})*/
+	
 	$(dragObj).css({
 		'left' : pageX - ($(dragObj).width() / 2) - parseInt($(".canvas").css("left")),
 		'top' : pageY - ($(dragObj).height() / 2) - parseInt($(".canvas").css("top"))
@@ -1457,6 +1555,12 @@ function setDrag() {
 
 function setSceneDrag() {
 	//$(".debug").text("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp setDrag cavasY " + canvasY);
+	/*
+	$(".canvas").css({
+		'left' : canvasX + (pageX - downX), 
+		'top' : canvasY + (pageY - downY)
+	})*/
+	
 	$(".canvas").css({
 		'left' : canvasX + (pageX - downX), 
 		'top' : canvasY + (pageY - downY)
@@ -1865,6 +1969,7 @@ function encodeJson() {
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));	
 				obj.level = parseInt($(this).attr("level"));	
+				obj.media = isEmpty($(this).attr("media"));
 				ary.push(obj);
 			
 		}
@@ -1931,7 +2036,7 @@ function encodeJson() {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/addNode",
+		   url: "./index.php/map/addNode",
 		   data: {
 				data : test_json
 		   },
@@ -2000,7 +2105,7 @@ function decodeJson() {
 			return xhr;
 			},
 			type: 'POST',
-			url: href + "/readNode",
+			url: "./index.php/map/readNode",
 			data: {
 				
 			},
@@ -2098,21 +2203,40 @@ function decodeJson() {
 function addPointObj() {
 	
 	var href = window.location.href;
+		
+	var prev_pid = "";
+	//新增一個小的
+	if(lvl == 1)
+	{
+		$(".canvas").append(
+			"<div class='drag point' level='" + 0 + "' prev_pid='" + pointObjIndex + "' open_answer='close' style='left:" + (((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + 0) + "px;top: " + (((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) - 40) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
+		)
+		
+		prev_pid = "prev_pid='" + pointObjIndex + "'";
+		pointObjIndex++;
+		
+	}
 	
 	$(".canvas").append(
-		"<div class='drag point' level='" + lvl + "' open_answer='close' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
-	)	
+		"<div class='drag point' level='" + lvl + "' " + prev_pid +  " open_answer='close' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
+	)
 	
 	$(".drag").bind("mousedown", mouseDown);
 	$(".drag").bind("mouseup", mouseUp);
 	
 	
+	
 	addPointPostAjax(pointObjIndex);
+	
+	
 		 
 }
 
-function addPointPostAjax(pointObjIndex) {
+function addPointPostAjax(pid, lvl) {
+	
+	
 	var ary = new Array();
+	var prev_uuid = 0;
 	
 	$(".canvas").find("div").each(function() {
 		var obj = new Object();
@@ -2128,6 +2252,7 @@ function addPointPostAjax(pointObjIndex) {
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));	
 				obj.level = parseInt($(this).attr("level"));	
+				obj.media = isEmpty($(this).attr("media"));	
 				ary.push(obj);
 			
 		}
@@ -2137,6 +2262,8 @@ function addPointPostAjax(pointObjIndex) {
 	var json = JSON.stringify(ary, null, 2);
 	test_json = json;
 	var href = window.location.href;
+	
+	
 	
 	$.ajax({
 		xhr: function()
@@ -2172,13 +2299,14 @@ function addPointPostAjax(pointObjIndex) {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/updNode",
+		   url: "./index.php/map/updNode",
 		   data: {
 				data : test_json
 		   },
 		   success: function(data){
 		     //Do something success-ish
-		     //alert("123 complete xhr: " + data);
+		    // alert("add Point ajax: " + data);
+		     
 		     $(".ajaxProressBg").width(0);
 		     $(".ajaxProressBox").css({
 		     	'display' : 'none'
@@ -2218,7 +2346,7 @@ function addPointPostAjax(pointObjIndex) {
 					     return xhr;
 					   },
 					   type: 'POST',
-					   url: href + "/readNode",
+					   url: "./index.php/map/readNode",
 					   success: function(data){
 					     //Do something success-ish
 					     //alert("123 complete xhr: " + data);
@@ -2235,10 +2363,18 @@ function addPointPostAjax(pointObjIndex) {
 							if(json[i].type == "point")
 							{
 								//alert(json[i].pid + " " + pointObjIndex);
-								if(json[i].pid == pointObjIndex)
+								if(json[i].pid == pid)
 								{
-									$(".point[pid=" + pointObjIndex + "]").attr("uuid" , json[i].uuid);
 									
+									$(".point[pid=" + pid + "]").attr("uuid" , json[i].uuid);
+									//如果增加大節點 則複製大節點的UUID到小節點上
+									
+									var prev_pid = $(".point[pid=" + pid + "]").attr("prev_pid");
+									
+									$(".point[prev_pid=" + prev_pid + "][level=0]").attr("uuid",json[i].uuid );
+									
+									//prev_uuid = json[i].uuid;
+									encodeUpdJson();
 								}
 								
 								
@@ -2246,6 +2382,7 @@ function addPointPostAjax(pointObjIndex) {
 						}
 					     
 					     pointObjIndex++;
+					     //alert("pid: " + pointObjIndex);
 					   }
 				 });
 				 
@@ -2302,6 +2439,7 @@ function encodeUpdJson() {
 				obj.pid = isEmpty($(this).attr("pid"));
 				obj.lid = isEmpty($(this).attr("lid"));
 				obj.ch_lid = isEmpty($(this).attr("ch_lid"));
+				obj.uuid = isEmpty($(this).attr("uuid"));
 				obj.text = isEmpty($(this).text());
 				obj.x = parseInt($(this).css("left"));
 				obj.y = parseInt($(this).css("top"));	
@@ -2372,13 +2510,13 @@ function encodeUpdJson() {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/updNode",
+		   url: "./index.php/map/updNode",
 		   data: {
 				data : test_json
 		   },
 		   success: function(data){
 		     //Do something success-ish
-		     //alert("123 complete xhr: " + data);
+		     //alert("upd data ajax: " + data);
 		     $(".ajaxProressBg").width(0);
 		     $(".ajaxProressBox").css({
 		     	'display' : 'none'
@@ -2448,7 +2586,7 @@ function removePointPost(obj) {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/delNode",
+		   url: "./index.php/map/delNode",
 		   data: {
 				data : j
 		   },
@@ -2512,7 +2650,7 @@ function removeLinkPost(_obj) {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/delLink",
+		   url: "./index.php/map/delLink",
 		   data: {
 				data : j
 		   },
@@ -2586,7 +2724,7 @@ function removeLinkChildPost(_obj) {
 		     return xhr;
 		   },
 		   type: 'POST',
-		   url: href + "/delLink",
+		   url: "./index.php/map/delLink",
 		   data: {
 				data : j
 		   },
@@ -2647,7 +2785,7 @@ function readLine(x, y ,lid ,cid ,tid,width,deg, level)
 {
 	
 	$(".canvas").append(
-		"<div class='line' level='" + level + "' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' lid='" + lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'></div>"
+		"<div class='line' level='" + level + "' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' lid='" + lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'><div class='lineArrow'></div></div>"
 	);
 	
 	var line = $(".line[lid=" + lid +"]");
@@ -2656,13 +2794,15 @@ function readLine(x, y ,lid ,cid ,tid,width,deg, level)
 		'transform': 'rotate(' + deg + 'deg)'
 	})
 		
+	setLine(lid, cid, tid);
 }
+
 
 function readChildLine(x, y ,ch_lid ,cid ,tid,width,deg, level)
 {
 	
 	$(".canvas").append(
-		"<div class='line chLine' level='" + level + "' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' ch_lid='" + ch_lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'></div>"
+		"<div class='line chLine' level='" + level + "' style='width:" + width + "px;left:" + x + "px;top:" + y + "px;' ch_lid='" + ch_lid + "' cid='" + cid + "' tid='" + tid + "' deg='" + deg + "'><div class='lineArrow'></div></div>"
 	);
 	
 	var line = $(".line[ch_lid=" + ch_lid +"]");
@@ -2671,15 +2811,16 @@ function readChildLine(x, y ,ch_lid ,cid ,tid,width,deg, level)
 		'transform': 'rotate(' + deg + 'deg)'
 	})
 		
+	setChildLine(ch_lid, cid, tid);
 }
 
-function getQueryStringByUrl(_url,paramName)
+function getQueryStringByUrl(_url, paramName)
 { 	
-　　paramName = paramName.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
-　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
-　　var regex = new RegExp( reg ); 
-　　var regResults = regex.exec(_url); 
-　　if( regResults == null ) return false; 
-　 else return regResults [1]; 
+	paramName = paramName.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
+	var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
+	var regex = new RegExp( reg ); 
+	var regResults = regex.exec(_url); 
+	if( regResults == null ) return false; 
+	else return regResults [1]; 
 } 
 
