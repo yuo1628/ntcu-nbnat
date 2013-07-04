@@ -71,6 +71,8 @@ class News {
                 return FALSE;
             }
         }
+		$this->CI->db->where('news_id', $this->id);
+		$this->CI->db->delete('news_has_file');
         // 儲存檔案
         foreach ($this->files as $file)
         {

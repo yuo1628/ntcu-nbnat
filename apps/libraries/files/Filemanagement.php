@@ -66,7 +66,7 @@ class Filemanagement {
 			return FALSE;
 		}
 	    // 刪除檔案
-        if (unlink($filepath) === FALSE) {
+        if (unlink(self::SAVE_PATH . basename($filepath)) === FALSE) {
 			return FALSE;
 		}
 		return TRUE;
@@ -89,8 +89,7 @@ class Filemanagement {
 		}
 		$file = $file_array[0];
 	    // 處理檔案路徑格式
-		$filePath = $file->path;
-		$filePath = $this->CI->config->item('base_url') . self::URL_PATH . basename($filePath);
+		$filePath = $this->to_url_path($file->path);
 	    // 回傳檔案名稱與檔案路徑
 		return array($file->name, $filePath);
 	}
@@ -112,6 +111,12 @@ class Filemanagement {
 		$file = $file_array[0];
 		$file->name = $new_file_name;
 		return $file->save();
+	}
+	
+	
+	private function to_url_path($name)
+	{
+		return $this->CI->config->item('base_url') . self::URL_PATH . $name;
 	}
 }
 // End of file
