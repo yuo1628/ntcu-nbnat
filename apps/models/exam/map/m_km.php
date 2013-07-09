@@ -42,13 +42,22 @@ class M_Km extends CI_Model {
 		if ($query->num_rows() > 0)
 		{
 			return $query -> result();
-		}
-		else
-		{
-			return "empty";
-		}
+		}		
 	}
 	
+	 /**
+     * 取得學制資料
+     *
+     * @access public     * 
+     * @return array
+     */
+    public function get_kmGroupBy($field) {    	
+    	$this->db->select($field);
+    	$this->db->group_by($field); 
+		$this->db->order_by($field, "asc"); 		
+        $query = $this -> db -> get($this -> tablename);
+		return $query -> result();      
+    } 
 	/**
 	 * Insert Km.
 	 *
@@ -58,7 +67,7 @@ class M_Km extends CI_Model {
 	public function addKm($data) {
 	
 		if ($this -> db -> insert($this -> tablename, $data)) {
-			return true;
+			return $this -> db -> insert_id();
 		} else {
 			return false;
 		}

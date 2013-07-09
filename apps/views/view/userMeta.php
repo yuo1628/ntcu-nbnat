@@ -1,7 +1,8 @@
 <div id="login">
+	
 	<ul>
 		<li>
-			
+		<!--您好，<?php echo $user[0]->name;?>!!-->	
 		</li>
 		<li>
 			
