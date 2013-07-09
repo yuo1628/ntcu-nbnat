@@ -143,12 +143,14 @@
 }
 
 .lineArrow {
+	/*
 	border-left: 2px solid #fff;
-	border-bottom: 2px solid #fff;
+	border-bottom: 2px solid #fff;*/
 	right:0;
-	top: -4px;
-	width: 10px;
-	height: 10px;
+	top: -7px;
+	width: 16px;
+	height: 16px;
+	background-image: url(../../img/arrow.png);
 }
 
 .point {
