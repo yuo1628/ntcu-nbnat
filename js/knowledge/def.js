@@ -204,6 +204,7 @@ $(function() {
 	$(".linkBtn").click(function() {
 		//alert("add line");
 		ACTION = ADD_LINK;
+		lvl = LEVEL_1;
 		linkBoo = true;
 		addLinkObj = pointClickObj;
 		$(".msg").text("請選擇節點");
@@ -212,6 +213,7 @@ $(function() {
 	$(".linkChildBtn").click(function() {
 		//alert("add line");
 		ACTION = ADD_CHILD_LINK;
+		lvl = LEVEL_0;
 		linkBoo = true;
 		addChildLinkObj = pointClickObj;
 		$(".msg").text("請選擇節點");
@@ -499,11 +501,23 @@ function zoomCanvasScale(scale) {/*
 		transform : 'scale(' + scale + ', ' + scale + ')'
 	},500)*/
 
-	$(".canvas").find(".point").animate({
+	$(".canvas").find(".point[level=1]").animate({
 		transform : 'scale(' + scale + ', ' + scale + ')'
 	},500)
 	//alert($(".canvas").css("left"));
 }
+
+function zoomCanvasScaleChild(scale) {/*
+	$(".canvas").animate({
+		transform : 'scale(' + scale + ', ' + scale + ')'
+	},500)*/
+
+	$(".canvas").find(".point[level=0]").animate({
+		transform : 'scale(' + scale + ', ' + scale + ')'
+	},500)
+	//alert($(".canvas").css("left"));
+}
+
 
 
 
@@ -518,6 +532,7 @@ function zoomScrollRect(s) {
 //zoom
 function zoomIn() {
 	zoomCanvasScale(1.16);
+	zoomCanvasScaleChild(1);
 	
 	lvl = LEVEL_0;
 	$(".point[level=1]").animate({
@@ -537,6 +552,7 @@ function zoomIn() {
 	})
 	
 	
+	
 	$(".point[level=0]").animate({
 		'opacity' : '1'
 	},200)
@@ -552,6 +568,13 @@ function zoomIn() {
 	$(".addPointL0Btn").css({
 		'display' : 'block'
 	})
+	$(".point[level=0]").find(".pointTextBox").css({
+		'display' : 'block'
+	})
+	$(".line[level=0]").find(".lineArrow").css({
+		'left' : '25px'
+	})
+	
 	
 	/*
 	$(".point").css({
@@ -564,6 +587,8 @@ function zoomIn() {
 
 function zoomAll() {
 	zoomCanvasScale(1.08);
+	
+	zoomCanvasScaleChild(0.5);
 	
 	$(".point[level=1]").animate({
 		'opacity' : '1'
@@ -580,6 +605,9 @@ function zoomAll() {
 	$(".addPointL1Btn").css({
 		'display' : 'block'
 	})
+	$(".line[level=1]").find(".lineArrow").css({
+		'left' : '48px'
+	})
 	
 	
 	$(".point[level=0]").animate({
@@ -597,6 +625,12 @@ function zoomAll() {
 	$(".addPointL0Btn").css({
 		'display' : 'block'
 	})
+	$(".point[level=0]").find(".pointTextBox").css({
+		'display' : 'none'
+	})
+	$(".line[level=0]").find(".lineArrow").css({
+		'left' : '12px'
+	})
 	
 	/*
 	$(".point").css({
@@ -608,6 +642,7 @@ function zoomAll() {
 
 function zoomOut() {
 	zoomCanvasScale(1);
+	zoomCanvasScaleChild(1);
 	
 	lvl = LEVEL_1;
 	$(".point[level=0]").animate({
@@ -627,6 +662,12 @@ function zoomOut() {
 	$(".addPointL0Btn").css({
 		'display' : 'none'
 	})
+	$(".point[level=0]").find(".pointTextBox").css({
+		'display' : 'block'
+	})
+	$(".line[level=1]").find(".lineArrow").css({
+		'left' : '45px'
+	})
 	
 	
 	$(".point[level=1]").animate({
@@ -645,6 +686,8 @@ function zoomOut() {
 	$(".addPointL1Btn").css({
 		'display' : 'block'
 	})
+	
+	
 	/*
 	$(".point").css({
 		transform : 'scale(0.9)'
