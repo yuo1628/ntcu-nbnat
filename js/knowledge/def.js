@@ -2601,6 +2601,7 @@ function removePointPost(obj) {
 	p_obj.text = isEmpty($(obj).text());
 	p_obj.x = parseInt($(obj).css("left"));
 	p_obj.y = parseInt($(obj).css("top"));	
+	p_obj.km_id = subject_id;
 	var j = JSON.stringify(p_obj, null,2);
 	
 	
@@ -2677,7 +2678,8 @@ function removeLinkPost(_obj) {
 	obj.width = isEmpty($(_obj).width());
 	obj.deg = isEmpty($(_obj).attr("deg"));
 	obj.x = parseInt($(_obj).css("left"));
-	obj.y = parseInt($(_obj).css("top"));		
+	obj.y = parseInt($(_obj).css("top"));	
+	obj.km_id = subject_id;	
 	var j = JSON.stringify(obj, null,2);
 	
 	$.ajax({
@@ -2751,7 +2753,8 @@ function removeLinkChildPost(_obj) {
 	obj.width = isEmpty($(_obj).width());
 	obj.deg = isEmpty($(_obj).attr("deg"));
 	obj.x = parseInt($(_obj).css("left"));
-	obj.y = parseInt($(_obj).css("top"));		
+	obj.y = parseInt($(_obj).css("top"));	
+	obj.km_id = subject_id;	
 	var j = JSON.stringify(obj, null,2);
 	
 	$.ajax({

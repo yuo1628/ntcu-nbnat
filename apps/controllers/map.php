@@ -241,7 +241,8 @@ class MapController extends MY_Controller {
 				
 				
 				$n_ary = array(
-					"pid" => $item->pid
+					"pid" => $item->pid,
+					"km_id" => $item->km_id
 				);
 				
 				//echo "media: " . $item->media;
@@ -261,7 +262,8 @@ class MapController extends MY_Controller {
 					);
 					
 				$compare = array(
-				"pid" => $item->pid
+				"pid" => $item->pid,
+					"km_id" => $item->km_id
 				);
 				
 				//echo "media =>" . $item->media;
@@ -283,7 +285,8 @@ class MapController extends MY_Controller {
 				
 				
 				$n_ary = array(
-					"lid" => $item->lid
+					"lid" => $item->lid,
+					"km_id" => $item->km_id
 				);
 				
 				$itemList = array(
@@ -303,7 +306,8 @@ class MapController extends MY_Controller {
 				//echo 'upd line data: ';
 					
 				$compare = array(
-				"lid" => $item->lid
+				"lid" => $item->lid,
+					"km_id" => $item->km_id
 				);
 				if($this->link->findLink($n_ary))
 				{
@@ -318,7 +322,8 @@ class MapController extends MY_Controller {
 			else if($item->type == "chLine")
 			{
 				$n_ary = array(
-					"lid" => $item->ch_lid
+					"lid" => $item->ch_lid,
+					"km_id" => $item->km_id
 				);
 				
 				$itemList = array(
@@ -336,7 +341,8 @@ class MapController extends MY_Controller {
 				);
 					
 				$compare = array(
-				"lid" => $item->ch_lid
+				"lid" => $item->ch_lid,
+					"km_id" => $item->km_id
 				);
 				if($this->link->findLink($n_ary))
 				{
@@ -363,7 +369,9 @@ class MapController extends MY_Controller {
 		if($json->type == "point")
 		{
 			$item = array(
-				"pid" => $json->pid
+				"pid" => $json->pid,
+				"km_id" => $json->km_id
+				
 			);
 			$this->node->delNode($item);
 			
@@ -383,7 +391,8 @@ class MapController extends MY_Controller {
 		{
 			$item = array(
 				"lid" => $json->lid,
-				"type" => $json->type
+				"type" => $json->type,
+				"km_id" => $json->km_id
 			);
 			$this->link->delLink($item);
 			
@@ -392,7 +401,8 @@ class MapController extends MY_Controller {
 		{
 			$item = array(
 				"lid" => $json->ch_lid,
-				"type" => $json->type
+				"type" => $json->type,
+					"km_id" => $json->km_id
 			);
 			$this->link->delLink($item);
 		}		
