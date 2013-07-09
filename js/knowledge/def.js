@@ -1467,7 +1467,7 @@ function setLine(lineId, p1, p2) {
 	})
 	
 	$(line).find(".lineArrow").css({
-		'left' : 45,
+		'left' : 45 + (zoomCount * 3),
 		'transform' : 'rotate(' + 45 + 'deg)'
 	})
 	
@@ -1496,7 +1496,7 @@ function setChildLine(lineId, p1, p2) {
 	})
 	
 	$(line).find(".lineArrow").css({
-		'left' : 25,
+		'left' : (zoomCount * 13),
 		'transform' : 'rotate(' + 45 + 'deg)'
 	})
 	
