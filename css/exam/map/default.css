@@ -1,0 +1,37 @@
+/*
+ * @description: 知識結構圖管理樣式
+ * @author: shown (2013-07-09 17:50)
+ * @update: shown
+ */
+div#kmList ul li
+{
+	position: relative;
+	
+	padding:10px;
+	cursor: pointer;	
+	font-family: "微軟正黑體";
+	border-bottom:1px solid #e7e7e7;
+}
+div#kmList ul li:hover
+{
+	background-color: #f3f2fb;	
+}
+div#kmList ul li span
+{
+	margin-right:30px;
+}
+div#kmList ul li span.blueBtn
+{
+	position: absolute;
+	right:0;
+	bottom:5px;
+	
+}
+div#map_manage span.fontGray
+{
+	cursor:pointer;
+}
+div#map_manage span.fontGray:hover
+{
+	color:#333;
+}

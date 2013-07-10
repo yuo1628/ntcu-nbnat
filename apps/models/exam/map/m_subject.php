@@ -47,10 +47,10 @@ class M_Subject extends CI_Model {
 	 * @param Array Subject insert data.
 	 * @return Boolean.
 	 */
-	public function addSubject($data) {
+	public function addSubject($subject) {
 	
-		if ($this -> db -> insert($this -> tablename, $data)) {
-			return true;
+		if ($this -> db -> insert($this -> tablename, array("subject"=>$subject))) {
+			return $this -> db -> insert_id();
 		} else {
 			return false;
 		}
