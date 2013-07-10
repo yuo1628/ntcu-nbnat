@@ -117,7 +117,7 @@
 
 .drag[level="1"] .pointTextBox
 {
-	top: 100px;
+	top: 90px;
 }
 
 .drag:hover .pointTextBox
@@ -191,7 +191,7 @@
 .pointTextBox {
 	position: absolute;
 	width: 140px;
-	top: 60px;
+	top: 50px;
 	left: 50%;
 	margin-left: -75px;
 }
