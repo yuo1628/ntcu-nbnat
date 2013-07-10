@@ -78,7 +78,7 @@ tinymce.addI18n('zh_TW',{
 "Insert\/edit video": "\u63d2\u4ef6\u5f0f\/\u53ef\u7de8\u8f2f \u5f71\u97f3",
 "Poster": "\u6a19\u8a9e",
 "Alternative source": "\u984d\u5916\u8cc7\u6e90",
-"Paste your embed code below:": "\u8acb\u5c07\u60a8\u7684\u5d4c\u5165\u5f0f\u7a0b\u5f0f\u78bc\u8cbc\u5728\u4e0b\u9762:",
+"Paste your embed code below:": "\u8acb\u5c07\u60a8\u7684\u5d4c\u5165\u5f0f\u7a0b\u5f0f\u78bc\u8cbc\u5728\u4e0b\u9762：",
 "Insert video": "\u63d2\u4ef6\u5f0f\u5f71\u97f3",
 "Embed": "\u5d4c\u5165",
 "Nonbreaking space": "\u4e0d\u5206\u884c\u7684\u7a7a\u683c",

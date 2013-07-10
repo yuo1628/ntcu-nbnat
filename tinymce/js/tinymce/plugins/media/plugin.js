@@ -104,7 +104,6 @@ tinymce.PluginManager.add('media', function(editor, url) {
 						}
 					]
 				},
-
 				{
 					title: 'Embed',
 					type: "panel",
@@ -119,8 +118,8 @@ tinymce.PluginManager.add('media', function(editor, url) {
 					items: [
 						{
 							type: 'label',
-							text: 'Paste your embed code below:'
-						},
+							text: "Paste your embed code below:"
+							},
 						{
 							type: 'textbox',
 							flex: 1,

@@ -89,12 +89,14 @@ class MapController extends MY_Controller {
 		$userId = 	$user[0] -> id;
 		
 		$kmArr	=	$this->km->findKm(array("t_id"=>$userId));
-		
-		foreach ($kmArr as $index=>$item)
+		if(count($kmArr)>0)
 		{
-			$s_name=$this->subject->findSubjectById($item->subject_id);
-			
-			$item->subjectName= $s_name[0]->subject;
+			foreach ($kmArr as $index=>$item)
+			{
+				$s_name=$this->subject->findSubjectById($item->subject_id);
+				
+				$item->subjectName= $s_name[0]->subject;
+			}
 		}
 		
 		$itemList = array(
