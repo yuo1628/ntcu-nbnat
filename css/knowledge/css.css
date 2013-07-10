@@ -209,6 +209,16 @@
 	opacity: 0.9;
 }
 
+.open {
+	background-color:#fff;
+	
+}
+
+.close .pointTextDesc {
+	text-decoration:line-through;
+	color:#333;
+}
+
 /*
  * zoom
  */
