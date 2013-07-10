@@ -81,6 +81,11 @@ var TEACHER = 0;
 //subject
 var subject_id = 0;
 
+//gotoExamBtn text
+var gotoExamBtnText = "";
+var gotoExamBtnText_TEACHER = "檢視試題";
+var gotoExamBtnText_STUDENT = "進行測驗";
+
 $(function() {
 	
 	//alert("123");
@@ -200,6 +205,8 @@ $(function() {
 	
 	$(".drag").bind("mousedown", mouseDown);
 	$(".drag").bind("mouseup", mouseUp);
+	
+	
 	
 	$(".linkBtn").click(function() {
 		//alert("add line");
@@ -410,10 +417,7 @@ $(function() {
 	
 	//exam btn
 	$(".gotoExamBtn").click(function() {
-		if(pointClickObj != null)
-		{
-			window.location = "./index.php/practice/?uuid=" + $(pointClickObj).attr("uuid");
-		}
+		gotoExam();
 		
 	})
 	
@@ -439,10 +443,15 @@ function setUI(rank) {
 	{
 		$(".controlBar").find("div").show();
 		$(".toolsBar").show();
+		gotoExamBtnText = gotoExamBtnText_TEACHER;
+		$(".gotoExamBtn").text(gotoExamBtnText);
+		
+		
 		
 	}
 	else
 	{
+		/*
 		$(".controlBar").find("div").hide();
 		$(".controlBar").find("label").hide();
 		$(".controlBar").find("input").hide();
@@ -451,6 +460,13 @@ function setUI(rank) {
 		
 		$(".toolsBar").hide();
 		$(".point").unbind("mousedown");
+		gotoExamBtnText = gotoExamBtnText_STUDENT;
+		$(".gotoExamBtn").text(gotoExamBtnText);
+		*/
+		$(".controlBar").hide();
+		
+		//point click
+		$(".point").click(mouseClick);
 	}
 	$(".controlBar").find(".gotoExamBtn").show();
 }
@@ -709,6 +725,18 @@ function mouseUp(){
 	dragBoo = false;
 	
 };
+
+
+function mouseClick() {
+	gotoExam();
+}
+
+function gotoExam() {
+	if(pointClickObj != null)
+	{
+		window.location = "./index.php/practice/?uuid=" + $(pointClickObj).attr("uuid");
+	}
+}
 
 function pointClick(obj) {
 	
