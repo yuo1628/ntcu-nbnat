@@ -2869,7 +2869,7 @@ function readPoint(x, y, pid, lid, ch_lid, text, uuid, lock, level, open_answer,
 	}
 	
 	$(".canvas").append(
-		"<div class='drag point " + lock + "' media='" + media + "' uuid=" + uuid + " level='" + level + "' open_answer='" + open_answer + "' style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + "><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'>" + text + "</div></div></div>"
+		"<div class='drag point " + lock + " " + open_answer +  "' media='" + media + "' uuid=" + uuid + " level='" + level + "' open_answer='" + open_answer + "' style='left:" + x + "px;top: " + y + "px;background-color:#fff' onclick='pointClick(this)'  pid='" + pid + "' " + lid_attr + " " + ch_lid_attr + "><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'>" + text + "</div></div></div>"
 	)
 	
 	$(".drag").bind("mousedown", mouseDown);
