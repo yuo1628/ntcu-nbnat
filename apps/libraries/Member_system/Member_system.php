@@ -412,9 +412,10 @@ class Member_system extends CI_Driver_Library {
             case 'username':
                 $member->username = $value;
                 break;
+            /*
             case 'password':
                 $member->password = $value;
-                break;
+                break;*/
             case 'name':
                 $member->name = $value;
                 break;
@@ -441,6 +442,12 @@ class Member_system extends CI_Driver_Library {
                 break;
             case 'email':
                 $member->email = $value;
+                break;
+            case 'created_time':
+                $member->created_time = $value;
+                break;
+            case 'password_edited_time':
+                $member->password_edited_time = $value;
                 break;
             default:
                 return FALSE;
@@ -575,6 +582,8 @@ class Member_system extends CI_Driver_Library {
                               $this->CI->member_model->TEL => $member->tel,
                               $this->CI->member_model->ADDRESS => $member->address,
                               $this->CI->member_model->EMAIL => $member->email,
+                              $this->CI->member_model->CREATED_TIME => $member->created_time,
+                              $this->CI->member_model->PASSWORD_EDITED_TIME => $member->password_edited_time,
                               $this->CI->member_model->UNIT_ID => $member->unit_id,
                               $this->CI->member_model->CLASS_ID => $member->class_id);
         return $member_array;

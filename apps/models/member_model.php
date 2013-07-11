@@ -44,6 +44,8 @@ class Member_model extends CI_Model {
     const TEL = 'tel';
     const ADDRESS = 'address';
     const EMAIL = 'email';
+    const CREATED_TIME = 'created_time';
+    const PASSWORD_EDITED_TIME = 'password_edited_time';
     const UNIT_ID = 'unit_id';
     const CLASS_ID = 'class_id';
     
@@ -77,6 +79,8 @@ class Member_model extends CI_Model {
                                    $this->TEL,
                                    $this->ADDRESS,
                                    $this->EMAIL,
+                                   $this->CREATED_TIME,
+                                   $this->PASSWORD_EDITED_TIME,
                                    $this->UNIT_ID,
                                    $this->CLASS_ID),
                             $data, NULL);
@@ -213,6 +217,8 @@ class Member_model extends CI_Model {
                                    $this->TEL,
                                    $this->ADDRESS,
                                    $this->EMAIL,
+                                   $this->CREATED_TIME,
+                                   $this->PASSWORD_EDITED_TIME,
                                    $this->UNIT_ID,
                                    $this->CLASS_ID),
                             $data, NULL);
@@ -410,6 +416,8 @@ class Member_model extends CI_Model {
                                    $this->TEL,
                                    $this->ADDRESS,
                                    $this->EMAIL,
+                                   $this->CREATED_TIME,
+                                   $this->PASSWORD_EDITED_TIME,
                                    $this->UNIT_ID,
                                    $this->CLASS_ID),
                              $data, NULL);
@@ -544,6 +552,8 @@ class Member_model extends CI_Model {
                                    $this->TEL,
                                    $this->ADDRESS,
                                    $this->EMAIL,
+                                   $this->CREATED_TIME,
+                                   $this->PASSWORD_EDITED_TIME,
                                    $this->UNIT_ID,
                                    $this->CLASS_ID),
                              $data, NULL);
@@ -681,6 +691,10 @@ class Member_model extends CI_Model {
                 return 'tel';
             case $this->EMAIL:
                 return 'email';
+            case $this->CREATED_TIME:
+                return 'created_time';
+            case $this->PASSWORD_EDITED_TIME:
+                return 'password_edited_time';
             case $this->UNIT_ID:
                 return 'unit_id';
             case $this->CLASS_ID:
