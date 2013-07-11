@@ -86,6 +86,9 @@ var gotoExamBtnText = "";
 var gotoExamBtnText_TEACHER = "檢視試題";
 var gotoExamBtnText_STUDENT = "進行測驗";
 
+//zoom scale
+var scale = 1;
+
 $(function() {
 	
 	//alert("123");
@@ -464,6 +467,8 @@ function setUI(rank) {
 		$(".gotoExamBtn").text(gotoExamBtnText);
 		*/
 		$(".controlBar").hide();
+		$(".toolsBar").hide();
+		$(".point").unbind("mousedown");
 		
 		//point click
 		$(".point").click(mouseClick);
@@ -498,14 +503,16 @@ function starEffectTime() {
 function zoom(s) {
 	switch(s) {
 		case 0:
+			zoomCanvas(0.8);
 			zoomOut();
 			
 		break;
 		case 1:
+			zoomCanvas(0.9);
 			zoomAll();
 		break;
 		case 2:
-			
+			zoomCanvas(1);
 			zoomIn();
 		break;
 	}
@@ -534,7 +541,12 @@ function zoomCanvasScaleChild(scale) {/*
 	//alert($(".canvas").css("left"));
 }
 
-
+function zoomCanvas(s) {
+	scale = s;
+	$(".canvas").css({
+		'transform' : 'scale(' + scale + ')'
+	})
+}
 
 
 function zoomScrollRect(s) {
@@ -547,8 +559,8 @@ function zoomScrollRect(s) {
 
 //zoom
 function zoomIn() {
-	zoomCanvasScale(1.16);
-	zoomCanvasScaleChild(1);
+	//zoomCanvasScale(1.16);
+	//zoomCanvasScaleChild(1);
 	
 	lvl = LEVEL_0;
 	$(".point[level=1]").animate({
@@ -602,9 +614,9 @@ function zoomIn() {
 }
 
 function zoomAll() {
-	zoomCanvasScale(1.08);
+	//zoomCanvasScale(1.08);
 	
-	zoomCanvasScaleChild(0.5);
+	//zoomCanvasScaleChild(0.5);
 	
 	$(".point[level=1]").animate({
 		'opacity' : '1'
@@ -657,8 +669,8 @@ function zoomAll() {
 }
 
 function zoomOut() {
-	zoomCanvasScale(1);
-	zoomCanvasScaleChild(1);
+	//zoomCanvasScale(1);
+	//zoomCanvasScaleChild(1);
 	
 	lvl = LEVEL_1;
 	$(".point[level=0]").animate({
@@ -1628,9 +1640,32 @@ function setDrag() {
 		'left' : pageX - ($(dragObj).width() / 2) - parseInt($(".canvas").css("left")),
 		'top' : pageY - ($(dragObj).height() / 2) - parseInt($(".canvas").css("top"))
 	})*/
+	var canvasWidth = $(".canvas").width();
+	var canvasWidthScale = Math.floor(canvasWidth * scale);
+	var canvasLeft = parseInt($(".canvas").css("left"));
 	
+	var dragObjWidth = $(dragObj).width();
+	var dragObjWidthPer = dragObjWidth * scale;
+	var dragObjBorder = (5 * scale);  
+	var dragObjWidthHalf = (dragObjWidthPer + dragObjBorder) / 2;
+	
+	
+	var x = pageX - dragObjWidthHalf - canvasLeft;
+	var per = canvasWidth / canvasWidthScale;
+	var xPer = (pageX - dragObjWidthHalf - canvasLeft) * per
+	var xSubPer = xPer - x;
+	var xSub =  (canvasWidth - canvasWidthScale) * 0.5; //左右兩邊間距
+	
+	//alert(per);
+	$(".d").text(
+		x + " pageX " +
+		pageX + " xPer " +
+		xPer
+	);
+	
+	//10 = border
 	$(dragObj).css({
-		'left' : pageX - ($(dragObj).width() / 2) - parseInt($(".canvas").css("left")),
+		'left' : x + xSubPer - xSub,
 		'top' : pageY - ($(dragObj).height() / 2) - parseInt($(".canvas").css("top"))
 	})
 };
