@@ -14,7 +14,7 @@ $(document).ready(function(){
 			"./index.php/mExam/showTinymce",
 			{
 				content: _oldCon,
-				type:"multi"
+				type:"stuff"
 			},
 			function(data)
 			{				
@@ -30,8 +30,9 @@ $(document).ready(function(){
 					
 					//tinymce.triggerSave();
 					var _con=tinymce.activeEditor.getContent();
+					var _conBox=_con.replace("/*___*/","<span class='stuffbox' />");
 					
-					_this.nextAll("div.tinymceView").html(_con).show();
+					_this.nextAll("div.tinymceView").html(_conBox).show();
 					_this.nextAll("textarea").val(_con).hide();
 					$("div#tinymceFrame").remove();	
 					

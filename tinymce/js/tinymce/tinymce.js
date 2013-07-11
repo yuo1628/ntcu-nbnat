@@ -17865,6 +17865,14 @@ define("tinymce/EditorCommands", [
 
 			InsertHorizontalRule: function() {
 				editor.execCommand('mceInsertContent', false, '<hr />');
+				//editor.execCommand('mceInsertContent', false, '/*___*/');
+
+			},
+			
+			InsertStuffBox: function() {
+				//editor.execCommand('mceInsertContent', false, '<hr />');
+				editor.execCommand('mceInsertContent', false, '/*___*/');
+
 			},
 
 			mceToggleVisualAid: function() {
@@ -30827,6 +30835,7 @@ define("tinymce/ui/FormatControls", [
 			help: ['Help', 'mceHelp'],
 			selectall: ['Select all', 'SelectAll'],
 			hr: ['Insert horizontal rule', 'InsertHorizontalRule'],
+			stuffbox: ['Insert Stuff box', 'InsertStuffBox'],
 			removeformat: ['Clear formatting', 'RemoveFormat'],
 			visualaid: ['Visual aids', 'mceToggleVisualAid'],
 			newdocument: ['New document', 'mceNewDocument']

@@ -308,3 +308,15 @@ div#tinymceFrame div#tinymceOk
 	width:500px;
 	height:1.5em;
 }
+
+span.stuffbox
+{
+	display:inline-block;
+	background-color: #e0e0e0;	
+	height:20px;
+	margin:0;
+	padding:0;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;	
+}

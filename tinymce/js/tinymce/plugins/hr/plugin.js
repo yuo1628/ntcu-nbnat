@@ -13,6 +13,7 @@
 tinymce.PluginManager.add('hr', function(editor) {
 	editor.addCommand('InsertHorizontalRule', function() {
 		editor.execCommand('mceInsertContent', false, '<hr />');
+		//editor.execCommand('mceInsertContent', false, '/*___*/');
 	});
 
 	editor.addButton('hr', {

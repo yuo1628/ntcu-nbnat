@@ -548,6 +548,11 @@ define("tinymce/EditorCommands", [
 
 			InsertHorizontalRule: function() {
 				editor.execCommand('mceInsertContent', false, '<hr />');
+				//editor.execCommand('mceInsertContent', false, '/*___*/');
+			},
+			
+			InsertStuffBox: function(){
+				editor.execCommand('mceInsertContent', false, '/*___*/');
 			},
 
 			mceToggleVisualAid: function() {

@@ -29,7 +29,7 @@ class HomeController extends MY_Controller {
 			$menu	=	array(
 							array("member","./index.php/member", "修改個人資料"),
 							array("news","./index.php/news", "公佈欄資訊"),
-							array("exam","./index.php/exam", "試題庫"),
+							array("exam","./index.php/map", "試題庫"),
 							array("logout","./index.php/login/logout", "登出帳號")
 						);
 		}

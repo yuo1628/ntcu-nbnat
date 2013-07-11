@@ -13,7 +13,8 @@ $(document).ready(function(){
 		$.post(
 			"./index.php/mExam/showTinymce",
 			{
-				content: _oldCon
+				content: _oldCon,
+				type:"choose"
 			},
 			function(data)
 			{				

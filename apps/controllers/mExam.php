@@ -74,9 +74,7 @@ class MExamController extends MY_Controller {
 	function showTemplate($_type)
 	{
 		//$this -> layout -> addStyleSheet("css/exam/create/".$_type.".css");
-		$this -> layout -> addScript("js/exam/create/".$_type.".js");
-	
-			
+		$this -> layout -> addScript("js/exam/create/".$_type.".js");		
 		
 		$this->layout->setLayout('layout/empty');			
 		$this -> layout -> view('view/exam/create/'.$_type."Template");
@@ -244,8 +242,9 @@ class MExamController extends MY_Controller {
 	function showTinymce()
 	{
 		$content=$this->input->post("content");	
+		$type=$this->input->post("type");
 		$this -> layout -> setLayout('layout/empty');
-		return $this -> layout -> view('view/exam/create/tinymceTemplate.php',array("content"=>$content));
+		return $this -> layout -> view('view/exam/create/tinymceTemplate.php',array("content"=>$content,"type"=>$type));
 		
 	}
 	private function userMeta() {
