@@ -69,7 +69,12 @@
 		?>
 		
 		<?php echo "<li class='topicLi' id='li-".$item->id."'> "; ?>	
+			<div class="quizType"><?php echo $item -> type; ?></div>
 			
+			<?php if(!empty($item -> ansValue)): ?>
+            <div class="ansValue"><?php echo json_encode($item -> ansValue); ?></div>
+            
+            <?php endif;?>
 			<?php echo "<div class='topic'>".($j+1).".".$item -> topic."</div>"; ?>
 			
 			<?php echo "<ul>"; ?>
@@ -77,8 +82,6 @@
 				case 'choose': 
 				?>			
 					<?php foreach($item->optionList as $i => $optionItem):?>
-							
-						
 						<?php echo "<li><input type='radio' name='item-".$item->id."' value='".$optionItem->id."'";
 						if(isset($optionItem->checked))
 						{
@@ -102,7 +105,7 @@
 						
 						<?php echo chr ( 0x41+$i).". ".$optionItem->value."</li>"; ?>
 					<?php endforeach; ?>
-					<?php break; ?>
+					<?php break; ?>				
 			<?php endswitch; ?>
 		<?php echo "</ul>"; ?>
 		

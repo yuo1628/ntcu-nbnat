@@ -23,6 +23,7 @@ function showOption(_id, _type) {
 		$.post(_href + "/findQuizMeta", {
 			id : _id
 		}, function(result) {
+			
 			$("div#div-" + _id + " div.topic").next("div").html(result);
 			$("tr#topicLi-" + _id + " span.show").attr("onclick", "showOption('" + _id + "','open')");
 			$("tr#topicLi-" + _id + " span.show").html("收合").after("<span class='editQuiz' onclick=\"importTemplate('"+_id+"')\">編輯</span>");

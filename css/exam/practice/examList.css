@@ -137,6 +137,11 @@ ul#examList li.topicLi div.topic
 	font-family: "標楷體";
 	font-size:larger;	
 }
+ul#examList li.topicLi div.topic p
+{
+	margin:0;
+	display:inline-block;	
+}
 ul#examList div.arrow 
 {  	
   	background-color: #e8e8e8;
@@ -297,4 +302,14 @@ div#mediaFrame div#mediaClose
 	color:white;
 	z-index:999;
 	cursor: pointer;
+}
+input.stuffText
+{
+	width:50px;
+	text-align: center;
+	margin:0 3px;	
+}
+div.ansValue,div.quizType
+{
+	display:none;
 }

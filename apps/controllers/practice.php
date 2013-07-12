@@ -126,36 +126,59 @@ class PracticeController extends MY_Controller {
 			$_ansMes=$this -> answer -> findAnswerById($_ansId);
 			$itemList['lastAns']=$_ansMes;			
 		}
-			
+		
+        	
 		foreach ($data as $item)
 		{
-			$item->optionList = $this -> option -> findOptionByQId($item->id);
-			
-			if($_ansId)
-			{					
-				$_ansArr=(json_decode($_ansMes[0]->answer));
-				
-				foreach ($_ansArr as $ansItem)
-				{
-					foreach ($item->optionList as $_optionItem)
-					{						
-						if($ansItem->topicId==$_optionItem->questions_id )
-						{
-							foreach ($ansItem->ans as $_ansItem)
-							{
-								if($_ansItem==$_optionItem->id)
-								{
-									$_optionItem->checked=true;
-								}														
-							}							
-						}
-					}
-				}						
-			}		
-			
-			$itemList['examList'][]=$item;						
+		    if($item->type!="fill")
+            {                      
+    			$item->optionList = $this -> option -> findOptionByQId($item->id);
+    			
+    			if($_ansId)
+    			{					
+    				$_ansArr=(json_decode($_ansMes[0]->answer));
+    				
+    				foreach ($_ansArr as $ansItem)
+    				{
+    					foreach ($item->optionList as $_optionItem)
+    					{						
+    						if($ansItem->topicId==$_optionItem->questions_id )
+    						{
+    							foreach ($ansItem->ans as $_ansItem)
+    							{
+    							  
+    								if($_ansItem==$_optionItem->id)
+    								{
+    									$_optionItem->checked=true;
+    								}
+                                                               														
+    							}							
+    						}
+    					}
+    				}						
+                }		
+		      }
+		      else
+		      {
+		            if($_ansId)
+                    {                   
+                        $_ansArr=(json_decode($_ansMes[0]->answer));
+                        foreach ($_ansArr as $ansItem)
+                        {
+                                                
+                            if($ansItem->topicId==$item->id )
+                            {
+                                    $item->ansValue=$ansItem->ans;                       
+                            }                           
+                        }   
+                        
+                    }
+		      }
+            	
+			$itemList['examList'][]=$item;	
+         				
 		}
-					
+				
 		$itemList['examTitle'] =$node;
 		
 		

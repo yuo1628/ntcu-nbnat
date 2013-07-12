@@ -38,6 +38,10 @@ table#examList td div.topicDiv
 {
 	text-align:left;	
 }
+table#examList td div.topicDiv p
+{
+	margin: 0;
+}
 table#examList td div.topicDiv div span
 {
 	color:#888888;
@@ -110,3 +114,4 @@ table#examList span.editQuiz
 		
 	
 }
+div.quizType{display:none;}

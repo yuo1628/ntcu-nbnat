@@ -1,5 +1,15 @@
 <div class='editTemplate'>
-	<textarea class="edit_topicText"><?php echo $quiz[0] -> topic;?></textarea>
+    <div class='quizType'><?php echo $quiz[0] -> type; ?></div>
+	
+	    <?php if($quiz[0] -> type=="fill"):?>
+	        <?php $start=array("<label class='stuffbox'>","</label>"); 
+	              $end=array("/*_","_*/"); 
+	        ?>
+	        <textarea class="edit_topicText"><?php echo trim(str_replace($start,$end,$quiz[0] -> topic)); ?></textarea>
+	    <?php else:?>
+	        <textarea class="edit_topicText"><?php echo $quiz[0] -> topic;?></textarea>
+	    <?php endif;?>
+	
 <span>教學影片</span>
 	<input type="text" class="edit_mediaText" value='<?php echo $quiz[0] -> media_url; ?>'></input>
 <?php $tipsArray=json_decode($quiz[0]->tips,true);
@@ -42,8 +52,10 @@ echo "</div>";
 					 echo "/><textarea class='option' id='option-".$optionItem->id."'>".$optionItem->value."</textarea><span class='delBtn' onclick=\"removeOption('".$optionItem->id."')\">X</span></li>"?>
 									<?php echo "</li>"?>
 				<?php endforeach; ?>
-				<?php break; ?>
+				<?php break; ?>			
 		<?php endswitch; ?>				
 	</ul>
+	<?php if($quiz[0] -> type!="fill") :?>
 	<span class="newOption" onclick="newOption('<?php echo ($quiz[0] -> id);?>','<?php echo ($quiz[0] -> type);?>')">新增選項</span>
+	<?php endif;?>
 </div>

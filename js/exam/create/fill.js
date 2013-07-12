@@ -14,7 +14,7 @@ $(document).ready(function(){
 			"./index.php/mExam/showTinymce",
 			{
 				content: _oldCon,
-				type:"stuff"
+				type:"fill"
 			},
 			function(data)
 			{				
@@ -30,7 +30,11 @@ $(document).ready(function(){
 					
 					//tinymce.triggerSave();
 					var _con=tinymce.activeEditor.getContent();
-					var _conBox=_con.replace("/*___*/","<span class='stuffbox' />");
+					var stuff_start="\/\\*_";
+					var stuff_start_temp=new RegExp(stuff_start,"g");
+					var stuff_end="_\\*\/";
+					var stuff_end_temp=new RegExp(stuff_end,"g");
+					var _conBox=_con.replace(stuff_start_temp,"<label class='stuffbox'>").replace(stuff_end_temp,"</label>");
 					
 					_this.nextAll("div.tinymceView").html(_conBox).show();
 					_this.nextAll("textarea").val(_con).hide();
@@ -49,6 +53,49 @@ $(document).ready(function(){
 		
 	});
 });
+function stuffSendOut() 
+{
+	
+	var _trLength=$("div.tinymceView p span.stuffbox").size();	
+	var _score = $("#scoreText").val();
+	var _topic = $("textarea#topicText").val();
+	var _type = $("select#type").val();
+	var _url = $("input#mediaUrl").val();
+	
+	var _tips = new Array();
+	$("textarea.tipsText").each(function(i){
+		if($(this).val()!=""){
+			_tips[i]=$(this).val();
+		}
+	});		
 
+	var _show = $("input#show").prop("checked");	
+	
+	var _con=_topic;
+	var stuff_start="\/\\*_";
+	var stuff_start_temp=new RegExp(stuff_start,"g");
+	var stuff_end="_\\*\/";
+	var stuff_end_temp=new RegExp(stuff_end,"g");
+	var _conBox=_con.replace(stuff_start_temp,"<label class='stuffbox'>").replace(stuff_end_temp,"</label>");
+	
+	$.post("./index.php/mExam/addQuestion", {
+		topic : _conBox,
+		type : _type,
+		tips : JSON.stringify(_tips),
+		nodes_uuid : _urlUid,
+		score : _score,
+		url:_url,
+		_public : _show,
+		option : ""
+	}, function() {
+		
+		quizList(_urlUid);
+		cancel();
+		showTemp();
+		setQuizMetaFunction();
+		
+	});	
+	
+}
 
 

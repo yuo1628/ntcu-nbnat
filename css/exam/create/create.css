@@ -309,13 +309,16 @@ div#tinymceFrame div#tinymceOk
 	height:1.5em;
 }
 
-span.stuffbox
+label.stuffbox
 {
 	display:inline-block;
-	background-color: #e0e0e0;	
-	height:20px;
-	margin:0;
-	padding:0;
+	background-color: #caf4f9;
+	/*text-decoration:underline;*/	
+	color:red;
+	border:1px solid #fff;
+	height:20px;	
+	margin:0 5px;
+	padding:.2em .5em;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-o-border-radius: 5px;	

@@ -109,6 +109,7 @@ function enter(_uuid) {
 		uid : _uuid
 	}, function(data) {
 		
+		
 		$("div#practice").html(data);
 		if($("div#openState").html()=="open"){
 			if($("ul#examList li.topicLi").size()>0)
@@ -128,6 +129,11 @@ function enter(_uuid) {
 				_limitMin=parseInt($("div#limitTime div.limitMin").html(),10);
 				_limitSec=parseInt($("div#limitTime div.limitSec").html(),10);
 				start();
+				$("div#toggle").click();
+				$("label.stuffbox").before("<input type='text' class='stuffText' />").remove();
+				
+				
+				
 			}
 			else
 			{
@@ -178,8 +184,23 @@ function continuePractice(_uuid,_ansId,_index)
 		_min=parseInt($("div#timer div.min").html(),10);
 		_sec=parseInt($("div#timer div.sec").html(),10);
 		timedCount();
+		$("div#toggle").click();
+		$("label.stuffbox").before("<input type='text' class='stuffText' />").remove();
 		
-		
+		$("ul#examList li.topicLi").each(function(i){
+			var _this=$(this);
+			if($(this).find("div.ansValue").length>0){
+				var ansArr=$.parseJSON($(this).find("div.ansValue").html());
+				
+				for(var j=0;j<ansArr.length;j++)
+				{
+					_this.find("input.stuffText:eq("+j+")").val(ansArr[j]);
+					
+				}
+				
+			}
+			
+		});
 		
 	});
 }
@@ -235,15 +256,27 @@ function finish(_uuid,_finish,_type,_aid)
 	$("ul#examList li.topicLi").each(function(i) {		
 				
 		var ans = new Object();
-		var _thisLI = $(this).children("ul").children("li");
+		
 		var _id = $(this).attr("id").replace("li-", "");
 		ans.topicId = _id;
 		var option = new Array();
-		_thisLI.each(function() {
-			if ($(this).children("input").prop("checked") == true) {
-				option.push($(this).children("input").val());
-			}
-		});
+		
+		if($(this).find("div.quizType").html()=="fill")
+		{
+			
+			$(this).find("input.stuffText").each(function() {
+				
+				option.push($(this).val());
+				
+			});
+		}else{
+			var _thisLI = $(this).children("ul").children("li");
+			_thisLI.each(function() {
+				if ($(this).children("input").prop("checked") == true) {
+					option.push($(this).children("input").val());
+				}
+			});
+		}
 		ans.ans = option;
 		ansArr[i] = ans;
 		if(!_finish){
@@ -253,6 +286,7 @@ function finish(_uuid,_finish,_type,_aid)
 			}	
 		}		
 	});
+	
 	var _min=parseInt($("div#timer div.min").html());
 	var _sec=parseInt($("div#timer div.sec").html());
 	var _spend=(_min*60)+_sec;

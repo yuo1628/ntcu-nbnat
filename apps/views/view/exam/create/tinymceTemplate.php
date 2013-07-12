@@ -10,15 +10,20 @@ tinymce.init({
         "searchreplace visualblocks",
         "insertdatetime media table contextmenu "
     ],     
-    toolbar: "undo redo | styleselect forecolor | fontsizeselect | bold underline italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | <?php if($type=="stuff"): ?>stuffbox2<?php endif;?>",
+    toolbar: "undo redo | styleselect forecolor | fontsizeselect | bold underline italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | <?php if($type=="fill"): ?>stuffbox2<?php endif;?>",
     setup:function(ed)
     {
     	ed.addButton('stuffbox2',{
     		 title: '新增填空區塊',    			
 	         image: 'img/stuffbox.png',
 	         onclick: function() {
-            	ed.insertContent('/*___*/');
-            	//ed.insertContent('<span class="stuffbox"></span>');
+	             var _sel=ed.selection.getContent();
+	             if(_sel=="") _sel="答案內容"
+            	ed.insertContent('/*_'+_sel+'_*/');
+            	
+            	//ed.insertContent('<span class="stuffbox">'+_sel+'</span>');
+            	
+               
          }
     	});
     },
@@ -34,7 +39,6 @@ tinymce.init({
   window.open('./kfm/index.php?mode=selector&type='+type,'kfm','modal,width=800,height=600');
 }
 });
-
 
 </script>
 <body>
