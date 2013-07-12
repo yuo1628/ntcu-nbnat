@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主機: localhost
--- 產生日期: 2013 年 07 月 03 日 04:13
+-- 產生日期: 2013 年 07 月 12 日 09:35
 -- 伺服器版本: 5.5.24-log
 -- PHP 版本: 5.4.3
 
@@ -33,28 +33,31 @@ CREATE TABLE IF NOT EXISTS `answer` (
   `spend` int(11) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `nodes_uuid` char(32) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `nodes_id` (`nodes_uuid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=71 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=76 ;
 
 --
 -- 轉存資料表中的資料 `answer`
 --
 
 INSERT INTO `answer` (`id`, `answer`, `finish`, `spend`, `time`, `nodes_uuid`, `user_id`) VALUES
-(59, '[{"topicId":"107","ans":["116"]},{"topicId":"108","ans":["120","122"]},{"topicId":"109","ans":["124"]}]', 'true', 14, '2013-06-21 03:48:11', '7994a3e994c38939eadd5941ec0ee8a6', 0),
-(60, '[{"topicId":"110","ans":["128"]},{"topicId":"111","ans":["133"]}]', 'true', 10, '2013-06-21 03:52:45', 'bffddf84b653ecc600c1695efb8a5939', 0),
-(61, '[{"topicId":"107","ans":["117"]},{"topicId":"108","ans":["119","120"]},{"topicId":"109","ans":["125"]}]', 'true', 23, '2013-06-21 03:56:19', '7994a3e994c38939eadd5941ec0ee8a6', 0),
-(62, '[{"topicId":"107","ans":["116"]},{"topicId":"108","ans":["119","120"]},{"topicId":"109","ans":["124"]}]', 'true', 10, '2013-06-21 04:00:14', '7994a3e994c38939eadd5941ec0ee8a6', 0),
-(63, '[{"topicId":"107","ans":["116"]},{"topicId":"108","ans":["120","122"]},{"topicId":"109","ans":["124"]},{"topicId":"113","ans":["137"]}]', 'true', 13, '2013-06-22 10:24:32', '7994a3e994c38939eadd5941ec0ee8a6', 0),
-(64, '[{"topicId":"112","ans":[]}]', 'false', 1, '2013-06-21 04:03:45', 'c624a7ea37b73a7ad1d413d8a8a0fa6a', 0),
-(65, '[{"topicId":"110","ans":["128"]},{"topicId":"111","ans":["133"]}]', 'true', 6, '2013-06-22 09:09:21', 'bffddf84b653ecc600c1695efb8a5939', 0),
-(66, '[{"topicId":"110","ans":["128"]},{"topicId":"111","ans":["133"]}]', 'true', 6, '2013-06-22 10:28:04', 'bffddf84b653ecc600c1695efb8a5939', 0),
-(67, '[{"topicId":"110","ans":["128"]},{"topicId":"111","ans":["133"]}]', 'true', 4, '2013-06-22 10:28:18', 'bffddf84b653ecc600c1695efb8a5939', 0),
-(68, '[{"topicId":"107","ans":["116"]},{"topicId":"108","ans":["120","122"]},{"topicId":"109","ans":["124"]},{"topicId":"113","ans":["137"]}]', 'true', 31, '2013-06-24 06:08:44', '7994a3e994c38939eadd5941ec0ee8a6', 0),
-(69, '[{"topicId":"107","ans":[]},{"topicId":"108","ans":[]},{"topicId":"109","ans":[]},{"topicId":"113","ans":[]},{"topicId":"118","ans":[]},{"topicId":"119","ans":[]},{"topicId":"120","ans":[]}]', 'true', 3, '2013-06-25 08:36:24', '7994a3e994c38939eadd5941ec0ee8a6', 0),
-(70, '[{"topicId":"107","ans":[]},{"topicId":"108","ans":[]},{"topicId":"109","ans":[]},{"topicId":"113","ans":[]},{"topicId":"121","ans":[]},{"topicId":"122","ans":[]},{"topicId":"123","ans":[]}]', 'true', 55, '2013-06-27 02:35:42', '7994a3e994c38939eadd5941ec0ee8a6', 0);
+(59, '[{"topicId":"107","ans":["116"]},{"topicId":"108","ans":["120","122"]},{"topicId":"109","ans":["124"]}]', 'true', 14, '2013-07-03 04:33:49', '7994a3e994c38939eadd5941ec0ee8a6', 1),
+(60, '[{"topicId":"110","ans":["128"]},{"topicId":"111","ans":["133"]}]', 'true', 10, '2013-07-03 04:50:57', 'bffddf84b653ecc600c1695efb8a5939', 3),
+(61, '[{"topicId":"107","ans":["117"]},{"topicId":"108","ans":["119","120"]},{"topicId":"109","ans":["125"]}]', 'true', 23, '2013-07-03 04:51:06', '7994a3e994c38939eadd5941ec0ee8a6', 2),
+(62, '[{"topicId":"107","ans":["116"]},{"topicId":"108","ans":["119","120"]},{"topicId":"109","ans":["124"]}]', 'true', 10, '2013-07-03 04:51:09', '7994a3e994c38939eadd5941ec0ee8a6', 1),
+(63, '[{"topicId":"107","ans":["116"]},{"topicId":"108","ans":["120","122"]},{"topicId":"109","ans":["124"]},{"topicId":"113","ans":["137"]}]', 'true', 13, '2013-07-03 04:51:11', '7994a3e994c38939eadd5941ec0ee8a6', 1),
+(65, '[{"topicId":"110","ans":["128"]},{"topicId":"111","ans":["133"]}]', 'true', 6, '2013-07-03 04:51:18', 'bffddf84b653ecc600c1695efb8a5939', 2),
+(66, '[{"topicId":"110","ans":["128"]},{"topicId":"111","ans":["133"]}]', 'true', 6, '2013-07-03 04:51:20', 'bffddf84b653ecc600c1695efb8a5939', 2),
+(67, '[{"topicId":"110","ans":["128"]},{"topicId":"111","ans":["133"]}]', 'true', 4, '2013-07-03 04:51:22', 'bffddf84b653ecc600c1695efb8a5939', 1),
+(68, '[{"topicId":"107","ans":["116"]},{"topicId":"108","ans":["120","122"]},{"topicId":"109","ans":["124"]},{"topicId":"113","ans":["137"]}]', 'true', 31, '2013-07-03 04:51:25', '7994a3e994c38939eadd5941ec0ee8a6', 1),
+(69, '[{"topicId":"107","ans":[]},{"topicId":"108","ans":[]},{"topicId":"109","ans":[]},{"topicId":"113","ans":[]},{"topicId":"118","ans":[]},{"topicId":"119","ans":[]},{"topicId":"120","ans":[]}]', 'true', 3, '2013-07-03 04:51:27', '7994a3e994c38939eadd5941ec0ee8a6', 2),
+(70, '[{"topicId":"107","ans":[]},{"topicId":"108","ans":[]},{"topicId":"109","ans":[]},{"topicId":"113","ans":[]},{"topicId":"121","ans":[]},{"topicId":"122","ans":[]},{"topicId":"123","ans":[]}]', 'true', 55, '2013-07-03 04:51:29', '7994a3e994c38939eadd5941ec0ee8a6', 3),
+(71, '[{"topicId":"107","ans":["116"]},{"topicId":"108","ans":["120","122"]},{"topicId":"109","ans":["124"]},{"topicId":"113","ans":["137"]},{"topicId":"121","ans":["154"]},{"topicId":"122","ans":["157"]},{"topicId":"123","ans":["159"]}]', 'true', 20, '2013-07-03 05:00:33', '7994a3e994c38939eadd5941ec0ee8a6', 5),
+(72, '[{"topicId":"107","ans":["116"]},{"topicId":"108","ans":["120","122"]},{"topicId":"109","ans":["126"]},{"topicId":"113","ans":["139"]},{"topicId":"121","ans":["154"]},{"topicId":"122","ans":[]},{"topicId":"123","ans":[]}]', 'true', 12, '2013-07-12 07:43:22', '7994a3e994c38939eadd5941ec0ee8a6', 1),
+(74, '[{"topicId":"125","ans":["+"]},{"topicId":"126","ans":["+","+"]}]', 'true', 11, '2013-07-12 09:30:33', 'c624a7ea37b73a7ad1d413d8a8a0fa6a', 1),
+(75, '[{"topicId":"107","ans":["116"]},{"topicId":"108","ans":[]}]', 'false', 3, '2013-07-12 08:15:48', '7994a3e994c38939eadd5941ec0ee8a6', 1);
 
 -- --------------------------------------------------------
 
@@ -121,15 +124,20 @@ CREATE TABLE IF NOT EXISTS `km` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `t_id` int(11) NOT NULL DEFAULT '1',
   `subject_id` int(11) NOT NULL DEFAULT '1',
+  `grade` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- 轉存資料表中的資料 `km`
 --
 
-INSERT INTO `km` (`id`, `t_id`, `subject_id`) VALUES
-(1, 3, 1);
+INSERT INTO `km` (`id`, `t_id`, `subject_id`, `grade`) VALUES
+(1, 3, 1, 5),
+(3, 3, 2, 12),
+(4, 3, 1, 1),
+(5, 3, 2, 11),
+(6, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -149,6 +157,7 @@ CREATE TABLE IF NOT EXISTS `links` (
   `type` text,
   `level` int(11) NOT NULL,
   `lid` int(11) DEFAULT NULL,
+  `km_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `node_from` (`node_from`),
   KEY `node_to` (`node_to`)
@@ -158,22 +167,20 @@ CREATE TABLE IF NOT EXISTS `links` (
 -- 轉存資料表中的資料 `links`
 --
 
-INSERT INTO `links` (`id`, `node_from`, `node_to`, `width`, `x`, `y`, `z`, `is_child`, `type`, `level`, `lid`) VALUES
-(109, 1, 2, 206, 911, 423, 8.090777871989605, '1', 'chLine', 0, 1),
-(110, 2, 3, 162, 781, 345, 51.783048855201145, '1', 'chLine', 0, 2),
-(111, 3, 4, 242, 780, 201, 138.3468186417402, '1', 'chLine', 0, 3),
-(112, 4, 5, 390, 603, 142, -6.178064902128333, '0', 'line', 0, 4),
-(113, 6, 5, 427, 243, 317, 134.05148103901394, '0', 'line', 0, 5),
-(114, 7, 6, 173, 229, 554, 84.02567671351937, '1', 'chLine', 0, 6),
-(115, 8, 6, 209, 134, 550, 130.7493454253488, '1', 'chLine', 0, 7),
-(116, 9, 5, 300, 502, 306, 71.38430799266897, '1', 'chLine', 0, 8),
-(117, 10, 9, 251, 464, 506, 153.02715656635624, '1', 'chLine', 0, 9),
-(118, 9, 11, 254, 511, 559, -60.115713188577956, '1', 'chLine', 0, 10),
-(119, 9, 12, 238, 595, 567, -96.02159013904335, '1', 'chLine', 0, 11),
-(120, 9, 13, 271, 665, 541, -137.08798383272335, '1', 'chLine', 0, 12),
-(121, 14, 15, 329, 654, 261, -17.71809967124576, '0', 'line', 1, 13),
-(122, 14, 15, 329, 654, 261, -17.71809967124576, '0', 'line', 1, 13),
-(123, 16, 15, 404, 275, 393, 155.90798047100967, '0', 'line', 1, 14);
+INSERT INTO `links` (`id`, `node_from`, `node_to`, `width`, `x`, `y`, `z`, `is_child`, `type`, `level`, `lid`, `km_id`) VALUES
+(109, 1, 2, 199, 916, 429, 8.942753948409715, '1', 'chLine', 0, 1, 1),
+(110, 2, 3, 162, 785, 350, 51.505626645683684, '1', 'chLine', 0, 2, 1),
+(111, 3, 4, 247, 786, 206, 139.09728360520828, '1', 'chLine', 0, 3, 1),
+(112, 4, 5, 396, 608, 146, -6.228441969363445, '0', 'line', 0, 4, 1),
+(113, 6, 5, 427, 247, 322, 133.86182299251183, '0', 'line', 0, 5, 1),
+(114, 7, 6, 170, 236, 560, 84.59166784252466, '1', 'chLine', 0, 6, 1),
+(115, 8, 6, 209, 140, 555, 130.92818610569236, '1', 'chLine', 0, 7, 1),
+(116, 9, 5, 302, 506, 311, 71.26507601477408, '1', 'chLine', 0, 8, 1),
+(117, 10, 9, 250, 469, 511, 152.92339295633496, '1', 'chLine', 0, 9, 1),
+(118, 9, 11, 254, 516, 564, -60.31098975264578, '1', 'chLine', 0, 10, 1),
+(119, 9, 12, 238, 600, 572, -96.26057746711756, '1', 'chLine', 0, 11, 1),
+(120, 9, 13, 272, 670, 546, -137.23117460803127, '1', 'chLine', 0, 12, 1),
+(123, 16, 15, 412, 270, 378, 150.01372954649273, '0', 'line', 1, 14, 1);
 
 -- --------------------------------------------------------
 
@@ -209,10 +216,10 @@ CREATE TABLE IF NOT EXISTS `nodes` (
 INSERT INTO `nodes` (`id`, `uuid`, `name`, `x`, `y`, `lid`, `ch_lid`, `pid`, `type`, `level`, `km_id`, `rule`, `lock`, `open_answer`, `limit_time`, `media`) VALUES
 (265, '7994a3e994c38939eadd5941ec0ee8a6', '加法', 1048, 238, '', '0', 0, 'point', 0, 1, NULL, 'unlock', 'open', 0, 'NEdyRGXyYpk'),
 (266, 'bffddf84b653ecc600c1695efb8a5939', '減法', 1089, 420, '', '0,1', 1, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
-(267, 'c624a7ea37b73a7ad1d413d8a8a0fa6a', '乘法', 892, 389, '', '1,2', 2, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
+(267, 'c624a7ea37b73a7ad1d413d8a8a0fa6a', '乘法', 892, 389, '', '1,2', 2, 'point', 0, 1, NULL, 'unlock', 'open', 0, ''),
 (268, '531024b1286a8acac5d35c289140b2c1', '除法', 791, 262, '', '2,3', 3, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
 (269, '912a2246dc92d18365e6b6fdfcb8531c', '四則運算', 978, 100, '4', '3', 4, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
-(270, 'b320e3f07f21b80cc6f874a7e55621bc', '分數運算', 584, 143, '4,5,14,13,13', '8', 5, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
+(270, 'b320e3f07f21b80cc6f874a7e55621bc', '分數運算', 584, 143, '4,5,14', '8', 5, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
 (271, 'f7bcdfd20cc06f0b57524364f89f2f99', '微積分', 288, 451, '5', '6,7', 6, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
 (272, '9cdc58eae84942876336eb0b5352d809', '微分', 304, 620, '', '6', 7, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
 (273, 'ab12c382837cb66fb6ef9d948c4540fa', '積分', 151, 609, '', '7', 8, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
@@ -221,9 +228,7 @@ INSERT INTO `nodes` (`id`, `uuid`, `name`, `x`, `y`, `lid`, `ch_lid`, `pid`, `ty
 (276, 'b237764bb402ea1c3071a5a711d6d3e5', '比較假分數和帶分數', 555, 650, '', '10', 11, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
 (277, '8b2a01592deb816ab74bf65809606ee9', '帶分數的加法與減法', 707, 666, '', '11', 12, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
 (278, 'a0a2172e536bf7b22547f5abb3c4e847', '數線上的分數', 881, 614, '', '12', 13, 'point', 0, 1, NULL, 'lock', 'close', 0, ''),
-(281, '03591e02b3265996f19c7da038886563', '四則運算', 935, 171, '13', '', 14, 'point', 1, 1, NULL, 'lock', 'close', 0, '8OS2tXpZ7cA'),
-(282, '732fa17ffe2c8d4d1b251cbe2ce835e9', '四則運算', 935, 171, '13', '', 14, 'point', 1, 1, NULL, 'unlock', 'close', 0, '8OS2tXpZ7cA'),
-(283, '2392d9ffda6e89f215381098d637c5c2', '分數', 621, 266, '13,14', '', 15, 'point', 1, 1, NULL, 'lock', 'close', 0, ''),
+(283, '2392d9ffda6e89f215381098d637c5c2', '分數', 611, 230, '14', '', 15, 'point', 1, 1, NULL, 'lock', 'close', 0, ''),
 (284, '158780cd3517a6d11c530f8985b4a9ea', '微積分', 253, 436, '14', '', 16, 'point', 1, 1, NULL, 'unlock', 'close', 0, '');
 
 -- --------------------------------------------------------
@@ -281,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `options` (
   PRIMARY KEY (`id`),
   KEY `questions_id` (`questions_id`),
   KEY `questions_id_2` (`questions_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=161 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=163 ;
 
 --
 -- 轉存資料表中的資料 `options`
@@ -316,8 +321,7 @@ INSERT INTO `options` (`id`, `value`, `correct`, `questions_id`) VALUES
 (156, '<p><iframe src="http://www.youtube.com/embed/BqKCPszx6mY" width="425" height="350"></iframe></p>', 'false', 121),
 (157, '123', 'true', 122),
 (158, '<p><iframe src="http://www.youtube.com/embed/MpEPRqV9SSQ" width="425" height="350"></iframe></p>', 'true', 123),
-(159, '<p><img src="http://likecool.com/Gear/Pic/One%20Trippy%20Profile%20Pic/One-Trippy-Profile-Pic.jpg" alt="" /></p>', 'false', 123),
-(160, 'b', 'true', 124);
+(159, '<p><img src="http://likecool.com/Gear/Pic/One%20Trippy%20Profile%20Pic/One-Trippy-Profile-Pic.jpg" alt="" /></p>', 'false', 123);
 
 -- --------------------------------------------------------
 
@@ -337,7 +341,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
   PRIMARY KEY (`id`),
   KEY `exam_id` (`nodes_uuid`),
   KEY `exam_id_2` (`nodes_uuid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=125 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=127 ;
 
 --
 -- 轉存資料表中的資料 `questions`
@@ -349,12 +353,13 @@ INSERT INTO `questions` (`id`, `topic`, `type`, `media_url`, `tips`, `score`, `p
 (109, '5+7', 'choose', '', '[]', 2000, 'true', '7994a3e994c38939eadd5941ec0ee8a6'),
 (110, '9-7', 'choose', '', '[]', 500, 'true', 'bffddf84b653ecc600c1695efb8a5939'),
 (111, '13-5', 'choose', '', '[]', 500, 'true', 'bffddf84b653ecc600c1695efb8a5939'),
-(112, '1*2*4', 'choose', '', '[]', 0, 'false', 'c624a7ea37b73a7ad1d413d8a8a0fa6a'),
+(112, '1*2*4', 'choose', '', '[]', 3000, 'false', 'c624a7ea37b73a7ad1d413d8a8a0fa6a'),
 (113, '1+9', 'choose', '', '[]', 2000, 'true', '7994a3e994c38939eadd5941ec0ee8a6'),
 (121, '<p><span style="font-size: 24pt;"><strong>gdfgdfgg</strong></span></p>\n<p><span style="font-size: 24pt;"><strong><iframe src="http://www.youtube.com/embed/BqKCPszx6mY" width="425" height="350"></iframe></strong></span></p>', 'choose', 'http://www.youtube.com/watch?v=BqKCPszx6mY', '["123","2121","<p>231</p>\\n<p><iframe src=\\"http://www.youtube.com/embed/BqKCPszx6mY\\" width=\\"425\\" height=\\"350\\"></iframe></p>"]', 2000, 'true', '7994a3e994c38939eadd5941ec0ee8a6'),
 (122, '<p><iframe src="http://www.youtube.com/embed/MpEPRqV9SSQ" width="425" height="350"></iframe></p>', 'choose', '', '["<p><img src=\\"http://likecool.com/Gear/Pic/One%20Trippy%20Profile%20Pic/One-Trippy-Profile-Pic.jpg\\" alt=\\"\\" width=\\"384\\" height=\\"399\\" /></p>"]', 0, 'true', '7994a3e994c38939eadd5941ec0ee8a6'),
 (123, '', 'choose', '', '[]', 0, 'true', '7994a3e994c38939eadd5941ec0ee8a6'),
-(124, '123', 'choose', 'http://www.youtube.com/watch?v=8OS2tXpZ7cA', '["a"]', 0, 'true', '732fa17ffe2c8d4d1b251cbe2ce835e9');
+(125, '<p>1<label class=''stuffbox''>X</label>1=1</p>', 'fill', '', '[]', 3000, 'true', 'c624a7ea37b73a7ad1d413d8a8a0fa6a'),
+(126, '<p>1<label class=''stuffbox''>+</label>4<label class=''stuffbox''>+</label>3=8</p>', 'fill', '', '[]', 3000, 'true', 'c624a7ea37b73a7ad1d413d8a8a0fa6a');
 
 -- --------------------------------------------------------
 
@@ -390,14 +395,15 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- 轉存資料表中的資料 `subject`
 --
 
 INSERT INTO `subject` (`id`, `subject`) VALUES
-(1, '數學');
+(1, '數學'),
+(2, '微積分');
 
 -- --------------------------------------------------------
 
