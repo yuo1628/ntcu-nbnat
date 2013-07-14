@@ -238,23 +238,35 @@ class PracticeController extends MY_Controller {
 		$userAnsArray=json_decode($userAns[0]->answer,true);
 		
 		$quizArray=$this->quizToArray($a_uid,$userAnsArray);
-				
+		
 		foreach ($userAnsArray as $userAnsItem) 
-		{			
+		{
+					
 			foreach ($quizArray as $i=>$quizAnsItem) 
 			{
+				
 				if($userAnsItem["topicId"]==$quizAnsItem["topicId"])
 				{
-					$userTemp[]=$userAnsItem["ans"];						
-					foreach ($quizAnsItem["ans"] as $item) 
-					{
-						if($item["correct"]=="true")
+					$userTemp[]=$userAnsItem["ans"];
+					if($quizAnsItem["type"]!="fill")
+					{						
+						foreach ($quizAnsItem["ans"] as $item) 
 						{
-							$temp[$i][]=$item["id"];
-						}						
+							if($item["correct"]=="true")
+							{
+								$temp[$i][]=$item["id"];
+							}						
+						}
 					}
+					else
+					{
+						$temp[$i][]="";
+					}
+					
 				}
-			}			
+				
+						
+			}
 		}	
 		
 		
@@ -262,7 +274,8 @@ class PracticeController extends MY_Controller {
 		$scoreTotal=0;
 		
 		foreach ($userTemp as $i=>$item) 
-		{			
+		{
+			
 			if($item==$temp[$i])
 			{
 				$correct[$i]="1";
@@ -282,7 +295,7 @@ class PracticeController extends MY_Controller {
 		if($rank<3)
 		{
 				$itemList = array("itemList" =>	array(
-										array("back","./index.php/home", "返回主選單"),
+									array("back","./index.php/home", "返回主選單"),
 									array("examManage","./index.php/exam", "管理試卷"),			
 									array("map","./index.php/map", "知識結構圖"),
 									/*array("result","./index.php/exam", "試題分析"),*/
@@ -354,19 +367,28 @@ class PracticeController extends MY_Controller {
 				$ans["topic"]=$item->topic;
 				$ans["tips"]=$item->tips;
 				$ans["score"]=($item->score)/100;
-				$correctArray = $this -> option -> findOption(array("questions_id"=>$item->id));
 				$ansArr=array();
-				foreach ($correctArray as $correctItem)
+				if($item->type!="fill")
+				{	
+					$correctArray = $this -> option -> findOption(array("questions_id"=>$item->id));
+					
+					foreach ($correctArray as $correctItem)
+					{						
+						$item2 = array();
+						$item2["id"] = $correctItem->id;
+						$item2["value"] = $correctItem->value; 
+						$item2["correct"] = $correctItem->correct; 
+						$ansArr[]= $item2; 
+						//$ansArr[$correctItem->id]=$correctItem->value; 
+					}	
+					$ans["ans"]=$ansArr;
+				}else
 				{
-					$item2 = array();
-					$item2["id"] = $correctItem->id;
-					$item2["value"] = $correctItem->value; 
-					$item2["correct"] = $correctItem->correct; 
-					$ansArr[]= $item2; 
-					//$ansArr[$correctItem->id]=$correctItem->value; 
-				}	
+					$ans["ans"]=$userAnsItem["ans"];
+				}
 				
-				$ans["ans"]=$ansArr;
+				
+				
 				$arr[]=$ans;	
 			}
 		}

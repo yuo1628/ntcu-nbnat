@@ -46,50 +46,78 @@
 	</div>
 	 	
 	<ul id="examList">
+	
 	<?php foreach ($quizAns as $i=>$item):?>
 		<?php echo "<li class='topicLi'>"; ?>
 		
 		<?php echo "<span class='score'>得分：<span>"; ?>
-		<?php if($correct[$i]=="1"){echo $item["score"];}else{echo "0";} ?>
+		<?php
+			if ($correct[$i] == "1")
+			{
+				echo $item["score"];
+			} else if ($item["type"]=="fill"){
+				echo $item["score"];
+			
+			} else {
+				echo "0";
+			}
+ ?>
 		<?php echo "</span>分</span><br/>" ;?>
 				
 		<?php echo "<div class='topic'>".($i+1) .". ".$item["topic"]."</div>";?>
-			<ul>
+			
+			<?php if($item["type"]=="fill"):?>
 				
-			<?php foreach ($item["ans"] as $j=>$option):?>	
-				<?php 
-				if($correct[$i]=="0" && $option["correct"]=="true")
-				{ 
-					echo "<li class='green'>"; 
-				}
-				else
-				{
-					echo "<li>"; 	
-				}
-				?>
+				<?php echo "<div class='userAnsArr'>".json_encode($item["ans"] )."</div>";?>
+			<?php else: ?>
+			<ul>
+			<?php foreach ($item["ans"] as $j=>$option):?>		
+						
 				<?php switch ($item["type"]) {
-					case 'choose':											
+					case 'choose':		
+						if($correct[$i]=="0" && $option["correct"]=="true")
+						{ 
+							echo "<li class='green'>"; 
+						}
+						else
+						{
+							echo "<li>"; 	
+						}												
 						echo "<input type='radio' name='option-".$item["topicId"]."' disabled='disabled' ";
 						if (in_array($option["id"], $userOptionAns[$i]))
 						{
 							 echo "checked='checked'";
 						}					
 						echo "></input>";		
-									
+						echo chr ( 0x41+$j).".".$option["value"]."</li>";	
 						break;
 					case 'multi_choose':
+						if($correct[$i]=="0" && $option["correct"]=="true")
+						{ 
+							echo "<li class='green'>"; 
+						}
+						else
+						{
+							echo "<li>"; 	
+						}
+				
 						echo "<input type='checkbox' name='option-".$item["topicId"]."' disabled='disabled' ";
 						if (in_array($option["id"], $userOptionAns[$i]))
 						{
 							 echo "checked='checked'";
 						}					
 						echo "></input>";	
-						break;					
+						echo chr ( 0x41+$j).".".$option["value"]."</li>";
+						
+						break;									
 				}
+
 				?>	
-				<?php echo chr ( 0x41+$j).".".$option["value"]."</li>";?>
+				
 			<?php endforeach; ?>
 			</ul>
+			<?php endif;?>
+			
 		<?php echo "</li>";?>	
 	<?php endforeach; ?>
 	</ul>
