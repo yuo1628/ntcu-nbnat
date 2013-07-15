@@ -153,6 +153,10 @@ class Member {
     private $address;
     // email
     private $email;
+    // 帳號建立時間
+    private $created_time;
+    // 帳號密碼修改時間
+    private $password_edited_time;
     // 班級資料庫主鍵值
     private $class_id;
     // 班級學制

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
   * Member_model
   *
@@ -44,6 +44,8 @@ class Member_model extends CI_Model {
     const TEL = 'tel';
     const ADDRESS = 'address';
     const EMAIL = 'email';
+    const CREATED_TIME = 'created_time';
+    const PASSWORD_EDITED_TIME = 'password_edited_time';
     const UNIT_ID = 'unit_id';
     const CLASS_ID = 'class_id';
     
@@ -77,6 +79,8 @@ class Member_model extends CI_Model {
                                    $this->TEL,
                                    $this->ADDRESS,
                                    $this->EMAIL,
+                                   $this->CREATED_TIME,
+                                   $this->PASSWORD_EDITED_TIME,
                                    $this->UNIT_ID,
                                    $this->CLASS_ID),
                             $data, NULL);
@@ -212,8 +216,8 @@ class Member_model extends CI_Model {
                                    $this->PHONE,
                                    $this->TEL,
                                    $this->ADDRESS,
-                                   $this->EMAIL, 
-                                 //$this->UNIT_ID,                                  
+                                   $this->CREATED_TIME,
+                                   $this->PASSWORD_EDITED_TIME,
                                    $this->CLASS_ID),
                             $data, NULL);
         // 取出要特殊處理的資料
@@ -250,8 +254,10 @@ class Member_model extends CI_Model {
      * @return NULL
      */
     public function insert_city($data) {
+
         $cityData = elements(array($this->CITY_NAME),
                              $data, NULL);
+
        // $this->set('id', $cityData[$this->CITY_PK]);
         $this->set('name', $cityData[$this->CITY_NAME]);
         $this->db->insert('city');
@@ -304,6 +310,7 @@ class Member_model extends CI_Model {
         $this->set('grade', $classData[$this->CLASS_GRADE]);
         $this->set('name', $classData[$this->CLASS_NAME]);
         $this->set('school_id', $classData[$this->CLASS_SCHOOL_ID]);
+
         $this->db->insert('class');
         return $this->db->insert_id();
     }
@@ -327,7 +334,6 @@ class Member_model extends CI_Model {
 		$this->db->order_by("name desc");
         return $this->db->get()->result();
     }
-   
     /**
      * 取得學校資料
      *
@@ -443,6 +449,8 @@ class Member_model extends CI_Model {
                                    $this->TEL,
                                    $this->ADDRESS,
                                    $this->EMAIL,
+                                   $this->CREATED_TIME,
+                                   $this->PASSWORD_EDITED_TIME,
                                    $this->UNIT_ID,
                                    $this->CLASS_ID),
                              $data, NULL);
@@ -577,6 +585,8 @@ class Member_model extends CI_Model {
                                    $this->TEL,
                                    $this->ADDRESS,
                                    $this->EMAIL,
+                                   $this->CREATED_TIME,
+                                   $this->PASSWORD_EDITED_TIME,
                                    $this->UNIT_ID,
                                    $this->CLASS_ID),
                              $data, NULL);
@@ -714,6 +724,10 @@ class Member_model extends CI_Model {
                 return 'tel';
             case $this->EMAIL:
                 return 'email';
+            case $this->CREATED_TIME:
+                return 'created_time';
+            case $this->PASSWORD_EDITED_TIME:
+                return 'password_edited_time';
             case $this->UNIT_ID:
                 return 'unit_id';
             case $this->CLASS_ID:
