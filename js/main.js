@@ -13,7 +13,9 @@ $(document).ready(function() {
 
 });
 
-function login() {
+function login()
+{
+	
 	if($("input#username").val()=="")
 	{
 		$("input#username").css({"border":"2px solid #ff0000"});

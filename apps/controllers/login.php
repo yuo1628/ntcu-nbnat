@@ -52,6 +52,7 @@ class LoginController extends MY_Controller {
 		}*/
 		$user=$this->session->userdata("user");
 		echo $user[0]->rank;
+		
 	}
 	
 	public function login() 

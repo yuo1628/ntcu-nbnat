@@ -102,11 +102,12 @@ class NewsController extends MY_Controller {
 		$data['category_list'] = $categories;
 		$data['news'] = $this->news_library->create();
 		//print_r($this->input->post());
-		//print_r($_FILES);
+		
 		
 		$postData = $this->input->post();
 		// 處理使用者傳入資料
 		if ($postData !== FALSE) {
+		   
 			// 取得POST資料
 			$title = $this->input->post('title');
 			$content = $this->input->post('content');
@@ -118,10 +119,11 @@ class NewsController extends MY_Controller {
 			// 驗證
 			$hasError = FALSE;
 			$validate_errors = $this->_validate_news($data['news']);
+           
 			if ($validate_errors) {
 				$hasError = TRUE;
 				foreach ($validate_errors as $validate_error) {
-					$data['errors'][] = $validate_error;
+				    $data['errors'][] = $validate_error;
 				}
 			}
 			// 處理上傳檔案
@@ -255,7 +257,7 @@ class NewsController extends MY_Controller {
 	{
 		$itemList = array("itemList" => array(
 		 array("back","./index.php/home", "返回主選單"),
-		 array("news", "./index.php/news/manage", "公佈欄管理"), 
+		 array("manage", "./index.php/news/manage", "公佈欄管理"), 
 		 array("create", "./index.php/news/add", "建立公告"),
 		 array("logout", "./", "登出帳號")
 		), 'state' => $this->_userMeta());
@@ -319,7 +321,8 @@ class NewsController extends MY_Controller {
 		} else {
 			print "UnLogin";
 		}*/
-		return $this->session->userdata("user")[0]->id;
+		$user=$this->session->userdata("user");
+		return $user[0]->id;
 		return 1;
 	}
 	

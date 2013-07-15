@@ -10,9 +10,17 @@ class MemberController extends MY_Controller {
 		
 		$this->edit();
 	}
-	public function edit() {
-		
-		$this -> layout -> view('view/member/default', $this->_mainmenu());
+	public function edit() 
+	{
+	    $user=$this->session->userdata("user");
+      
+	    $this -> load -> model('member_model', 'member');
+		$itemList=$this->_mainmenu();
+        $itemList["member_profile"]  =   $this -> member -> get(array("id"=>$user[0]->id));
+        $itemList["member_class"]  =   $this -> member -> get(array("id"=>$user[0]->id));
+        
+        
+		$this -> layout -> view('view/member/default', $itemList);
 	}
 	public function create() {
 		$this -> load -> model('member_model', 'member');		

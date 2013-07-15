@@ -246,7 +246,19 @@
 		//訪客
 		"4" 		=> array(	"login"		=>	array(	"index",
 														"login",
-														"logout")
+														"logout"),
+								"member"    =>  array(  "index"         ,
+                                                        "edit"          ,
+                                                        "create"        ,
+                                                        "manage"        ,
+                                                        "selectSchoolOption",
+                                                        "selectClassOption" ,
+                                                        "insertCity"    ,
+                                                        "insertSchool"  ,
+                                                        "insertClass"   ,
+                                                        "insertUser"    ,
+                                                        "findUserRank"
+                                                        )
 								
 							
 							)

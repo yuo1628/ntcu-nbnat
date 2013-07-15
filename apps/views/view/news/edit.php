@@ -34,7 +34,10 @@
 		<select name="category" required>
 			<option value="">請選擇公告分類</option>
 			<?php foreach ($category_list as $category): ?>
-				<option value="<?php echo $category->id ?>" <?php if (!is_null($news->category) && $category->id == $news->category->id) : echo 'selected'; endif; ?>>
+				<option value="<?php echo $category->id ?>" <?php
+                if (!is_null($news -> category) && $category -> id == $news -> category -> id) : echo 'selected';
+                endif;
+ ?>>
 				<?php echo $category->name ?></option>
 			<?php endforeach ?>
 		</select>
