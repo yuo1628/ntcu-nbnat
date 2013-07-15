@@ -71,7 +71,16 @@
 														"manage",
 														"create",
 														"insertSub"
-														)								
+														),
+								"news"      =>  array(  "index",
+								                        "read",
+								                        "download",
+								                        "manage",
+								                        "add",
+								                        "edit",
+								                        "delete",
+								                        "delete_file"
+								                        )								
 							),
 		//一般管理員
 		"1" 		=> array(	"login"		=>	array(	"index",

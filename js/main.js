@@ -4,6 +4,13 @@
 
 $(document).ready(function() {
 	
+    $("#login input").keypress(function(event){       
+        if (event.keyCode == 13) 
+        {
+        	login();
+        }
+     });
+
 });
 
 function login() {
@@ -21,6 +28,7 @@ function login() {
 	}
 	else
 	{	
+		
 		$("input#username").css({"border":"2px solid #e0e0e0"});
 		$("input#password").css({"border":"2px solid #e0e0e0"});
 		$.post(
@@ -32,8 +40,10 @@ function login() {
 			function(data) {
 				
 				if($.trim(data)=="error")
-				{							
+				{		
+									
 					window.location = "./index.php/login/index/error";
+					
 				}
 				else
 				{
