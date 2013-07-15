@@ -503,12 +503,12 @@ function starEffectTime() {
 function zoom(s) {
 	switch(s) {
 		case 0:
-			zoomCanvas(0.8);
+			zoomCanvas(0.6);
 			zoomOut();
 			
 		break;
 		case 1:
-			zoomCanvas(0.9);
+			zoomCanvas(0.8);
 			zoomAll();
 		break;
 		case 2:
@@ -537,9 +537,16 @@ function zoomCanvasScaleChild(scale) {
 function zoomCanvas(s) {
 	
 	scale = s;
-	$(".canvas").css({
-		'transform' : 'scale(' + scale + ')'
-	})
+	$(".canvas").animate({
+		'transform' : 'scale(' + scale + ')'/*,
+		'left' : -((($(".canvas").width() - ($(".canvas").width() * scale))) / 2),
+		'top' : -((($(".canvas").height() - ($(".canvas").height() * scale))) / 2),*/
+	},200)
+	/*
+	$(".canvas").animate({
+		'left' : -((($(".canvas").width() - ($(".canvas").width() * scale))) / 2),
+		'top' : -((($(".canvas").height() - ($(".canvas").height() * scale))) / 2),
+	},200)*/
 }
 
 
@@ -1648,7 +1655,8 @@ function setDrag() {
 	var dragObjWABHalf = dragObjWABPer / 2; // 取得放大差邊寬後的正中心
 	
 	var orginalX = pageX - ((canvasWidth - canvasWidthScale ) * 0.5);// 除以2是為了 左右兩邊間距的差
-	var dragX = orginalX - (orginalX - (orginalX * perX))- canvasLeft; //減掉scale產生的比例像素問題
+	var canvasLeftPerX = canvasLeft - (canvasLeft - (canvasLeft * perX));
+	var dragX = orginalX - (orginalX - (orginalX * perX))- canvasLeftPerX; //減掉scale產生的比例像素問題
 	
 	/**
 	 * y 軸差距計算
@@ -1666,19 +1674,11 @@ function setDrag() {
 	var dragObjHABHalf = dragObjHABPer / 2; // 取得放大差邊寬後的正中心
 	
 	var orginalY = pageY - ((canvasHeight - canvasHeightScale ) * 0.5);// 除以2是為了 左右兩邊間距的差
-	var dragY = orginalY - (orginalY - (orginalY * perY)) - canvasTop; //減掉scale產生的比例像素問題
+	var canvasTopPerY = canvasTop - (canvasTop - (canvasTop * perY));
+	var dragY = orginalY - (orginalY - (orginalY * perY)) - canvasTopPerY; //減掉scale產生的比例像素問題
 	
 	
 	//alert(per);
-	/*
-	$(".d").text(
-		" pageY: " +
-		pageY + " orginalY: " +
-		orginalY +" dragY: " +
-		dragY + " dragObjHeightAndBorder: " +
-		dragObjHeightAndBorder
-	);*/
-	
 	
 	
 	//10 = border
@@ -1686,6 +1686,12 @@ function setDrag() {
 		'left' : dragX - dragObjWABHalf,
 		'top' : dragY - dragObjHABHalf 
 	})
+	
+	$(".d").text(
+		" canvasTop: " +
+		canvasTop + " canvasTopPerY " + 
+		canvasTopPerY 
+	);
 };
 
 function setSceneDrag() {
