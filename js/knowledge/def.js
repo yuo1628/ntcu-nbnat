@@ -519,29 +519,23 @@ function zoom(s) {
 	zoomScrollRect(s);
 }
 
-function zoomCanvasScale(scale) {/*
-	$(".canvas").animate({
-		transform : 'scale(' + scale + ', ' + scale + ')'
-	},500)*/
-
+function zoomCanvasScale(scale) {
+/*
 	$(".canvas").find(".point[level=1]").animate({
 		transform : 'scale(' + scale + ', ' + scale + ')'
-	},500)
-	//alert($(".canvas").css("left"));
+	},500)*/
+	
 }
 
-function zoomCanvasScaleChild(scale) {/*
-	$(".canvas").animate({
-		transform : 'scale(' + scale + ', ' + scale + ')'
-	},500)*/
-
+function zoomCanvasScaleChild(scale) {
+	/*
 	$(".canvas").find(".point[level=0]").animate({
 		transform : 'scale(' + scale + ', ' + scale + ')'
-	},500)
-	//alert($(".canvas").css("left"));
+	},500)*/
 }
 
 function zoomCanvas(s) {
+	
 	scale = s;
 	$(".canvas").css({
 		'transform' : 'scale(' + scale + ')'
@@ -559,8 +553,8 @@ function zoomScrollRect(s) {
 
 //zoom
 function zoomIn() {
-	//zoomCanvasScale(1.16);
-	//zoomCanvasScaleChild(1);
+	zoomCanvasScale(1);
+	zoomCanvasScaleChild(1.5);
 	
 	lvl = LEVEL_0;
 	$(".point[level=1]").animate({
@@ -579,7 +573,10 @@ function zoomIn() {
 		'display' : 'none'
 	})
 	
-	
+	//point text
+	$(".point[level=0]").find(".pointTextBox").css({
+		'transform' : 'scale(0.58)'
+	})
 	
 	$(".point[level=0]").animate({
 		'opacity' : '1'
@@ -614,9 +611,9 @@ function zoomIn() {
 }
 
 function zoomAll() {
-	//zoomCanvasScale(1.08);
+	zoomCanvasScale(1);
 	
-	//zoomCanvasScaleChild(0.5);
+	zoomCanvasScaleChild(1);
 	
 	$(".point[level=1]").animate({
 		'opacity' : '1'
@@ -628,7 +625,7 @@ function zoomAll() {
 		'opacity' : '1'
 	},200)
 	$(".line[level=1]").css({
-		'display' : 'block'
+		'display' : 'none'
 	})
 	$(".addPointL1Btn").css({
 		'display' : 'block'
@@ -669,8 +666,8 @@ function zoomAll() {
 }
 
 function zoomOut() {
-	//zoomCanvasScale(1);
-	//zoomCanvasScaleChild(1);
+	zoomCanvasScale(1.1);
+	zoomCanvasScaleChild(1);
 	
 	lvl = LEVEL_1;
 	$(".point[level=0]").animate({
@@ -714,7 +711,6 @@ function zoomOut() {
 	$(".addPointL1Btn").css({
 		'display' : 'block'
 	})
-	
 	
 	/*
 	$(".point").css({
@@ -1635,38 +1631,60 @@ function get2PointZRotate(o1, o2) {
 
 
 function setDrag() {
-		/*
-	$(dragObj).css({
-		'left' : pageX - ($(dragObj).width() / 2) - parseInt($(".canvas").css("left")),
-		'top' : pageY - ($(dragObj).height() / 2) - parseInt($(".canvas").css("top"))
-	})*/
+	
+	/**
+	 * x 軸差距計算
+	 */
 	var canvasWidth = $(".canvas").width();
 	var canvasWidthScale = Math.floor(canvasWidth * scale);
-	var canvasLeft = parseInt($(".canvas").css("left"));
+	var canvasLeft = parseInt($(".canvas").css("left")); //移動場景時取得canvas的left
 	
-	var dragObjWidth = $(dragObj).width();
-	var dragObjWidthPer = dragObjWidth * scale;
-	var dragObjBorder = (5 * scale);  
-	var dragObjWidthHalf = (dragObjWidthPer + dragObjBorder) / 2;
+	var perX = canvasWidth / canvasWidthScale;
 	
+	var dragObjWidth = $(dragObj).width(); //取得被拖動物件的寬
+	var dragObjBorder = parseInt($(dragObj).css("border-left-width")); //物件單邊寬
+	var dragObjWidthAndBorder = dragObjWidth + dragObjBorder; //物件寬+邊寬
+	var dragObjWABPer = dragObjWidthAndBorder / perX; // 物件邊寬除掉canvas的放大差
+	var dragObjWABHalf = dragObjWABPer / 2; // 取得放大差邊寬後的正中心
 	
-	var x = pageX - dragObjWidthHalf - canvasLeft;
-	var per = canvasWidth / canvasWidthScale;
-	var xPer = (pageX - dragObjWidthHalf - canvasLeft) * per
-	var xSubPer = xPer - x;
-	var xSub =  (canvasWidth - canvasWidthScale) * 0.5; //左右兩邊間距
+	var orginalX = pageX - ((canvasWidth - canvasWidthScale ) * 0.5);// 除以2是為了 左右兩邊間距的差
+	var dragX = orginalX - (orginalX - (orginalX * perX))- canvasLeft; //減掉scale產生的比例像素問題
+	
+	/**
+	 * y 軸差距計算
+	 */
+	var canvasHeight = $(".canvas").height();
+	var canvasHeightScale = Math.floor(canvasHeight * scale);
+	var canvasTop = parseInt($(".canvas").css("top")); //移動場景時取得canvas的left
+	
+	var perY = canvasHeight / canvasHeightScale;
+	
+	var dragObjHeight = $(dragObj).height(); //取得被拖動物件的寬
+	var dragObjBorder = parseInt($(dragObj).css("border-left-width")); //物件單邊寬
+	var dragObjHeightAndBorder = dragObjHeight + dragObjBorder; //物件寬+邊寬
+	var dragObjHABPer = dragObjHeightAndBorder / perY; // 物件邊寬除掉canvas的放大差
+	var dragObjHABHalf = dragObjHABPer / 2; // 取得放大差邊寬後的正中心
+	
+	var orginalY = pageY - ((canvasHeight - canvasHeightScale ) * 0.5);// 除以2是為了 左右兩邊間距的差
+	var dragY = orginalY - (orginalY - (orginalY * perY)) - canvasTop; //減掉scale產生的比例像素問題
+	
 	
 	//alert(per);
+	/*
 	$(".d").text(
-		x + " pageX " +
-		pageX + " xPer " +
-		xPer
-	);
+		" pageY: " +
+		pageY + " orginalY: " +
+		orginalY +" dragY: " +
+		dragY + " dragObjHeightAndBorder: " +
+		dragObjHeightAndBorder
+	);*/
+	
+	
 	
 	//10 = border
 	$(dragObj).css({
-		'left' : x + xSubPer - xSub,
-		'top' : pageY - ($(dragObj).height() / 2) - parseInt($(".canvas").css("top"))
+		'left' : dragX - dragObjWABHalf,
+		'top' : dragY - dragObjHABHalf 
 	})
 };
 

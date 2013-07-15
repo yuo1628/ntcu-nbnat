@@ -83,8 +83,8 @@
 	box-shadow: 0px 2px 4px #89baef;
 	*/
 	border-radius: 5px;
-	width: 40px;
-	height: 40px;
+	width: 6px;
+	height: 6px;
 	text-align: center;
 	line-height:20px;
 	
@@ -111,13 +111,13 @@
 
 .drag[level="1"]
 {
-	width: 80px;
-	height: 80px;
+	width: 50px;
+	height: 50px;
 }
 
 .drag[level="1"] .pointTextBox
 {
-	top: 90px;
+	top: 60px;
 }
 
 .drag:hover .pointTextBox
@@ -191,7 +191,7 @@
 .pointTextBox {
 	position: absolute;
 	width: 140px;
-	top: 50px;
+	top: 20px;
 	left: 50%;
 	margin-left: -75px;
 }
