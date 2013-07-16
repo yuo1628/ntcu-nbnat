@@ -18,7 +18,9 @@
 														"create"		,
 														"manage"		,
 														"selectSchoolOption",
+														"selectUnitOption",
 														"selectClassOption"	,
+														"insertUnit",
 														"insertCity"	,
 														"insertSchool"	,
 														"insertClass"	,
@@ -93,7 +95,9 @@
 														"create",
 														"manage",
 														"selectSchoolOption",
+														"selectUnitOption",
 														"selectClassOption",
+														"insertUnit",
 														"insertCity",
 														"insertSchool",
 														"insertClass",
@@ -155,7 +159,7 @@
 														"edit",
 														"create",
 														"manage",
-														"selectSchoolOption",
+														"selectSchoolOption",														
 														"selectClassOption",
 														"insertCity",
 														"insertSchool",
@@ -246,8 +250,8 @@
 		//訪客
 		"4" 		=> array(	"login"		=>	array(	"index",
 														"login",
-														"logout"),
-								"member"    =>  array(  "index"         ,
+														"logout")
+								/*"member"    =>  array(  "index"         ,
                                                         "edit"          ,
                                                         "create"        ,
                                                         "manage"        ,
@@ -258,7 +262,7 @@
                                                         "insertClass"   ,
                                                         "insertUser"    ,
                                                         "findUserRank"
-                                                        )
+                                                        )*/
 								
 							
 							)

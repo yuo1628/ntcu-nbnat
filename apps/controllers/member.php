@@ -16,10 +16,9 @@ class MemberController extends MY_Controller {
       
 	    $this -> load -> model('member_model', 'member');
 		$itemList=$this->_mainmenu();
-        $itemList["member_profile"]  =   $this -> member -> get(array("id"=>$user[0]->id));
-        $itemList["member_class"]  =   $this -> member -> get(array("id"=>$user[0]->id));
-        
-        
+        $itemList["member_profile"]  =   $user;
+        $class=$this -> member -> get_class(array("class_pk"=>$user[0]->class_id));
+        $itemList["member_class"]  =  $class;       
 		$this -> layout -> view('view/member/default', $itemList);
 	}
 	public function create() {
@@ -75,6 +74,19 @@ class MemberController extends MY_Controller {
 		$optionList		=	$this -> member -> get_class($search_index);
 		echo json_encode($optionList);		
 	}	
+    public function selectUnitOption()
+    {
+             
+        $this -> load -> model('member_model', 'member');           
+        $unitList     =   $this -> member -> get_unit("");
+        echo json_encode($unitList);      
+    }
+    public function insertUnit()
+    {
+        $this -> load -> model('member_model', 'member');   
+        $unit_id=$this->member->insert_unit(array("unit_name"=>$this->input->post("unit_name")));
+        echo $unit_id;
+    }  
 	public function insertCity()
 	{
 		$this -> load -> model('member_model', 'member');	
@@ -107,10 +119,11 @@ class MemberController extends MY_Controller {
 		echo $_classId;	
 	}	
 	public function insertUser()
-	{
+	{	   
 		$user_value	=	$this->input->post("value");		
 		$this -> load -> model('member_model', 'member');				
-		$this -> member -> insert($user_value);	
+		$this -> member -> insert($user_value);
+
 	}	
 	public function findUserRank()
 	{

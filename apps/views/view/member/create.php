@@ -1,9 +1,10 @@
 <div id="member">
 	<h1>建立帳號</h1>
+	<hr/>
 	<table>
 		<tr><th>使用者帳號</th><td><input type="text" id="username" /></td></tr>
 		<tr><th>使用者密碼</th><td><input type="password" id="password" /></td></tr>
-		<tr><th>再次輸入密碼</th><td><input type="password" id="secondPwd" /><span></span></td></tr>
+		<tr><th>再次輸入密碼</th><td><input type="password" id="secondPwd" /><span>X</span></td></tr>
 		<tr><th>權限</th><td>
 			<select id="rank"></select>
 		</td></tr>
@@ -41,14 +42,25 @@
 		<tr><th>學校電話</th>
 			<td id='schoolPhone' level='5'><input type='text' id='schoolPhoneText' /></td>
 		</tr>
-		
-		<tr rank="0"><th>學制</th><td id="classType" level='6'>		
+		<tr unit="0"><th>選擇單位</th>
+		    <td>
+		        <ul id="unitChoose">
+		            <li><input type="checkbox" class="unitCheck" value="0">無</li>
+		            <li><input type="checkbox" class="unitCheck" value="1">處室</li>
+		            <li><input type="checkbox" class="unitCheck" value="2">班級</li>
+		        </ul>		   
+		    </td>
+		</tr>
+		<tr unit="1"><th>處室</th><td id="unitType" level='6'>     
+            <input type='text' id='unitTypeText'/>             
+        </td></tr>
+		<tr unit="2"><th>學制</th><td id="classType" level='6'>		
 			<input type='text' id='classTypeText'/>				
 		</td></tr>
-		<tr rank="0"><th>年級</th><td id="classGrade" level='7'>	
+		<tr unit="2"><th>年級</th><td id="classGrade" level='7'>	
 			<input type='text' id='classGradeText'/>					
 		</td></tr>
-		<tr rank="0"><th>班別</th><td id="className" level='8'>	
+		<tr unit="2"><th>班別</th><td id="className" level='8'>	
 			<input type='text' id='classNameText' />			
 		</td></tr>
 		<tr><th colspan="2">基本資料</th></tr>

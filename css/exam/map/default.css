@@ -35,3 +35,7 @@ div#map_manage span.fontGray:hover
 {
 	color:#333;
 }
+div#map_manage span.greenBtn
+{
+	margin-left:30px;
+}

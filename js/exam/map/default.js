@@ -2,6 +2,7 @@
  * @author Shown
  */
 $(document).ready(function(){
+	
 	var showText=function(){
 		 
 		$("select#subjectSelect").hide();
@@ -13,6 +14,22 @@ $(document).ready(function(){
 		});
 	};
 	$("span#subTextToggle").bind("click",showText);
+	$("select#typeSelect").change(function(){
+		var _this=$("select#typeSelect");
+		if(_this.val()!=0)
+		{			
+			$("select#gradeSelect option[value=4]").hide();
+			$("select#gradeSelect option[value=5]").hide();
+			$("select#gradeSelect option[value=6]").hide();
+		}
+		else
+		{
+			$("select#gradeSelect option[value=4]").show();
+			$("select#gradeSelect option[value=5]").show();
+			$("select#gradeSelect option[value=6]").show();
+		}
+	});
+	
 });
 
 function kmList()
@@ -105,7 +122,8 @@ function createMap()
 				_subject = $.trim(result);
 			}		
 		});
-	}else
+	}
+	else
 	{
 		_subject=$("select#subjectSelect").val();
 		

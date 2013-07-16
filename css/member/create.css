@@ -12,3 +12,12 @@
 {
 	color:#c0c0c0;	
 }
+ul#unitChoose
+{
+	margin:0;
+}
+ul#unitChoose li
+{
+	font-family: "微軟正黑體";
+	font-size:14px;
+}

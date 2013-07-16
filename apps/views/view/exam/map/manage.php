@@ -7,7 +7,7 @@
 		<select id="subjectSelect">	
 		<?php foreach ($sunjectList as $value): ?>
 			<option value="<?php echo $value->id; ?>"><?php echo $value->subject; ?></option>
-		<?php endforeach; ?>
+		<?php endforeach;?>
 		</select>	
 		<span class="fontGray" id="subTextToggle">建立科目</span>	
 	<?php else: ?>

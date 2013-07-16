@@ -43,7 +43,7 @@ $(document).ready(function(){
 			if($("ul#examList li.topicLi:eq("+j+") div.topic label.stuffbox span.wrong").size()==0)
 			{
 				$("span#correct").html(parseInt($("span#correct").html()+1));
-				$("span#score").html(parseInt($("span#score").html()+parseInt($("ul#examList li.topicLi:eq("+j+") span.score span").html())));
+				$("span#score").html(parseInt($("span#score").html())+parseInt($("ul#examList li.topicLi:eq("+j+") span.score span").html()));
 			}
 		}
 		

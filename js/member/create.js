@@ -66,23 +66,80 @@ $(document).ready(function() {
 					
 	}	
 	optionBindInit();	
+		
 	
+	$("ul#unitChoose li:eq(0) input.unitCheck").click(function(){
+		if($(this).prop("checked"))
+		{
+			$("ul#unitChoose li:eq(1) input.unitCheck").prop("checked",false).attr("disabled","disabled");
+			$("ul#unitChoose li:eq(2) input.unitCheck").prop("checked",false).attr("disabled","disabled");
+			checkUnit(1);
+			checkUnit(2);
+		}
+		else
+		{
+			$("ul#unitChoose li:eq(1) input.unitCheck").removeAttr("disabled");
+			$("ul#unitChoose li:eq(2) input.unitCheck").removeAttr("disabled");
+			checkUnit(1);
+			checkUnit(2);
+		}
+	});	
+	$("ul#unitChoose li:eq(1) input.unitCheck").click(function() {
+		checkUnit(1);
 
+	}); 
+	$("ul#unitChoose li:eq(2) input.unitCheck").click(function() {
+		checkUnit(2);
+
+	});		
 });	
-
-
-function checkRank(_level)
+function checkUnit(_index)
 {
 	
-	if(_level=="1") //最高權限管理者
-	{
-		$("table tr[rank=0]").hide();
-		
+	if ($("ul#unitChoose li:eq("+_index+") input.unitCheck").prop("checked")) {
+		$("table tr[unit="+_index+"]").show();
+		getUnitType();
+	} else {
+		$("table tr[unit="+_index+"]").hide();
 	}
-	else //一般管理者
+	
+
+}
+
+function checkRank(_level)
+{	
+	if(_level=="3") 
 	{
-		$("table tr[rank=0]").show();		
+		$("table tr[unit=0]").hide();
+		$("table tr[unit=2]").show();
+		$("table tr[unit=1]").hide();
 	}
+	else 
+	{
+		$("table tr[unit=0]").show();
+		$("table tr[unit=2]").hide();	
+		$("table tr[unit=1]").hide();		
+	}
+	
+}
+function getUnitType()
+{
+	
+	
+	$.post("./index.php/member/selectUnitOption",
+	function(result_arr)
+	{				
+		if(result_arr.length>0)
+		{
+			$("td#unitType").html("<select id='unitTypeSelect'></select><span class='fontGray inputNewText'>新增選項</span>");
+			$("td#unitType span").unbind("click").html("新增選項").bind("click", inputToggle);							
+			
+			$.each(result_arr,function(i,j)
+			{				
+				$("select#unitTypeSelect").append("<option value='"+j.id+"'>"+j.name+"</option>");					
+			});
+		}		
+	},"json");	
 }
 function getClassType()
 {
@@ -348,11 +405,14 @@ function createMember()
 		school_address	=	"",
 		school_phone	=	"";
 	/*	班級資料	*/
-	var	_class_id		= 	"", 
+	var	_class_id		= 	"0", 
 		class_type		=	"",
 		class_grade		=	"",
 		class_name		=	"";		
-			
+		
+	var	_unit_id		= 	"0",
+		unit_name		=	""; 
+		
 	if($("select#citySelect").length>0)
 	{
 		_cityPk			=	$("select#countrySelect").val();		
@@ -410,16 +470,40 @@ function createMember()
 			}			
 		});
 	}	
-	
-	switch(_rank)
+	if($("ul#unitChoose li:eq(0) input.unitCheck").prop("checked")==false)
 	{
-		case "1":
-			_class_id	=	"0";
-			break;
-		default:
+		if($("ul#unitChoose li:eq(1) input.unitCheck").prop("checked"))
+		{
+			if($("select#unitTypeSelect").length>0)
+			{
+				_unit_id=$("select#unitTypeSelect").val();				
+			}
+			else
+			{
+				
+				unit_name=$("input#unitTypeText").val();
+				
+				$.ajax({
+					type	:"POST",
+					url		:"./index.php/member/insertUnit",
+					async	:false,
+					data	:
+					{						
+						unit_name		:unit_name										
+					},
+					success	:function(result_unit_id)
+					{
+						_unit_id	=	$.trim(result_unit_id);
+					}
+				});				
+			}
+		}
+		
+		if($("ul#unitChoose li:eq(2) input.unitCheck").prop("checked"))
+		{
 			if($("select#classNameSelect").length>0)
 			{
-				_class_id=$("select#classNameSelect").val();
+				_class_id=$("select#classNameSelect").val();				
 			}
 			else
 			{
@@ -458,8 +542,9 @@ function createMember()
 					}			
 				});				
 			}
-			break;			
+		}
 	}	
+	
 	
 	var user_value			=	new Object();
 		user_value.username	=	$("input#username").val(),
@@ -473,7 +558,8 @@ function createMember()
 		user_value.tel		=	$("input#tel").val(),
 		user_value.address	=	$("input#address").val(),
 		user_value.email	=	$("input#email").val(),
-		user_value.class_id	=	_class_id;	
+		user_value.class_id	=	_class_id,	
+		user_value.unit_id	=	_unit_id;	
 		
 	$.ajax({
 		type	:"POST",
@@ -487,8 +573,6 @@ function createMember()
 		{			
 			alert("insert user data is success!!");
 		}					
-	});
-	
-	
+	});	
 	
 }

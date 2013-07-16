@@ -243,6 +243,7 @@ class Member_model extends CI_Model {
         $this->set('id', $unitData[$this->UNIT_PK]);
         $this->set('name', $unitData[$this->UNIT_NAME]);
         $this->db->insert('unit');
+        return $this->db->insert_id();
     }
 
     /**
