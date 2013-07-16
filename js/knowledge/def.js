@@ -86,6 +86,9 @@ var gotoExamBtnText = "";
 var gotoExamBtnText_TEACHER = "檢視試題";
 var gotoExamBtnText_STUDENT = "進行測驗";
 
+//zoom scale
+var scale = 1;
+
 $(function() {
 	
 	//alert("123");
@@ -110,8 +113,9 @@ $(function() {
 		'left' : ($("canvas").width() * 0.5) - ($(document).width() * 0.5)
 	})
 	
-	//star effect
-	starEffectTime();
+	//star effect 
+	//耗資源 先關掉
+	//starEffectTime();
 	
 	
 	//setLine();
@@ -309,7 +313,7 @@ $(function() {
 	})
 	
 	//預設縮小
-	zoomOut();
+	zoom(0);
 	
 	//zoom in 放大
 	$(".zoomIn").click(function() {
@@ -464,6 +468,8 @@ function setUI(rank) {
 		$(".gotoExamBtn").text(gotoExamBtnText);
 		*/
 		$(".controlBar").hide();
+		$(".toolsBar").hide();
+		$(".point").unbind("mousedown");
 		
 		//point click
 		$(".point").click(mouseClick);
@@ -498,47 +504,55 @@ function starEffectTime() {
 function zoom(s) {
 	switch(s) {
 		case 0:
+			zoomCanvas(0.6);
 			zoomOut();
 			
 		break;
 		case 1:
+			zoomCanvas(0.8);
 			zoomAll();
 		break;
 		case 2:
-			
+			zoomCanvas(1);
 			zoomIn();
 		break;
 	}
 	zoomScrollRect(s);
 }
 
-function zoomCanvasScale(scale) {/*
-	$(".canvas").animate({
-		transform : 'scale(' + scale + ', ' + scale + ')'
-	},500)*/
-
+function zoomCanvasScale(scale) {
+/*
 	$(".canvas").find(".point[level=1]").animate({
 		transform : 'scale(' + scale + ', ' + scale + ')'
-	},500)
-	//alert($(".canvas").css("left"));
+	},500)*/
+	
 }
 
-function zoomCanvasScaleChild(scale) {/*
-	$(".canvas").animate({
-		transform : 'scale(' + scale + ', ' + scale + ')'
-	},500)*/
-
+function zoomCanvasScaleChild(scale) {
+	/*
 	$(".canvas").find(".point[level=0]").animate({
 		transform : 'scale(' + scale + ', ' + scale + ')'
-	},500)
-	//alert($(".canvas").css("left"));
+	},500)*/
 }
 
-
+function zoomCanvas(s) {
+	
+	scale = s;
+	$(".canvas").animate({
+		'transform' : 'scale(' + scale + ')',
+		'left' : -((($(".canvas").width() - ($(".canvas").width() * scale))) / 2),
+		'top' : -((($(".canvas").height() - ($(".canvas").height() * scale))) / 2),
+	},200)
+	/*
+	$(".canvas").animate({
+		'left' : -((($(".canvas").width() - ($(".canvas").width() * scale))) / 2),
+		'top' : -((($(".canvas").height() - ($(".canvas").height() * scale))) / 2),
+	},200)*/
+}
 
 
 function zoomScrollRect(s) {
-	
+	//alert("s: " + s);
 	$(".zoomScrollRect").animate({
 		'top' : 223 - (s * 27)
 	})
@@ -547,8 +561,8 @@ function zoomScrollRect(s) {
 
 //zoom
 function zoomIn() {
-	zoomCanvasScale(1.16);
-	zoomCanvasScaleChild(1);
+	zoomCanvasScale(1);
+	zoomCanvasScaleChild(1.5);
 	
 	lvl = LEVEL_0;
 	$(".point[level=1]").animate({
@@ -567,7 +581,10 @@ function zoomIn() {
 		'display' : 'none'
 	})
 	
-	
+	//point text
+	$(".point[level=0]").find(".pointTextBox").css({
+		'transform' : 'scale(0.58)'
+	})
 	
 	$(".point[level=0]").animate({
 		'opacity' : '1'
@@ -588,7 +605,7 @@ function zoomIn() {
 		'display' : 'block'
 	})
 	$(".line[level=0]").find(".lineArrow").css({
-		'left' : '25px'
+		'left' : '12px'
 	})
 	
 	
@@ -602,9 +619,9 @@ function zoomIn() {
 }
 
 function zoomAll() {
-	zoomCanvasScale(1.08);
+	zoomCanvasScale(1);
 	
-	zoomCanvasScaleChild(0.5);
+	zoomCanvasScaleChild(1);
 	
 	$(".point[level=1]").animate({
 		'opacity' : '1'
@@ -616,13 +633,13 @@ function zoomAll() {
 		'opacity' : '1'
 	},200)
 	$(".line[level=1]").css({
-		'display' : 'block'
+		'display' : 'none'
 	})
 	$(".addPointL1Btn").css({
 		'display' : 'block'
 	})
 	$(".line[level=1]").find(".lineArrow").css({
-		'left' : '48px'
+		'left' : '20px'
 	})
 	
 	
@@ -657,7 +674,7 @@ function zoomAll() {
 }
 
 function zoomOut() {
-	zoomCanvasScale(1);
+	zoomCanvasScale(1.1);
 	zoomCanvasScaleChild(1);
 	
 	lvl = LEVEL_1;
@@ -682,7 +699,7 @@ function zoomOut() {
 		'display' : 'block'
 	})
 	$(".line[level=1]").find(".lineArrow").css({
-		'left' : '45px'
+		'left' : '30px'
 	})
 	
 	
@@ -702,7 +719,6 @@ function zoomOut() {
 	$(".addPointL1Btn").css({
 		'display' : 'block'
 	})
-	
 	
 	/*
 	$(".point").css({
@@ -1623,16 +1639,60 @@ function get2PointZRotate(o1, o2) {
 
 
 function setDrag() {
-		/*
-	$(dragObj).css({
-		'left' : pageX - ($(dragObj).width() / 2) - parseInt($(".canvas").css("left")),
-		'top' : pageY - ($(dragObj).height() / 2) - parseInt($(".canvas").css("top"))
-	})*/
 	
+	/**
+	 * x 軸差距計算
+	 */
+	var canvasWidth = $(".canvas").width();
+	var canvasWidthScale = Math.floor(canvasWidth * scale);
+	var canvasLeft = parseInt($(".canvas").css("left")); //移動場景時取得canvas的left
+	
+	var perX = canvasWidth / canvasWidthScale;
+	
+	var dragObjWidth = $(dragObj).width(); //取得被拖動物件的寬
+	var dragObjBorder = parseInt($(dragObj).css("border-left-width")); //物件單邊寬
+	var dragObjWidthAndBorder = dragObjWidth + dragObjBorder; //物件寬+邊寬
+	var dragObjWABPer = dragObjWidthAndBorder / perX; // 物件邊寬除掉canvas的放大差
+	var dragObjWABHalf = dragObjWABPer / 2; // 取得放大差邊寬後的正中心
+	
+	var orginalX = pageX - ((canvasWidth - canvasWidthScale ) * 0.5);// 除以2是為了 左右兩邊間距的差
+	var canvasLeftPerX = canvasLeft - (canvasLeft - (canvasLeft * perX));
+	var dragX = orginalX - (orginalX - (orginalX * perX))- canvasLeftPerX; //減掉scale產生的比例像素問題
+	
+	/**
+	 * y 軸差距計算
+	 */
+	var canvasHeight = $(".canvas").height();
+	var canvasHeightScale = Math.floor(canvasHeight * scale);
+	var canvasTop = parseInt($(".canvas").css("top")); //移動場景時取得canvas的left
+	
+	var perY = canvasHeight / canvasHeightScale;
+	
+	var dragObjHeight = $(dragObj).height(); //取得被拖動物件的寬
+	var dragObjBorder = parseInt($(dragObj).css("border-left-width")); //物件單邊寬
+	var dragObjHeightAndBorder = dragObjHeight + dragObjBorder; //物件寬+邊寬
+	var dragObjHABPer = dragObjHeightAndBorder / perY; // 物件邊寬除掉canvas的放大差
+	var dragObjHABHalf = dragObjHABPer / 2; // 取得放大差邊寬後的正中心
+	
+	var orginalY = pageY - ((canvasHeight - canvasHeightScale ) * 0.5);// 除以2是為了 左右兩邊間距的差
+	var canvasTopPerY = canvasTop - (canvasTop - (canvasTop * perY));
+	var dragY = orginalY - (orginalY - (orginalY * perY)) - canvasTopPerY; //減掉scale產生的比例像素問題
+	
+	
+	//alert(per);
+	
+	
+	//10 = border
 	$(dragObj).css({
-		'left' : pageX - ($(dragObj).width() / 2) - parseInt($(".canvas").css("left")),
-		'top' : pageY - ($(dragObj).height() / 2) - parseInt($(".canvas").css("top"))
+		'left' : dragX - dragObjWABHalf,
+		'top' : dragY - dragObjHABHalf 
 	})
+	
+	$(".d").text(
+		" canvasTop: " +
+		canvasTop + " canvasTopPerY " + 
+		canvasTopPerY 
+	);
 };
 
 function setSceneDrag() {
