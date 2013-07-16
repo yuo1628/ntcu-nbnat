@@ -113,8 +113,9 @@ $(function() {
 		'left' : ($("canvas").width() * 0.5) - ($(document).width() * 0.5)
 	})
 	
-	//star effect
-	starEffectTime();
+	//star effect 
+	//耗資源 先關掉
+	//starEffectTime();
 	
 	
 	//setLine();
@@ -312,7 +313,7 @@ $(function() {
 	})
 	
 	//預設縮小
-	zoomOut();
+	zoom(0);
 	
 	//zoom in 放大
 	$(".zoomIn").click(function() {
@@ -538,9 +539,9 @@ function zoomCanvas(s) {
 	
 	scale = s;
 	$(".canvas").animate({
-		'transform' : 'scale(' + scale + ')'/*,
+		'transform' : 'scale(' + scale + ')',
 		'left' : -((($(".canvas").width() - ($(".canvas").width() * scale))) / 2),
-		'top' : -((($(".canvas").height() - ($(".canvas").height() * scale))) / 2),*/
+		'top' : -((($(".canvas").height() - ($(".canvas").height() * scale))) / 2),
 	},200)
 	/*
 	$(".canvas").animate({
@@ -551,7 +552,7 @@ function zoomCanvas(s) {
 
 
 function zoomScrollRect(s) {
-	
+	//alert("s: " + s);
 	$(".zoomScrollRect").animate({
 		'top' : 223 - (s * 27)
 	})
@@ -604,7 +605,7 @@ function zoomIn() {
 		'display' : 'block'
 	})
 	$(".line[level=0]").find(".lineArrow").css({
-		'left' : '25px'
+		'left' : '12px'
 	})
 	
 	
@@ -638,7 +639,7 @@ function zoomAll() {
 		'display' : 'block'
 	})
 	$(".line[level=1]").find(".lineArrow").css({
-		'left' : '48px'
+		'left' : '20px'
 	})
 	
 	
@@ -698,7 +699,7 @@ function zoomOut() {
 		'display' : 'block'
 	})
 	$(".line[level=1]").find(".lineArrow").css({
-		'left' : '45px'
+		'left' : '30px'
 	})
 	
 	
