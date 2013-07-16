@@ -583,7 +583,7 @@ function zoomIn() {
 	
 	//point text
 	$(".point[level=0]").find(".pointTextBox").css({
-		'transform' : 'scale(0.58)'
+		'transform' : 'scale(0.9)'
 	})
 	
 	$(".point[level=0]").animate({
@@ -605,7 +605,7 @@ function zoomIn() {
 		'display' : 'block'
 	})
 	$(".line[level=0]").find(".lineArrow").css({
-		'left' : '12px'
+		'left' : '8px'
 	})
 	
 	
@@ -643,6 +643,7 @@ function zoomAll() {
 	})
 	
 	
+	
 	$(".point[level=0]").animate({
 		'opacity' : '1'
 	},200)
@@ -662,7 +663,7 @@ function zoomAll() {
 		'display' : 'none'
 	})
 	$(".line[level=0]").find(".lineArrow").css({
-		'left' : '12px'
+		'left' : '8px'
 	})
 	
 	/*
@@ -1510,8 +1511,9 @@ function setLine(lineId, p1, p2) {
 		'transform' : 'rotate(' + get2PointZRotate($(p1obj), $(p2obj)) + 'deg)'
 	})
 	
+	
 	$(line).find(".lineArrow").css({
-		'left' : 48 + (zoomCount * 3),
+		//'left' : 48 + (zoomCount * 3),
 		'transform' : 'rotate(' + 45 + 'deg)'
 	})
 	
@@ -1539,8 +1541,9 @@ function setChildLine(lineId, p1, p2) {
 		'transform' : 'rotate(' + get2PointZRotate($(p1obj), $(p2obj)) + 'deg)'
 	})
 	
+	
 	$(line).find(".lineArrow").css({
-		'left' : (zoomCount * 14),
+		//'left' : (zoomCount * 14),
 		'transform' : 'rotate(' + 45 + 'deg)'
 	})
 	
@@ -1683,16 +1686,18 @@ function setDrag() {
 	
 	
 	//10 = border
+	
 	$(dragObj).css({
 		'left' : dragX - dragObjWABHalf,
 		'top' : dragY - dragObjHABHalf 
 	})
 	
+	/*
 	$(".d").text(
 		" canvasTop: " +
 		canvasTop + " canvasTopPerY " + 
 		canvasTopPerY 
-	);
+	);*/
 };
 
 function setSceneDrag() {
