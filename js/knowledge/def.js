@@ -636,7 +636,7 @@ function zoomAll() {
 		'display' : 'none'
 	})
 	$(".addPointL1Btn").css({
-		'display' : 'block'
+		'display' : 'none'
 	})
 	$(".line[level=1]").find(".lineArrow").css({
 		'left' : '20px'
@@ -657,7 +657,7 @@ function zoomAll() {
 		'display' : 'block'
 	})
 	$(".addPointL0Btn").css({
-		'display' : 'block'
+		'display' : 'none'
 	})
 	$(".point[level=0]").find(".pointTextBox").css({
 		'display' : 'none'
@@ -707,10 +707,13 @@ function zoomOut() {
 	$(".point[level=1]").animate({
 		'opacity' : '1'
 	},200)
-	$(".line[level=1]").animate({
-		'opacity' : '1'
-	},200)
+	$(".point[level=1]").find(".pointTextBox").css({
+		'transform' : 'scale(1.5)'
+	})
 	
+	$(".point[level=1]").css({
+		'display' : 'block'
+	})
 	$(".point[level=1]").css({
 		'display' : 'block'
 	})
@@ -896,16 +899,24 @@ function setControlVar(obj) {
 		$(".removeLinkBtn").hide();
 		$(".linkChildBtn").hide();
 		$(".removeChildLinkBtn").hide();
-		if($(obj).attr("level") == '0')
+		
+		//alert(zoomCount);
+		
+		if(zoomCount != 1)
 		{
-			$(".linkChildBtn").show();
-			$(".removeChildLinkBtn").show();
+			if($(obj).attr("level") == '0')
+			{
+				
+				$(".linkChildBtn").show();
+				$(".removeChildLinkBtn").show();
+			}
+			else
+			{
+				$(".linkBtn").show();
+				$(".removeLinkBtn").show();
+			}
 		}
-		else
-		{
-			$(".linkBtn").show();
-			$(".removeLinkBtn").show();
-		}
+		
 	}
 	//open answer
 	//暫時先用關閉的方式 日後gotoTopic會改成別的功能 此時就可開放
@@ -2352,9 +2363,11 @@ function decodeJson() {
 
 function addPointObj() {
 	
-	var href = window.location.href;
+	//var href = window.location.href;
 		
-	var prev_pid = "";
+	//var prev_pid = "";
+	
+	/*
 	//新增一個小的
 	if(lvl == 1)
 	{
@@ -2365,11 +2378,12 @@ function addPointObj() {
 		prev_pid = "prev_pid='" + pointObjIndex + "'";
 		pointObjIndex++;
 		
-	}
+	}*/
 	
 	$(".canvas").append(
-		"<div class='drag point' level='" + lvl + "' " + prev_pid +  " open_answer='close' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
+		"<div class='drag point' level='" + lvl + "' open_answer='close' style='left:" + ((parseInt($(document).width() * 0.5) - parseInt($(".canvas").css("left"))) - ($(".drag").width() * 0.5)) + "px;top: " + ((parseInt($(document).height() * 0.5) - parseInt($(".canvas").css("top"))) - ($(".drag").height() * 0.5)) + "px' onclick='pointClick(this)'  pid='" + pointObjIndex + "'><div class='pointTextBox'><div class='pointTextDesc' style='position: relative;'></div></div>"
 	)
+	
 	
 	$(".drag").bind("mousedown", mouseDown);
 	$(".drag").bind("mouseup", mouseUp);
@@ -2523,9 +2537,10 @@ function addPointPostAjax(pid, lvl) {
 									$(".point[pid=" + pid + "]").attr("uuid" , json[i].uuid);
 									//如果增加大節點 則複製大節點的UUID到小節點上
 									
+									/*
 									var prev_pid = $(".point[pid=" + pid + "]").attr("prev_pid");
 									
-									$(".point[prev_pid=" + prev_pid + "][level=0]").attr("uuid",json[i].uuid );
+									$(".point[prev_pid=" + prev_pid + "][level=0]").attr("uuid",json[i].uuid );*/
 									
 									//prev_uuid = json[i].uuid;
 									encodeUpdJson();
