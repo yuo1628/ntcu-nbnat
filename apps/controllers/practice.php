@@ -130,33 +130,39 @@ class PracticeController extends MY_Controller {
         	
 		foreach ($data as $item)
 		{
+		   
 		    if($item->type!="fill")
             {                      
     			$item->optionList = $this -> option -> findOptionByQId($item->id);
     			
-    			if($_ansId)
-    			{					
-    				$_ansArr=(json_decode($_ansMes[0]->answer));
-    				
-    				foreach ($_ansArr as $ansItem)
-    				{
-    					foreach ($item->optionList as $_optionItem)
-    					{						
-    						if($ansItem->topicId==$_optionItem->questions_id )
-    						{
-    							foreach ($ansItem->ans as $_ansItem)
-    							{
-    							  
-    								if($_ansItem==$_optionItem->id)
-    								{
-    									$_optionItem->checked=true;
-    								}
-                                                               														
-    							}							
-    						}
-    					}
-    				}						
-                }		
+        			if($_ansId)
+        			{					
+        				$_ansArr=(json_decode($_ansMes[0]->answer));
+        				
+        				foreach ($_ansArr as $ansItem)
+        				{
+        					foreach ($item->optionList as $_optionItem)
+        					{						
+        						if($ansItem->topicId==$_optionItem->questions_id )
+        						{
+        							foreach ($ansItem->ans as $_ansItem)
+        							{
+        							  
+        								if($_ansItem==$_optionItem->id)
+        								{
+        									$_optionItem->checked=true;
+                                           
+        								}
+                                                                   														
+        							}
+                                     if(isset($ansItem->now))
+                                     {
+                                      $item->here="true";
+                                     } 							
+        						}
+        					}
+        				}						
+                    }		
 		      }
 		      else
 		      {
@@ -168,13 +174,19 @@ class PracticeController extends MY_Controller {
                                                 
                             if($ansItem->topicId==$item->id )
                             {
-                                    $item->ansValue=$ansItem->ans;                       
-                            }                           
+                                $item->ansValue=$ansItem->ans;  
+                               if(isset($ansItem->now))
+                                {
+                                    $item->here="true";
+                                } 
+                            }   
+                            
+                                                                          
                         }   
-                        
+                         
                     }
 		      }
-            	
+            
 			$itemList['examList'][]=$item;	
          				
 		}

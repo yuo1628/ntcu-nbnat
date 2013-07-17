@@ -1,28 +1,42 @@
 
 <div class="navMenu">
 	<?php 
-	$display = 'block';
+	$display = 'block';   
 	foreach($examList as $i => $item): 
 	?>
 	<?php if($i != 0){
 		$display = 'none';
 	}
+    if($item->media_url==""):
 	?>
-	<div class="mediaBtn navItem" style="display: <?php echo $display; ?>" onclick="showMedia('<?php echo $item->media_url; ?>')">
-		觀看教學影片
-	</div>
-		
+    	<div class="mediaBtn navItemDis" style="display: <?php echo $display; ?>">
+    		觀看教學影片
+    	</div>
+	<?php else: ?>
+	    <div class="mediaBtn navItem" style="display: <?php echo $display; ?>" onclick="showMedia('<?php echo $item->media_url; ?>')">
+                       觀看教學影片
+        </div>
+		<?php endif; ?>
 	<?php endforeach; ?>
 	
-	<a href="./index.php/map">
+	<a href="./index.php/map/map?id=<?php echo $examTitle[0]->km_id;?>" style="text-decoration:none;" >
 		<div class="navItem">
 			回到知識結構
 		</div>
 	</a>
+	<div id="examMiniList">
+	    <div id="examMiniTitle">試題列表</div>
+	   <ul>
+	       <?php foreach($examList as $i => $item): ?>
+	           <li class="undo" onclick="changeQuetion('<?php echo ($i); ?>')"><?php echo "第 ".($i+1)." 題"; ?></li>
+	       <?php endforeach; ?>    
+	   </ul>
+	</div>
 	<div class="clearfix"></div>
 </div>
 <div class="examBox">
 	<div id="examTitle">
+	    
 	<h1><?php echo $examTitle[0]->name;?></h1>
 	<div id="openState" style="display:none;"><?php echo $examTitle[0]->open_answer;?></div>
 	<div id="examMeta">
@@ -66,9 +80,13 @@
 	<ul id="examList">
 		
 		<?php foreach ($examList as $j=>$item):
-		?>
+       
+             if(isset($item->here) && $item->here=="true")             
+              { $showState="list-item";
+              }else{ $showState="none";}
+       		?>
 		
-		<?php echo "<li class='topicLi' id='li-".$item->id."'> "; ?>	
+		<?php echo "<li class='topicLi' id='li-".$item->id."' style='display:".$showState."'> "; ?>	
 			<div class="quizType"><?php echo $item -> type; ?></div>
 			
 			<?php if(!empty($item -> ansValue)): ?>

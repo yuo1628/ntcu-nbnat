@@ -2,16 +2,13 @@
  * @author Shown
  */
 
-$(document).ready(function() {
-	
+$(document).ready(function() {	
 	
 	if(getQueryString("uuid") != "")
 	{
 		var uuid = getQueryString("uuid");
 		enter(uuid);
 	}
-	
-	
 	
 });
 
@@ -52,25 +49,14 @@ function showMedia(_url)
 		$("div#mediaFrame").remove();
 	});
 }
-function getQueryString( paramName )
-{ 
-　　paramName = paramName .replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
-　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
-　　var regex = new RegExp( reg ); 
-　　var regResults = regex.exec( window.location.href.toLowerCase() ); 
-　　if( regResults == null ) return ""; 
-　 else return regResults [1]; 
-} 
+function changeQuetion(_index)
+{
+	$("ul#examList li.topicLi").hide();
+	$("ul#examList li.topicLi:eq("+_index+")").show();
+	$("div#examMeta span.quizOn").html(parseInt(_index)+1);
+}
 
-function getQueryStringByUrl(_url,paramName)
-{ 	
-　　paramName = paramName.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
-　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
-　　var regex = new RegExp( reg ); 
-　　var regResults = regex.exec(_url); 
-　　if( regResults == null ) return false; 
-　 else return regResults [1]; 
-} 
+
 
 
 /*
@@ -108,8 +94,7 @@ function enter(_uuid) {
 	$.post("./index.php/practice/findExamList", {
 		uid : _uuid
 	}, function(data) {
-		
-		
+				
 		$("div#practice").html(data);
 		if($("div#openState").html()=="open"){
 			if($("ul#examList li.topicLi").size()>0)
@@ -130,7 +115,49 @@ function enter(_uuid) {
 				_limitSec=parseInt($("div#limitTime div.limitSec").html(),10);
 				start();
 				$("div#toggle").click();
+				
 				$("label.stuffbox").before("<input type='text' class='stuffText' />").remove();
+				$("ul#examList li.topicLi input").each(function(i){
+					$("ul#examList li.topicLi:eq("+i+") input").bind("click",function(){
+						var _this=$("ul#examList li.topicLi:eq("+i+") input");
+						var _type=$("ul#examList li.topicLi:eq("+i+") input").attr("type");
+						switch (_type)
+						{							
+							case "text":
+								_this.keyup(function(){
+									var _empty=0;
+									$("ul#examList li.topicLi:eq("+i+") input").each(function(){
+										if($(this).val()=="") _empty++;									
+									});
+									
+									if(_empty==$("ul#examList li.topicLi:eq("+i+") input").size())
+									{
+										$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("undo");
+									}
+									else
+									{
+										$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
+									}
+								});
+							break;
+							case "radio":
+								$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
+							break;
+							case "checkbox":
+							
+								if($("ul#examList li.topicLi:eq("+i+") input:checked").size()>0)
+								{
+									$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
+								}
+								else
+								{
+									$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("undo");
+								}
+							break;
+						}
+					});
+					
+				});
 				
 				
 				
@@ -147,6 +174,7 @@ function enter(_uuid) {
 		}
 		
 	});
+	
 }
 
 
@@ -158,6 +186,7 @@ function reStart(_uuid)
 		uuid : _uuid
 		},function(){
 			enter(_uuid);
+			
 		});
 	}
 	else
@@ -165,7 +194,36 @@ function reStart(_uuid)
 		return false;
 	}
 }
-
+function checkDoEmpty()
+{
+	$("ul#examList li.topicLi input").each(function(i){
+		
+		var _this=$("ul#examList li.topicLi:eq("+i+") input");
+		var _type=$("ul#examList li.topicLi:eq("+i+") input").attr("type");
+		switch (_type)
+		{							
+			case "text":				
+					var _empty=0;
+					$("ul#examList li.topicLi:eq("+i+") input").each(function(j){
+						if($(this).val()=="") _empty++;									
+					});
+					
+					if(_empty!=$("ul#examList li.topicLi:eq("+i+") input").size())
+					{
+						$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
+					}				
+			break;
+			default:
+			
+				if($("ul#examList li.topicLi:eq("+i+") input:checked").size()>0)
+				{
+					$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
+				}
+				
+			break;
+		}		
+	});
+}
 function continuePractice(_uuid,_ansId,_index)
 {
 	$.post("./index.php/practice/findExamList", {
@@ -174,8 +232,8 @@ function continuePractice(_uuid,_ansId,_index)
 	},function(data){
 		
 		$("div#practice").html(data);
-		$("ul#examList li.topicLi").hide();
-		$("ul#examList li.topicLi:eq("+(_index-1)+")").show();		
+		//$("ul#examList li.topicLi").hide();
+		//$("ul#examList li.topicLi:eq("+(_index-1)+")").show();		
 		$("p#examBtn span.previousQuiz").hide();
 		isLastQuiz();
 		
@@ -199,9 +257,47 @@ function continuePractice(_uuid,_ansId,_index)
 				}
 				
 			}
+			$("ul#examList li.topicLi:eq("+i+") input").bind("click",function(){
+				var _this=$("ul#examList li.topicLi:eq("+i+") input");
+				var _type=$("ul#examList li.topicLi:eq("+i+") input").attr("type");
+				switch (_type)
+				{							
+					case "text":
+						_this.keyup(function(){
+							var _empty=0;
+							$("ul#examList li.topicLi:eq("+i+") input").each(function(){
+								if($(this).val()=="") _empty++;									
+							});
+							
+							if(_empty==$("ul#examList li.topicLi:eq("+i+") input").size())
+							{
+								$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("undo");
+							}
+							else
+							{
+								$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
+							}
+						});
+					break;
+					case "radio":
+						$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
+					break;
+					case "checkbox":
+					
+						if($("ul#examList li.topicLi:eq("+i+") input:checked").size()>0)
+						{
+							$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
+						}
+						else
+						{
+							$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("undo");
+						}
+					break;
+				}
+			});
 			
 		});
-		
+		checkDoEmpty();
 	});
 }
 
@@ -254,7 +350,7 @@ function finish(_uuid,_finish,_type,_aid)
 	var ansArr = new Array();
 
 	$("ul#examList li.topicLi").each(function(i) {		
-				
+		
 		var ans = new Object();
 		
 		var _id = $(this).attr("id").replace("li-", "");
@@ -278,13 +374,19 @@ function finish(_uuid,_finish,_type,_aid)
 			});
 		}
 		ans.ans = option;
-		ansArr[i] = ans;
+		
 		if(!_finish){
 			if($(this).is(":visible"))
 			{
-				return false;
+				ans.now=true;
+				//return false;
+			}
+			else
+			{
+				
 			}	
-		}		
+		}	
+		ansArr[i] = ans;	
 	});
 	
 	var _min=parseInt($("div#timer div.min").html());
@@ -372,3 +474,22 @@ function isFirstStep(_id)
 	}
 	
 }
+function getQueryString( paramName )
+{ 
+　　paramName = paramName .replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
+　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
+　　var regex = new RegExp( reg ); 
+　　var regResults = regex.exec( window.location.href.toLowerCase() ); 
+　　if( regResults == null ) return ""; 
+　 else return regResults [1]; 
+} 
+
+function getQueryStringByUrl(_url,paramName)
+{ 	
+　　paramName = paramName.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
+　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
+　　var regex = new RegExp( reg ); 
+　　var regResults = regex.exec(_url); 
+　　if( regResults == null ) return false; 
+　 else return regResults [1]; 
+} 
