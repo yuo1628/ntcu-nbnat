@@ -1,3 +1,4 @@
+
 /*
  * @description: 功能選單基本樣式宣告
  * @author: shown
@@ -99,6 +100,7 @@
 	background-repeat: no-repeat;
 	background-size: 29px auto;
 	border: 1px solid #f9f9f9;
+	
 	
 }
 .icon:hover {

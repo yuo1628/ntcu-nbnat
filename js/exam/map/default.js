@@ -80,10 +80,10 @@ function kmList()
 					}
 					else if(j.grade>6 && j.grade<=9)
 					{
-						liCon+="國中 "+j.grade+" 年級";
+						liCon+="國中 "+(parseInt(j.grade)-6)+" 年級";
 					}else if(j.grade>9 && j.grade<=12)
 					{
-						liCon+="高中 "+j.grade+" 年級";
+						liCon+="高中 "+(parseInt(j.grade)-9)+" 年級";
 					}
 					liCon+="</span><span>建立者："+j.teacherName+"</span></li>";
 					$("div#kmList ul").append(liCon);				

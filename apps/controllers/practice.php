@@ -42,6 +42,7 @@ class PracticeController extends MY_Controller {
 		$itemList['childList'] =array();
 		$exist_uuid = '0';
 		foreach ($node as $item){
+		   
 			if($exist_uuid != $item->uuid)
 			{
 				$score=0;
@@ -55,7 +56,22 @@ class PracticeController extends MY_Controller {
 				$item->count_score = ($score/100);						
 			
 				$user_id=$user[0]->id;		
-				$item->isNotFinish=$this->answer->findAnswer(array("nodes_uuid"=>$item->uuid,"finish"=>"false","user_id"=>$user_id));
+				$isNotFinish=$this->answer->findAnswer(array("nodes_uuid"=>$item->uuid,"finish"=>"false","user_id"=>$user_id));
+                if(count($isNotFinish)>0)
+                {
+                    $ansObj=json_decode($isNotFinish[0]->answer); 
+                    $item->ansId=$isNotFinish[0]->id; 
+                    foreach ($ansObj as $j=>$ansObjItem)
+                    {
+                        if(isset($ansObjItem->now) && $ansObjItem->now)
+                        {
+                           
+                            $item->isNotFinish=$j+1;
+                        }
+                    }
+                }
+              
+              
 				$itemList['childList'][] = $item;
 			}
 			$exist_uuid = $item->uuid;

@@ -33,7 +33,8 @@
 	<h2>知識結構列表</h2><br />
 	<div id="kmList">
 		<ul>
-		<?php if(count($kmList)>0):?>
+		<?php 
+		if(count($kmList)>0):?>
 			<?php foreach ($kmList as $value): ?>
 				<li><span>科目：<?php echo $value->subjectName;?></span><span>年級：
 				<?php if($value->grade<=6): ?>

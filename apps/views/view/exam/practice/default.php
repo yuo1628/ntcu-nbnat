@@ -10,10 +10,10 @@
 		 
 			<?php 
 		if ($item -> open_answer=="open" && $item -> count_e > 0) {
-				if (count($item->isNotFinish )>0)
-				{
-								
-					echo "<span class='greenBtn' uuid='" . $item -> uuid .  "' onclick=\"continuePractice('". $item -> uuid . "','". $item->isNotFinish[0]->id . "','".count(json_decode($item->isNotFinish[0]->answer))."')\">續考</span>";
+		   
+				if (isset($item->ansId))
+				{								
+					echo "<span class='greenBtn' uuid='" . $item -> uuid .  "' onclick=\"continuePractice('". $item -> uuid . "','". $item->ansId . "','".$item->isNotFinish."')\">續考</span>";
 					echo "<span class='grayBtn' onclick=\"reStart('" . $item -> uuid . "')\" >進行測驗</span>";
 				}				
 				else

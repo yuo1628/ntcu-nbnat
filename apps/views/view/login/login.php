@@ -7,10 +7,7 @@
 		<li>
 			<h6>使用者密碼</h6>
 			<input type="password" id="password" class="textStyle" />
-		</li>
-		<li>
-			<a href=""><h6>忘記密碼？</h6></a>
-		</li>
+		</li>		
 		<li>
 			<!--<a href="./index.php/home" onclick="login('1');return false;" style="text-decoration:none;"><span class="greenBtn">學生登入</span></a>-->
 			<span class="fontRed"><?php echo $mes;?></span>

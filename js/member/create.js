@@ -559,8 +559,9 @@ function createMember()
 		user_value.address	=	$("input#address").val(),
 		user_value.email	=	$("input#email").val(),
 		user_value.class_id	=	_class_id,	
-		user_value.unit_id	=	_unit_id;	
-		
+		user_value.unit_id	=	_unit_id;
+	
+	/*	
 	$.ajax({
 		type	:"POST",
 		url		:"./index.php/member/insertUser",
@@ -574,5 +575,5 @@ function createMember()
 			alert("insert user data is success!!");
 		}					
 	});	
-	
+	*/
 }

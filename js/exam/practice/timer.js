@@ -11,15 +11,15 @@ $(document).ready(function(){
 
 function timedCount()
 {	
-	
-	
-	$("div#timer div.min").html(checkNum(_min));
-	$("div#timer div.sec").html(checkNum(_sec));
 	if(_sec==60)
 	{
 		_sec=0;
 		_min++;	
-	}	
+	}
+	
+	$("div#timer div.min").html(checkNum(_min));
+	$("div#timer div.sec").html(checkNum(_sec));
+		
 	
 	_sec++;
 	setTimeout(function(){timedCount()},1000);
