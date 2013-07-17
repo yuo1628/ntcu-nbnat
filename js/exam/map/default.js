@@ -107,7 +107,7 @@ function createMap()
 {
 	var _subject;
 	var _grade;
-	if($("select#subjectSelect").is(":hidden"))
+	if($("input#subText").length>0)
 	{
 		
 		$.ajax({
