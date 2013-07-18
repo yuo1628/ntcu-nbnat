@@ -29,7 +29,9 @@ class Member_system extends CI_Driver_Library {
                                      'member_system_city_management',
                                      'member_system_school_management',
                                      'member_system_class_management',
-                                     'member_system_unit_management');
+                                     'member_system_unit_management',
+                                     'member_system_importer',
+                                     'member_system_exporter');
         $this->CI = & get_instance();
         $this->CI->load->model('member_model');
     }
@@ -47,6 +49,12 @@ class Member_system extends CI_Driver_Library {
                        $this->RANK_STUDENT,
                        $this->RANK_ADMIN);
         return in_array($rank, $ranks);
+    }
+    
+    // Quick Fix
+    public function get_empty_member_instance()
+    {
+        return $this->member_management->get_empty_member_instance();
     }
     
     /**
@@ -412,10 +420,9 @@ class Member_system extends CI_Driver_Library {
             case 'username':
                 $member->username = $value;
                 break;
-            /*
             case 'password':
                 $member->password = $value;
-                break;*/
+                break;
             case 'name':
                 $member->name = $value;
                 break;
