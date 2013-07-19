@@ -15,7 +15,8 @@ class M_Km extends CI_Model {
 	 */
 	public function allKm() {
 
-		$query = $this -> db -> get($this -> tablename);
+		$query = $this -> db -> get_where($this -> tablename, array('visible' => true));
+
 		return $query -> result();
 	}
 
@@ -26,7 +27,7 @@ class M_Km extends CI_Model {
 	 * @return Mixed Array or Null.
 	 */
 	public function findKmById($id) {
-		$query = $this -> db -> get_where($this -> tablename, array('id' => $id));
+		$query = $this -> db -> get_where($this -> tablename, array('id' => $id,'visible' => true));
 		return $query -> result();
 	}
 
@@ -36,28 +37,29 @@ class M_Km extends CI_Model {
 	 * @param Array conditions.
 	 * @return Mixed Array or Null.
 	 */
-	public function findKm($conditions) 
+	public function findKm($conditions)
 	{
+		$conditions['visible'] = true;
 		$query = $this -> db -> get_where($this -> tablename, $conditions);
 		if ($query->num_rows() > 0)
 		{
 			return $query -> result();
-		}		
+		}
 	}
-	
+
 	 /**
      * 取得學制資料
      *
-     * @access public     * 
+     * @access public     *
      * @return array
      */
-    public function get_kmGroupBy($field) {    	
+    public function get_kmGroupBy($field) {
     	$this->db->select($field);
-    	$this->db->group_by($field); 
-		$this->db->order_by($field, "asc"); 		
-        $query = $this -> db -> get($this -> tablename);
-		return $query -> result();      
-    } 
+    	$this->db->group_by($field);
+		$this->db->order_by($field, "asc");
+        $query = $this -> db -> get_where($this -> tablename, array('visible' => true));
+		return $query -> result();
+    }
 	/**
 	 * Insert Km.
 	 *
@@ -65,7 +67,7 @@ class M_Km extends CI_Model {
 	 * @return Boolean.
 	 */
 	public function addKm($data) {
-	
+
 		if ($this -> db -> insert($this -> tablename, $data)) {
 			return $this -> db -> insert_id();
 		} else {

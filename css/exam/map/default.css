@@ -6,26 +6,38 @@
 div#kmList ul li
 {
 	position: relative;
-	
+
 	padding:10px;
-	cursor: pointer;	
+	/*cursor: pointer;*/
 	font-family: "微軟正黑體";
 	border-bottom:1px solid #e7e7e7;
 }
 div#kmList ul li:hover
 {
-	background-color: #f3f2fb;	
+	background-color: #f3f2fb;
 }
 div#kmList ul li span
 {
 	margin-right:30px;
 }
-div#kmList ul li span.blueBtn
+div#kmList ul li div.btnList
 {
 	position: absolute;
 	right:0;
-	bottom:5px;
-	
+	bottom:10px;
+}
+div#kmList ul li div.btnList span
+{
+	margin-right:10px;
+}
+div.delBtn,div.delBtn:active
+{
+	font-family: Arial;
+	font-weight: normal;
+	font-size:1em;
+	margin-right:10px;
+	display:inline-block;
+
 }
 div#map_manage span.fontGray
 {

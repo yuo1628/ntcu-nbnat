@@ -2,14 +2,14 @@
  * @author Shown
  */
 
-$(document).ready(function() {	
-	
+$(document).ready(function() {
+
 	if(getQueryString("uuid") != "")
 	{
 		var uuid = getQueryString("uuid");
 		enter(uuid);
 	}
-	
+
 });
 
 function showMedia(_url)
@@ -20,15 +20,15 @@ function showMedia(_url)
 	var _html="";
 	var _parm=(getQueryStringByUrl(_url,"v"));
 	/*
-	 * 
-	 if ( ( matches = parser.search.match("v=([\w[\-]]*)")) != null) 
+	 *
+	 if ( ( matches = parser.search.match("v=([\w[\-]]*)")) != null)
 	{
 		_html = "<iframe src=\"http://www.youtube.com/embed/" + matches[1] + "\" frameborder=\"0\" allowfullscreen></iframe>"
 	}
 	else if ( ( matches = parser.search.match("http://youtu.be/(.*)") ) != null)
 	{
 		_html = "<iframe src=\"http://www.youtube.com/embed/" + matches[1] + "\" frameborder=\"0\" allowfullscreen></iframe>"
-	}	
+	}
 	*/
 	if(_parm)
 	{
@@ -37,14 +37,14 @@ function showMedia(_url)
 	else
 	{
 		var _urlParm=_url.split("/");
-		
+
 		_html = "<iframe width='480' height='360' src=\"http://www.youtube.com/embed/" +_urlParm[_urlParm.length-1]  + "\" frameborder=\"0\" allowfullscreen></iframe>";
-		
+
 
 	}
-	
-	$("div#practice").after("<div id='mediaFrame'><div id='mediaBg'></div><div id='mediaClose'>X</div><div id='mediaCon'>"+_html+"</div></div>");	
-	
+
+	$("div#practice").after("<div id='mediaFrame'><div id='mediaBg'></div><div id='mediaClose'>X</div><div id='mediaCon'>"+_html+"</div></div>");
+
 	$("div#mediaClose").click(function(){
 		$("div#mediaFrame").remove();
 	});
@@ -63,7 +63,7 @@ function changeQuetion(_index)
 function slide(_id, _state) {
 	switch (_state) {
 		case "close":
-			
+
 			$.ajax({
 				url : "./index.php/practice/findChild/" + _id,
 				cache : false,
@@ -94,42 +94,42 @@ function enter(_uuid) {
 	$.post("./index.php/practice/findExamList", {
 		uid : _uuid
 	}, function(data) {
-				
+
 		$("div#practice").html(data);
 		if($("div#openState").html()=="open"){
 			if($("ul#examList li.topicLi").size()>0)
 			{
 				$("ul#examList li.topicLi").hide();
-				$("ul#examList li.topicLi:eq(0)").show();		
+				$("ul#examList li.topicLi:eq(0)").show();
 				$("p#examBtn span.previousQuiz").hide();
 				isLastQuiz();
 				isLastStep(_uuid);
-				
+
 				$("div#examMeta span.quizOn").html("1");
-				
+
 				_min=parseInt($("div#timer div.min").html(),10);
 				_sec=parseInt($("div#timer div.sec").html(),10);
 				timedCount();
-				
+
 				_limitMin=parseInt($("div#limitTime div.limitMin").html(),10);
 				_limitSec=parseInt($("div#limitTime div.limitSec").html(),10);
 				start();
 				$("div#toggle").click();
-				
+
 				$("label.stuffbox").before("<input type='text' class='stuffText' />").remove();
 				$("ul#examList li.topicLi input").each(function(i){
 					$("ul#examList li.topicLi:eq("+i+") input").bind("click",function(){
 						var _this=$("ul#examList li.topicLi:eq("+i+") input");
 						var _type=$("ul#examList li.topicLi:eq("+i+") input").attr("type");
 						switch (_type)
-						{							
+						{
 							case "text":
 								_this.keyup(function(){
 									var _empty=0;
 									$("ul#examList li.topicLi:eq("+i+") input").each(function(){
-										if($(this).val()=="") _empty++;									
+										if($(this).val()=="") _empty++;
 									});
-									
+
 									if(_empty==$("ul#examList li.topicLi:eq("+i+") input").size())
 									{
 										$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("undo");
@@ -144,7 +144,7 @@ function enter(_uuid) {
 								$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
 							break;
 							case "checkbox":
-							
+
 								if($("ul#examList li.topicLi:eq("+i+") input:checked").size()>0)
 								{
 									$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
@@ -156,11 +156,11 @@ function enter(_uuid) {
 							break;
 						}
 					});
-					
+
 				});
-				
-				
-				
+
+
+
 			}
 			else
 			{
@@ -172,9 +172,9 @@ function enter(_uuid) {
 			alert("目前此試卷並未開放作答");
 			history.back();
 		}
-		
+
 	});
-	
+
 }
 
 
@@ -186,7 +186,7 @@ function reStart(_uuid)
 		uuid : _uuid
 		},function(){
 			enter(_uuid);
-			
+
 		});
 	}
 	else
@@ -197,31 +197,31 @@ function reStart(_uuid)
 function checkDoEmpty()
 {
 	$("ul#examList li.topicLi input").each(function(i){
-		
+
 		var _this=$("ul#examList li.topicLi:eq("+i+") input");
 		var _type=$("ul#examList li.topicLi:eq("+i+") input").attr("type");
 		switch (_type)
-		{							
-			case "text":				
+		{
+			case "text":
 					var _empty=0;
 					$("ul#examList li.topicLi:eq("+i+") input").each(function(j){
-						if($(this).val()=="") _empty++;									
+						if($(this).val()=="") _empty++;
 					});
-					
+
 					if(_empty!=$("ul#examList li.topicLi:eq("+i+") input").size())
 					{
 						$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
-					}				
+					}
 			break;
 			default:
-			
+
 				if($("ul#examList li.topicLi:eq("+i+") input:checked").size()>0)
 				{
 					$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
 				}
-				
+
 			break;
-		}		
+		}
 	});
 }
 function continuePractice(_uuid,_ansId,_index)
@@ -230,45 +230,45 @@ function continuePractice(_uuid,_ansId,_index)
 		uid : _uuid,
 		ansId:_ansId
 	},function(data){
-		
+
 		$("div#practice").html(data);
 		//$("ul#examList li.topicLi").hide();
-		//$("ul#examList li.topicLi:eq("+(_index-1)+")").show();		
+		//$("ul#examList li.topicLi:eq("+(_index-1)+")").show();
 		$("p#examBtn span.previousQuiz").hide();
 		isLastQuiz();
-		
+
 		$("div#examMeta span.quizOn").html(_index);
-		
+
 		_min=parseInt($("div#timer div.min").html(),10);
 		_sec=parseInt($("div#timer div.sec").html(),10);
 		timedCount();
 		$("div#toggle").click();
 		$("label.stuffbox").before("<input type='text' class='stuffText' />").remove();
-		
+
 		$("ul#examList li.topicLi").each(function(i){
 			var _this=$(this);
 			if($(this).find("div.ansValue").length>0){
 				var ansArr=$.parseJSON($(this).find("div.ansValue").html());
-				
+
 				for(var j=0;j<ansArr.length;j++)
 				{
 					_this.find("input.stuffText:eq("+j+")").val(ansArr[j]);
-					
+
 				}
-				
+
 			}
 			$("ul#examList li.topicLi:eq("+i+") input").bind("click",function(){
 				var _this=$("ul#examList li.topicLi:eq("+i+") input");
 				var _type=$("ul#examList li.topicLi:eq("+i+") input").attr("type");
 				switch (_type)
-				{							
+				{
 					case "text":
 						_this.keyup(function(){
 							var _empty=0;
 							$("ul#examList li.topicLi:eq("+i+") input").each(function(){
-								if($(this).val()=="") _empty++;									
+								if($(this).val()=="") _empty++;
 							});
-							
+
 							if(_empty==$("ul#examList li.topicLi:eq("+i+") input").size())
 							{
 								$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("undo");
@@ -283,7 +283,7 @@ function continuePractice(_uuid,_ansId,_index)
 						$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
 					break;
 					case "checkbox":
-					
+
 						if($("ul#examList li.topicLi:eq("+i+") input:checked").size()>0)
 						{
 							$("div#examMiniList ul li:eq("+i+")").removeClass().addClass("do");
@@ -295,7 +295,7 @@ function continuePractice(_uuid,_ansId,_index)
 					break;
 				}
 			});
-			
+
 		});
 		checkDoEmpty();
 	});
@@ -309,21 +309,21 @@ function nextQuiz()
 		{
 			$(this).hide();
 			$(this).next("li").show();
-			
-			
-			
+
+
+
 			var _quizOn=parseInt($("span.quizOn").html());
 			//show media
 			$(".mediaBtn").hide();
 			var m = $(".mediaBtn").get(_quizOn);
 			$(m).show();
-			
+
 			_quizOn++;
 			$("div#quizNum span.quizOn").html(_quizOn);
 			isLastQuiz();
 			return false;
-		}		
-	});	
+		}
+	});
 }
 function isLastQuiz()
 {
@@ -331,7 +331,7 @@ function isLastQuiz()
 	if($("ul#examList li.topicLi:eq("+_index+")").is(':visible'))
 	{
 		$("p#examBtn span.nextQuiz").hide();
-	}	
+	}
 }
 function previousQuiz()
 {
@@ -341,29 +341,29 @@ function previousQuiz()
 			$(this).hide();
 			$(this).prev("li").show();
 			return false;
-		}		
-	});	
+		}
+	});
 }
 
 function finish(_uuid,_finish,_type,_aid)
 {
 	var ansArr = new Array();
 
-	$("ul#examList li.topicLi").each(function(i) {		
-		
+	$("ul#examList li.topicLi").each(function(i) {
+
 		var ans = new Object();
-		
+
 		var _id = $(this).attr("id").replace("li-", "");
 		ans.topicId = _id;
 		var option = new Array();
-		
+
 		if($(this).find("div.quizType").html()=="fill")
 		{
-			
+
 			$(this).find("input.stuffText").each(function() {
-				
+
 				option.push($(this).val());
-				
+
 			});
 		}else{
 			var _thisLI = $(this).children("ul").children("li");
@@ -374,7 +374,7 @@ function finish(_uuid,_finish,_type,_aid)
 			});
 		}
 		ans.ans = option;
-		
+
 		if(!_finish){
 			if($(this).is(":visible"))
 			{
@@ -383,17 +383,17 @@ function finish(_uuid,_finish,_type,_aid)
 			}
 			else
 			{
-				
-			}	
-		}	
-		ansArr[i] = ans;	
+
+			}
+		}
+		ansArr[i] = ans;
 	});
-	
+
 	var _min=parseInt($("div#timer div.min").html());
 	var _sec=parseInt($("div#timer div.sec").html());
 	var _spend=(_min*60)+_sec;
-	
-	
+
+
 		$.post("./index.php/practice/addAnswer", {
 			answer : JSON.stringify(ansArr),
 			spend : _spend,
@@ -401,32 +401,34 @@ function finish(_uuid,_finish,_type,_aid)
 			uuid : _uuid,
 			aid:_aid,
 			type:_type
-		}, function() {
+		}, function(resultUrl) {
 			if(_finish)
 			{
 				location.href = "./index.php/practice/resultRoute/?id=" + _uuid + "&sort=desc";
 			}
 			else
 			{
-				location.href = "./index.php/practice";
-			}		
+				//location.href = "./index.php/practice/index/";
+
+				location.href = "./index.php/practice/index/"+resultUrl;
+			}
 		});
-	
-	
+
+
 }
 
-function result(_uid) {	
+function result(_uid) {
 	location.href = "./index.php/practice/resultRoute/?id=" + _uid + "&sort=asc";
 }
 
 function showTips(_id, _state) {
 
 	$.post("./index.php/practice/findTips", {
-		id : _id		
+		id : _id
 	}, function(result) {
 		if (_state == "close") {
 		$("div#tipsBtn-" + _id).after("<div><div class='arrow-block'><div class='arrow'></div></div><div class='tips-content'><div class='tipsMes' id='tipsMes-"+_id+"'>"+result+"</div></div></div>");
-		
+
 		$("div#tipsBtn-" + _id+" span.tips").attr("onclick","showTips('"+_id+"','open')");
 		$("div#tipsMes-"+_id+" div.tipsFrame").hide();
 		$("div#tipsMes-"+_id+" div.tipsFrame:eq(0)").show();
@@ -435,22 +437,22 @@ function showTips(_id, _state) {
 		} else {
 			$("div#tipsBtn-" + _id).next("div").remove();
 			$("div#tipsBtn-" + _id+" span.tips").attr("onclick","showTips('"+_id+"','close')");
-	
+
 		}
-		isLastStep(_id);	
+		isLastStep(_id);
 	});
-		
+
 }
 
 function nextStep(_id,_index)
-{	
+{
 	$("div#tipsMes-"+_id+" div.tipsFrame:eq("+_index+")").hide();
 	$("div#tipsMes-"+_id+" div.tipsFrame:eq("+(_index+1)+")").show();
 	isLastStep(_id);
 }
 
 function previousStep(_id,_index)
-{	
+{
 	$("div#tipsMes-"+_id+" div.tipsFrame:eq("+_index+")").hide();
 	$("div#tipsMes-"+_id+" div.tipsFrame:eq("+(_index-1)+")").show();
 	isFirstStep(_id);
@@ -462,34 +464,34 @@ function isLastStep(_id)
 	if($("div#tipsMes-"+_id+" div.tipsFrame:eq("+_index+")").is(':visible'))
 	{
 		$("div#tipsMes-"+_id+" div.tipsFrame:eq("+_index+") div.step span.down").remove();
-	}	
+	}
 }
 
 function isFirstStep(_id)
 {
-	
+
 	if($("div#tipsMes-"+_id+" div.tipsFrame:eq(0)").is(':visible'))
 	{
 		$("div#tipsMes-"+_id+" div.tipsFrame:eq(0) div.step span.up").remove();
 	}
-	
+
 }
 function getQueryString( paramName )
-{ 
-　　paramName = paramName .replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
-　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
-　　var regex = new RegExp( reg ); 
-　　var regResults = regex.exec( window.location.href.toLowerCase() ); 
-　　if( regResults == null ) return ""; 
-　 else return regResults [1]; 
-} 
+{
+　　paramName = paramName .replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase();
+　　var reg = "[\\?&]"+paramName +"=([^&#]*)";
+　　var regex = new RegExp( reg );
+　　var regResults = regex.exec( window.location.href.toLowerCase() );
+　　if( regResults == null ) return "";
+　 else return regResults [1];
+}
 
 function getQueryStringByUrl(_url,paramName)
-{ 	
-　　paramName = paramName.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase(); 
-　　var reg = "[\\?&]"+paramName +"=([^&#]*)"; 
-　　var regex = new RegExp( reg ); 
-　　var regResults = regex.exec(_url); 
-　　if( regResults == null ) return false; 
-　 else return regResults [1]; 
-} 
+{
+　　paramName = paramName.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]").toLowerCase();
+　　var reg = "[\\?&]"+paramName +"=([^&#]*)";
+　　var regex = new RegExp( reg );
+　　var regResults = regex.exec(_url);
+　　if( regResults == null ) return false;
+　 else return regResults [1];
+}

@@ -92,15 +92,15 @@
 
 .icon {
 	padding: 2px 1px 2px 34px;
-	height: 30px;
+	height: 25px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	background: url(../img/icon.png);
 	background-repeat: no-repeat;
-	background-size: 29px auto;
+	background-size: 25px auto;
 	border: 1px solid #f9f9f9;
-	
+	font-size:1.1em;
 	
 }
 .icon:hover {
@@ -117,87 +117,87 @@
 	background-color: #E0E0E0;
 }
 .icon-member {
-	background-position: 3px -403px;
+	background-position: 5px -347px;
 }
 .icon-member:hover {
-	background-position: 3px -439px;
+	background-position: 5px -378px;
 }
 .icon-news {
-	background-position: 3px -475px;
+	background-position: 5px -408px;
 }
 .icon-news:hover {
-	background-position: 3px -509px;
+	background-position: 5px -437px;
 }
 .icon-exam {
-	background-position: 3px -543px;
+	background-position: 5px -467px;
 }
 .icon-exam:hover {
-	background-position: 3px -575px;
+	background-position: 5px -494px;
 }
 .icon-examManage {
-	background-position: 3px -608px;
+	background-position: 5px -525px;
 }
 .icon-examManage:hover {
-	background-position: 3px -642px;
+	background-position: 5px -554px;
 }
 .icon-map {
-	background-position: 3px -675px;
+	background-position: 5px -580px;
 }
 .icon-map:hover {
-	background-position: 3px -704px;
+	background-position: 5px -605px;
 }
 .icon-result {
-	background-position: 3px -800px;
+	background-position: 5px -800px;
 }
 .icon-result:hover {
-	background-position: 3px -830px;
+	background-position: 5px -830px;
 }
 .icon-practice {
-	background-position: 3px -863px;
+	background-position: 5px -741px;
 }
 .icon-practice:hover {
-	background-position: 3px -893px;
+	background-position: 5px -767px;
 }
 .icon-node {
-	background-position: 3px -735px;
+	background-position: 5px -735px;
 }
 .icon-node:hover {
-	background-position: 3px -768px;
+	background-position: 5px -768px;
 }
 .icon-create {
-	background-position: 3px -133px;
+	background-position: 5px -114px;
 }
 .icon-create:hover {
-	background-position: 3px -167px;
+	background-position: 5px -143px;
 }
 .icon-read {
-	background-position: 3px -200px;
+	background-position: 5px -172px;
 }
 .icon-read:hover {
-	background-position: 3px -232px;
+	background-position: 5px -199.5px;
 }
 .icon-edit {
-	background-position: 3px -265px;
+	background-position: 5px -228px;
 }
 .icon-edit:hover {
-	background-position: 3px -297px;
+	background-position: 5px -255.5px;
 }
 .icon-manage {
-	background-position: 3px -332px;
+	background-position: 5px -286px;
 }
 .icon-manage:hover {
-	background-position: 3px -367px;
+	background-position: 5px -316px;
 }
 .icon-back {
-	background-position: 3px -68px;
+	background-position: 5px -58px;
 }
 .icon-back:hover {
-	background-position: 3px -100px;
+	background-position: 5px -85px;
 }
 .icon-logout {
-	background-position: 3px -1px;
+	background-position: 5px -1px;
 }
 .icon-logout:hover {
-	background-position: 3px -35px;
+	background-position: 5px -30px;
 }
 

@@ -1,10 +1,13 @@
 <div id="result">
 	<h1>測驗結果</h1>
+	<div>
+		返回列表
+	</div>
 	<div style="display:none;" id="uuid"><?php echo $uuid;?></div>
 	<div id="head">
 		<table cellspacing="0">
 			<tr><th>測驗名稱：</th><td><span><?php echo $examMes[0] -> name; ?></span></td></tr>
-			
+
 			<tr>
 				<th>測驗次別：</th><td>第
 				<select id="times">
@@ -28,7 +31,7 @@
 				<?php echo ($userAns[0] -> spend%60)." 秒"; ?>
 				</span></td></tr>
 			<tr><th></th><td class="topic">測驗題數﹦<span id="count"><?php echo $count; ?></span></td></tr>
-			<tr><th></th><td class="topic">答對題數﹦<span id="correct"><?php 					
+			<tr><th></th><td class="topic">答對題數﹦<span id="correct"><?php
 					if(in_array("1",$correct))
 					{
 						$show=array_count_values($correct);
@@ -37,19 +40,19 @@
 					else
 					{
 						echo "0";
-					}					
+					}
 				?></span></td></tr>
 			<tr><th></th><td class="topic">測驗總分﹦<span><?php echo $scoreTotal; ?></span></td></tr>
-	
+
 			<tr><th></th><td class="topic">測驗得分﹦<span id="score" style="color:red;"><?php echo $score; ?></span></td></tr>
 		</table>
 	</div>
-	 	
+
 	<ul id="examList">
-	
+
 	<?php foreach ($quizAns as $i=>$item):?>
 		<?php echo "<li class='topicLi'>"; ?>
-		
+
 		<?php echo "<span class='score'>得分：<span>"; ?>
 		<?php
 			if ($correct[$i] == "1")
@@ -57,68 +60,68 @@
 				echo $item["score"];
 			} else if ($item["type"]=="fill"){
 				echo $item["score"];
-			
+
 			} else {
 				echo "0";
 			}
  ?>
 		<?php echo "</span>分</span><br/>" ;?>
-				
+
 		<?php echo "<div class='topic'>".($i+1) .". ".$item["topic"]."</div>";?>
-			
+
 			<?php if($item["type"]=="fill"):?>
-				
+
 				<?php echo "<div class='userAnsArr'>".json_encode($item["ans"] )."</div>";?>
 			<?php else: ?>
 			<ul>
-			<?php foreach ($item["ans"] as $j=>$option):?>		
-						
+			<?php foreach ($item["ans"] as $j=>$option):?>
+
 				<?php switch ($item["type"]) {
-					case 'choose':		
+					case 'choose':
 						if($correct[$i]=="0" && $option["correct"]=="true")
-						{ 
-							echo "<li class='green'>"; 
+						{
+							echo "<li class='green'>";
 						}
 						else
 						{
-							echo "<li>"; 	
-						}												
+							echo "<li>";
+						}
 						echo "<input type='radio' name='option-".$item["topicId"]."' disabled='disabled' ";
 						if (in_array($option["id"], $userOptionAns[$i]))
 						{
 							 echo "checked='checked'";
-						}					
-						echo "></input>";		
-						echo chr ( 0x41+$j).".".$option["value"]."</li>";	
+						}
+						echo "></input>";
+						echo chr ( 0x41+$j).".".$option["value"]."</li>";
 						break;
 					case 'multi_choose':
 						if($correct[$i]=="0" && $option["correct"]=="true")
-						{ 
-							echo "<li class='green'>"; 
+						{
+							echo "<li class='green'>";
 						}
 						else
 						{
-							echo "<li>"; 	
+							echo "<li>";
 						}
-				
+
 						echo "<input type='checkbox' name='option-".$item["topicId"]."' disabled='disabled' ";
 						if (in_array($option["id"], $userOptionAns[$i]))
 						{
 							 echo "checked='checked'";
-						}					
-						echo "></input>";	
+						}
+						echo "></input>";
 						echo chr ( 0x41+$j).".".$option["value"]."</li>";
-						
-						break;									
+
+						break;
 				}
 
-				?>	
-				
+				?>
+
 			<?php endforeach; ?>
 			</ul>
 			<?php endif;?>
-			
-		<?php echo "</li>";?>	
+
+		<?php echo "</li>";?>
 	<?php endforeach; ?>
 	</ul>
 

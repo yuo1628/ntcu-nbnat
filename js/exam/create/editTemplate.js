@@ -17,7 +17,7 @@ function importTemplate(_id) {
 		$("tr#topicLi-" + _id + " span.show").attr("onclick", "updateQuiz('" + _id + "')");
 		$("tr#topicLi-" + _id + " span.show").html("確定");
 		$("tr#topicLi-" + _id + " span.editQuiz").html("取消").attr("onclick", "cancelQuiz('" + _id + "')");
-		$("div#div-" + _id + " div div.editTemplate textarea").before("<div class='useTinymce' title='使用文字編輯器'></div><div class='useText' title='文字方塊'></div><div class='tinymceView'></div>");
+		$("div#div-" + _id + " div div.editTemplate textarea").before("<div class='useTinymce out' title='使用文字編輯器'></div><div class='useText on' title='文字方塊'></div><div class='tinymceView'></div>");
 
 		$("div#div-" + _id + " div div.editTemplate .useTinymce").bind("click", function() {
 			var _this = $(this);
@@ -48,6 +48,8 @@ function importTemplate(_id) {
 					_this.nextAll("div.tinymceView").html(_conBox).show();
 					_this.nextAll("textarea").val(_con).hide();
 					$("div#tinymceFrame").remove();
+					_this.next("div.useText").removeClass("on").addClass("out");
+					_this.removeClass("out").addClass("on");
 				});
 			});
 		});
@@ -56,6 +58,8 @@ function importTemplate(_id) {
 			var _this = $(this);
 			_this.nextAll("div.tinymceView").hide();
 			_this.nextAll("textarea").show();
+			_this.prev("div.useTinymce").removeClass("on").addClass("out");
+			_this.removeClass("out").addClass("on");
 
 		});
 
@@ -199,8 +203,8 @@ function newOption(_id, _type) {
 
 	if (_type == "choose") {
 		var temp = '<li class="newOption"><input type="radio" name="item-' + _id + '">';
-		temp += "<div class='useTinymce' title='使用文字編輯器'></div>";
-		temp += "<div class='useText' title='文字方塊'></div>";
+		temp += "<div class='useTinymce out' title='使用文字編輯器'></div>";
+		temp += "<div class='useText on' title='文字方塊'></div>";
 		temp += "<div class='tinymceView'></div>";
 		temp += '<textarea class="option"></textarea><span class="delBtn">X</span></li>';
 		$("ul#editOption-" + _id).append(temp);
@@ -240,6 +244,8 @@ function newOption(_id, _type) {
 				_this.nextAll("div.tinymceView").html(_con).show();
 				_this.nextAll("textarea").val(_con).hide();
 				$("div#tinymceFrame").remove();
+				_this.next("div.useText").removeClass("on").addClass("out");
+				_this.removeClass("out").addClass("on");
 			});
 		});
 	});
@@ -248,6 +254,8 @@ function newOption(_id, _type) {
 		var _this = $(this);
 		_this.nextAll("div.tinymceView").hide();
 		_this.nextAll("textarea").show();
+		_this.prev("div.useTinymce").removeClass("on").addClass("out");
+			_this.removeClass("out").addClass("on");
 
 	});
 
@@ -260,11 +268,11 @@ function removeTips(_index, _id) {
 
 function tipsAppend(_id) {
 
-	var temp = "<div class='tipsDiv'>";
+	var temp = "<div class='tipsDiv' >";
 	temp += "<span class='tipsTopic'></span>";
-	temp += "<div class='useTinymce' title='使用文字編輯器'></div>";
-	temp += "<div class='useText' title='文字方塊'></div>";
-	temp += "<div class='tinymceView'></div>";
+	temp += "<div class='useTinymce out' title='使用文字編輯器'></div>";
+	temp += "<div class='useText on' title='文字方塊'></div>";
+	temp += "<div class='tinymceView' style='display:none;'></div>";
 	temp += "<textarea class='tipsTextarea'></textarea>";
 	temp += "<span class='delBtn'>X</span>";
 	temp += "</div>";
@@ -299,6 +307,8 @@ function tipsAppend(_id) {
 				_this.nextAll("div.tinymceView").html(_con).show();
 				_this.nextAll("textarea").val(_con).hide();
 				$("div#tinymceFrame").remove();
+				_this.next("div.useText").removeClass("on").addClass("out");
+				_this.removeClass("out").addClass("on");
 			});
 		});
 	});
@@ -307,6 +317,8 @@ function tipsAppend(_id) {
 		var _this = $(this);
 		_this.nextAll("div.tinymceView").hide();
 		_this.nextAll("textarea").show();
+		_this.prev("div.useTinymce").removeClass("on").addClass("out");
+			_this.removeClass("out").addClass("on");
 
 	});
 

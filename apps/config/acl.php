@@ -1,8 +1,8 @@
 <?php
 /*
  * role => array(models => array( methods ))
- * 
- * 
+ *
+ *
  * */
 	$config['AUTH'] = array
 	(
@@ -47,7 +47,7 @@
 														"editQuiz",
 														"editOption",
 														"editQuizTemplate",
-														"showTinymce"														
+														"showTinymce"
 														),
 								"practice"	=>	array(	"index",
 														"countQuizScore",
@@ -72,7 +72,8 @@
 														"kmList",
 														"manage",
 														"create",
-														"insertSub"
+														"insertSub",
+														"hideKm"
 														),
 								"news"      =>  array(  "index",
 								                        "read",
@@ -82,7 +83,7 @@
 								                        "edit",
 								                        "delete",
 								                        "delete_file"
-								                        )								
+								                        )
 							),
 		//一般管理員
 		"1" 		=> array(	"login"		=>	array(	"index",
@@ -122,12 +123,12 @@
 														"editQuiz",
 														"editOption",
 														"editQuizTemplate",
-														"showTinymce"														
+														"showTinymce"
 														),
 								"practice"	=>	array(	"index",
 														"countQuizScore",
 														"findChild",
-														"countExam",														
+														"countExam",
 														"countAns",
 														"findExamList",
 														"addAnswer",
@@ -146,8 +147,9 @@
 														"kmList",
 														"manage",
 														"create",
-														"insertSub"
-														)								
+														"insertSub",
+														"hideKm"
+														)
 							),
 		//老師
 		"2" 		=> array(	"login"		=>	array(	"index",
@@ -159,7 +161,7 @@
 														"edit",
 														"create",
 														"manage",
-														"selectSchoolOption",														
+														"selectSchoolOption",
 														"selectClassOption",
 														"insertCity",
 														"insertSchool",
@@ -185,7 +187,7 @@
 														"editQuiz",
 														"editOption",
 														"editQuizTemplate",
-														"showTinymce"														
+														"showTinymce"
 														),
 								"practice"	=>	array(	"index",
 														"countQuizScore",
@@ -209,8 +211,9 @@
 														"kmList",
 														"manage",
 														"create",
-														"insertSub"
-														)								
+														"insertSub",
+														"hideKm"
+														)
 							),
 		//學生
 		"3" 		=> array(	"login"		=>	array(	"index",
@@ -218,14 +221,14 @@
 														"logout",
 														"getSessionValue"),
 								"home"		=>	array(),
-								"exam"		=>	array(	"index",
+								/*"exam"		=>	array(	"index",
 														"findChild",
 														"countQuizTotal",
 														"countQuizOpen",
 														"countQuizScore",
 														"lockToggle",
 														"closePractice",
-														"sentOpen"),
+														"sentOpen"),*/
 								"practice"	=>	array(	"index",
 														"countQuizScore",
 														"findChild",
@@ -245,7 +248,7 @@
 														"updNode",
 														"delNode",
 														"delLink",
-														"kmList")								
+														"kmList")
 							),
 		//訪客
 		"4" 		=> array(	"login"		=>	array(	"index",
@@ -263,8 +266,7 @@
                                                         "insertUser"    ,
                                                         "findUserRank"
                                                         )*/
-								
-							
+
+
 							)
 	);
-	

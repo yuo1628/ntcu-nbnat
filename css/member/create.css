@@ -21,3 +21,34 @@ ul#unitChoose li
 	font-family: "微軟正黑體";
 	font-size:14px;
 }
+span#checkPwd
+{
+	display:inline-block;
+	width:10px;
+	height:10px;	
+	margin-left:5px;		
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;	
+}
+span.emptyPwd
+{
+	background-color:#e0e0e0;
+	-webkit-box-shadow:inset #e0e0e0 0px 0px 10px 5px;
+	-moz-box-shadow:inset #e0e0e0 0px 0px 10px 5px;
+	box-shadow:#e0e0e0 0px 0px 5px 1px;
+}
+span.pwdError
+{		
+	background-color:#ff3e43;
+	-webkit-box-shadow:#ff3e43 0px 0px 5px 1px;
+	-moz-box-shadow:#ff3e43 0px 0px 5px 1px;
+	box-shadow:#ff3e43 0px 0px 5px 1px;	
+}
+span.pwdRight
+{	
+	background-color:#00d500;
+	-webkit-box-shadow:#00d500 0px 0px 5px 1px;
+	-moz-box-shadow:#00d500 0px 0px 5px 1px;
+	box-shadow:#00d500 0px 0px 5px 1px;
+}

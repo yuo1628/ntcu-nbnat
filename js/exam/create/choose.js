@@ -2,7 +2,7 @@
  * @author Shown
  */
 $(document).ready(function(){	
-	$("div#template textarea").before("<div class='useTinymce' title='使用文字編輯器'></div><div class='useText' title='文字方塊'></div><div class='tinymceView'></div>");
+	$("div#template textarea").before("<div class='useTinymce out' title='使用文字編輯器'></div><div class='useText on' title='文字方塊'></div><div class='tinymceView'></div>");
 	$("table#choose tbody tr:eq(0) input[type=radio]").prop("checked",true);
 	
 	$("div.useTinymce").click(function(){
@@ -34,7 +34,8 @@ $(document).ready(function(){
 					_this.nextAll("div.tinymceView").html(_con).show();
 					_this.nextAll("textarea").val(_con).hide();
 					$("div#tinymceFrame").remove();	
-					
+					_this.next("div.useText").removeClass("on").addClass("out");
+					_this.removeClass("out").addClass("on");
 				});
 				
 				
@@ -45,6 +46,8 @@ $(document).ready(function(){
 		var _this=$(this);
 		_this.nextAll("div.tinymceView").hide();
 		_this.nextAll("textarea").show();
+		_this.prev("div.useTinymce").removeClass("on").addClass("out");
+		_this.removeClass("out").addClass("on");
 		
 	});
 	

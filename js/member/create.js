@@ -4,75 +4,78 @@
 var inputToggle;
 var user_rank;
 
+$(document).ready(function()
+{
 
-$(document).ready(function() {
-	
-	$.ajax({			
-			url		:"./index.php/member/findUserRank",
-			async	:false,			
-			success	:function(rank)
-			{
-				user_rank=rank;
-			}			
-		});
-	
+	$.ajax(
+	{
+		url : "./index.php/member/findUserRank",
+		async : false,
+		success : function(rank)
+		{
+			user_rank = rank;
+		}
+	});
+
 	settingRank();
 	checkPWD();
-		
-	inputToggle 	= 	function() {
-		var _this 	= 	$(this);
-		var _select = 	_this.prev("select");
-		var _id 	=	 _this.parents("td").attr("id");
-		var _level	=	_this.parents("td").attr("level");		
-	
-		_select.remove();		
-		_this.before("<input type='text' id='" + _id + "Text' />");		
-		var _itemOldCon	=	new Array();
-		$("div#member table tr").each(function(i){
-			var o	=	$(this);
-			if(o.children("td").attr("level")>_level)
+
+	inputToggle = function()
+	{
+		var _this = $(this);
+		var _select = _this.prev("select");
+		var _id = _this.parents("td").attr("id");
+		var _level = _this.parents("td").attr("level");
+
+		_select.remove();
+		_this.before("<input type='text' id='" + _id + "Text' />");
+		var _itemOldCon = new Array();
+		$("div#member table tr").each(function(i)
+		{
+			var o = $(this);
+			if (o.children("td").attr("level") > _level)
 			{
-				var _itemId		=	o.children("td").attr("id");
-				_itemOldCon[i]	=	o.children("td").clone();
-				o.children("td").html("<input type='text' id='"+_itemId+"Text'/>");				
-			}				
-		});				
-		_this.unbind("click");		
-		_this.html("取消").bind("click", function() 
+				var _itemId = o.children("td").attr("id");
+				_itemOldCon[i] = o.children("td").clone();
+				o.children("td").html("<input type='text' id='" + _itemId + "Text'/>");
+			}
+		});
+		_this.unbind("click");
+		_this.html("取消").bind("click", function()
+		{
+			$("input#" + _id + "Text").remove();
+			_this.before(_select);
+			_this.unbind("click").html("新增選項").bind("click", inputToggle);
+			$("div#member table tr").each(function(i)
 			{
-				$("input#" + _id + "Text").remove();
-				_this.before(_select);					
-				_this.unbind("click").html("新增選項").bind("click", inputToggle);							
-				$("div#member table tr").each(function(i)
+				var k = $(this);
+				if (k.children("td").attr("level") > _level)
 				{
-					var k	=	$(this);
-					if(k.children("td").attr("level")>_level)
-					{														
-						k.children("td").html(_itemOldCon[i].html());
-						selectSchoolMeta();
-						optionBindInit();
-					}					
-				});							
-		});		
+					k.children("td").html(_itemOldCon[i].html());
+					selectSchoolMeta();
+					optionBindInit();
+				}
+			});
+		});
 	};
 
-	if($("table tr td#schoolType select#schoolTypeSelect").length>0)
+	if ($("table tr td#schoolType select#schoolTypeSelect").length > 0)
 	{
-		selectSchoolName();			
+		selectSchoolName();
 	}
 	else
 	{
 		$("table tr td#schoolName").html("<input type=\"text\" id=\"schoolNameText\"/>");
-					
-	}	
-	optionBindInit();	
-		
-	
-	$("ul#unitChoose li:eq(0) input.unitCheck").click(function(){
-		if($(this).prop("checked"))
+
+	}
+	optionBindInit();
+
+	$("ul#unitChoose li:eq(0) input.unitCheck").click(function()
+	{
+		if ($(this).prop("checked"))
 		{
-			$("ul#unitChoose li:eq(1) input.unitCheck").prop("checked",false).attr("disabled","disabled");
-			$("ul#unitChoose li:eq(2) input.unitCheck").prop("checked",false).attr("disabled","disabled");
+			$("ul#unitChoose li:eq(1) input.unitCheck").prop("checked", false).attr("disabled", "disabled");
+			$("ul#unitChoose li:eq(2) input.unitCheck").prop("checked", false).attr("disabled", "disabled");
 			checkUnit(1);
 			checkUnit(2);
 		}
@@ -83,96 +86,101 @@ $(document).ready(function() {
 			checkUnit(1);
 			checkUnit(2);
 		}
-	});	
-	$("ul#unitChoose li:eq(1) input.unitCheck").click(function() {
+	});
+	$("ul#unitChoose li:eq(1) input.unitCheck").click(function()
+	{
 		checkUnit(1);
 
-	}); 
-	$("ul#unitChoose li:eq(2) input.unitCheck").click(function() {
+	});
+	$("ul#unitChoose li:eq(2) input.unitCheck").click(function()
+	{
 		checkUnit(2);
 
-	});		
-});	
+	});
+});
 function checkUnit(_index)
 {
-	
-	if ($("ul#unitChoose li:eq("+_index+") input.unitCheck").prop("checked")) {
-		$("table tr[unit="+_index+"]").show();
+
+	if ($("ul#unitChoose li:eq(" + _index + ") input.unitCheck").prop("checked"))
+	{
+		$("table tr[unit=" + _index + "]").show();
 		getUnitType();
-	} else {
-		$("table tr[unit="+_index+"]").hide();
 	}
-	
+	else
+	{
+		$("table tr[unit=" + _index + "]").hide();
+	}
 
 }
 
 function checkRank(_level)
-{	
-	if(_level=="3") 
+{
+	if (_level == "3")
 	{
 		$("table tr[unit=0]").hide();
 		$("table tr[unit=2]").show();
 		$("table tr[unit=1]").hide();
 	}
-	else 
+	else
 	{
 		$("table tr[unit=0]").show();
-		$("table tr[unit=2]").hide();	
-		$("table tr[unit=1]").hide();		
+		$("table tr[unit=2]").hide();
+		$("table tr[unit=1]").hide();
 	}
-	
+
 }
+
 function getUnitType()
 {
-	
-	
-	$.post("./index.php/member/selectUnitOption",
-	function(result_arr)
-	{				
-		if(result_arr.length>0)
+
+	$.post("./index.php/member/selectUnitOption", function(result_arr)
+	{
+		if (result_arr.length > 0)
 		{
 			$("td#unitType").html("<select id='unitTypeSelect'></select><span class='fontGray inputNewText'>新增選項</span>");
-			$("td#unitType span").unbind("click").html("新增選項").bind("click", inputToggle);							
-			
-			$.each(result_arr,function(i,j)
-			{				
-				$("select#unitTypeSelect").append("<option value='"+j.id+"'>"+j.name+"</option>");					
+			$("td#unitType span").unbind("click").html("新增選項").bind("click", inputToggle);
+
+			$.each(result_arr, function(i, j)
+			{
+				$("select#unitTypeSelect").append("<option value='" + j.id + "'>" + j.name + "</option>");
 			});
-		}		
-	},"json");	
+		}
+	}, "json");
 }
+
 function getClassType()
 {
-	if($("select#schoolNameSelect").length>0)
+	if ($("select#schoolNameSelect").length > 0)
 	{
-		var schoolId		=	$("select#schoolNameSelect").val();
-		var key_arr			=	new Array();
-			key_arr[0]		=	"class_school_id";
-		var value_arr		=	new Array();
-			value_arr[0]	=	schoolId;
-		var class_type		=	new Array();
-							
+		var schoolId = $("select#schoolNameSelect").val();
+		var key_arr = new Array();
+		key_arr[0] = "class_school_id";
+		var value_arr = new Array();
+		value_arr[0] = schoolId;
+		var class_type = new Array();
+
 		$.post("./index.php/member/selectClassOption",
 		{
-			key		:key_arr,
-			value	:value_arr
-		},
-		function(result_arr)
-		{				
-			if(result_arr.length>0)
+			key : key_arr,
+			value : value_arr
+		}, function(result_arr)
+		{
+			if (result_arr.length > 0)
 			{
 				$("td#classType").html("<select id='classTypeSelect'></select><span class='fontGray inputNewText'>新增選項</span>");
-				$("td#classType span").unbind("click").html("新增選項").bind("click", inputToggle);							
-				$.each(result_arr,function(i,j)
+				$("td#classType span").unbind("click").html("新增選項").bind("click", inputToggle);
+				$.each(result_arr, function(i, j)
 				{
-					if($.inArray(j.type,class_type)<0){
-						class_type[i]	=	j.type;
-						$("select#classTypeSelect").append("<option value='"+j.type+"'>"+j.type+"</option>");					
-					}				
+					if ($.inArray(j.type, class_type) < 0)
+					{
+						class_type[i] = j.type;
+						$("select#classTypeSelect").append("<option value='" + j.type + "'>" + j.type + "</option>");
+					}
 				});
 				getClassGrade();
-				
-				$("select#classTypeSelect").bind("change",function(){
+
+				$("select#classTypeSelect").bind("change", function()
+				{
 					getClassGrade();
 				});
 			}
@@ -180,400 +188,402 @@ function getClassType()
 			{
 				$("td#classType").html("<input type='text' id='classTypeText'/>");
 				$("td#classGrade").html("<input type='text' id='classGradeText'/>");
-				$("td#className").html("<input type='text' id='classNameText'/>");					
+				$("td#className").html("<input type='text' id='classNameText'/>");
 			}
-		},"json");
+		}, "json");
 	}
 	else
 	{
 		$("td#classType").html("<input type='text' id='classTypeText'/>");
 		$("td#classGrade").html("<input type='text' id='classGradeText'/>");
-		$("td#className").html("<input type='text' id='classNameText'/>");		
+		$("td#className").html("<input type='text' id='classNameText'/>");
 	}
-	
+
 }
+
 function getClassGrade()
 {
-	var schoolId		=	$("select#schoolNameSelect").val(),
-		class_type		=	$("select#classTypeSelect").val();
-	
-	var key_arr			=	new Array();
-		key_arr[0]		=	"class_school_id",
-		key_arr[1]		=	"class_type";
-	var value_arr		=	new Array();
-		value_arr[0]	=	schoolId,
-		value_arr[1]	=	class_type;
-	var class_grade		=	new Array();
-	
+	var schoolId = $("select#schoolNameSelect").val(), class_type = $("select#classTypeSelect").val();
+
+	var key_arr = new Array();
+	key_arr[0] = "class_school_id", key_arr[1] = "class_type";
+	var value_arr = new Array();
+	value_arr[0] = schoolId, value_arr[1] = class_type;
+	var class_grade = new Array();
+
 	$.post("./index.php/member/selectClassOption",
 	{
-		key		:key_arr,
-		value	:value_arr
-	},
-	function(result_arr)
-	{				
-		if(result_arr.length>0)
+		key : key_arr,
+		value : value_arr
+	}, function(result_arr)
+	{
+		if (result_arr.length > 0)
 		{
 			$("td#classGrade").html("<select id='classGradeSelect'></select><span class='fontGray inputNewText'>新增選項</span>");
-			$("td#classGrade span").unbind("click").html("新增選項").bind("click", inputToggle);							
-				
-			$.each(result_arr,function(i,j)
-			{	
-				if($.inArray(j.grade,class_grade)<0){
-					class_grade[i]=j.grade;
-					$("select#classGradeSelect").append("<option value='"+j.grade+"'>"+j.grade+"</option>");					
-				}				
+			$("td#classGrade span").unbind("click").html("新增選項").bind("click", inputToggle);
+
+			$.each(result_arr, function(i, j)
+			{
+				if ($.inArray(j.grade, class_grade) < 0)
+				{
+					class_grade[i] = j.grade;
+					$("select#classGradeSelect").append("<option value='" + j.grade + "'>" + j.grade + "</option>");
+				}
 			});
 			getClassName();
-		}		
-	},"json");	
-	
+		}
+	}, "json");
+
 }
 
 function getClassName()
 {
-	var schoolId		=	$("select#schoolNameSelect").val(),
-		class_type		=	$("select#classTypeSelect").val(),
-		class_grade		=	$("select#classGradeSelect").val();
-	
-	var key_arr			=	new Array();
-		key_arr[0]		=	"class_school_id",
-		key_arr[1]		=	"class_type",
-		key_arr[2]		=	"class_grade";
-	var value_arr		=	new Array();
-		value_arr[0]	=	schoolId,
-		value_arr[1]	=	class_type,
-		value_arr[2]	=	class_grade;
+	var schoolId = $("select#schoolNameSelect").val(), class_type = $("select#classTypeSelect").val(), class_grade = $("select#classGradeSelect").val();
 
-	
+	var key_arr = new Array();
+	key_arr[0] = "class_school_id", key_arr[1] = "class_type", key_arr[2] = "class_grade";
+	var value_arr = new Array();
+	value_arr[0] = schoolId, value_arr[1] = class_type, value_arr[2] = class_grade;
+
 	$.post("./index.php/member/selectClassOption",
 	{
-		key		:key_arr,
-		value	:value_arr
-	},
-	function(result_arr)
-	{				
-		if(result_arr.length>0)
+		key : key_arr,
+		value : value_arr
+	}, function(result_arr)
+	{
+		if (result_arr.length > 0)
 		{
 			$("td#className").html("<select id='classNameSelect'></select><span class='fontGray inputNewText'>新增選項</span>");
-			$("td#className span").unbind("click").html("新增選項").bind("click", inputToggle);							
-			
-			$.each(result_arr,function(i,j)
-			{				
-				$("select#classNameSelect").append("<option value='"+j.id+"'>"+j.name+"</option>");					
+			$("td#className span").unbind("click").html("新增選項").bind("click", inputToggle);
+
+			$.each(result_arr, function(i, j)
+			{
+				$("select#classNameSelect").append("<option value='" + j.id + "'>" + j.name + "</option>");
 			});
-		}		
-	},"json");	
+		}
+	}, "json");
 }
 
 function checkPWD()
 {
-	$("input#secondPwd").keyup(function(){
-		if($(this).val()!=$("input#password").val())
+	$("input#secondPwd").keyup(function()
+	{
+		if ($(this).val() != $("input#password").val())
 		{
-			$(this).next("span").html("X");
-		}else
-		{
-			$(this).next("span").html("O");
+			$(this).next("span").removeClass().addClass("pwdError").attr("title", "兩次密碼不相等");
 		}
-		
+		else
+		{
+			$(this).next("span").removeClass().addClass("pwdRight").attr("title", "");
+		}
+
 	});
 }
 
 function settingRank()
 {
-	var randArr	=	new Array("管理者","老師","學生");
-	var temp	=	"";	
-	for (var i = user_rank; i < randArr.length; i++) {
-		temp	+=	"<option value='"+(parseInt(i)+1)+"'>";
-		temp	+=	randArr[i];
-		temp	+=	"</option>";
+	var randArr = new Array("管理者", "老師", "學生");
+	var temp = "";
+	for (var i = user_rank; i < randArr.length; i++)
+	{
+		temp += "<option value='" + (parseInt(i) + 1) + "'>";
+		temp += randArr[i];
+		temp += "</option>";
 	}
 	$("select#rank").html(temp);
-	
-	checkRank($("select#rank").val());	
-	$("select#rank").bind("change",function()
+
+	checkRank($("select#rank").val());
+	$("select#rank").bind("change", function()
 	{
-		checkRank($(this).val());		
+		checkRank($(this).val());
 	});
 }
 
 function optionBindInit()
 {
-	$("table tr td#schoolType select,table tr td#city select").unbind("change").bind("change",function(){
+	$("table tr td#schoolType select,table tr td#city select").unbind("change").bind("change", function()
+	{
 		selectSchoolName();
 	});
-	
-	$("table tr td#schoolName select").unbind("change").bind("change",function(){
+
+	$("table tr td#schoolName select").unbind("change").bind("change", function()
+	{
 		selectSchoolMeta();
-	
+
 	});
-	
+
 	$("span.inputNewText").unbind("click").bind("click", inputToggle);
 }
 
 function selectSchoolMeta()
 {
-	if($("table tr td#schoolName select").size()>0){
-		var schoolId		=	$("table tr td#schoolName select").val();	
-		var key_arr			=	new Array();
-			key_arr[0]		=	"school_pk";
-		var value_arr		=	new Array();
-			value_arr[0]	=	schoolId;
-			
+	if ($("table tr td#schoolName select").size() > 0)
+	{
+		var schoolId = $("table tr td#schoolName select").val();
+		var key_arr = new Array();
+		key_arr[0] = "school_pk";
+		var value_arr = new Array();
+		value_arr[0] = schoolId;
+
 		$.post("./index.php/member/selectSchoolOption",
 		{
-			key		:key_arr,
-			value	:value_arr
-		},
-		function(result_arr)
+			key : key_arr,
+			value : value_arr
+		}, function(result_arr)
 		{
-			if(result_arr.length>0)
+			if (result_arr.length > 0)
 			{
-				$.each(result_arr,function(i,j)
+				$.each(result_arr, function(i, j)
 				{
-					$("table tr td#schoolAddress input").val(j.address);	
+					$("table tr td#schoolAddress input").val(j.address);
 					$("table tr td#schoolPhone input").val(j.phone);
-					$("table tr td#schoolAddress input").attr("disabled","disabled");	
-					$("table tr td#schoolPhone input").attr("disabled","disabled");
+					$("table tr td#schoolAddress input").attr("disabled", "disabled");
+					$("table tr td#schoolPhone input").attr("disabled", "disabled");
 				});
 			}
-		},"json");
+		}, "json");
 		getClassType();
 	}
 }
 
 function selectSchoolName()
 {
-	var city			=	$("table tr td#city select").val();
-	var schoolType		=	$("table tr td#schoolType select").val();
-	var key_arr			=	new Array();
-		key_arr[0]		=	"school_city_id";
-		key_arr[1]		=	"school_type";
-	var value_arr		=	new Array();
-		value_arr[0]	=	city;
-		value_arr[1]	=	schoolType;		
-	
+	var city = $("table tr td#city select").val();
+	var schoolType = $("table tr td#schoolType select").val();
+	var key_arr = new Array();
+	key_arr[0] = "school_city_id";
+	key_arr[1] = "school_type";
+	var value_arr = new Array();
+	value_arr[0] = city;
+	value_arr[1] = schoolType;
+
 	$.post("./index.php/member/selectSchoolOption",
 	{
-		key		:key_arr,
-		value	:value_arr
-	},
-	function(result_arr)
-	{	
-		var temp="";	
-		if(result_arr.length>0){
-			temp="<select id='schoolNameSelect'>";
-			$.each(result_arr,function(i,j){
-					temp+="<option value="+result_arr[i].id+">"+result_arr[i].name+"</option>";
+		key : key_arr,
+		value : value_arr
+	}, function(result_arr)
+	{
+		var temp = "";
+		if (result_arr.length > 0)
+		{
+			temp = "<select id='schoolNameSelect'>";
+			$.each(result_arr, function(i, j)
+			{
+				temp += "<option value=" + result_arr[i].id + ">" + result_arr[i].name + "</option>";
 			});
-			temp+="</select>";
-			temp+="<span class='fontGray inputNewText'>新增選項</span>";	
-			$("table tr td#schoolName").html(temp);	
-			
-			selectSchoolMeta();	
+			temp += "</select>";
+			temp += "<span class='fontGray inputNewText'>新增選項</span>";
+			$("table tr td#schoolName").html(temp);
+
+			selectSchoolMeta();
 			optionBindInit();
-						
-		}	
+
+		}
 		else
 		{
-			temp="<input type=\"text\" id=\"schoolNameText\"/>";
-			$("table tr td#schoolName").html(temp);	
-			$("table tr td#schoolAddress input").val("");	
-			$("table tr td#schoolPhone input").val("");	
-			$("table tr td#schoolAddress input").removeAttr("disabled");	
+			temp = "<input type=\"text\" id=\"schoolNameText\"/>";
+			$("table tr td#schoolName").html(temp);
+			$("table tr td#schoolAddress input").val("");
+			$("table tr td#schoolPhone input").val("");
+			$("table tr td#schoolAddress input").removeAttr("disabled");
 			$("table tr td#schoolPhone input").removeAttr("disabled");
-			getClassType();	
-					
-		}
-			
-	},"json");	
-	
-}
+			getClassType();
 
+		}
+
+	}, "json");
+
+}
 
 function createMember()
 {
 	/*	帳號資料	*/
-	var	_rank			=	$("select#rank").val();
-	/*	學校資料	*/		
-	var	_cityPk			=	"",
-		_cityName		=	"",	
-		school_pk		=	"",	
-		school_type		=	"",
-		school_name		=	"",
-		school_address	=	"",
-		school_phone	=	"";
+	var _rank = $("select#rank").val();
+	/*	學校資料	*/
+	var _cityPk = "", _cityName = "", school_pk = "", school_type = "", school_name = "", school_address = "", school_phone = "";
 	/*	班級資料	*/
-	var	_class_id		= 	"0", 
-		class_type		=	"",
-		class_grade		=	"",
-		class_name		=	"";		
-		
-	var	_unit_id		= 	"0",
-		unit_name		=	""; 
-		
-	if($("select#citySelect").length>0)
+	var _class_id = "0", class_type = "", class_grade = "", class_name = "";
+
+	var _unit_id = "0", unit_name = "";
+
+	if ($("select#citySelect").length > 0)
 	{
-		_cityPk			=	$("select#countrySelect").val();		
-	}
-	else 
-	{		
-		_cityName		=	$("input#cityText").val();
-				
-		$.ajax({
-			type	:"POST",
-			url		:"./index.php/member/insertCity",
-			async	:false,
-			data	:
-			{
-				city_name:_cityName
-			},
-			success	:function(result_city_id)
-			{
-				_cityPk=$.trim(result_city_id);
-			}			
-		});					
-	}
-	if($("select#schoolTypeSelect").length>0)
-	{
-		school_type		=	$("select#schoolTypeSelect").val();
+		_cityPk = $("select#countrySelect").val();
 	}
 	else
 	{
-		school_type		=	$("input#schoolTypeText").val();
-	}
-	if($("select#schoolNameSelect").length>0)
-	{
-		school_pk		=	$("select#schoolNameSelect").val();			
-	}
-	else
-	{
-		school_name		=	$("input#schoolNameText").val();
-		school_address	=	$("input#schoolAddressText").val(),
-		school_phone	=	$("input#schoolPhoneText").val();	
-		$.ajax({
-			type	:"POST",
-			url		:"./index.php/member/insertSchool",
-			async	:false,
-			data	:
+		_cityName = $("input#cityText").val();
+
+		$.ajax(
+		{
+			type : "POST",
+			url : "./index.php/member/insertCity",
+			async : false,
+			data :
 			{
-				school_type		:school_type,
-				school_name		:school_name,
-				school_address	:school_address,
-				school_phone	:school_phone,
-				city_id			:_cityPk
+				city_name : _cityName
 			},
-			success	:function(result_school_id)
+			success : function(result_city_id)
 			{
-				school_pk	=	$.trim(result_school_id);
-			}			
+				_cityPk = $.trim(result_city_id);
+			}
 		});
-	}	
-	if($("ul#unitChoose li:eq(0) input.unitCheck").prop("checked")==false)
+	}
+	if ($("select#schoolTypeSelect").length > 0)
 	{
-		if($("ul#unitChoose li:eq(1) input.unitCheck").prop("checked"))
+		school_type = $("select#schoolTypeSelect").val();
+	}
+	else
+	{
+		school_type = $("input#schoolTypeText").val();
+	}
+	if ($("select#schoolNameSelect").length > 0)
+	{
+		school_pk = $("select#schoolNameSelect").val();
+	}
+	else
+	{
+		school_name = $("input#schoolNameText").val();
+		school_address = $("input#schoolAddressText").val(), school_phone = $("input#schoolPhoneText").val();
+		$.ajax(
 		{
-			if($("select#unitTypeSelect").length>0)
+			type : "POST",
+			url : "./index.php/member/insertSchool",
+			async : false,
+			data :
 			{
-				_unit_id=$("select#unitTypeSelect").val();				
+				school_type : school_type,
+				school_name : school_name,
+				school_address : school_address,
+				school_phone : school_phone,
+				city_id : _cityPk
+			},
+			success : function(result_school_id)
+			{
+				school_pk = $.trim(result_school_id);
+			}
+		});
+	}
+	if ($("ul#unitChoose li:eq(0) input.unitCheck").prop("checked") == false)
+	{
+		if ($("ul#unitChoose li:eq(1) input.unitCheck").prop("checked"))
+		{
+			if ($("select#unitTypeSelect").length > 0)
+			{
+				_unit_id = $("select#unitTypeSelect").val();
 			}
 			else
 			{
-				
-				unit_name=$("input#unitTypeText").val();
-				
-				$.ajax({
-					type	:"POST",
-					url		:"./index.php/member/insertUnit",
-					async	:false,
-					data	:
-					{						
-						unit_name		:unit_name										
-					},
-					success	:function(result_unit_id)
+
+				unit_name = $("input#unitTypeText").val();
+
+				$.ajax(
+				{
+					type : "POST",
+					url : "./index.php/member/insertUnit",
+					async : false,
+					data :
 					{
-						_unit_id	=	$.trim(result_unit_id);
+						unit_name : unit_name
+					},
+					success : function(result_unit_id)
+					{
+						_unit_id = $.trim(result_unit_id);
 					}
-				});				
+				});
 			}
 		}
-		
-		if($("ul#unitChoose li:eq(2) input.unitCheck").prop("checked"))
+
+		if ($("ul#unitChoose li:eq(2) input.unitCheck").prop("checked"))
 		{
-			if($("select#classNameSelect").length>0)
+			if ($("select#classNameSelect").length > 0)
 			{
-				_class_id=$("select#classNameSelect").val();				
+				_class_id = $("select#classNameSelect").val();
 			}
 			else
 			{
-				if($("select#classTypeSelect").length>0)
+				if ($("select#classTypeSelect").length > 0)
 				{
-					class_type=$("select#classTypeSelect").val();
+					class_type = $("select#classTypeSelect").val();
 				}
 				else
 				{
-					class_type=$("input#classTypeText").val();
+					class_type = $("input#classTypeText").val();
 				}
-				if($("select#classGradeSelect").length>0)
+				if ($("select#classGradeSelect").length > 0)
 				{
-					class_grade=$("select#classGradeSelect").val();
+					class_grade = $("select#classGradeSelect").val();
 				}
 				else
 				{
-					class_grade=$("input#classGradeText").val();
+					class_grade = $("input#classGradeText").val();
 				}
-				class_name=$("input#classNameText").val();
-				
-				$.ajax({
-					type	:"POST",
-					url		:"./index.php/member/insertClass",
-					async	:false,
-					data	:
+				class_name = $("input#classNameText").val();
+
+				$.ajax(
+				{
+					type : "POST",
+					url : "./index.php/member/insertClass",
+					async : false,
+					data :
 					{
-						class_type		:class_type,
-						class_grade		:class_grade,
-						class_name		:class_name,
-						class_school_id	:school_pk						
+						class_type : class_type,
+						class_grade : class_grade,
+						class_name : class_name,
+						class_school_id : school_pk
 					},
-					success	:function(result_class_id)
+					success : function(result_class_id)
 					{
-						_class_id	=	$.trim(result_class_id);
-					}			
-				});				
+						_class_id = $.trim(result_class_id);
+					}
+				});
 			}
 		}
-	}	
-	
-	
-	var user_value			=	new Object();
-		user_value.username	=	$("input#username").val(),
-		user_value.password	=	$("input#password").val(),
-		user_value.name		=	$("input#name").val(),
-		user_value.sex		=	$("input[name=sex]:checked").val(),
-		user_value.rank		=	_rank,
-		user_value.birthday	=	$("input#birthday").val(),
-		user_value.ic_number=	$("input#icNum").val(),
-		user_value.phone	=	$("input#phone").val(),
-		user_value.tel		=	$("input#tel").val(),
-		user_value.address	=	$("input#address").val(),
-		user_value.email	=	$("input#email").val(),
-		user_value.class_id	=	_class_id,	
-		user_value.unit_id	=	_unit_id;
-	
-	/*	
-	$.ajax({
-		type	:"POST",
-		url		:"./index.php/member/insertUser",
-		async	:false,
-		data	:
-		{	
-			value	:user_value
-		},
-		success	:function(data)
-		{			
-			alert("insert user data is success!!");
-		}					
-	});	
-	*/
+	}
+	if ($("span#checkPwd").attr("class") == "pwdRight")
+	{
+		if ($("ul#unitChoose input:checked").size() > 0)
+		{
+			var user_value = new Object();
+			user_value.username = $("input#username").val();
+			user_value.password = $("input#password").val();
+			user_value.name = $("input#name").val();
+			//user_value.sex = $("input[name=sex]:checked").val();
+			user_value.rank = _rank;
+			//user_value.birthday = $("input#birthday").val();
+			user_value.ic_number = $("input#icNum").val();
+			//user_value.phone = $("input#phone").val();
+			//user_value.tel = $("input#tel").val();
+			//user_value.address = $("input#address").val();
+			//user_value.email = $("input#email").val();
+			user_value.class_id = _class_id;
+			user_value.unit_id = _unit_id;
+
+			$.ajax(
+			{
+				type : "POST",
+				url : "./index.php/member/insertUser",
+				async : false,
+				data :
+				{
+					value : user_value
+				},
+				success : function(data)
+				{
+					alert("insert user data is success!!");
+				}
+			});
+		}
+		else
+		{
+			alert("請選擇一個服務單位。");
+			
+		}
+
+	}
+	else
+	{
+		alert("請確認使用者密碼。");
+	}
+
 }

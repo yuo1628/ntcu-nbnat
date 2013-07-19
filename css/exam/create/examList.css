@@ -90,6 +90,14 @@ table#examList div.tipsMes span.tipsContent
 	margin:2px 10px 10px 10px;
 	
 }
+table#examList div.tipsMes div.tinymceView
+{
+	display:inline-block;
+	width:90%;
+	margin-right:5px;
+	
+	
+}
 table#examList td div.topicDiv ul
 {
 	margin:5px 0 2px 10px;

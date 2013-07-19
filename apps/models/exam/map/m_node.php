@@ -6,7 +6,7 @@
  */
 class M_Node extends CI_Model {
 
-	private $tablename= "nodes";	
+	private $tablename= "nodes";
 
 	/**
 	 * Select all Node.
@@ -37,21 +37,21 @@ class M_Node extends CI_Model {
 	 */
 	public function findNode($conditions) {
 		$query = $this -> db -> get_where($this->tablename, $conditions);
-		
+
 		return $query -> result();
-		
-		
+
+
 	}
-	
+
 	/**
 	 * Select Node it is not linking to anyone.
-	 * 
+	 *
 	 * @return Mixed Array or Null.
 	 */
 	public function findFirstNode($_id) {
 		$SqlInfo="SELECT * FROM nodes where parent_node='".$_id."' and first_child = '0' and not exists (Select * from links where nodes.id=links.node_from)";
 		$query = $this->db->query($SqlInfo);
-	
+
 		return $query -> result();
 	}
 
@@ -62,7 +62,7 @@ class M_Node extends CI_Model {
 	 * @return Boolean.
 	 */
 	public function addNode($data) {
-		
+
 		$data["uuid"]=md5(uniqid(rand(), true));
 		if ($this -> db -> insert($this->tablename, $data)) {
 			return $this->db->insert_id();
@@ -99,8 +99,7 @@ class M_Node extends CI_Model {
 			return false;
 		}
 	}
-	
+
 }
 
 
- 

@@ -12,15 +12,15 @@ class HomeController extends MY_Controller {
 
 		$user = $this -> session -> userdata('user');
 		$rank = $user[0] -> rank;
-		
+
 		$menu=array();
-		
+
 		if($rank<3)
 		{
 			$menu	=	array(
 							array("member","./index.php/member", "會員管理"),
 							array("news","./index.php/news", "公佈欄管理"),
-							array("exam","./index.php/exam", "試題庫管理"),
+							array("map","./index.php/map", "知識結構圖"),
 							array("logout","./index.php/login/logout", "登出帳號")
 						);
 		}
@@ -29,7 +29,7 @@ class HomeController extends MY_Controller {
 			$menu	=	array(
 							array("member","./index.php/member", "修改個人資料"),
 							array("news","./index.php/news", "公佈欄資訊"),
-							array("exam","./index.php/map", "試題庫"),
+							array("map","./index.php/map", "知識結構圖"),
 							array("logout","./index.php/login/logout", "登出帳號")
 						);
 		}
@@ -59,9 +59,9 @@ class HomeController extends MY_Controller {
 		$this -> layout -> view('view/home/default', $itemList);
 	}
 
-	private function userMeta() 
+	private function userMeta()
 	{
-		$user = $this -> session -> userdata('user');		
+		$user = $this -> session -> userdata('user');
 		return $this -> load -> view('view/userMeta',array("user"=>$user),TRUE);
 	}
 

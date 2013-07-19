@@ -3,6 +3,28 @@
  * @author: shown (2013-05-30 15:10)
  * @update: shown
  */
+div#kmMes
+{
+	margin:10px 3px;
+
+}
+div#kmMes h6
+{
+	color:#888;
+	font-weight: normal;
+}
+div#kmMes ul,div#kmMes ul li
+{
+	display:inline-block;
+	margin:0;
+	padding:0;
+	font-family: "微軟正黑體";
+}
+div#kmMes ul li
+{
+	margin-right:20px;
+
+}
 #practice ul#node
 {
 	-webkit-box-shadow: #e0e0e0 2px 2px 3px;
@@ -23,11 +45,11 @@
 	overflow:hidden;
 }
 #practice ul#node li.open:hover{
-	
+
 	background-color: #d0d0d0;
 }
 #practice ul#node li.open{
-	cursor: pointer;	
+	cursor: pointer;
 	padding: 10px 5px;
 	background-color: #e0e0e0;
 }
@@ -36,7 +58,7 @@
 	background-color: #e0e0e0;
 }
 #practice ul#node li.nodeList{
-	cursor: pointer;	
+	cursor: pointer;
 	padding: 10px 5px;
 	background-color: #f0f0f0;
 }
@@ -47,27 +69,27 @@
 #practice ul#childList
 {
 	background-color: #fff;
-	
-	border:1px solid #F0f0f0;	
+
+	border:1px solid #F0f0f0;
 }
 #practice ul#childList li
-{	
-	padding:10px;	
+{
+	padding:10px;
 }
 #practice ul#childList li:hover
 {
 	background-color: #EBF5FF;
-	
+
 }
 #practice ul#childList li span.quizMeta
-{	
+{
 	font-size:.6em;
 	color:#A0A0A0;
 	margin-left:20px;
 }
 #practice ul#childList li div.btn
-{	
-	float:right;		
+{
+	float:right;
 }
 #practice ul#childList li div.btn span
 {
@@ -82,20 +104,20 @@
 {
 	padding:20px 0 20px 0px;
 	text-align: right;
-	
+
 }
-#practice p#examBtn span 
+#practice p#examBtn span
 {
 	margin:0px 10px;
-			
+
 }
 #practice p#examBtn span.previousQuiz,#practice p#examBtn span.nextQuiz
-{		
+{
 	color:#888888;
 	font-family:"微軟正黑體";
 	border:1px solid #e0e0e0;
 	padding:3px 8px;
-	-webkit-border-radius: 3px;	
+	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	cursor:pointer;

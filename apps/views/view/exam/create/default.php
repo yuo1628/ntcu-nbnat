@@ -1,13 +1,14 @@
 <div id="create">
 	<h1 id="nodeTitle"><?php echo $result[0]->name?></h1>
-	<div id="nodeMes">		
-		<span id="lockBtn" class="<?php echo $result[0]->lock; ?>"></span>				
+	<div id="nodeMes">
+		<span id="backBtn" onclick="backKmList('<?php echo $result[0]->km_id; ?>')">返回列表</span>
+		<span id="lockBtn" class="<?php echo $result[0]->lock; ?>"></span>
 		<span id="openBtn" class="<?php echo $result[0]->open_answer; ?>"></span>
-		<span id="limitTime"><?php echo $result[0]->limit_time?></span>						
+		<span id="limitTime"><?php echo $result[0]->limit_time?></span>
 	</div>
-	
+
 	<div id="lockCover"></div>
-	
+
 	<div id='tools'>
 		<ul>
 			<ul><li class='action unabled' onclick='batchDel()'>刪除</li></ul>
@@ -21,21 +22,21 @@
 				<li>開放題數：<span class="fontGreen"></span></li>
 				<li>總得分：<span class="fontBlue"></span></li>
 			</ul>
-		</div>		
+		</div>
 	</div>
-	
+
 	<div id="quizList"><table id="examList" cellspacing="0">
-	
+
 	<?php echo "<tr><th width='50px'><input type='checkbox' class='all' onclick='checkAll()' /></th><th width='50px'>題號</th><th>題目</th><th width='50px'></th><th width='50px'>配分</th><th width='50px'>狀態</th></tr>"; ?>
 	<?php if(count($examList)>0):?>
 	<?php foreach ($examList as $j=>$item):	?>
-	
+
 	<?php echo "<tr class='topicLi' id='topicLi-".$item->id."'><td><input type='checkbox' class='quiz'  onclick='decideCheck()' value='exam-".$item->id."' /></td><td class='number'></td><td>"; ?>
-	<?php echo "<div class='topicDiv' id='div-".$item->id."'>"; ?>	
-				
+	<?php echo "<div class='topicDiv' id='div-".$item->id."'>"; ?>
+
 		<?php echo "<div class='topic'>".$item -> topic."</div>"; ?>
-		
-		
+
+
 		 <?php echo "</div>";?>
 	<?php echo "</td><td><span class='show' onclick=\"showOption('".$item->id."','close')\">展開</span></td><td class='score'><span class='fontBlue'>".(($item -> score)/100)."</span></td><td class='public'>";
 			if($item -> public=="true")
@@ -49,8 +50,8 @@
 	echo "</td></tr>"; ?>
 	<?php endforeach; ?>
 	<?php else:?>
-	<?php echo "<tr><td class='empty' colspan='6'>尚未新增試題</td></tr>"; ?>	
-	<?php endif;?>	
+	<?php echo "<tr><td class='empty' colspan='6'>尚未新增試題</td></tr>"; ?>
+	<?php endif;?>
 </table>
 </div>
 	<span class="greenBtn" onclick="showTemp()">新增試題</span>
@@ -59,11 +60,11 @@
 		<select id="type">
 			<option selected="selected" value="0">請選擇...</option>
 			<option value="choose">單選題</option>
-			<option value="multi_choose">多選題</option>	
-			<option value="fill">填充題</option>					
+			<option value="multi_choose">多選題</option>
+			<option value="fill">填充題</option>
 		</select>
 		<div id="content"></div>
 	</div>
 	<div id="qList"></div>
-	
+
 </div>
