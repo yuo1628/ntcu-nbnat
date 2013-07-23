@@ -203,7 +203,7 @@ class Member_model extends CI_Model {
      * @access public
      * @param array $data 參數data為一陣列，內容為要插入的使用者資料，
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-     * @return NULL
+     * @return int
      */
     public function insert($data) {
         $userData = elements(array($this->USERNAME,
@@ -226,6 +226,7 @@ class Member_model extends CI_Model {
 
         $this->db->set('password', "PASSWORD('{$userPassword}')", FALSE);
         $this->db->insert('user', $userData);
+        return $this->db->insert_id();
     }
     
     /**
@@ -234,7 +235,7 @@ class Member_model extends CI_Model {
      * @access public
      * @param array $data 參數data為一陣列，內容為要插入的服務單位資料，
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-     * @return NULL
+     * @return int
      */
     public function insert_unit($data) {
         $unitData = elements(array($this->UNIT_PK,
@@ -252,7 +253,7 @@ class Member_model extends CI_Model {
      * @access public
      * @param array $data 參數data為一陣列，內容為要插入的城市資料，
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-     * @return NULL
+     * @return int
      */
     public function insert_city($data) {
 
@@ -262,7 +263,7 @@ class Member_model extends CI_Model {
        // $this->set('id', $cityData[$this->CITY_PK]);
         $this->set('name', $cityData[$this->CITY_NAME]);
         $this->db->insert('city');
-		return $this->db->insert_id();
+        return $this->db->insert_id();
     }
     
     /**
@@ -271,7 +272,7 @@ class Member_model extends CI_Model {
      * @access public
      * @param array $data 參數data為一陣列，內容為要插入的學校資料，
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-     * @return NULL
+     * @return int
      */
     public function insert_school($data) {
         $schoolData = elements(array($this->SCHOOL_PK,
@@ -288,7 +289,7 @@ class Member_model extends CI_Model {
         $this->set('phone', $schoolData[$this->SCHOOL_PHONE]);
         $this->set('city_id', $schoolData[$this->SCHOOL_CITY_ID]);
         $this->db->insert('school');
-		return $this->db->insert_id();
+        return $this->db->insert_id();
     }
     
     /**
@@ -297,7 +298,7 @@ class Member_model extends CI_Model {
      * @access public
      * @param array $data 參數data為一陣列，內容為要插入的班級資料，
      * 格式為 columnName => value，columnName可使用此類別定義的常數。
-     * @return NULL
+     * @return int 新插入班級的資料庫編號
      */
     public function insert_class($data) {
         $classData = elements(array($this->CLASS_PK,
@@ -311,7 +312,6 @@ class Member_model extends CI_Model {
         $this->set('grade', $classData[$this->CLASS_GRADE]);
         $this->set('name', $classData[$this->CLASS_NAME]);
         $this->set('school_id', $classData[$this->CLASS_SCHOOL_ID]);
-
         $this->db->insert('class');
         return $this->db->insert_id();
     }
