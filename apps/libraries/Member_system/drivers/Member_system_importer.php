@@ -7,6 +7,7 @@ require_once './phpexcel/PHPExcel/IOFactory.php';
  * @author Yuo <pors37@gmail.com>
  */
 class Member_system_importer extends CI_Driver {
+    public $MEMBER_FIELDS_COUNT = 20;
     
     private $CI;
     
@@ -21,6 +22,7 @@ class Member_system_importer extends CI_Driver {
      *
      * @access public
      * @param string $fileName
+     * @throws LengthException 當行資料紀錄的數量不正確時丟出
      * @param boolean $hasTitle
      */
     public function importMembersFromExcel($fileName, $hasTitle)
@@ -35,6 +37,7 @@ class Member_system_importer extends CI_Driver {
      * @access public
      * @param string $fileName
      * @param boolean $hasTitle
+     * @throws LengthException 當行資料紀錄的數量不正確時丟出
      * @return array 回傳包含Member實體的陣列
      */
     public function readMembersFromExcel($fileName, $hasTitle)
@@ -60,6 +63,7 @@ class Member_system_importer extends CI_Driver {
      *
      * @access private
      * @param PHPExcel_Row $row
+     * @throws LengthException 當行資料紀錄的數量不正確時丟出
      * @return Member
      */
     private function readMemberFromRow($row)
@@ -69,6 +73,11 @@ class Member_system_importer extends CI_Driver {
         $newMember = $this->get_empty_member_instance();
         $cells = $row->getCellIterator();
         $cells->setIterateOnlyExistingCells(False);
+        $cellCount = iterator_count($cells);
+        if ($cellCount != $this->MEMBER_FIELDS_COUNT) {
+            throw new LengthException("行{$row->getRowIndex()}的資料數量不正確");
+        }
+        $cells->rewind();
         $readCell = function ($cells) {
             $value = $cells->current()->getValue();
             $cells->next();
@@ -197,12 +206,17 @@ class Member_system_importer extends CI_Driver {
      * 新增至資料庫。
      *
      * @access private
+     * @throws InvalidArgumentException 會員資料不正確時丟出
      * @param array $members
      */
     private function saveMembers($members)
     {
         foreach($members as $member)
         {
+            // 檢查使用者名稱是否重複
+            if ($this->CI->member_model->get(array($this->CI->member_model->USERNAME => $member->username))) {
+                throw new InvalidArgumentException("會員帳號\"{$member->username}\"重複");
+            }
             $member->city_id = $this->findExistingCityId($member->city_name);
             $member->school_id = $this->findExistingSchoolId($member->school_type,
                                                              $member->school_name,
