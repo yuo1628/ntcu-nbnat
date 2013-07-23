@@ -35,7 +35,111 @@ class MemberController extends MY_Controller {
 	}
 	public function manage() {
 		$this -> layout -> view('view/member/manage', $this->_mainmenu());
+        
 	}
+    
+    /**
+     * 會員匯入匯出
+     * 
+     * @access public
+     */
+    public function bridge() {
+        $this->load->driver('member_system');
+        $data = $this->_mainmenu();
+        $data['post_url'] = './index.php/member/bridge';
+        $data['types'] = array('CSV', 'Excel2007');
+        $data['errors'] = array();
+        $data['infos'] = array();
+        
+        $submitType = $this->input->post('submit');
+        switch ($submitType) {
+            // 匯入會員資料
+            case '1':
+                if (isset($_FILES['excel'])) {
+                    $hasTitle = $this->input->post('hastitle');
+                    $errors = $this->bridge_import($_FILES['excel']['tmp_name'], $hasTitle);
+                    if ($errors) {
+                        $data['errors'] = array_merge($data['errors'], $errors);
+                    } else {
+                        $data['infos'][] = '會員資料匯入成功';
+                    }
+                }
+                break;
+            // 匯出會員資料
+            case '2':
+                $type = $this->input->post('type'); // return False on failed
+                if ($type !== FALSE) {
+                    $result = $this->bridge_export($type);
+                    if ($result) {
+                        return;
+                    } else {
+                        $data['errors'][] = '會員資料匯出發生錯誤';
+                    }
+                }
+                break;
+            // 操作頁面
+            default:
+        }
+        
+        $this-> layout -> view('view/member/bridge', $data);
+    }
+    
+    /**
+     * 匯入會員資料
+     *
+     * @access private
+     * @return array 包含錯誤訊息的陣列
+     */
+    private function bridge_import($filePath, $hasTitle) {
+        $this->load->driver('member_system');
+        // 讀取指定檔案（記得Catch PHPExcel_Reader_Exception）
+        try {
+            //print (new finfo(FILEINFO_MIME))->file($filePath);
+            //$this->member_system->importer->importMembersFromExcel($filePath, $hasTitle);
+            //header('Content-Type: text/html; charset=utf-8;');
+            //print '<pre>';
+            //print_r($this->member_system->importer->readMembersFromExcel($filePath, $hasTitle));
+            //print '</pre>';
+            try {
+                $this->member_system->importer->importMembersFromExcel($filePath, $hasTitle);
+            } catch (LengthException $e) {
+                return array($e->getMessage());
+            } catch (InvalidArgumentException $e) {
+                return array($e->getMessage());
+            }
+        } catch (PHPExcel_Reader_Exception $e) {
+            return array('檔案讀取失敗');
+        }
+        // 匯入資料
+        return array();
+    }
+    
+    /**
+     * 匯出會員資料
+     *
+     * 匯出檔名以日期命名
+     *
+     * @access private
+     * @return boolean 匯出成功回傳True，否則回傳False
+     */
+    private function bridge_export($type) {
+        $this->load->driver('member_system');
+        $tmpfname = tempnam('./media', 'FOO');
+        // 檢查指定檔案類型（記得Catch PHPExcel_Reader_Exception）
+        try {
+            // 匯出會員資料
+            $this->member_system->exporter->writeMembersToExcel($tmpfname, True, $type);
+        } catch (PHPExcel_Reader_Exception $e) {
+            return False;
+        }
+        
+        // 寫出headers和檔案內容
+        $this->output->set_content_type('application/octet-stream');
+        $this->output->set_header('Content-Disposition: attachment; filename="' . (new DateTime())->format('Y-m-d') . '.xlsx"');
+        $this->output->set_output(file_get_contents($tmpfname));
+        return True;
+    }
+    
 	private function _mainmenu()
 	{
 		$itemList = array("itemList" => array(
