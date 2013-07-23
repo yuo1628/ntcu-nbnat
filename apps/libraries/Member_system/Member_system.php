@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if ( ! defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -90,16 +90,16 @@ class Member_system extends CI_Driver_Library {
         }
         // 填入學校資料
         $key_school_id = 'school_id';
-        $schoolPk = $classData->$key_school_id;
-        $schoolData = $this->CI->member_model->get_school(array($this->CI->member_model->SCHOOL_PK => $schoolPk))[0];
-        foreach ($classData as $key => $value) {
+        $schoolPk = $classData[0]->$key_school_id;
+        $schoolData = $this->CI->member_model->get_school(array($this->CI->member_model->SCHOOL_PK => $schoolPk));
+        foreach ($classData[0] as $key => $value) {
             $this->fill_member_school_data($key, $value, $member);
         }
         // 填入城市資料
         $key_city_id = 'city_id';
-        $cityPk = $schoolData->$key_city_id;
-        $cityData = $this->CI->member_model->get_city(array($this->CI->member_model->CITY_PK => $cityPk))[0];
-        foreach ($cityData as $key => $value) {
+        $cityPk = $schoolData[0]->$key_city_id;
+        $cityData = $this->CI->member_model->get_city(array($this->CI->member_model->CITY_PK => $cityPk));
+        foreach ($cityData[0] as $key => $value) {
             $this->fill_member_city_data($key, $value, $member);
         }
         return $member;
